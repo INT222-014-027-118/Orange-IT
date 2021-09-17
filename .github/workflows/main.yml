@@ -12,7 +12,13 @@ jobs:
       with:
         user: ${{ secrets.USERNAME }}
         pass: ${{ secrets.PASSWORD }}
-    - name: Clone GitHub repository
-      run: git clone git@github.com:INT222-014-027-118/Orange-IT.git
-      
-
+    - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
+      uses: GuillaumeFalourd/clone-github-repo-action@v1
+      with:
+        owner: 'INT222-014-027-118'
+        repository: 'Orange-IT'
+        access-token: ${{ secrets.ACCESS_TOKEN }}
+    - name: Access cloned repository content
+      run: |
+        cd Orang-IT
+        ls -l
