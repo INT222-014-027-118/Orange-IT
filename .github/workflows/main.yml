@@ -8,8 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Login VM
-      run: ssh ${{ secrets.USERNAME }}
-      run: ${{ secrets.PASSWORD }}
+      run: 
+        ssh ${{ secrets.USERNAME }}
+        ${{ secrets.PASSWORD }}
 
       # uses: cross-the-world/ssh-pipeline@v1.2.0
       # with:
