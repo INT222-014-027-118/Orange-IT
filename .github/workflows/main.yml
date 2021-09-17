@@ -12,23 +12,7 @@ jobs:
       with:
         user: ${{ secrets.USERNAME }}
         pass: ${{ secrets.PASSWORD }}
-#     - name: Login VM
-#       run: 
-#         ssh ${{ secrets.USERNAME }}
-#         ${{ secrets.PASSWORD }}
+    - name: Clone GitHub repository
+      run: git clone git@github.com:INT222-014-027-118/Orange-IT.git
+      
 
-# - name: scp pipelines
-#   uses: cross-the-world/ssh-scp-ssh-pipelines@latest
-#   with:
-#     host: ${{ secrets.DC_HOST }}
-#     user: ${{ secrets.DC_USER }}
-#     pass: ${{ secrets.DC_PASS }}
-
-
-      # uses: cross-the-world/ssh-pipeline@v1.2.0
-      # with:
-      #   user: 
-      #   pass: 
-      # - run: cd Orange-IT 
-      # - run: git status
-   
