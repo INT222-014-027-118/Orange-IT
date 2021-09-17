@@ -12,6 +12,8 @@ jobs:
       with:
         user: ${{ secrets.USERNAME }}
         pass: ${{ secrets.PASSWORD }}
+      scp: |
+         mkdir test
     # - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
     #   uses: GuillaumeFalourd/clone-github-repo-action@v1
     #   with:
@@ -26,6 +28,6 @@ jobs:
     #   run: |
     #     cd Orang-IT
     #     ls -l
-    - name: test
-      run: |    
-        mkdir test
+    # - name: test
+    #   run: |    
+    #     mkdir test
