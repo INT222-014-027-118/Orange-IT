@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    name: Build
+    name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
     - name: Login
@@ -13,9 +13,10 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        script: cd Orange-IT
-          -git pull 
-          
+        script: |
+          cd Orange-IT
+          git pull 
+
     # - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
     #   uses: GuillaumeFalourd/clone-github-repo-action@v1
     #   with:
