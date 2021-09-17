@@ -12,8 +12,8 @@ jobs:
       with:
         user: ${{ secrets.USERNAME }}
         pass: ${{ secrets.PASSWORD }}
-      scp: |
-         mkdir test
+        scp: |
+          mkdir test
     # - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
     #   uses: GuillaumeFalourd/clone-github-repo-action@v1
     #   with:
