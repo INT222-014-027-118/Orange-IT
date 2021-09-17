@@ -1,4 +1,4 @@
-name: CI-pipeline
+name: CI-CD_pipeline
 
 on: [push]
 
@@ -7,7 +7,7 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: Login
+    - name: Login to VM, build and deploy
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -16,21 +16,4 @@ jobs:
         script: |
           cd Orange-IT
           git pull 
-
-    # - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
-    #   uses: GuillaumeFalourd/clone-github-repo-action@v1
-    #   with:
-    #     owner: 'INT222-014-027-118'
-    #     repository: 'Orange-IT'
-    #     access-token: ${{ secrets.ACCESS_TOKEN }}
-    # - name: Clone GitHub repository
-    #   run: |
-    #     git clone https://github.com/INT222-014-027-118/Orange-IT.git
-    #     ${{ secrets.ACCESS_TOKEN }}
-    # - name: Access cloned repository content
-    #   run: |
-    #     cd Orang-IT
-    #     ls -l
-    # - name: test
-    #   run: |    
-    #     mkdir test
+          docker-compose up --build  
