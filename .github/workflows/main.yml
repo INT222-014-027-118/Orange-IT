@@ -1,4 +1,4 @@
-name: Build Vue
+name: Build Project
 
 on: [push]
 
