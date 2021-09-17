@@ -10,7 +10,7 @@ jobs:
     - name: Login
       uses: appleboy/ssh-action@master
       with:
-        host: @23.98.79.3
+        host: 23.98.79.3
         username: orange-admin
         password: Orange_014027118
         port: 22
