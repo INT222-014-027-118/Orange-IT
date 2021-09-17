@@ -4,7 +4,7 @@ networks:
     client :    
 services:
     backend:
-        build: Back-end
+        build: Backend
         container_name: backend
         restart: on-failure
         environment:
@@ -19,7 +19,7 @@ services:
             - client
             - server
     frontend:
-        build: Front-end
+        build: Frontend
         container_name: frontend
         depends_on:
             - backend
