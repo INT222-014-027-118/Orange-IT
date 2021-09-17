@@ -4,14 +4,15 @@ on: [push]
 
 jobs:
   build:
-    name: Login
+    name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: scp pipelines
-      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+    - name: Login
+      uses: appleboy/ssh-action@master
       with:
-        user: ${{ secrets.USERNAME }}
-        pass: ${{ secrets.PASSWORD }}
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
         run: |
           mkdir test12
     # - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
