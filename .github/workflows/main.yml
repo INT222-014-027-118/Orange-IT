@@ -4,13 +4,26 @@ on: [push]
 
 jobs:
   build:
-    name: Clone
+    name: Login
     runs-on: ubuntu-latest
     steps:
-    - name: Login VM
-      run: 
-        ssh ${{ secrets.USERNAME }}
-        ${{ secrets.PASSWORD }}
+    - name: scp pipelines
+      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+      with:
+        user: ${{ secrets.USERNAME }}
+        pass: ${{ secrets.PASSWORD }}
+#     - name: Login VM
+#       run: 
+#         ssh ${{ secrets.USERNAME }}
+#         ${{ secrets.PASSWORD }}
+
+# - name: scp pipelines
+#   uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+#   with:
+#     host: ${{ secrets.DC_HOST }}
+#     user: ${{ secrets.DC_USER }}
+#     pass: ${{ secrets.DC_PASS }}
+
 
       # uses: cross-the-world/ssh-pipeline@v1.2.0
       # with:
