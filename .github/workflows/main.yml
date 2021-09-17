@@ -7,11 +7,14 @@ jobs:
     name: Clone
     runs-on: ubuntu-latest
     steps:
-    - name: ssh-pipeline
-      uses: cross-the-world/ssh-pipeline@v1.2.0
-      with:
-        user: ${{ secrets.USERNAME }}
-        pass: ${{ secrets.PASSWORD }}
-      - run: cd Orange-IT 
-      - run: git status
+    - name: Login VM
+      run: ssh ${{ secrets.USERNAME }}
+      run: ${{ secrets.PASSWORD }}
+
+      # uses: cross-the-world/ssh-pipeline@v1.2.0
+      # with:
+      #   user: 
+      #   pass: 
+      # - run: cd Orange-IT 
+      # - run: git status
    
