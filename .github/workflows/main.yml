@@ -1,15 +1,17 @@
-name: Build Project
+name: CI-pipeline
 
 on: [push]
 
 jobs:
   build:
+    name: Clone
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: isbang/compose-action@v1.0.0
-        with:
-          compose-file: './docker-compose.yml'
-          down-flags: '--volumes'
-      - run: docker-compose build
-
+      - name: Setup SSH
+        uses: cross-the-world/ssh-pipeline@master
+      with:
+        user: ${{ secrets.USERNAME }}
+        pass: ${{ secrets.PASSWORD }}
+      - run: cd Orange-IT 
+      - run: git status
+   
