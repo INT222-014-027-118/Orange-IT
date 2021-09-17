@@ -7,21 +7,13 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    # - name: Login
-    #   uses: appleboy/ssh-action@master
-    #   with:
-    #     host: ${{ secrets.HOST }}
-    #     username: ${{ secrets.USERNAME }}
-    #     key: ${{ secrets.ORANGE_IT_SECRET }}
-    #     port: 22
-    #     script: |
-    #       mkdir test12
     - name: Login
       uses: appleboy/ssh-action@master
       with:
-        host: 23.98.79.3
-        username: orange-admin
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
         key: ${{ secrets.ORANGE_IT_SECRET }}
+        password: ${{ secrets.PASSWORD }}
         port: 22
         script: |
           mkdir test12
