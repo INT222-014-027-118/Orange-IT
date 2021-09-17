@@ -7,8 +7,8 @@ jobs:
     name: Clone
     runs-on: ubuntu-latest
     steps:
-      - name: Setup SSH
-      - uses: cross-the-world/ssh-pipeline@master
+    - name: ssh-pipeline
+      uses: cross-the-world/ssh-pipeline@v1.2.0
       with:
         user: ${{ secrets.USERNAME }}
         pass: ${{ secrets.PASSWORD }}
