@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup SSH
-        uses: cross-the-world/ssh-pipeline@master
+      - uses: cross-the-world/ssh-pipeline@master
       with:
         user: ${{ secrets.USERNAME }}
         pass: ${{ secrets.PASSWORD }}
