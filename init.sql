@@ -7,9 +7,9 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `category` VARCHAR(40) NOT NULL,
   `parent_id` INT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `category_UNIQUE` (`category` ASC) VISIBLE,
-  INDEX `fk_Categories_Categories1_idx` (`parent_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `category_UNIQUE` (`category` ASC) ,
+  INDEX `fk_Categories_Categories1_idx` (`parent_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Categories_Categories1`
     FOREIGN KEY (`parent_id`)
     REFERENCES `categories` (`id`))
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `colors` (
   `label` VARCHAR(30) NOT NULL,
   `hex_code` VARCHAR(6) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `email` VARCHAR(50) NOT NULL,
   `points` INT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS `delivery_details` (
   `address` VARCHAR(150) NOT NULL,
   `customer_id` INT NOT NULL,
   PRIMARY KEY (`id`, `customer_id`),
-  INDEX `fk_Delivery_details_Customers_idx` (`customer_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_Delivery_details_Customers_idx` (`customer_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Delivery_details_Customers`
     FOREIGN KEY (`customer_id`)
     REFERENCES `customers` (`id`))
@@ -67,9 +67,9 @@ CREATE TABLE IF NOT EXISTS `shippings` (
   `delivery_detail_id` INT NOT NULL,
   `customer_id` INT NOT NULL,
   PRIMARY KEY (`id`, `delivery_detail_id`, `customer_id`),
-  UNIQUE INDEX `tracking_number_UNIQUE` (`tracking_number` ASC) VISIBLE,
-  INDEX `fk_Shippings_Delivery_details1_idx` (`delivery_detail_id` ASC, `customer_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `tracking_number_UNIQUE` (`tracking_number` ASC) ,
+  INDEX `fk_Shippings_Delivery_details1_idx` (`delivery_detail_id` ASC, `customer_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Shippings_Delivery_details1`
     FOREIGN KEY (`delivery_detail_id` , `customer_id`)
     REFERENCES `delivery_details` (`id` , `customer_id`))
@@ -89,9 +89,9 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `paid_date` DATETIME NOT NULL,
   `customer_id` INT NOT NULL,
   PRIMARY KEY (`id`, `customer_id`),
-  UNIQUE INDEX `slip_image_UNIQUE` (`slip_image` ASC) VISIBLE,
-  INDEX `fk_Payments_Customers1_idx` (`customer_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `slip_image_UNIQUE` (`slip_image` ASC) ,
+  INDEX `fk_Payments_Customers1_idx` (`customer_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Payments_Customers1`
     FOREIGN KEY (`customer_id`)
     REFERENCES `customers` (`id`))
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `discounts` (
   `discount_percent` FLOAT NOT NULL,
   `active` TINYINT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -119,9 +119,9 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `payments_id` INT NOT NULL,
   `payments_customer_id` INT NOT NULL,
   PRIMARY KEY (`id`, `shipping_id`, `delivery_detail_id`, `customer_id`, `payments_id`, `payments_customer_id`),
-  INDEX `fk_Order_Shippings1_idx` (`shipping_id` ASC, `delivery_detail_id` ASC, `customer_id` ASC) VISIBLE,
-  INDEX `fk_orders_payments1_idx` (`payments_id` ASC, `payments_customer_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_Order_Shippings1_idx` (`shipping_id` ASC, `delivery_detail_id` ASC, `customer_id` ASC) ,
+  INDEX `fk_orders_payments1_idx` (`payments_id` ASC, `payments_customer_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Order_Shippings1`
     FOREIGN KEY (`shipping_id` , `delivery_detail_id` , `customer_id`)
     REFERENCES `shippings` (`id` , `delivery_detail_id` , `customer_id`),
@@ -142,8 +142,8 @@ CREATE TABLE IF NOT EXISTS `products` (
   `quantity_stock` INT NOT NULL,
   `discount_id` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Products_Discounts1_idx` (`discount_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_Products_Discounts1_idx` (`discount_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Products_Discounts1`
     FOREIGN KEY (`discount_id`)
     REFERENCES `discounts` (`id`))
@@ -156,8 +156,8 @@ CREATE TABLE IF NOT EXISTS `images` (
   `label` VARCHAR(30) NOT NULL,
   `product_id` INT NOT NULL,
   PRIMARY KEY (`id`, `product_id`),
-  INDEX `fk_Images_Products1_idx` (`product_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_Images_Products1_idx` (`product_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Images_Products1`
     FOREIGN KEY (`product_id`)
     REFERENCES `products` (`id`))
@@ -174,9 +174,9 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   `customer_id` INT NOT NULL,
   `product_id` INT NOT NULL,
   PRIMARY KEY (`id`, `order_id`, `shipping_id`, `delivery_detail_id`, `customer_id`),
-  INDEX `fk_Order_items_Orders1_idx` (`order_id` ASC, `shipping_id` ASC, `delivery_detail_id` ASC, `customer_id` ASC) VISIBLE,
-  INDEX `fk_Order_items_Products1_idx` (`product_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_Order_items_Orders1_idx` (`order_id` ASC, `shipping_id` ASC, `delivery_detail_id` ASC, `customer_id` ASC) ,
+  INDEX `fk_Order_items_Products1_idx` (`product_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Order_items_Orders1`
     FOREIGN KEY (`order_id` , `shipping_id` , `delivery_detail_id` , `customer_id`)
     REFERENCES `orders` (`id` , `shipping_id` , `delivery_detail_id` , `customer_id`),
@@ -190,8 +190,8 @@ CREATE TABLE IF NOT EXISTS `products_has_categories` (
   `product_id` INT NOT NULL,
   `category_id` INT NOT NULL,
   PRIMARY KEY (`product_id`, `category_id`),
-  INDEX `fk_Products_has_Categories_Categories1_idx` (`category_id` ASC) VISIBLE,
-  INDEX `fk_Products_has_Categories_Products1_idx` (`product_id` ASC) VISIBLE,
+  INDEX `fk_Products_has_Categories_Categories1_idx` (`category_id` ASC) ,
+  INDEX `fk_Products_has_Categories_Products1_idx` (`product_id` ASC) ,
   CONSTRAINT `fk_Products_has_Categories_Categories1`
     FOREIGN KEY (`category_id`)
     REFERENCES `categories` (`id`),
@@ -205,8 +205,8 @@ CREATE TABLE IF NOT EXISTS `products_has_colors` (
   `product_id` INT NOT NULL,
   `color_id` INT NOT NULL,
   PRIMARY KEY (`product_id`, `color_id`),
-  INDEX `fk_Products_has_Colors_Colors1_idx` (`color_id` ASC) VISIBLE,
-  INDEX `fk_Products_has_Colors_Products1_idx` (`product_id` ASC) VISIBLE,
+  INDEX `fk_Products_has_Colors_Colors1_idx` (`color_id` ASC) ,
+  INDEX `fk_Products_has_Colors_Products1_idx` (`product_id` ASC) ,
   CONSTRAINT `fk_Products_has_Colors_Colors1`
     FOREIGN KEY (`color_id`)
     REFERENCES `colors` (`id`),
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `specs` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `spec` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -229,8 +229,8 @@ CREATE TABLE IF NOT EXISTS `product_spec_values` (
   `spec_id` INT NOT NULL,
   `spec_value` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`product_id`, `spec_id`),
-  INDEX `fk_Products_has_specs_specs1_idx` (`spec_id` ASC) VISIBLE,
-  INDEX `fk_Products_has_specs_Products1_idx` (`product_id` ASC) VISIBLE,
+  INDEX `fk_Products_has_specs_specs1_idx` (`spec_id` ASC) ,
+  INDEX `fk_Products_has_specs_Products1_idx` (`product_id` ASC) ,
   CONSTRAINT `fk_Products_has_specs_Products1`
     FOREIGN KEY (`product_id`)
     REFERENCES `products` (`id`),
@@ -247,8 +247,8 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   `review_date` DATETIME NOT NULL,
   `customer_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Reviews_Customers1_idx` (`customer_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_Reviews_Customers1_idx` (`customer_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Reviews_Customers1`
     FOREIGN KEY (`customer_id`)
     REFERENCES `customers` (`id`))
@@ -261,8 +261,8 @@ CREATE TABLE IF NOT EXISTS `ratings` (
   `description` VARCHAR(100) NULL DEFAULT NULL,
   `category_id` INT NOT NULL,
   PRIMARY KEY (`id`, `category_id`),
-  INDEX `fk_Ratings_Categories1_idx` (`category_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_Ratings_Categories1_idx` (`category_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Ratings_Categories1`
     FOREIGN KEY (`category_id`)
     REFERENCES `categories` (`id`))
@@ -276,9 +276,9 @@ CREATE TABLE IF NOT EXISTS `rating_of_product` (
   `score` INT NOT NULL,
   `product_id` INT NOT NULL,
   PRIMARY KEY (`Reviews_id`, `Ratings_id`, `Ratings_category_id`),
-  INDEX `fk_Reviews_has_Ratings_Ratings1_idx` (`Ratings_id` ASC, `Ratings_category_id` ASC) VISIBLE,
-  INDEX `fk_Reviews_has_Ratings_Reviews1_idx` (`Reviews_id` ASC) VISIBLE,
-  INDEX `fk_Rating_of_product_Products1_idx` (`product_id` ASC) VISIBLE,
+  INDEX `fk_Reviews_has_Ratings_Ratings1_idx` (`Ratings_id` ASC, `Ratings_category_id` ASC) ,
+  INDEX `fk_Reviews_has_Ratings_Reviews1_idx` (`Reviews_id` ASC) ,
+  INDEX `fk_Rating_of_product_Products1_idx` (`product_id` ASC) ,
   CONSTRAINT `fk_Rating_of_product_Products1`
     FOREIGN KEY (`product_id`)
     REFERENCES `products` (`id`),
@@ -290,7 +290,4 @@ CREATE TABLE IF NOT EXISTS `rating_of_product` (
     REFERENCES `reviews` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
-
-
-
 
