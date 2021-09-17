@@ -16,4 +16,4 @@ jobs:
         script: |
           cd Orange-IT
           git pull 
-     
+          docker-compose up --build
