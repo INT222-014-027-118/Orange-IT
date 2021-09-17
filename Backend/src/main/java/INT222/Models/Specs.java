@@ -10,17 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ProductSpecTypes")
-public class ProductSpecTypes {
+@Entity
+@Table(name = "specs")
+public class Specs {
+
 
     @Id
-    @Column(name = "specTypeId")
-    private long specTypeId;
+    private long id;
 
-    @Column(name = "specTypeName")
-    private long specTypeName;
+    @Column
+    private String spec;
 
 }

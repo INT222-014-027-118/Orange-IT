@@ -10,19 +10,27 @@ module.exports = {
             colors: {
                 primary: '#EC6907',
                 secondary: '#f6ae2d',
-                neutral : '#f8f8f8',
+                neutral: '#f8f8f8',
             }
-        }
+        },
     },
     variants: {
         extend: {
             backgroundColor: ['checked'],
             borderColor: ['checked'],
+            ringColor: ['responsive', 'dark', 'focus-within', 'focus', 'checked', 'active', 'hover'],
+            ringOffsetColor: ['responsive', 'dark', 'focus-within', 'focus', 'checked', 'active', 'hover'],
+            ringOffsetWidth: ['responsive', 'focus-within', 'focus', 'checked', 'active', 'hover'],
+            ringOpacity: ['responsive', 'dark', 'focus-within', 'focus', 'checked', 'active', 'hover'],
+            ringWidth: ['responsive', 'focus-within', 'focus', 'checked', 'active', 'hover'],
         }
     },
     plugins: [
         // require('daisyui'),
-        // require('@tailwindcss/forms'), 
+        require("@tailwindcss/forms")({
+            strategy: 'class',
+            
+        }),
     ],
     // daisyui: {
     //     styled: true,

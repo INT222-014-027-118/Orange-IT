@@ -20,8 +20,8 @@ public class Colors {
     private long id;
 
     @Column
-    private String name;
+    private String label;
 
-    @Column
-    private String hex;
+    @Column(name = "hex_code")
+    private String hexCode;
 }

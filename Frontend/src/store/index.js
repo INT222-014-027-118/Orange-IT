@@ -98,11 +98,25 @@ export default createStore({
         "id": 5
       },
     ],
+    cart: []
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    addCartItem(state, item) {
+      state.cart.push(item);
+    },
+  },
+  actions: {
+    addCartItem(context, item) {
+      context.commit('addCartItem', item)
+    },
+  },
   modules: {},
   getters: {
-    itemTest: state => state.itemTest
+    itemTest: state => state.itemTest,
+    cart: state => state.cart,
+    totalInCart: state => state.cart.length,
+    // totalInCart(state) {
+    //   return state.cart.length
+    // },
   }
 })

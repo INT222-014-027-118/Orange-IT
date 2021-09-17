@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -17,9 +14,20 @@ import javax.persistence.Table;
 public class Images {
 
     @Id
-    @Column(name = "imageId")
-    private long imageId;
+    private long id;
 
-    @Column(name = "imageFileName")
-    private long imageFileName;
+    @Column
+    private String source;
+
+    @Column
+    private String label;
+
+
+
+
+
+//
+//    @ManyToOne
+//    @JoinColumn(name = "productid")
+//    private Products products;
 }

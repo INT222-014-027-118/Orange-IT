@@ -1,5 +1,6 @@
 package INT222.Models;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,11 +14,15 @@ import javax.persistence.Table;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Test")
-public class Test {
+@Table(name = "Reviews")
+public class Ratings {
 
     @Id
-    @Column(name = "test")
-    private String test;
+    private long id;
+    @Column
+    private String name;
+
+    @Column
+    private String description;
 
 }
