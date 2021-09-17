@@ -22,8 +22,10 @@ jobs:
     #   run: |
     #     git clone https://github.com/INT222-014-027-118/Orange-IT.git
     #     ${{ secrets.ACCESS_TOKEN }}
-    - name: Access cloned repository content
-      run: |
-        cd Orang-IT
-        ls -l
+    # - name: Access cloned repository content
+    #   run: |
+    #     cd Orang-IT
+    #     ls -l
+    - name: test
+      run: |    
         mkdir test
