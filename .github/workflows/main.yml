@@ -13,8 +13,7 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        script: whoami
-
+        script: mkdir test
 
     # - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
     #   uses: GuillaumeFalourd/clone-github-repo-action@v1
