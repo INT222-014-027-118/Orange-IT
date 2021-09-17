@@ -7,12 +7,6 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: checkout repo
-      uses: actions/checkout@v1
-    - name: Login
-      run: >
-        ssh orange-admin@23.98.79.3
-        -Orange_014027118
     # - name: Login
     #   uses: appleboy/ssh-action@master
     #   with:
@@ -22,15 +16,14 @@ jobs:
     #     port: 22
     #     script: |
     #       mkdir test12
-    # - name: Login
-    #   uses: appleboy/ssh-action@master
-    #   with:
-    #     host: ${{ secrets.HOST }}
-    #     username: ${{ secrets.USERNAME }}
-    #     password: ${{ secrets.PASSWORD }}
-    #     port: 22
-    #     script: |
-    #       mkdir test12
+    - name: Login
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: 22
+        script: whoami
 
 
     # - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
