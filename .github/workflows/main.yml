@@ -13,7 +13,7 @@ jobs:
         user: ${{ secrets.USERNAME }}
         pass: ${{ secrets.PASSWORD }}
         run: |
-          mkdir test
+          mkdir test12
     # - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
     #   uses: GuillaumeFalourd/clone-github-repo-action@v1
     #   with:
