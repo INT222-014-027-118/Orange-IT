@@ -66,12 +66,12 @@
                 </div>
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
-                    <label class="label-css" for="previewImage">color *</label>
+                    <label class="label-css" for="">color *</label>
                     <div class="input-css" :class="{ 'ring ring-red-400': invalid.Color }">
                         <input
                             type="checkbox"
                             name="color"
-                            class="w-8 h-8 m-2 rounded-full border-1 form-checkbox ring-transparent ring-4 ring-offset-2 focus:ring-4 focus:ring-offset-2 focus:ring-secondary active:ring-secondary checked:ring-primary"
+                            class="w-8 h-8 m-2 rounded-full border-1 form-checkbox ring-transparent ring-4 ring-offset-2 focus:ring-offset-2 focus:ring-secondary active:ring-secondary checked:ring-primary"
                             v-for="color in $store.getters.itemTest[2].colors"
                             :key="color.colorId"
                             :style="{
@@ -88,7 +88,7 @@
                 </div>
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
-                    <label class="label-css" for="previewImage">Launch date *</label>
+                    <label class="label-css" for="">Launch date *</label>
                     <input type="date" class="input-css" v-model="product.launchDate" required :class="{ 'ring ring-red-400': invalid.date }" />
                     <span v-if="invalid.date" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2"
                         >Please input date</span
@@ -122,7 +122,10 @@
                             </div>
                             <p class="text-sm font-light">file name: {{ imageInfo[index].name }}</p>
                             <p class="text-sm font-light">size: {{ imageInfo[index].size / 1024 }}KB</p>
-                            <div @click="deleteImg(index)" class="bg-red-600 absolute text-center pt-0.5  cursor-pointer -top-3 -right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white">
+                            <div
+                                @click="deleteImg(index)"
+                                class="bg-red-600 absolute text-center pt-0.5  cursor-pointer -top-3 -right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white"
+                            >
                                 delete_forever
                             </div>
                         </div>
@@ -141,31 +144,68 @@
                     </div>
                 </div>
 
-                <div class="container w-full mx-auto px-2 bg-gray-400 ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>title</th>
-                                <th>title</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>att</td>
-                                <td>att</td>
-                            </tr>
-                            <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="px-3 mb-6 lg:w-full md:mb-0 rounded-md">
+                    <div class="input-css">
+                        <table class="w-full">
+                            <thead>
+                                <tr>
+                                    <th class="w-5/12">Key</th>
+                                    <th class="w-5/12">Value</th>
+                                    <th class="w-1/12"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="pb-5"><RichSelect @selected="selected" /></td>
+                                    <td class="pb-5">
+                                        <input
+                                            type="text"
+                                            placeholder="value"
+                                            v-model="attributeText"
+                                            class="block w-full px-3 py-2 transition duration-100 ease-in-out border rounded shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed text-black placeholder-gray-400 bg-white border-gray-300 focus:border-blue-500 "
+                                        />
+                                    </td>
+                                    <td class="pb-5">
+                                        <button
+                                            type="button"
+                                            class="bg-green-600 text-white select-none block px-3 py-2 text-center w-full rounded hover:shadow-md hover:bg-green-700 cursor-pointer"
+                                            @click="Addattribute"
+                                        >
+                                            Add
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr v-show="product.attributes.length !== 0">
+                                    <td colspan="3" class="font-semibold p-2">Attributes list</td>
+                                </tr>
+                                <tr v-for="(spec, index) in product.attributes" :key="spec.key" :class="index % 2 == 0 ? 'bg-white' : 'bg-gray-50'" class="border">
+                                    <td class="">
+                                        <p class="px-3 py-2">{{ spec.key }}</p>
+                                    </td>
+                                    <td class="">
+                                        <p class="px-3 py-2">{{ spec.textValue }}</p>
+                                    </td>
+                                    <td class="p-1">
+                                        <button
+                                            type="button"
+                                            class="bg-red-500 text-white select-none block px-3 py-2 text-center w-full rounded hover:shadow-md hover:bg-red-600 cursor-pointer"
+                                            @click="removeAddattribute(index)"
+                                        >
+                                            remove
+                                        </button>
+                                    </td>
+                                </tr>
+                                <br />
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <button @click="validating" type="submit" class="self-end rounded shadow-md cursor-pointer btn">
                 Add Product
             </button>
         </form>
+        <router-link to="/tester" class="p-10 bg-red-500">tester</router-link>
     </div>
     <!-- <div v-show="isLoad" class="flex items-center justify-center w-full h-screen">
         <i class="text-4xl material-icons animate-spin" v-show="isLoad"> autorenew </i>
@@ -173,16 +213,23 @@
 </template>
 
 <script>
+import RichSelect from "../components/RichSelect.vue";
 export default {
+    components: {
+        RichSelect,
+    },
     data() {
         return {
             brands: [],
             colors: [],
             categorys: [],
             // url: "http://137.116.145.41/refun",
-            // previewImage: null,
             activeClose: true,
             productIds: [],
+
+            attributeText: "",
+            attributeSelect: "",
+
             product: {
                 categoryAdd: "",
                 brandAdd: "",
@@ -192,6 +239,7 @@ export default {
                 warranty: 0,
                 launchDate: "",
                 description: "",
+                attributes: [],
             },
             invalid: {
                 category: false,
@@ -204,9 +252,6 @@ export default {
             },
             isLoad: true,
             imageFile: null,
-            oldImage: { image: "", useThis: Boolean },
-
-            previewImage: null,
 
             preview_list: [],
             imageInfo: [],
@@ -223,14 +268,13 @@ export default {
             this.invalid.price = this.product.price === 0 ? true : false;
             this.invalid.Color = this.product.colorsAdd.length === 0 ? true : false;
             this.invalid.date = this.product.launchDate === "" ? true : false;
-            this.invalid.img = this.product.previewImage === null ? true : false;
             for (let prop in this.invalid) {
                 setTimeout(() => {
                     this.invalid[`${prop}`] = false;
                 }, 5000);
             }
-            console.log(this.imageInfo);
         },
+
         generateNewId() {
             if (this.productIds.length > 0) {
                 return (
@@ -257,6 +301,20 @@ export default {
         //     this.product.previewImage = null;
         //     this.product.activeClose = !this.activeClose;
         // },
+        selected(choosed) {
+            this.attributeSelect = choosed;
+        },
+        Addattribute() {
+            if (!this.attributeText == "" && !this.attributeSelect == "") {
+                let spce = { key: this.attributeSelect, textValue: this.attributeText };
+                this.product.attributes.push(spce);
+                this.attributeText = "";
+                this.attributeSelect = "";
+            }
+        },
+        removeAddattribute(index) {
+            this.product.attributes.splice(index, 1);
+        },
 
         previewMultiImage(event) {
             var imgName = event.target.files[0].name;
@@ -277,6 +335,7 @@ export default {
                 }
             }
         },
+
         deleteImg(index) {
             this.imageInfo.splice(index, 1);
             this.preview_list.splice(index, 1);
@@ -293,24 +352,11 @@ export default {
                 this.activeClose = true;
             }
         },
-        createImage(file) {
-            let reader = new FileReader();
-            reader.onload = (event) => {
-                this.previewImage = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        },
+
         uploadImage() {
             let data = new FormData();
             data.append("refun", this.imageFile);
             return data;
-        },
-        removeImage() {
-            this.previewImage = null;
-            if (this.itemId) {
-                this.oldImage.useThis = false;
-            }
-            this.activeClose = !this.activeClose;
         },
 
         async getDataToEdit() {
@@ -348,7 +394,7 @@ export default {
     },
     computed: {
         isValid() {
-            return this.brandAdd !== "" && this.name !== "" && this.price !== 0 && this.typeAdd !== "" && this.colorsAdd.length !== 0 && this.launchDate !== "" && this.previewImage !== null;
+            return this.brandAdd !== "" && this.name !== "" && this.price !== 0 && this.typeAdd !== "" && this.colorsAdd.length !== 0 && this.launchDate !== "";
         },
         countText() {
             return this.product.name.length;
@@ -374,21 +420,10 @@ export default {
 }
 
 [type="checkbox"]:checked {
-    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='rgb(236, 105, 7)' stroke-linecap='round' stroke='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='rgb(236, 105, 7)' stroke-width='2%' stroke-linecap='round' stroke='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
 }
 
 [type="radio"]:checked {
     background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='red' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
-}
-
-[type="checkbox"]:focus,
-[type="radio"]:focus {
-    --tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
-    --tw-ring-offset-width: 0px;
-    --tw-ring-offset-color: #fff;
-    --tw-ring-color: #f6ae2d;
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 </style>
