@@ -8,7 +8,7 @@ module.exports = {
         extend: {
             textOpacity: ['dark'],
             colors: {
-                primary: '#FB8500',
+                primary: '#F88100',
                 primaryfocus: '#F35B04',
                 secondary: '#FFB703',
                 tertiary: '#FAE445',
