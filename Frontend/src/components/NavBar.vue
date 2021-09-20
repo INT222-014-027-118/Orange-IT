@@ -3,9 +3,9 @@
         <div class="fixed top-0 z-50 w-full bg-white shadow-sm select-none dark:bg-gray-900 dark:text-gray-100">
             <div class="flex items-center justify-around h-12 px-2 mx-auto max-w-7xl sm:h-20 md:h-20 lg:h-20 sm:px-0">
                 <div class="hidden sm:inline-flex lg:w-3/12">
-                    <router-link to="/" class="flex items-center transition rounded-full cursor-pointer hover:bg-primary hover:text-gray-100">
-                        <img src="../assets/orange.svg" alt="orange_icon" class="h-11 md:h-12" />
-                        <span class="hidden py-2 font-bold tracking-tighter md:text-lg lg:text-2xl md:inline-flex md:w-24 lg:w-24">range IT</span>
+                    <router-link to="/" class="flex items-center transition rounded-full cursor-pointer bg-gradient-to-r hover:from-secondary hover:to-primary hover:text-gray-100">
+                        <img src="../assets/orange.svg" alt="orange_icon" class="h-11 md:h-12 ml-2" />
+                        <span class="hidden  font-bold tracking-tighter md:text-lg lg:text-2xl md:inline-flex md:w-24 lg:w-24">range IT</span>
                     </router-link>
                     <router-link to="/form" class="flex items-center">form</router-link>
                 </div>
