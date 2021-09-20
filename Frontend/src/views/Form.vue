@@ -118,13 +118,13 @@
                     <div class="relative input-css flex flex-wrap select-none overflow-hidden">
                         <div v-for="(item, index) in preview_list" :key="index" class="m-5 relative">
                             <div class="bg-white h-40 w-40 md:h-64 md:w-64 mb-2 rounded-md">
-                                <img :src="item" class="object-cover object-center w-full h-full rounded-md" />
+                                <img :src="item" class="object-contain object-center w-full h-full rounded-md" />
                             </div>
                             <p class="text-sm font-light">file name: {{ imageInfo[index].name }}</p>
                             <p class="text-sm font-light">size: {{ imageInfo[index].size / 1024 }}KB</p>
                             <div
                                 @click="deleteImg(index)"
-                                class="bg-red-600 absolute text-center pt-0.5  cursor-pointer -top-3 -right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white"
+                                class="bg-red-600 absolute text-center pt-0.5 cursor-pointer -top-3 -right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white"
                             >
                                 delete_forever
                             </div>
