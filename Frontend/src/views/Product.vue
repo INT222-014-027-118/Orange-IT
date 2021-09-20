@@ -37,7 +37,7 @@
                         </div>
 
                         <button
-                            class="bg-primary text-white select-none block py-3 px-4 text-center w-full rounded-md hover:shadow-md hover:bg-secondary cursor-pointer fixed sm:static bottom-12 left-0 z-40"
+                            class="bg-primary text-white select-none block py-3 px-4 text-center w-full rounded-md hover:shadow-md hover:bg-primaryfocus cursor-pointer fixed sm:static bottom-12 left-0 z-40"
                             @click="addCartItem()"
                         >
                             Add to Cart
