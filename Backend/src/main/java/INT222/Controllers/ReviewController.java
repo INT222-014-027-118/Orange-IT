@@ -1,5 +1,7 @@
 package INT222.Controllers;
 
+import INT222.Exceptions.NotFoundException;
+import INT222.Models.Products;
 import INT222.Models.Reviews;
 import INT222.Repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,4 +40,20 @@ public class ReviewController {
     public List<Reviews> getReview() {
        return reviewRepository.findAll();
     }
+
+    @DeleteMapping("{id}")
+    public void deleteById(@PathVariable(value = "id") long id) {
+        reviewRepository.deleteById(id);
+    }
+
+    @PutMapping("/update")
+    public void editReview(@RequestBody Reviews reviews) {
+            reviewRepository.save(reviews);
+    }
+
+    @PostMapping("/add")
+    public void addReview(@RequestBody Reviews reviews) {
+        reviewRepository.save(reviews);
+    }
+
 }

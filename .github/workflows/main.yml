@@ -1,7 +1,9 @@
 name: CI-CD_pipeline
 
-on: [push]
-
+on: 
+ pull_request:
+    branches:
+      - master
 jobs:
   build:
     name: Build and Deploy
