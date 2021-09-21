@@ -1,3 +1,4 @@
+DROP DATABASE [IF EXISTS] mysql-orangeit;
 CREATE USER 'adminUser'@'%' IDENTIFIED BY 'password';
 
 GRANT ALL ON *.* TO 'adminUser'@'%';
@@ -291,3 +292,19 @@ CREATE TABLE IF NOT EXISTS `rating_of_product` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
+CREATE TABLE IF NOT EXISTS `cart_items` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `quantity` INT NOT NULL DEFAULT 0,
+  `customer_id` INT NOT NULL,
+  `product_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_Cart_items_customers1_idx` (`customer_id` ASC) ,
+  INDEX `fk_Cart_items_products1_idx` (`product_id` ASC) ,
+  CONSTRAINT `fk_Cart_items_customers1`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `customers` (`id`),
+  CONSTRAINT `fk_Cart_items_products1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `products` (`id`))
+ENGINE = InnoDB;
