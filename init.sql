@@ -1,4 +1,3 @@
-DROP DATABASE [IF EXISTS] mysql-orangeit;
 CREATE USER 'adminUser'@'%' IDENTIFIED BY 'password';
 
 GRANT ALL ON *.* TO 'adminUser'@'%';
