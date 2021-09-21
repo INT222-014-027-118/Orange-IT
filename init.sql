@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
     REFERENCES `categories` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
----
+
 CREATE TABLE IF NOT EXISTS `colors` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `label` VARCHAR(30) NOT NULL,
