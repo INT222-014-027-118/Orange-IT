@@ -26,10 +26,11 @@
                         :class="[this.$route.name === 'Cart' ? 'text-primary font-semibold' : '']"
                     >
                         <div class="relative hover:opacity-80">
-                            <span class="px-1 pt-1 material-icons"> shopping_cart </span>
+                            <span class="px-1 pt-1 material-icons-round"> shopping_cart </span>
                             <div class="absolute px-2 text-xs  text-white bg-primary rounded-full -top-1 -right-3 md:-top-2 sm:-right-3">
                                 {{ $store.getters.totalInCart == 0 ? "" : $store.getters.totalInCart }}
                             </div>
+
                         </div>
                         <span class="tracking-tight">cart</span>
                         <div
