@@ -13,8 +13,8 @@ const state = {
     colors:[],
     categories:[],
     brand: [
-        Razer,
-        Logitech
+        'Razer',
+        'Logitech'
     ]
 }
 
