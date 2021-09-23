@@ -1,11 +1,15 @@
 import axios from 'axios'
 
-// const url = 'http://localhost:5000/products';
-const url = 'http://52.187.10.17/orange-it/product/list'
-// const get_images = `${api}/image/get/`
+const api = 'http://52.187.10.17/orange-it'
+// const get_colors = `${api}/color/list`
+
+
+// const post_product = `${api}/product/add`
+// const put_product = `${api}/product/update`
+// const post_image = `${api}/image/add`
+// const put_image = `${api}/image/update/`
 
 const state = {
-    products: []
 }
 
 const getters = {
