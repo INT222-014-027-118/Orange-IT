@@ -65,6 +65,8 @@
                     <textarea class="h-40 input-css" id="description" v-model="product.description" type="text" placeholder="Please enter text up to 500 characters." maxlength="500" />
                 </div>
 
+
+                <!-- Colors ใช้
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="">color *</label>
                     <div class="input-css" :class="{ 'ring ring-red-400': invalid.Color }">
@@ -93,8 +95,9 @@
                     <span v-if="invalid.date" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2"
                         >Please input date</span
                     >
-                </div>
+                </div> -->
 
+                <!-- Warranty ไม่ได้ใช้
                 <div class="px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css">Warranty</label>
                     <div class="flex flex-col md:flex-row input-css">
@@ -111,7 +114,7 @@
                             <label for="2">2 year</label>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css">Upload Image</label>
@@ -223,7 +226,6 @@ export default {
             brands: [],
             colors: [],
             categorys: [],
-            // url: "http://137.116.145.41/refun",
             activeClose: true,
             productIds: [],
 

@@ -321,7 +321,7 @@ INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `brand_nam
   Switch with 45 G actuation force\r\n- 100 million keystroke lifespan\r\n- Chroma backlighting
   with 16.8 million customizable color options', '5990', 'Razer', '40', NULL),
   ('3', 'RAZER DEATHADDER V2', '- True 20,000 DPI Focus+ optical sensor\r\n- Up to 650 inches per second
-  (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy', '1990', 'RAZER DEATHADDER V2', '20', NULL),
+  (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy', '1990', 'Razer', '20', NULL),
   ('4', 'RAZER BLACKSHARK V2 PRO', 'Frequency Response : 12 Hz – 28 kHz\r\nImpedance : 32 Ω (1 kHz)', '6490', 'Razer', '50', NULL),
   ('1', 'LOGITECH G G913 LIGHTSPEED WIRELESS RGB (GL CLICKY SWITCH) (RGB LED) (EN/TH)', '', '5990', 'Logitech', '55', NULL);
 

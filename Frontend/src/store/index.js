@@ -1,9 +1,11 @@
 import Vuex from 'vuex';
 import products from './modules/products';
+import form from './modules/form';
 
 export default new Vuex.Store({
   modules: {
-    products
+    products,
+    form
   },
   state: {
     itemTest: [],
