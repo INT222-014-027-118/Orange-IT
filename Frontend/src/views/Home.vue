@@ -19,19 +19,20 @@
             <router-link
                 :to="{
                     name: 'Product',
-                    params: { product_name: item.name, type: item.type, productId: item.productId, price: item.price },
+                    params: { product_name: product.productName, productId: product.id, price: product.price ,brand:product.brandName},
                 }"
-                v-for="item in $store.getters.itemTest"
-                :key="item.productId"
+                v-for="product in $store.getters.products"
+                :key="product.id"
             >
-                <BaseItem :product="item" />
+                <BaseProduct :product="product" />
             </router-link>
         </div>
-
+    
         <!-- <div v-else class="flex items-center justify-center w-full h-screen select-none">
             <i class="text-4xl material-icons animate-spin" v-show="isLoad"> autorenew </i>
             <div class="font-mono text-4xl font-bold tracking-wide" v-show="!isLoad">Product Out</div>
         </div> -->
+       
     </div>
 </template>
 
@@ -60,7 +61,12 @@ export default {
     },
     mounted() {
         this.scrollToTop();
+        this.$store.dispatch('loadProducts')
     },
+    created() {
+    },
+    
+    
 };
 </script>
 
