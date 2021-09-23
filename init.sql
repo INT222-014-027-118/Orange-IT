@@ -309,29 +309,29 @@ CREATE TABLE IF NOT EXISTS `cart_items` (
 ENGINE = InnoDB;
 
 INSERT INTO `colors` (`id`, `label`, `hex_code`) VALUES ('2', 'Black', '000000'),
- ('3', 'White', 'FFFFFF'),('1', 'Red', 'ff0000'), ('4', 'Lavender', 'E6E6FA'),
-('5', 'Pink', 'E5A3CF'), ('6', 'Gray', '#9AA0A8'),('7', 'Orange', 'FF7400'), 
-('8', 'Yellow', 'FFC100');
+  ('3', 'White', 'FFFFFF'),('1', 'Red', 'ff0000'), ('4', 'Lavender', 'E6E6FA'),
+  ('5', 'Pink', 'E5A3CF'), ('6', 'Gray', '9AA0A8'),('7', 'Orange', 'FF7400'), 
+  ('8', 'Yellow', 'FFC100');
 
 INSERT INTO `categories` (`id`, `category`, `parent_id`) VALUES ('2', 'Keyboard', NULL),('1', 'Mouse', NULL), 
-('3', 'Headset', NULL),('4', 'Wireless headset', '3'), ('5', 'Wireless mouse', '1'),(NULL, 'Wireless keyboard', '2');
+  ('3', 'Headset', NULL),('4', 'Wireless headset', '3'), ('5', 'Wireless mouse', '1'),(NULL, 'Wireless keyboard', '2');
 
 INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `brand_name`, `quantity_stock`, `discount_id`) VALUES
- ('2', 'RAZER HUNTSMAN ELITE (LINEAR OPTICAL SWITCH) (EN/TH)', '- Razer™ Opto-Mechanical 
-Switch with 45 G actuation force\r\n- 100 million keystroke lifespan\r\n- Chroma backlighting
- with 16.8 million customizable color options', '5990', 'Razer', '40', '1'),
- ('3', 'RAZER DEATHADDER V2', '- True 20,000 DPI Focus+ optical sensor\r\n- Up to 650 inches per second
- (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy', '1990', 'RAZER DEATHADDER V2', '20', '1'),
-('4', 'RAZER BLACKSHARK V2 PRO', 'Frequency Response : 12 Hz – 28 kHz\r\nImpedance : 32 Ω (1 kHz)', '6490', 'Razer', '50', NULL),
-('1', 'LOGITECH G G913 LIGHTSPEED WIRELESS RGB (GL CLICKY SWITCH) (RGB LED) (EN/TH)', '', '5990', 'Logitech', '55', NULL);
+  ('2', 'RAZER HUNTSMAN ELITE (LINEAR OPTICAL SWITCH) (EN/TH)', '- Razer™ Opto-Mechanical 
+  Switch with 45 G actuation force\r\n- 100 million keystroke lifespan\r\n- Chroma backlighting
+  with 16.8 million customizable color options', '5990', 'Razer', '40', NULL),
+  ('3', 'RAZER DEATHADDER V2', '- True 20,000 DPI Focus+ optical sensor\r\n- Up to 650 inches per second
+  (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy', '1990', 'RAZER DEATHADDER V2', '20', NULL),
+  ('4', 'RAZER BLACKSHARK V2 PRO', 'Frequency Response : 12 Hz – 28 kHz\r\nImpedance : 32 Ω (1 kHz)', '6490', 'Razer', '50', NULL),
+  ('1', 'LOGITECH G G913 LIGHTSPEED WIRELESS RGB (GL CLICKY SWITCH) (RGB LED) (EN/TH)', '', '5990', 'Logitech', '55', NULL);
 
 INSERT INTO `images` (`id`, `source`, `label`, `product_id`) VALUES ('2', 'test.png', 'test', '4'), ('3', 'test1.png', 'test1', '3');
 
 INSERT INTO `specs` (`id`, `spec`) VALUES ('1', 'Wired/Wireless'), ('2', 'Keyboard type'), ('3', 'Keyboard size'), 
-('4', 'Switch'), ('5', 'Sound');
+  ('4', 'Switch'), ('5', 'Sound');
 
 INSERT INTO `products_has_colors` (`product_id`, `color_id`) VALUES ('1', '2'), ('1', '6'), ('1', '1'), ('4', '2'), ('4', '3'),
- ('3', '4'), ('3', '3'), ('2', '5'), ('2', '4'), ('2', '8');
+  ('3', '4'), ('3', '3'), ('2', '5'), ('2', '4'), ('2', '8');
 
 INSERT INTO `products_has_categories` (`product_id`, `category_id`) VALUES ('1', '6'), ('4', '4'), ('3', '2'), ('2', '2');
 
