@@ -10,8 +10,8 @@ const get_categories = `${api}/category/list`
 // const put_image = `${api}/image/update/`
 
 const state = {
-    colors:[],
-    categories:[],
+    colors: [],
+    categories: [],
     brand: [
         "Razer",
         "Logitech"
@@ -24,7 +24,9 @@ const getters = {
 }
 
 const actions = {
-    loadColors({commit}) {
+    loadColors({
+        commit
+    }) {
         axios
             .get(get_colors)
             .then(data => {
@@ -35,16 +37,18 @@ const actions = {
                 console.log(error)
             })
     },
-    loadCategories({commit}){
+    loadCategories({
+        commit
+    }) {
         axios
-        .get(get_categories)
-        .then(data => {
-            let categories = data.data
-            commit('SET_PRODUCTS', categories)
-        })
-        .catch(error => {
-            console.log(error)
-        })
+            .get(get_categories)
+            .then(data => {
+                let categories = data.data
+                commit('SET_PRODUCTS', categories)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     },
 
 
