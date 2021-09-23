@@ -1,7 +1,12 @@
 <template>
-    <div class="container flex p-1 py-5 mx-auto lg:max-w-7xl ">
-        <div class="fixed left-0 z-30 mx-2 w-52 lg:w-3/12 top-20 lg:static">
-            <div class="px-3 pb-3 bg-white rounded-md shadow-md select-none">
+    <div class="container flex p-1 py-11 lg:py-5 mx-auto lg:max-w-7xl ">
+        <div class="fixed left-0 z-30 mx-2 lg:w-3/12 top-12 sm:top-20 lg:static lg:bg-transparent">
+            <div class="lg:hidden">
+                <button class="material-icons p-2 bg-white rounded-md shadow-md select-none cursor-pointer " @click="showFilter = !showFilter">
+                    filter_list
+                </button>
+            </div>
+            <div class="px-3 pb-3 bg-white rounded-md shadow-md select-none w-52 lg:w-full sh" :class="[{'hidden' : showFilter}, 'lg:block']">
                 <div class="border-b-2">
                     <div class="flex items-center justify-between py-3 text-gray-600 cursor-pointer hover:text-black" @click="showCat = !showCat">
                         <span class="font-semibold">Category</span> <span class="text-base font-bold">+</span>
@@ -55,12 +60,32 @@
             <router-link
                 :to="{
                     name: 'Product',
-                    params: { product_name: item.name, type: item.type, productId: item.productId, price: item.price },
+                    params: { product_name: product.productName, productId: product.id, price: product.price, brand: product.brandName },
                 }"
-                v-for="item in $store.getters.itemTest"
-                :key="item.productId"
+                v-for="product in $store.getters.products"
+                :key="product.id"
             >
-                <BaseItem :product="item" />
+                <BaseProduct :product="product" />
+            </router-link>
+            <router-link
+                :to="{
+                    name: 'Product',
+                    params: { product_name: product.productName, productId: product.id, price: product.price, brand: product.brandName },
+                }"
+                v-for="product in $store.getters.products"
+                :key="product.id"
+            >
+                <BaseProduct :product="product" />
+            </router-link>
+            <router-link
+                :to="{
+                    name: 'Product',
+                    params: { product_name: product.productName, productId: product.id, price: product.price, brand: product.brandName },
+                }"
+                v-for="product in $store.getters.products"
+                :key="product.id"
+            >
+                <BaseProduct :product="product" />
             </router-link>
         </div>
     </div>
@@ -70,6 +95,7 @@
 export default {
     data() {
         return {
+            showFilter: true,
             showCat: false,
             showtype: false,
             categorysName: [],
