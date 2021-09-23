@@ -1,7 +1,7 @@
 <template>
     <div class="relative">
         <div class="fixed top-0 z-50 w-full bg-white shadow-sm select-none dark:bg-gray-900 dark:text-gray-100">
-            <div class="flex items-center justify-around h-12 px-2 mx-auto max-w-7xl sm:h-20 md:h-20 lg:h-20 sm:px-0">
+            <div class="flex items-center justify-around px-2 mx-auto max-w-7xl h-12 sm:h-20 md:h-20 lg:h-20 sm:px-0">
                 <div class="hidden sm:inline-flex lg:w-3/12">
                     <router-link to="/" class="flex items-end transition rounded-full cursor-pointer bg-gradient-to-r hover:from-secondary hover:to-primary hover:text-gray-100">
                         <img src="../assets/orange.svg" alt="orange_icon" class="h-11 md:h-12 ml-2" />
