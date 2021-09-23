@@ -1,8 +1,6 @@
 <template>
     <div>
         <Carousel class="container mx-auto lg:max-w-7xl" />
-        <!-- <div class="" v-if="brandsObjs.length > 0"> -->
-        <!-- <div class="relative items-center h-full max-w-6xl mx-auto mb-8 bg-blue-100 rounded-md dark:bg-gray-700" v-for="brand in brandsObjs" :key="brand.brand"> -->
         <div class="container lg:max-w-7xl grid grid-cols-4 gap-1 md:gap-3 mx-auto my-3 md:my-7 md:px-0.5">
             <router-link :to="{ name: 'resultProducts', params: { categoryName: category.itmeName } }" v-for="category in categorys" :key="category">
                 <div class="grid-cols-5 transition bg-white rounded-md shadow-md cursor-pointer md:grid md:h-28 ring ring-transparent hover:ring-primary">
@@ -27,11 +25,7 @@
                 <BaseProduct :product="product" />
             </router-link>
         </div>
-    
-        <!-- <div v-else class="flex items-center justify-center w-full h-screen select-none">
-            <i class="text-4xl material-icons animate-spin" v-show="isLoad"> autorenew </i>
-            <div class="font-mono text-4xl font-bold tracking-wide" v-show="!isLoad">Product Out</div>
-        </div> -->
+ 
        
     </div>
 </template>

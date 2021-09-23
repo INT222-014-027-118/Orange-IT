@@ -21,8 +21,6 @@ public class ColorController {
     @Autowired
     private ColorRepository colorRepository;
 
-    @Autowired
-    private OrderItemRepository orderItemRepository;
 
     @GetMapping("/list")
     public List<Colors> getColor(){
@@ -51,8 +49,5 @@ public class ColorController {
             throw new NotFoundException(id);
     }
 
-    @GetMapping("/test")
-    public List<OrderItems> getTest(){
-        return orderItemRepository.findAll();
-    }
+
 }
