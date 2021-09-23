@@ -24,7 +24,6 @@
                 v-for="product in $store.getters.products"
                 :key="product.id"
             >
-            
                 <BaseProduct :product="product" />
             </router-link>
         </div>
@@ -33,7 +32,7 @@
             <i class="text-4xl material-icons animate-spin" v-show="isLoad"> autorenew </i>
             <div class="font-mono text-4xl font-bold tracking-wide" v-show="!isLoad">Product Out</div>
         </div> -->
-        <button class="fixed" @click="test">test</button>
+       
     </div>
 </template>
 
