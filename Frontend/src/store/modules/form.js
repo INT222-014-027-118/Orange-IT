@@ -3,6 +3,7 @@ import axios from 'axios'
 const api = 'http://52.187.10.17/orange-it'
 const get_colors = `${api}/color/list`
 const get_categories = `${api}/category/list`
+const get_specs = `${api}/spec/list`
 
 // const post_product = `${api}/product/add`
 // const put_product = `${api}/product/update`
@@ -12,7 +13,8 @@ const get_categories = `${api}/category/list`
 const state = {
     colors:[],
     categories:[],
-    brand: [
+    specs:[],
+    brands: [
         'Razer',
         'Logitech'
     ]
@@ -21,33 +23,41 @@ const state = {
 const getters = {
     colors: state => state.colors,
     categories: state => state.categories,
+    brands: state => state.brands,
+    specs: state => state.specs
 }
 
 const actions = {
-    loadColors({commit}) {
+    loadDataForm({commit}) {
         axios
             .get(get_colors)
             .then(data => {
                 let colors = data.data
-                commit('SET_PRODUCTS', colors)
+                commit('SET_COLORS', colors)
             })
             .catch(error => {
                 console.log(error)
             })
-    },
-    loadCategories({commit}){
+        axios    
+            .get(get_categories)
+            .then(data => {
+                let categories = data.data
+                commit('SET_CATEGORIES', categories)
+            })
+            .catch(error => {
+                console.log(error)
+            })
         axios
-        .get(get_categories)
-        .then(data => {
-            let categories = data.data
-            commit('SET_PRODUCTS', categories)
-        })
-        .catch(error => {
-            console.log(error)
-        })
+            .get(get_specs)
+            .then(data => {
+                let specs = data.data
+                commit('SET_SPECS', specs)
+            })  
+            .catch(error => {
+                console.log(error)
+            })
     },
-
-
+    
 }
 
 
@@ -57,6 +67,9 @@ const mutations = {
     },
     SET_CATEGORIES(state, payload) {
         state.categories = payload
+    },
+    SET_SPECS(state, payload) {
+        state.specs = payload
     },
 }
 

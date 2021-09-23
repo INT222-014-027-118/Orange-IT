@@ -25,9 +25,8 @@
                     <label class="label-css" for="brand">Brand *</label>
                     <select class="input-css" id="brandAdd" v-model="product.brandAdd" required :class="{ 'ring ring-red-400': invalid.brand }">
                         <option value="" disabled selected>[ Select Brand ]</option>
-                        <option value="test">test</option>
 
-                        <option v-for="brand in brands" :key="brand.brandId" :value="brand.brandName" class="text-lg">{{ brand.brandName }}</option>
+                        <option v-for="brand in $store.getters.brands" :key="brand" :value="brand" class="text-lg">{{ brand }}</option>
                     </select>
                     <span v-if="invalid.brand" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2"
                         >Please select Brand</span
@@ -62,11 +61,10 @@
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="description">Description</label>
-                    <textarea class="h-40 input-css" id="description" v-model="product.description" type="text" placeholder="Please enter text up to 500 characters." maxlength="500" />
+                    <textarea class="h-40 input-css" id="description" v-model="product.description" type="text" placeholder="Please enter text up to 1000 characters." maxlength="500" />
                 </div>
 
 
-                <!-- Colors ใช้
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="">color *</label>
                     <div class="input-css" :class="{ 'ring ring-red-400': invalid.Color }">
@@ -74,14 +72,14 @@
                             type="checkbox"
                             name="color"
                             class="w-8 h-8 m-2 rounded-full border-1 form-checkbox ring-transparent ring-4 ring-offset-2 focus:ring-offset-2 focus:ring-secondary active:ring-secondary checked:ring-primary"
-                            v-for="color in $store.getters.itemTest[2].colors"
-                            :key="color.colorId"
+                            v-for="color in $store.getters.colors"
+                            :key="color.id"
                             :style="{
-                                backgroundColor: color.hexColor,
+                                backgroundColor: `#${color.hexCode}`,
                             }"
                             required
-                            :value="color.hexColor"
-                            v-model="product.colorsAdd"
+                            :value="color.hexCode"
+                            
                         />
                     </div>
                     <span v-if="invalid.Color" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-6 left-3 sm:-bottom-1 sm:left-1/2 sm:-translate-x-1/2"
@@ -95,7 +93,7 @@
                     <span v-if="invalid.date" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2"
                         >Please input date</span
                     >
-                </div> -->
+                </div>
 
                 <!-- Warranty ไม่ได้ใช้
                 <div class="px-3 mb-6 lg:w-full md:mb-0">
@@ -207,16 +205,24 @@
             <button @click="validating" type="submit" class="self-end rounded shadow-md cursor-pointer btn">
                 Add Product
             </button>
+            
         </form>
-        <router-link to="/tester" class="p-10 bg-red-500">tester</router-link>
+        
+        <!-- <router-link to="/tester" class="p-10 bg-red-500">tester</router-link> -->
+
     </div>
     <!-- <div v-show="isLoad" class="flex items-center justify-center w-full h-screen">
         <i class="text-4xl material-icons animate-spin" v-show="isLoad"> autorenew </i>
     </div> -->
+        
+        
+    
+    
 </template>
 
 <script>
 import RichSelect from "../components/RichSelect.vue";
+import { mapGetters } from 'vuex'
 export default {
     components: {
         RichSelect,
@@ -289,7 +295,14 @@ export default {
             }
             return 1;
         },
-        submitForm() {},
+        submitForm() {
+        },
+        test(){
+        console.log(this.store.state.colors);
+        console.log(this.$store.state.categories);
+        console.log(this.$store.state.brands);
+
+        },
 
         // restart() {
         //     this.product.brandAdd = "";
@@ -395,14 +408,24 @@ export default {
         },
     },
     computed: {
+        ...mapGetters([
+        'colors',
+        'categories',
+        'brands',
+        'specs'
+        ]),
         isValid() {
             return this.brandAdd !== "" && this.name !== "" && this.price !== 0 && this.typeAdd !== "" && this.colorsAdd.length !== 0 && this.launchDate !== "";
         },
         countText() {
             return this.product.name.length;
         },
+    },    
+    mounted() {
+        this.$store.dispatch('loadDataForm')
     },
-    async created() {
+    created() {
+
         // await this.getDataToEdit();
     },
 };
