@@ -5,7 +5,7 @@ const get_colors = `${api}/color/list`
 const get_categories = `${api}/category/list`
 const get_specs = `${api}/spec/list`
 
-// const post_product = `${api}/product/add`
+const post_product = `${api}/product/add`
 // const put_product = `${api}/product/update`
 // const post_image = `${api}/image/add`
 // const put_image = `${api}/image/update/`
@@ -18,10 +18,9 @@ const state = {
         'Razer',
         'Logitech'
     ],
-    setCategories:[]
+    setCategories: [],
 }
 
-// { "id": 1, "category": "Mouse", "parentId": null },
 
 const getters = {
     colors: state => state.colors,
@@ -40,7 +39,7 @@ const getters = {
                 child: [state.categories.filter((category) => {
                     return category.parentId == upperId
                 })],
-                active:false
+                active: false
             }
         })
     },
@@ -81,8 +80,16 @@ const actions = {
                 console.log(error)
             })
     },
-    activeCategory(){
 
+    addProduct(context, product) {
+        axios
+            .post(post_product, product)
+            .then(response => {
+                console.log("response: ", response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
 }
@@ -100,7 +107,7 @@ const mutations = {
     },
     SET_SETCATEGORIES(state, payload) {
         state.setCategories = payload
-    },
+    }
 }
 
 export default {

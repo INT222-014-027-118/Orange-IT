@@ -73,38 +73,3 @@
         }
     ]
 }
-
-[{
-    "id": 1,
-    "category": "Mouse",
-    "child": [
-        [{
-            "id": 5,
-            "category": "Wireless mouse",
-            "parentId": "1"
-        }]
-    ],
-    "active": false
-}, {
-    "id": 2,
-    "category": "Keyboard",
-    "child": [
-        [{
-            "id": 6,
-            "category": "Wireless keyboard",
-            "parentId": "2"
-        }]
-    ],
-    "active": false
-}, {
-    "id": 3,
-    "category": "Headset",
-    "child": [
-        [{
-            "id": 4,
-            "category": "Wireless headset",
-            "parentId": "3"
-        }]
-    ],
-    "active": false
-}]

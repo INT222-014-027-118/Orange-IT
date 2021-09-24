@@ -1,41 +1,25 @@
 <template>
     <div class="py-5" v-show="isLoad">
-        <!-- {{ product }} -->
-        <!-- {{ $store.getters.setCategories }} -->
-        <!-- {{ $store.getters.childCategories("1") }} -->
         <form @submit.prevent="submitForm" class="px-2 py-8 mx-auto bg-white rounded shadow-md dark:bg-gray-700 max-w-7xl sm:px-6">
             <div class="mx-auto sm:max-w-5xl">
                 <div class="px-3 mb-6 md:mb-0">
                     <label class="label-css" for="grid-state">Category *</label>
-                    <!-- <div class="flex flex-col" v-for="category in $store.getters.rootCategories" :key="category.id">
-                        <button type="button" @click="activeCategory(category.id)">
-                            {{ category.category }}
-                        </button>
-                    </div> -->
                     <div class="flex cursor-pointer">
                         <div class="flex flex-col bg-red-300 w-1/3">
-                            <div v-for="category in $store.getters.setCategories" :key="category.id" @click="selectCat = category" class="">{{ category.category }}</div>
-                            <!-- <div v-if="category.active">
-                            <div v-for="category in category.child" :key="category.id">
-                                {{ category.category }}
-                            </div>
-                        </div> -->
-                            <!-- <div v-for="childcat in category.child" :key="childcat" class="w-1/2">
-                            <button type="button" v-for="child in childcat" :key="child" @click="selectChild = child.category">child: {{ child.category }}</button>
-                        </div> -->
+                            <div v-for="category in $store.getters.rootCategories" :key="category.id" @click="chooseRootCategory(category)" class="">{{ category.category }}</div>
                         </div>
                         <div class="flex flex-col w-1/3">
-                            <div class="bg-green-300" v-for="childcat in $store.getters.childCategories(`${this.selectCat.id}`)" :key="childcat" @click="selectChild = childcat.category">
+                            <div class="bg-green-300" v-for="childcat in $store.getters.childCategories(`${this.selectRootCat.id}`)" :key="childcat.id" @click="chooseSubCategory(childcat)">
                                 {{ childcat.category }}
                             </div>
                         </div>
                     </div>
-                    <span class="bg-yellow-100"> {{ selectCat.category }}, {{ selectChild }}</span>
+                    <span class="bg-yellow-100"> {{ selectRootCat.category }}, {{ selectChildCat.category }}</span>
                 </div>
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="brand">Brand *</label>
-                    <select class="input-css" id="brandAdd" v-model="product.brandAdd" required :class="{ 'ring ring-red-400': invalid.brand }">
+                    <select class="input-css" id="brandName" v-model="product.brandName"  :class="{ 'ring ring-red-400': invalid.brand }">
                         <option value="" disabled selected>[ Select Brand ]</option>
 
                         <option v-for="brand in $store.getters.brands" :key="brand" :value="brand" class="text-lg">{{ brand }}</option>
@@ -51,13 +35,13 @@
                         <p class="label-css">{{ countText }}/40</p>
                     </div>
                     <input
-                        v-model="product.name"
+                        v-model="product.productName"
                         class="input-css"
                         id=""
                         type="text"
                         placeholder="Please input name 40 characters"
                         maxlength="40"
-                        required
+                        
                         :class="{ 'ring ring-red-400': invalid.name }"
                     />
                     <span v-if="invalid.name" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2"
@@ -67,7 +51,7 @@
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="price">Price *</label>
-                    <input v-model="product.price" step="0.01" class="input-css" id="price" type="number" placeholder="" min="1" max="99999" required :class="{ 'ring ring-red-400': invalid.price }" />
+                    <input v-model="product.price" step="0.01" class="input-css" id="price" type="number" placeholder="" min="1" max="99999"  :class="{ 'ring ring-red-400': invalid.price }" />
                     <span v-if="invalid.price" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
                 </div>
 
@@ -88,41 +72,15 @@
                             :style="{
                                 backgroundColor: `#${color.hexCode}`,
                             }"
-                            required
-                            :value="color.hexCode"
+                            
+                            :value="color"
+                            v-model="product.colors"
                         />
                     </div>
                     <span v-if="invalid.Color" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-6 left-3 sm:-bottom-1 sm:left-1/2 sm:-translate-x-1/2"
                         >Please select product color</span
                     >
                 </div>
-
-                <div class="relative px-3 mb-6 lg:w-full md:mb-0">
-                    <label class="label-css" for="">Launch date *</label>
-                    <input type="date" class="input-css" v-model="product.launchDate" required :class="{ 'ring ring-red-400': invalid.date }" />
-                    <span v-if="invalid.date" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2"
-                        >Please input date</span
-                    >
-                </div>
-
-                <!-- Warranty ไม่ได้ใช้
-                <div class="px-3 mb-6 lg:w-full md:mb-0">
-                    <label class="label-css">Warranty</label>
-                    <div class="flex flex-col md:flex-row input-css">
-                        <div class="flex items-center mr-7">
-                            <input type="radio" id="0" name="warranty" v-model="product.warranty" value="0" class="w-4 h-5 mr-2" />
-                            <label for="0">none</label>
-                        </div>
-                        <div class="flex items-center mr-7">
-                            <input type="radio" id="1" name="warranty" v-model="product.warranty" value="1" class="w-4 h-5 mr-2" />
-                            <label for="1">1 year</label>
-                        </div>
-                        <div class="flex items-center mr-7">
-                            <input type="radio" id="2" name="warranty" v-model="product.warranty" value="2" class="w-4 h-5 mr-2" />
-                            <label for="2">2 year</label>
-                        </div>
-                    </div>
-                </div> -->
 
                 <div class="px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css">Upload Image</label>
@@ -186,7 +144,7 @@
                                         </button>
                                     </td>
                                 </tr>
-                                <tr v-show="product.attributes.length !== 0">
+                                <tr v-show="1 !== 0">
                                     <td colspan="3" class="font-semibold p-2">Attributes list</td>
                                 </tr>
                                 <tr v-for="(spec, index) in product.attributes" :key="spec.key" :class="index % 2 == 0 ? 'bg-white' : 'bg-gray-50'" class="border">
@@ -226,35 +184,36 @@
 
 <script>
 import RichSelect from "../components/RichSelect.vue";
-import { mapGetters } from "vuex";
+// import axios from 'axios';
+
 export default {
     components: {
         RichSelect,
     },
     data() {
         return {
-            brands: [],
-            colors: [],
-            categorys: [],
             activeClose: true,
             productIds: [],
 
             attributeText: "",
             attributeSelect: "",
 
-            selectCat: "",
-            selectChild: "",
+            selectRootCat: {},
+            selectChildCat: {},
 
             product: {
-                categoryAdd: "",
-                brandAdd: "",
-                colorsAdd: [],
-                name: "",
-                price: 0,
-                warranty: 0,
-                launchDate: "",
+                id: 0,
+                productName: "",
                 description: "",
-                attributes: [],
+                price: 0,
+                brandName: "",
+                quantityStock: 0,
+                discount: null,
+                colors:[],
+                specs:[],
+                images: [],
+                catergories:[],
+                productSpecValues:[]
             },
             invalid: {
                 category: false,
@@ -276,20 +235,19 @@ export default {
         itemId: String,
     },
     methods: {
-        validating() {
-            this.invalid.category = this.product.categoryAdd === "" ? true | this.$refs.category.focus() : false;
-            this.invalid.brand = this.product.brandAdd === "" ? true : false;
-            this.invalid.name = this.product.name === "" ? true : false;
-            this.invalid.price = this.product.price === 0 ? true : false;
-            this.invalid.Color = this.product.colorsAdd.length === 0 ? true : false;
-            this.invalid.date = this.product.launchDate === "" ? true : false;
-            for (let prop in this.invalid) {
-                setTimeout(() => {
-                    this.invalid[`${prop}`] = false;
-                }, 5000);
-            }
-        },
-
+        // validating() {
+        //     this.invalid.category = this.product.categoryAdd === "" ? true | this.$refs.category.focus() : false;
+        //     this.invalid.brand = this.product.brandName === "" ? true : false;
+        //     this.invalid.name = this.product.name === "" ? true : false;
+        //     this.invalid.price = this.product.price === 0 ? true : false;
+        //     this.invalid.Color = this.product.colorsAdd.length === 0 ? true : false;
+        //     this.invalid.date = this.product.launchDate === "" ? true : false;
+        //     for (let prop in this.invalid) {
+        //         setTimeout(() => {
+        //             this.invalid[`${prop}`] = false;
+        //         }, 5000);
+        //     }
+        // },
         generateNewId() {
             if (this.productIds.length > 0) {
                 return (
@@ -302,25 +260,30 @@ export default {
             }
             return 1;
         },
-        submitForm() {},
-        test() {
-            console.log(this.store.state.colors);
-            console.log(this.$store.state.categories);
-            console.log(this.$store.state.brands);
+        submitForm() {
+           // axios
+          //  console.log(this.product)
+        //   let pro ={
+        //         id: this.id,
+        //         productName: this.productName,
+        //         description: this.description,
+        //         price: this.price,
+        //         brandName: this.brandName,
+        //         quantityStock: this.quantityStock,
+        //         discount: this.discount,
+        //         images: this.images,
+        //         catergories:this.catergories,
+        //       }
+         this.$store.dispatch('addProduct',this.product)
         },
-
-        // restart() {
-        //     this.product.brandAdd = "";
-        //     this.product.name = "";
-        //     this.product.price = 0;
-        //     this.product.warranty = 0;
-        //     this.product.launchDate = "";
-        //     this.product.type = "";
-        //     this.product.description = "";
-        //     this.product.colors.forEach((color) => (color["active"] = false));
-        //     this.product.previewImage = null;
-        //     this.product.activeClose = !this.activeClose;
-        // },
+        chooseRootCategory(category){
+            this.selectRootCat = category
+            this.selectChildCat = {}
+        },
+        chooseSubCategory(category){
+            this.selectChildCat = category
+            this.product.catergories = [category]
+        },
         selected(choosed) {
             this.attributeSelect = choosed;
         },
@@ -378,47 +341,14 @@ export default {
             data.append("refun", this.imageFile);
             return data;
         },
-
-        async getDataToEdit() {
-            // if (this.itemId != null) {
-            //     fetch(`${this.url}/product/${this.itemId}`)
-            //         .then((res) => {
-            //             return res.json();
-            //         })
-            //         .then((data) => {
-            //             this.brandAdd = data.brand.brandName;
-            //             this.typeAdd = data.type.typeName;
-            //             this.name = data.productName;
-            //             this.price = data.price;
-            //             this.description = data.description;
-            //             this.warranty = data.warranty;
-            //             this.launchDate = data.launchDate;
-            //             this.oldImage.image = data.imageUrl;
-            //             this.previewImage = `${this.url}/image/get/${data.imageUrl}`;
-            //             for (let i = 0; i < this.colors.length; i++) {
-            //                 if (
-            //                     data.colors.some((color) => {
-            //                         return color.colorId === this.colors[i].colorId;
-            //                     })
-            //                 ) {
-            //                     this.activeColor((this.colors[i].active = true), i);
-            //                 }
-            //             }
-            //         })
-            //         .catch((error) => console.log(error));
-            // } else {
-            //     this.restart();
-            //     this.isLoad = false;
-            // }
-        },
     },
     computed: {
-        ...mapGetters(["colors", "categories", "brands", "specs"]),
-        isValid() {
-            return this.brandAdd !== "" && this.name !== "" && this.price !== 0 && this.typeAdd !== "" && this.colorsAdd.length !== 0 && this.launchDate !== "";
-        },
+   
+        // isValid() {
+        //     return this.brandName !== "" && this.name !== "" && this.price !== 0 && this.typeAdd !== "" && this.colorsAdd.length !== 0 && this.launchDate !== "";
+        // },
         countText() {
-            return this.product.name.length;
+            return this.product.productName.length;
         },
     },
     mounted() {
