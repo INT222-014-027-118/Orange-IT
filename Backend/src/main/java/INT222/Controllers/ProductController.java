@@ -58,8 +58,9 @@ public class ProductController {
 
                 throw new SameProductNameException(products.getProductName());
             }
-            else
+            products.setId(productRepository.findTopByOrderByIdDesc().getId()+1);
             productRepository.save(products);
+        System.out.println(productRepository.findTopByOrderByIdDesc().getId()+1);
 
 
     }
@@ -76,6 +77,7 @@ public class ProductController {
             productRepository.save(products);
         }
         else throw new NotFoundException(products.getId());
+
 
     }
 
