@@ -4,22 +4,29 @@
             <div class="mx-auto sm:max-w-5xl">
                 <div class="px-3 mb-6 md:mb-0">
                     <label class="label-css" for="grid-state">Category *</label>
-                    <div class="flex cursor-pointer">
-                        <div class="flex flex-col bg-red-300 w-1/3">
-                            <div v-for="category in $store.getters.rootCategories" :key="category.id" @click="chooseRootCategory(category)" class="">{{ category.category }}</div>
+                    <div class="input-css">
+                        <div class="w-full flex text-xs p-2">
+                            <p class="w-1/3">category</p>
+                            <p class="w-1/3">sub category</p>
                         </div>
-                        <div class="flex flex-col w-1/3">
-                            <div class="bg-green-300" v-for="childcat in $store.getters.childCategories(`${this.selectRootCat.id}`)" :key="childcat.id" @click="chooseSubCategory(childcat)">
-                                {{ childcat.category }}
+                        <div class="bg-white w-full flex cursor-pointer p-1 rounded-md h-40 overflow-y-auto">
+                            <div class="flex flex-col bg-white w-1/3 pr-1 border-r-2">
+                                <div class="px-2 py-1 hover:bg-yellow-200 hover:text-black rounded-sm" :class="[selectRootCat.category === category.category ? 'bg-primary text-white': '']" v-for="(category ) in $store.getters.rootCategories" :key="category.id" @click="chooseRootCategory(category)">
+                                    {{ category.category }}
+                                </div>
+                            </div>
+                            <div class="flex flex-col bg-white w-1/3 px-1 border-r-2">
+                                <div class="px-2 py-1 hover:bg-yellow-200 hover:text-black rounded-sm" :class="[selectChildCat.category === childcat.category ? 'bg-primary text-white': '']" v-for="childcat in $store.getters.childCategories(`${this.selectRootCat.id}`)" :key="childcat.id" @click="chooseSubCategory(childcat)">
+                                    {{ childcat.category }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <span class="bg-yellow-100"> {{ selectRootCat.category }}, {{ selectChildCat.category }}</span>
                 </div>
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="brand">Brand *</label>
-                    <select class="input-css" id="brandName" v-model="product.brandName"  :class="{ 'ring ring-red-400': invalid.brand }">
+                    <select class="input-css" id="brandName" v-model="product.brandName" :class="{ 'ring ring-red-400': invalid.brand }">
                         <option value="" disabled selected>[ Select Brand ]</option>
 
                         <option v-for="brand in $store.getters.brands" :key="brand" :value="brand" class="text-lg">{{ brand }}</option>
@@ -41,7 +48,6 @@
                         type="text"
                         placeholder="Please input name 40 characters"
                         maxlength="40"
-                        
                         :class="{ 'ring ring-red-400': invalid.name }"
                     />
                     <span v-if="invalid.name" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2"
@@ -51,7 +57,7 @@
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="price">Price *</label>
-                    <input v-model="product.price" step="0.01" class="input-css" id="price" type="number" placeholder="" min="1" max="99999"  :class="{ 'ring ring-red-400': invalid.price }" />
+                    <input v-model="product.price" step="0.01" class="input-css" id="price" type="number" placeholder="" min="1" max="99999" :class="{ 'ring ring-red-400': invalid.price }" />
                     <span v-if="invalid.price" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
                 </div>
 
@@ -72,7 +78,6 @@
                             :style="{
                                 backgroundColor: `#${color.hexCode}`,
                             }"
-                            
                             :value="color"
                             v-model="product.colors"
                         />
@@ -209,11 +214,11 @@ export default {
                 brandName: "",
                 quantityStock: 0,
                 discount: null,
-                colors:[],
-                specs:[],
+                colors: [],
+                specs: [],
                 images: [],
-                catergories:[],
-                productSpecValues:[]
+                catergories: [],
+                productSpecValues: [],
             },
             invalid: {
                 category: false,
@@ -261,28 +266,28 @@ export default {
             return 1;
         },
         submitForm() {
-           // axios
-          //  console.log(this.product)
-        //   let pro ={
-        //         id: this.id,
-        //         productName: this.productName,
-        //         description: this.description,
-        //         price: this.price,
-        //         brandName: this.brandName,
-        //         quantityStock: this.quantityStock,
-        //         discount: this.discount,
-        //         images: this.images,
-        //         catergories:this.catergories,
-        //       }
-         this.$store.dispatch('addProduct',this.product)
+            // axios
+            //  console.log(this.product)
+            //   let pro ={
+            //         id: this.id,
+            //         productName: this.productName,
+            //         description: this.description,
+            //         price: this.price,
+            //         brandName: this.brandName,
+            //         quantityStock: this.quantityStock,
+            //         discount: this.discount,
+            //         images: this.images,
+            //         catergories:this.catergories,
+            //       }
+            this.$store.dispatch("addProduct", this.product);
         },
-        chooseRootCategory(category){
-            this.selectRootCat = category
-            this.selectChildCat = {}
+        chooseRootCategory(category) {
+            this.selectRootCat = category;
+            this.selectChildCat = {};
         },
-        chooseSubCategory(category){
-            this.selectChildCat = category
-            this.product.catergories = [category]
+        chooseSubCategory(category) {
+            this.selectChildCat = category;
+            this.product.catergories = [category];
         },
         selected(choosed) {
             this.attributeSelect = choosed;
@@ -343,7 +348,6 @@ export default {
         },
     },
     computed: {
-   
         // isValid() {
         //     return this.brandName !== "" && this.name !== "" && this.price !== 0 && this.typeAdd !== "" && this.colorsAdd.length !== 0 && this.launchDate !== "";
         // },

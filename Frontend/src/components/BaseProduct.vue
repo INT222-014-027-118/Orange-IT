@@ -13,7 +13,11 @@
                 {{ product.productName }}
             </p>
             <div class="bg-primary text-white px-3 inline-block font-light text-xs rounded-sm absolute bottom-10">Discount 99%</div>
-            <div class="text-xl text-red-500 font-bold mt-4">฿ {{ product.price }}</div>
+            <div class="text-xl mt-4 flex justify-between items-center">
+                <span class="text-red-500 font-bold">฿ {{ product.price }}</span>
+                <!-- <span class="text-xs" v-if="product.quantityStock < 10 ">{{ product.quantityStock }}</span> -->
+                <span class="text-xs md:text-sm opacity-70 capitalize">{{ stockCheck }}</span>
+            </div>
         </div>
     </div>
 </template>
@@ -35,7 +39,18 @@ export default {
 
         deleteItem() {},
     },
-}
+    computed: {
+        stockCheck() {
+            if (this.product.quantityStock == 0) {
+                return "out of stock";
+            } else if (this.product.quantityStock < 20) {
+                return "low stock";
+            } else {
+                return "in stock";
+            }
+        },
+    },
+};
 </script>
 
 <style>
