@@ -7,7 +7,7 @@
             <div class="w-full flex p-1">
                 <div class="flex flex-col w-1/3 bg-yellow-300" v-for="cat in categories" :key="cat">
                     <!-- <div v-for="big in cat.bigTitle" :key="big"> -->
-                        {{ cat }}
+                    {{ cat }}
                     <!-- </div> -->
                 </div>
                 <div class="flex flex-col w-1/3 bg-green-500" v-for="cat in categories" :key="cat">
@@ -23,108 +23,73 @@
             </div>
         </div>
 
-        <form name="myform" id="myForm">
-            Select Country:
-            <select name="state" id="countySel" size="1">
-                <option value="" selected="selected">Select Country</option>
-            </select>
-            <br />
-            <br />
-            Select State:
-            <select name="countrya" id="stateSel" size="1">
-                <option value="" selected="selected">Please select Country first</option>
-            </select>
-            <br />
-            <br />
-            Select District:
-            <select name="district" id="districtSel" size="1">
-                <option value="" selected="selected">Please select State first</option> </select
-            ><br />
-            <input type="submit" />
-        </form>
+        <div class="flex bg-white p-7">
+            <div class="p-9">
+                <h2>
+                    Categories
+                </h2>
+                <ul>
+                    <li @click="selected = undefined" class="clickable">All</li>
+                    <li v-for="category in categories" :key="category" @click="selected = category" class="clickable">{{ category }}</li>
+                </ul>
+            </div>
+            <div class="p-9">
+                <h2>
+                    Items
+                </h2>
+                <ul>
+                    <li v-for="item in filtered" :key="item">{{ item.name }}</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-var stateObject = {
-    India: { 
-        Delhi: ["new Delhi", "North Delhi"],
-        Kerala: ["Thiruvananthapuram", "Palakkad"], 
-        Goa: ["North Goa", "South Goa"] 
-    },
-    Australia: {
-        "South Australia": ["Dunstan", "Mitchell"],
-        Victoria: ["Altona", "Euroa"],
-    },
-    Canada: {
-        Alberta: ["Acadia", "Bighorn"],
-        Columbia: ["Washington", ""],
-    },
-};
-window.onload = function() {
-    var countySel = document.getElementById("countySel"),
-        stateSel = document.getElementById("stateSel"),
-        districtSel = document.getElementById("districtSel");
-    for (var country in stateObject) {
-        countySel.options[countySel.options.length] = new Option(country, country);
-    }
-    countySel.onchange = function() {
-        stateSel.length = 1; // remove all options bar first
-        districtSel.length = 1; // remove all options bar first
-        if (this.selectedIndex < 1) return; // done
-        for (var state in stateObject[this.value]) {
-            stateSel.options[stateSel.options.length] = new Option(state, state);
-        }
-    };
-    countySel.onchange(); // reset in case page is reloaded
-    stateSel.onchange = function() {
-        districtSel.length = 1; // remove all options bar first
-        if (this.selectedIndex < 1) return; // done
-        var district = stateObject[countySel.value][this.value];
-        for (var i = 0; i < district.length; i++) {
-            districtSel.options[districtSel.options.length] = new Option(district[i], district[i]);
-        }
-    };
-};
-
 export default {
     data() {
         return {
-            categories: {
-                bigTitle1: {
-                    bigTitle: ["1"],
-                    subTitle: ["2", "3"],
-                    thirdTitle: [],
+            selected: undefined,
+            categories: ["Animal", "Vegetable", "Mineral"],
+            items: [
+                {
+                    name: "Dog",
+                    type: "Animal",
                 },
-                bigTitle2: {
-                    bigTitle: ["4"],
-                    subTitle: ["5", "6", "7"],
-                    thirdTitle: ["8", "9"],
+                {
+                    name: "Cat",
+                    type: "Animal",
                 },
-                bigTitle3: {
-                    bigTitle: ["7"],
-                    subTitle: [],
-                    thirdTitle: [],
+                {
+                    name: "Carrot",
+                    type: "Vegetable",
                 },
-            },
-            stateObject: {
-                India: {
-                    Delhi: ["new Delhi", "North Delhi"],
-                    Kerala: ["Thiruvananthapuram", "Palakkad"],
-                    Goa: ["North Goa", "South Goa"],
+                {
+                    name: "Potato",
+                    type: "Vegetable",
                 },
-                Australia: {
-                    "South Australia": ["Dunstan", "Mitchell"],
-                    Victoria: ["Altona", "Euroa"],
+                {
+                    name: "Asbestos",
+                    type: "Mineral",
                 },
-                Canada: {
-                    Alberta: ["Acadia", "Bighorn"],
-                    Columbia: ["Washington", ""],
+                {
+                    name: "Bauxite",
+                    type: "Mineral",
                 },
-            },
+                {
+                    name: "Hematite",
+                    type: "Mineral",
+                },
+            ],
         };
+    },
+    computed: {
+        filtered() {
+            let items = this.selected ? this.items.filter((item) => item.type == this.selected) : this.items;
+            return items.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase());
+        },
     },
 };
 </script>
 
-<style></style>
+<style scoped></style>

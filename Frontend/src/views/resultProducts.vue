@@ -6,7 +6,7 @@
                     filter_list
                 </button>
             </div>
-            <div class="px-3 pb-3 bg-white rounded-md shadow-md select-none w-52 lg:w-full sh" :class="[{'hidden' : showFilter}, 'lg:block']">
+            <div class="px-3 pb-3 bg-white rounded-md shadow-md select-none w-52 lg:w-full" :class="[{ hidden: showFilter }, 'lg:block']">
                 <div class="border-b-2">
                     <div class="flex items-center justify-between py-3 text-gray-600 cursor-pointer hover:text-black" @click="showCat = !showCat">
                         <span class="font-semibold">Category</span> <span class="text-base font-bold">+</span>
@@ -39,10 +39,10 @@
                     </div>
                 </div>
                 <div class="border-b-2">
-                    <div class="flex items-center justify-between py-3 text-gray-600 cursor-pointer hover:text-black" @click="showtype = !showtype">
+                    <div class="flex items-center justify-between py-3 text-gray-600 cursor-pointer hover:text-black" @click="showType = !showType">
                         <span class="font-semibold">Type</span> <span class="text-base font-bold">+</span>
                     </div>
-                    <div class="p-1 mb-3 space-y-2 rounded-md bg-gray-50" v-show="showtype">
+                    <div class="p-1 mb-3 space-y-2 rounded-md bg-gray-50" v-show="showType">
                         <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
                             ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" />
                         </label>
@@ -54,9 +54,27 @@
                         </label>
                     </div>
                 </div>
+                <div class="border-b-2">
+                    <div class="flex items-center justify-between py-3 text-gray-600 cursor-pointer hover:text-black" @click="showPrice = !showPrice">
+                        <span class="font-semibold">Price</span> <span class="text-base font-bold">+</span>
+                    </div>
+                    <div class="p-1 mb-3 rounded-md bg-gray-50 flex w-full" v-show="showPrice">
+                        <label for="" class="flex flex-col items-center w-1/2 mx-1 font-thin">
+                            min
+                            <input type="number" class="px-1 pb-0.5 w-full h-8 ring-1 ring-inset ring-primary focus:outline-none rounded-md" />
+                        </label>
+                        <div class="self-end py-1">-</div>
+                        <label for="" class="flex flex-col items-center w-1/2 mx-1 font-thin">
+                            max
+                            <input type="number" class="px-1 pb-0.5 w-full h-8 ring-1 ring-inset ring-primary focus:outline-none rounded-md" />
+                        </label>
+
+                        <button type="button" class="py-1 px-2 h-8 w-3/12 self-end bg-primary hover:bg-primaryfocus rounded-md text-white">OK</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="container lg:max-w-7xl sm:px-5 md:px-0.5 mx-auto grid gap-1 md:gap-2 lg:gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 col-span-4">
+        <div class="container sm:px-5 md:px-0.5 mx-auto grid gap-1 md:gap-2 lg:gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 col-span-4">
             <router-link
                 :to="{
                     name: 'Product',
@@ -97,7 +115,8 @@ export default {
         return {
             showFilter: true,
             showCat: false,
-            showtype: false,
+            showType: false,
+            showPrice: false,
             categorysName: [],
         };
     },
@@ -110,4 +129,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+</style>
