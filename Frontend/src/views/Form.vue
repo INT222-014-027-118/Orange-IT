@@ -12,20 +12,25 @@
                             {{ category.category }}
                         </button>
                     </div> -->
-
-                    <div v-for="category in $store.getters.setCategories" :key="category.id" class="flex bg-red-300">
-                        <button type="button" @click="selectCat = category" class="w-1/2">category: {{ category.category }}</button>
-                        <!-- <div v-if="category.active">
+                    <div class="flex cursor-pointer">
+                        <div class="flex flex-col bg-red-300 w-1/3">
+                            <div v-for="category in $store.getters.setCategories" :key="category.id" @click="selectCat = category" class="">{{ category.category }}</div>
+                            <!-- <div v-if="category.active">
                             <div v-for="category in category.child" :key="category.id">
                                 {{ category.category }}
                             </div>
                         </div> -->
-                        <div v-for="childcat in category.child" :key="childcat" class="w-1/2">
+                            <!-- <div v-for="childcat in category.child" :key="childcat" class="w-1/2">
                             <button type="button" v-for="child in childcat" :key="child" @click="selectChild = child.category">child: {{ child.category }}</button>
+                        </div> -->
+                        </div>
+                        <div class="flex flex-col w-1/3">
+                            <div class="bg-green-300" v-for="childcat in $store.getters.childCategories(`${this.selectCat.id}`)" :key="childcat" @click="selectChild = childcat.category">
+                                {{ childcat.category }}
+                            </div>
                         </div>
                     </div>
-                    <span class="bg-red-300"> {{ selectCat.category }}, {{ selectChild }}</span>
-                    <div class="bg-green-300" v-for="childcat in $store.getters.childCategories(this.selectCat.id.toString())" :key="childcat">child: {{ childcat.category }}</div>
+                    <span class="bg-yellow-100"> {{ selectCat.category }}, {{ selectChild }}</span>
                 </div>
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
