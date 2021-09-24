@@ -30,8 +30,10 @@ public class ProductsHome {
     @Column(name = "quantity_stock")
     private int quantityStock;
 
-    @NonNull
-    @JoinColumn(nullable = false)
+
+
+
+    @JoinColumn(nullable = true)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Discounts discount;
 

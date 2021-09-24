@@ -54,7 +54,7 @@ public class ProductController {
     public void addProduct(@RequestBody Products products) {
 
 
-            if (productRepository.existsProductsByIdAndProductName(products.getId(),products.getProductName())) {
+            if (productRepository.existsByProductName(products.getProductName())) {
 
                 throw new SameProductNameException(products.getProductName());
             }
@@ -72,7 +72,7 @@ public class ProductController {
 //        Edit Product
     @PutMapping("/update")
     public void editProduct(@RequestBody Products products) {
-        if (productRepository.existsProductsByIdAndProductName(products.getId(), products.getProductName())) {
+        if (productRepository.existsByProductName( products.getProductName())) {
             productRepository.save(products);
         }
         else throw new NotFoundException(products.getId());
