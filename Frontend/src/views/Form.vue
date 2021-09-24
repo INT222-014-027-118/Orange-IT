@@ -1,26 +1,33 @@
 <template>
     <div class="py-5" v-show="isLoad">
-        {{ product }}
+        <!-- {{ product }} -->
+        {{$store.getters.setCategories}}
         <form @submit.prevent="submitForm" class="px-2 py-8 mx-auto bg-white rounded shadow-md dark:bg-gray-700 max-w-7xl sm:px-6">
             <div class="mx-auto sm:max-w-5xl">
+
+
                 <div class="px-3 mb-6 md:mb-0">
                     <label class="label-css" for="grid-state">Category *</label>
-                    <div class="relative">
-                        <select class="input-css" id="type" v-model="product.categoryAdd" ref="category" required :class="{ 'ring ring-red-400': invalid.category }">
-                            <option value="" disabled selected>[ Select Category ]</option>
-                            <option v-for="type in categorys" :key="type.id" :value="type.typeName">{{ type.typeName }}</option>
-                            <optgroup label="Swedish Cars">
-                                <option value="volvo">Volvo</option>
-                                <option value="saab">Saab</option>
-                            </optgroup>
-                            <optgroup label="German Cars">
-                                <option value="mercedes">Mercedes</option>
-                                <option value="audi">Audi</option>
-                            </optgroup>
-                        </select>
-                        <span v-if="invalid.category" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please select type</span>
+                    <div class="flex flex-col" v-for="category in $store.getters.rootCategories" :key="category.id">
+                        <button type="button" @click="activeCategory(category.id)">
+                            {{category.category}}
+                        </button>
                     </div>
+
+                    <div v-for="category in $store.getters.setCategories" :key="category.id">
+                         <button type="button" >
+                            {{category.category}}
+                        </button>
+                        <div v-if="category.active">
+                            <div v-for="category in category.child" :key="category.id">
+                                {{category.category}}
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+
+
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="brand">Brand *</label>
                     <select class="input-css" id="brandAdd" v-model="product.brandAdd" required :class="{ 'ring ring-red-400': invalid.brand }">

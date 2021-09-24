@@ -11,24 +11,48 @@ const get_specs = `${api}/spec/list`
 // const put_image = `${api}/image/update/`
 
 const state = {
-    colors:[],
-    categories:[],
-    specs:[],
+    colors: [],
+    categories: [],
+    specs: [],
     brands: [
         'Razer',
         'Logitech'
-    ]
+    ],
+    setCategories:[]
 }
+
+// { "id": 1, "category": "Mouse", "parentId": null },
 
 const getters = {
     colors: state => state.colors,
+    rootCategories: state => {
+        return state.categories.filter((element) => element.parentId === null)
+    },
+    childCategories: state => (id) => {
+        return state.categories.filter((element) => element.parentId === id)
+    },
+    setCategories: (state, getters) => {
+        return getters.rootCategories.map((category) => {
+            let upperId = category.id
+            return {
+                id: category.id,
+                category: category.category,
+                child: [state.categories.filter((category) => {
+                    return category.parentId == upperId
+                })],
+                active:false
+            }
+        })
+    },
     categories: state => state.categories,
     brands: state => state.brands,
     specs: state => state.specs
 }
 
 const actions = {
-    loadDataForm({commit}) {
+    loadDataForm({
+        commit
+    }) {
         axios
             .get(get_colors)
             .then(data => {
@@ -38,7 +62,7 @@ const actions = {
             .catch(error => {
                 console.log(error)
             })
-        axios    
+        axios
             .get(get_categories)
             .then(data => {
                 let categories = data.data
@@ -52,12 +76,15 @@ const actions = {
             .then(data => {
                 let specs = data.data
                 commit('SET_SPECS', specs)
-            })  
+            })
             .catch(error => {
                 console.log(error)
             })
     },
-    
+    activeCategory(){
+
+    }
+
 }
 
 
@@ -70,6 +97,9 @@ const mutations = {
     },
     SET_SPECS(state, payload) {
         state.specs = payload
+    },
+    SET_SETCATEGORIES(state, payload) {
+        state.setCategories = payload
     },
 }
 
