@@ -35,9 +35,9 @@ public class Products {
     @Column(name = "quantity_stock")
     private int quantityStock;
 
-    @NonNull
-    @JoinColumn(nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+
+    @JoinColumn(nullable = true)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Discounts discount;
 
 
