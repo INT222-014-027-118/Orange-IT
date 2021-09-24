@@ -24,6 +24,8 @@ public interface ProductRepository extends JpaRepository<Products,Long> {
 
   Boolean existsProductsByBrandNameContaining(String name);
 
+    Products findTopByOrderByIdDesc();
+
 
 
 
