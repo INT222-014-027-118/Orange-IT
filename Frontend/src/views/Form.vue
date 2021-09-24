@@ -1,32 +1,32 @@
 <template>
     <div class="py-5" v-show="isLoad">
         <!-- {{ product }} -->
-        {{$store.getters.setCategories}}
+        <!-- {{ $store.getters.setCategories }} -->
+        <!-- {{ $store.getters.childCategories("1") }} -->
         <form @submit.prevent="submitForm" class="px-2 py-8 mx-auto bg-white rounded shadow-md dark:bg-gray-700 max-w-7xl sm:px-6">
             <div class="mx-auto sm:max-w-5xl">
-
-
                 <div class="px-3 mb-6 md:mb-0">
                     <label class="label-css" for="grid-state">Category *</label>
-                    <div class="flex flex-col" v-for="category in $store.getters.rootCategories" :key="category.id">
+                    <!-- <div class="flex flex-col" v-for="category in $store.getters.rootCategories" :key="category.id">
                         <button type="button" @click="activeCategory(category.id)">
-                            {{category.category}}
+                            {{ category.category }}
                         </button>
-                    </div>
+                    </div> -->
 
-                    <div v-for="category in $store.getters.setCategories" :key="category.id">
-                         <button type="button" >
-                            {{category.category}}
-                        </button>
-                        <div v-if="category.active">
+                    <div v-for="category in $store.getters.setCategories" :key="category.id" class="flex bg-red-300">
+                        <button type="button" @click="selectCat = category" class="w-1/2">category: {{ category.category }}</button>
+                        <!-- <div v-if="category.active">
                             <div v-for="category in category.child" :key="category.id">
-                                {{category.category}}
+                                {{ category.category }}
                             </div>
+                        </div> -->
+                        <div v-for="childcat in category.child" :key="childcat" class="w-1/2">
+                            <button type="button" v-for="child in childcat" :key="child" @click="selectChild = child.category">child: {{ child.category }}</button>
                         </div>
                     </div>
-
+                    <span class="bg-red-300"> {{ selectCat.category }}, {{ selectChild }}</span>
+                    <div class="bg-green-300" v-for="childcat in $store.getters.childCategories(this.selectCat.id.toString())" :key="childcat">child: {{ childcat.category }}</div>
                 </div>
-
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="brand">Brand *</label>
@@ -71,7 +71,6 @@
                     <textarea class="h-40 input-css" id="description" v-model="product.description" type="text" placeholder="Please enter text up to 1000 characters." maxlength="500" />
                 </div>
 
-
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="">color *</label>
                     <div class="input-css" :class="{ 'ring ring-red-400': invalid.Color }">
@@ -86,7 +85,6 @@
                             }"
                             required
                             :value="color.hexCode"
-                            
                         />
                     </div>
                     <span v-if="invalid.Color" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-6 left-3 sm:-bottom-1 sm:left-1/2 sm:-translate-x-1/2"
@@ -212,24 +210,18 @@
             <button @click="validating" type="submit" class="self-end rounded shadow-md cursor-pointer btn">
                 Add Product
             </button>
-            
         </form>
-        
-        <!-- <router-link to="/tester" class="p-10 bg-red-500">tester</router-link> -->
 
+        <!-- <router-link to="/tester" class="p-10 bg-red-500">tester</router-link> -->
     </div>
     <!-- <div v-show="isLoad" class="flex items-center justify-center w-full h-screen">
         <i class="text-4xl material-icons animate-spin" v-show="isLoad"> autorenew </i>
     </div> -->
-        
-        
-    
-    
 </template>
 
 <script>
 import RichSelect from "../components/RichSelect.vue";
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 export default {
     components: {
         RichSelect,
@@ -244,6 +236,9 @@ export default {
 
             attributeText: "",
             attributeSelect: "",
+
+            selectCat: "",
+            selectChild: "",
 
             product: {
                 categoryAdd: "",
@@ -302,13 +297,11 @@ export default {
             }
             return 1;
         },
-        submitForm() {
-        },
-        test(){
-        console.log(this.store.state.colors);
-        console.log(this.$store.state.categories);
-        console.log(this.$store.state.brands);
-
+        submitForm() {},
+        test() {
+            console.log(this.store.state.colors);
+            console.log(this.$store.state.categories);
+            console.log(this.$store.state.brands);
         },
 
         // restart() {
@@ -415,24 +408,18 @@ export default {
         },
     },
     computed: {
-        ...mapGetters([
-        'colors',
-        'categories',
-        'brands',
-        'specs'
-        ]),
+        ...mapGetters(["colors", "categories", "brands", "specs"]),
         isValid() {
             return this.brandAdd !== "" && this.name !== "" && this.price !== 0 && this.typeAdd !== "" && this.colorsAdd.length !== 0 && this.launchDate !== "";
         },
         countText() {
             return this.product.name.length;
         },
-    },    
+    },
     mounted() {
-        this.$store.dispatch('loadDataForm')
+        this.$store.dispatch("loadDataForm");
     },
     created() {
-
         // await this.getDataToEdit();
     },
 };
