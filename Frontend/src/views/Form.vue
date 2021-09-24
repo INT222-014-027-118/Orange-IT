@@ -70,13 +70,33 @@
                 <div class="flex flex-col md:flex-row lg:w-full">
                     <div class="relative px-3 mb-6 md:w-1/2 md:mb-0">
                         <label class="label-css" for="price">Price *</label>
-                        <input v-model.number="product.price" step="0.01" class="input-css" id="price" type="number" placeholder="" min="1" max="99999" :class="{ 'ring ring-red-400': invalid.price }" />
+                        <input
+                            v-model.number="product.price"
+                            step="0.01"
+                            class="input-css"
+                            id="price"
+                            type="number"
+                            placeholder=""
+                            min="1"
+                            max="99999"
+                            :class="{ 'ring ring-red-400': invalid.price }"
+                        />
                         <span v-if="invalid.price" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
                     </div>
 
                     <div class="relative px-3 mb-6 md:w-1/2 md:mb-0">
                         <label class="label-css" for="stock">quantity stock *</label>
-                        <input v-model.number="product.quantityStock" step="1" class="input-css" id="stock" type="number" placeholder="" min="1" max="9999" :class="{ 'ring ring-red-400': invalid.quantityStock }" />
+                        <input
+                            v-model.number="product.quantityStock"
+                            step="1"
+                            class="input-css"
+                            id="stock"
+                            type="number"
+                            placeholder=""
+                            min="1"
+                            max="9999"
+                            :class="{ 'ring ring-red-400': invalid.quantityStock }"
+                        />
                         <span v-if="invalid.quantityStock" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
                     </div>
                 </div>
@@ -87,20 +107,22 @@
                 </div>
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
-                    <label class="label-css" for="">color *</label>
-                    <div class="input-css" :class="{ 'ring ring-red-400': invalid.Color }">
-                        <input
-                            type="checkbox"
-                            name="color"
-                            class="w-8 h-8 m-2 rounded-full border-1 form-checkbox ring-transparent ring-4 ring-offset-2 focus:ring-offset-2 focus:ring-secondary active:ring-secondary checked:ring-primary"
-                            v-for="color in $store.getters.colors"
-                            :key="color.id"
-                            :style="{
-                                backgroundColor: `#${color.hexCode}`,
-                            }"
-                            :value="color"
-                            v-model="product.colors"
-                        />
+                    <label class="label-css">color *</label>
+                    <div class="input-css flex flex-wrap" :class="{ 'ring ring-red-400': invalid.Color }">
+                        <label :for="color.id" v-for="(color) in $store.getters.colors" :key="color.id" class="flex flex-col items-center cursor-pointer">
+                            <input
+                                :id="color.id"
+                                type="checkbox"
+                                name="color"
+                                class="w-8 h-8 my-2 mx-5 cursor-pointer rounded-full border-1 form-checkbox ring-transparent ring-4 ring-offset-2 focus:ring-offset-2 focus:ring-secondary active:ring-secondary checked:ring-primary"
+                                :style="{
+                                    backgroundColor: `#${color.hexCode}`,
+                                }"
+                                :value="color"
+                                v-model="product.colors"
+                            />
+                            <span :class="[color.id == this.product.colors.id ? 'text-red-600' : '']" >{{ color.label }}</span>
+                        </label>
                     </div>
                     <span v-if="invalid.Color" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-6 left-3 sm:-bottom-1 sm:left-1/2 sm:-translate-x-1/2"
                         >Please select product color</span
@@ -240,6 +262,7 @@ export default {
                 catergories: [],
                 productSpecValues: [],
             },
+
             invalid: {
                 category: false,
                 brand: false,
@@ -249,6 +272,7 @@ export default {
                 date: false,
                 img: false,
             },
+
             isLoad: true,
             imageFile: null,
 
