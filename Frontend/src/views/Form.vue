@@ -9,14 +9,26 @@
                             <p class="w-1/3">category</p>
                             <p class="w-1/3">sub category</p>
                         </div>
-                        <div class="bg-white w-full flex cursor-pointer p-1 rounded-md h-40 overflow-y-auto">
-                            <div class="flex flex-col bg-white w-1/3 pr-1 border-r-2">
-                                <div class="px-2 py-1 hover:bg-yellow-200 hover:text-black rounded-sm" :class="[selectRootCat.category === category.category ? 'bg-primary text-white': '']" v-for="(category ) in $store.getters.rootCategories" :key="category.id" @click="chooseRootCategory(category)">
+                        <div class="bg-white w-full shadow-md flex mb-5 rounded-md h-40 overflow-y-auto">
+                            <div class="flex flex-col bg-white w-1/3 p-1 border-r-2">
+                                <div
+                                    class="px-2 py-1 cursor-pointer hover:bg-yellow-200 hover:text-black rounded-sm"
+                                    :class="[selectRootCat.category === category.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : '']"
+                                    v-for="category in $store.getters.rootCategories"
+                                    :key="category.id"
+                                    @click="chooseRootCategory(category)"
+                                >
                                     {{ category.category }}
                                 </div>
                             </div>
-                            <div class="flex flex-col bg-white w-1/3 px-1 border-r-2">
-                                <div class="px-2 py-1 hover:bg-yellow-200 hover:text-black rounded-sm" :class="[selectChildCat.category === childcat.category ? 'bg-primary text-white': '']" v-for="childcat in $store.getters.childCategories(`${this.selectRootCat.id}`)" :key="childcat.id" @click="chooseSubCategory(childcat)">
+                            <div class="flex flex-col bg-white w-1/3 p-1 border-r-2">
+                                <div
+                                    class="px-2 py-1 cursor-pointer hover:bg-yellow-200 hover:text-black rounded-sm"
+                                    :class="[selectChildCat.category === childcat.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : '']"
+                                    v-for="childcat in $store.getters.childCategories(`${this.selectRootCat.id}`)"
+                                    :key="childcat.id"
+                                    @click="chooseSubCategory(childcat)"
+                                >
                                     {{ childcat.category }}
                                 </div>
                             </div>
@@ -55,10 +67,18 @@
                     >
                 </div>
 
-                <div class="relative px-3 mb-6 lg:w-full md:mb-0">
-                    <label class="label-css" for="price">Price *</label>
-                    <input v-model="product.price" step="0.01" class="input-css" id="price" type="number" placeholder="" min="1" max="99999" :class="{ 'ring ring-red-400': invalid.price }" />
-                    <span v-if="invalid.price" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
+                <div class="flex flex-col md:flex-row lg:w-full">
+                    <div class="relative px-3 mb-6 md:w-1/2 md:mb-0">
+                        <label class="label-css" for="price">Price *</label>
+                        <input v-model.number="product.price" step="0.01" class="input-css" id="price" type="number" placeholder="" min="1" max="99999" :class="{ 'ring ring-red-400': invalid.price }" />
+                        <span v-if="invalid.price" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
+                    </div>
+
+                    <div class="relative px-3 mb-6 md:w-1/2 md:mb-0">
+                        <label class="label-css" for="stock">quantity stock *</label>
+                        <input v-model.number="product.quantityStock" step="1" class="input-css" id="stock" type="number" placeholder="" min="1" max="9999" :class="{ 'ring ring-red-400': invalid.quantityStock }" />
+                        <span v-if="invalid.quantityStock" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
+                    </div>
                 </div>
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
@@ -90,7 +110,7 @@
                 <div class="px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css">Upload Image</label>
                     <div class="relative input-css flex flex-wrap select-none overflow-hidden">
-                        <div v-for="(item, index) in preview_list" :key="index" class="m-5 relative">
+                        <div v-for="(item, index) in preview_list" :key="index" class="m-2 md:m-5 relative">
                             <div class="bg-white h-40 w-40 md:h-64 md:w-64 mb-2 rounded-md">
                                 <img :src="item" class="object-contain object-center w-full h-full rounded-md" />
                             </div>
@@ -98,14 +118,14 @@
                             <p class="text-sm font-light">size: {{ imageInfo[index].size / 1024 }}KB</p>
                             <div
                                 @click="deleteImg(index)"
-                                class="bg-red-600 absolute text-center pt-0.5 cursor-pointer -top-3 -right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white"
+                                class="bg-red-600 absolute text-center pt-0.5 cursor-pointer -top-3 right-3 md:-right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white"
                             >
                                 delete_forever
                             </div>
                         </div>
-                        <div class="self-start m-5" v-show="preview_list.length < 6">
+                        <div class="self-start m-2 md:m-5" v-show="preview_list.length < 6">
                             <label
-                                class="md:h-64 md:w-64 flex flex-col items-center px-4 justify-center bg-white text-blue rounded-md shadow-md tracking-wide uppercase border border-blue cursor-pointer transition hover:bg-primary hover:text-white"
+                                class="h-40 w-40 md:h-64 md:w-64 flex flex-col items-center px-4 justify-center bg-white text-blue rounded-md shadow-md tracking-wide uppercase border border-blue cursor-pointer transition hover:bg-primary hover:text-white"
                                 form="file"
                             >
                                 <span class="material-icons p-0.5 rounded-full border-2 border-current">
@@ -119,13 +139,13 @@
                 </div>
 
                 <div class="px-3 mb-6 lg:w-full md:mb-0 rounded-md">
-                    <div class="input-css">
+                    <div class="input-css ">
                         <table class="w-full">
                             <thead>
                                 <tr>
                                     <th class="w-5/12">Key</th>
                                     <th class="w-5/12">Value</th>
-                                    <th class="w-1/12"></th>
+                                    <th class="w-2/12"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -136,7 +156,7 @@
                                             type="text"
                                             placeholder="value"
                                             v-model="attributeText"
-                                            class="block w-full px-3 py-2 transition duration-100 ease-in-out border rounded shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed text-black placeholder-gray-400 bg-white border-gray-300 focus:border-blue-500 "
+                                            class="block w-full px-3 py-2 transition duration-100 ease-in-out border rounded shadow-sm focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed text-black placeholder-gray-400 bg-white border-gray-300 "
                                         />
                                     </td>
                                     <td class="pb-5">
