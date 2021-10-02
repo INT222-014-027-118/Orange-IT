@@ -39,7 +39,7 @@
                         >
                             Add to Cart
                         </button>
-                        <div class="text-xl text-green-600 font-bold flex items-center"><span class="material-icons"> check_circle_outline </span> In stork</div>
+                        <div class="text-xl text-green-600 font-bold flex items-center"><span class="material-icons"> check_circle_outline </span> {{stockCheck}}</div>
                     </div>
                 </div>
 
@@ -147,6 +147,17 @@ export default {
         //     console.log(this.product);
 
         // }, 5000);
+    },
+    computed: {
+        stockCheck() {
+            if (this.product.quantityStock == 0) {
+                return "out of stock";
+            } else if (this.product.quantityStock < 20) {
+                return "low stock";
+            } else {
+                return "in stock";
+            }
+        },
     },
     async created() {
         console.log(this.productId);

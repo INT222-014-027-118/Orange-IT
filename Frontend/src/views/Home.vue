@@ -23,7 +23,6 @@
                 v-for="product in $store.getters.products"
                 :key="product.id"
             >
-                <!-- @click="$store.dispatch('loadProduct', product.id)" -->
                 <BaseProduct :product="product" />
             </router-link>
         </div>
