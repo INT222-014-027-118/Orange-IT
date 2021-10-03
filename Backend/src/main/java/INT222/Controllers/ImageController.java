@@ -2,6 +2,9 @@ package INT222.Controllers;
 
 import INT222.Exceptions.NotFoundImageException;
 import INT222.Exceptions.SameImageException;
+import INT222.Models.Images;
+import INT222.Repositories.ImageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,8 @@ import java.nio.file.Paths;
 @CrossOrigin(origins = "*")
 public class ImageController {
 
+    @Autowired
+    private ImageRepository imageRepository;
     private final Path path = Paths.get("images");
 
     @GetMapping("/get/{id:.+}")
@@ -39,7 +44,7 @@ public class ImageController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<Object> fileUpload(@RequestParam("refun") MultipartFile file)throws IOException {
+    public ResponseEntity<Object> fileUpload(@RequestParam("orange") MultipartFile file)throws IOException {
         Path file1 = path.resolve(file.getOriginalFilename());
         Resource resource = new UrlResource(file1.toUri());
         File myFile = new File(resource.getURI());
@@ -51,7 +56,15 @@ public class ImageController {
         FileOutputStream fos = new FileOutputStream(myFile);
         fos.write(file.getBytes());
         fos.close();
+//        long idImage = imageRepository.findTopByOrderByIdDesc().getId()+1;
+//        String source= file.getOriginalFilename();
+//        String label = file.getName();
+//        long productId = id;
+//        Images image = new Images(idImage,source,label,productId);
+//        imageRepository.save(image);
         return new ResponseEntity<Object>("The File Uploaded Successfully", HttpStatus.OK);
+
+
     }
 
 

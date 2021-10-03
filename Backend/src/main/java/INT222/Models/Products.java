@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class Products {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(name = "product_name")
@@ -49,15 +52,15 @@ public class Products {
     @JoinTable(name = "product_spec_values", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "spec_id"))
     private List<Specs>  specs = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "id",insertable = true, updatable = true)
-    private List<Images> images = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id",insertable = true, updatable = true)
+    private List<Images> images ;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "Products_has_categories", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Categories> catergories = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id",insertable = true, updatable = true)
     private List<ProductSpecValues> productSpecValues;
 
