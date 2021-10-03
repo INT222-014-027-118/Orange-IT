@@ -249,7 +249,7 @@ export default {
             selectChildCat: {},
 
             product: {
-                id: 0,
+                id: 1,
                 productName: "",
                 description: "",
                 price: 0,
@@ -310,20 +310,35 @@ export default {
             return 1;
         },
         submitForm() {
-            // axios
-            //  console.log(this.product)
-            //   let pro ={
-            //         id: this.id,
-            //         productName: this.productName,
-            //         description: this.description,
-            //         price: this.price,
-            //         brandName: this.brandName,
-            //         quantityStock: this.quantityStock,
-            //         discount: this.discount,
-            //         images: this.images,
-            //         catergories:this.catergories,
-            //       }
+            let imagesArray = this.imageInfo.map((image)=>{return {id:1,source:image.name,label:image.name.split(".")[0],product_id:1}})
+            this.product.images = imagesArray
             this.$store.dispatch("addProduct", this.product);
+           
+            // let data = new FormData();
+            // console.log(this.imageInfo[0]);
+            // data.append("orange", this.imageInfo[0]);
+            // axios
+            //     .post( `http://52.187.10.17/orange-it/image/add`, data,
+            //     )
+            //     .then(response => {
+            //         console.log("response: ", response)
+            //     })
+            // axios({
+            // method: 'post',
+            // headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            // url: 'http://52.187.10.17/orange-it/image/add',
+            // data: data
+            // }).then(function (response) {
+            //     console.log(response.data);
+            // });
+
+            // let data = new FormData();
+            // console.log(this.imageInfo[0]);
+            // data.append("orange", this.imageInfo[0]);
+            // axios.post("http://52.187.10.17/orange-it/image/add", data).then((res) => res); 
+
+            this.$store.dispatch("uploadImages", this.imageInfo);
+
         },
         chooseRootCategory(category) {
             this.selectRootCat = category;
@@ -349,7 +364,7 @@ export default {
         },
 
         previewMultiImage(event) {
-            var imgName = event.target.files[0].name;
+            let imgName = event.target.files[0].name;
             var input = event.target;
             var count = input.files.length;
             var index = 0;
@@ -383,12 +398,6 @@ export default {
                 this.createImage(files[0]);
                 this.activeClose = true;
             }
-        },
-
-        uploadImage() {
-            let data = new FormData();
-            data.append("refun", this.imageFile);
-            return data;
         },
     },
     computed: {
