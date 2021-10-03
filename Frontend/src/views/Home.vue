@@ -1,6 +1,7 @@
 <template>
     <div>
         <Carousel class="container mx-auto lg:max-w-7xl" />
+
         <div class="container lg:max-w-7xl grid grid-cols-4 gap-1 md:gap-3 mx-auto my-3 md:my-7 px-1">
             <router-link :to="{ name: 'resultProducts', params: { categoryName: category.itmeName } }" v-for="category in categorys" :key="category">
                 <div class="grid-cols-5 transition bg-white rounded-md shadow-md cursor-pointer md:grid md:h-28 ring ring-transparent hover:ring-primary">
@@ -17,7 +18,7 @@
             <router-link
                 :to="{
                     name: 'Product',
-                    params: { product_name: product.productName, productId: product.id, price: product.price ,brand:product.brandName},
+                    params: { product_name: product.productName, productId: product.id },
                 }"
                 v-for="product in $store.getters.products"
                 :key="product.id"
@@ -25,8 +26,6 @@
                 <BaseProduct :product="product" />
             </router-link>
         </div>
- 
-       
     </div>
 </template>
 
@@ -36,8 +35,7 @@ import speaker from "../assets/category/speaker.jpg";
 import keyboard from "../assets/category/keyboard.jpg";
 import mouse from "../assets/category/mouse.png";
 export default {
-    components: {
-    },
+    components: {},
     data() {
         return {
             categorys: [
@@ -55,12 +53,9 @@ export default {
     },
     mounted() {
         this.scrollToTop();
-        this.$store.dispatch('loadProducts')
+        this.$store.dispatch("loadProducts");
     },
-    created() {
-    },
-    
-    
+    created() {},
 };
 </script>
 

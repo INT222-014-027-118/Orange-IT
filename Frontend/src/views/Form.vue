@@ -4,22 +4,41 @@
             <div class="mx-auto sm:max-w-5xl">
                 <div class="px-3 mb-6 md:mb-0">
                     <label class="label-css" for="grid-state">Category *</label>
-                    <div class="flex cursor-pointer">
-                        <div class="flex flex-col bg-red-300 w-1/3">
-                            <div v-for="category in $store.getters.rootCategories" :key="category.id" @click="chooseRootCategory(category)" class="">{{ category.category }}</div>
+                    <div class="input-css">
+                        <div class="w-full flex text-xs p-2">
+                            <p class="w-1/3">category</p>
+                            <p class="w-1/3">sub category</p>
                         </div>
-                        <div class="flex flex-col w-1/3">
-                            <div class="bg-green-300" v-for="childcat in $store.getters.childCategories(`${this.selectRootCat.id}`)" :key="childcat.id" @click="chooseSubCategory(childcat)">
-                                {{ childcat.category }}
+                        <div class="bg-white w-full shadow-md flex mb-5 rounded-md h-40 overflow-y-auto">
+                            <div class="flex flex-col bg-white w-1/3 p-1 border-r-2">
+                                <div
+                                    class="px-2 py-1 cursor-pointer hover:bg-yellow-200 hover:text-black rounded-sm"
+                                    :class="[selectRootCat.category === category.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : '']"
+                                    v-for="category in $store.getters.rootCategories"
+                                    :key="category.id"
+                                    @click="chooseRootCategory(category)"
+                                >
+                                    {{ category.category }}
+                                </div>
+                            </div>
+                            <div class="flex flex-col bg-white w-1/3 p-1 border-r-2">
+                                <div
+                                    class="px-2 py-1 cursor-pointer hover:bg-yellow-200 hover:text-black rounded-sm"
+                                    :class="[selectChildCat.category === childcat.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : '']"
+                                    v-for="childcat in $store.getters.childCategories(`${this.selectRootCat.id}`)"
+                                    :key="childcat.id"
+                                    @click="chooseSubCategory(childcat)"
+                                >
+                                    {{ childcat.category }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <span class="bg-yellow-100"> {{ selectRootCat.category }}, {{ selectChildCat.category }}</span>
                 </div>
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="brand">Brand *</label>
-                    <select class="input-css" id="brandName" v-model="product.brandName"  :class="{ 'ring ring-red-400': invalid.brand }">
+                    <select class="input-css" id="brandName" v-model="product.brandName" :class="{ 'ring ring-red-400': invalid.brand }">
                         <option value="" disabled selected>[ Select Brand ]</option>
 
                         <option v-for="brand in $store.getters.brands" :key="brand" :value="brand" class="text-lg">{{ brand }}</option>
@@ -41,7 +60,6 @@
                         type="text"
                         placeholder="Please input name 40 characters"
                         maxlength="40"
-                        
                         :class="{ 'ring ring-red-400': invalid.name }"
                     />
                     <span v-if="invalid.name" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2"
@@ -49,10 +67,38 @@
                     >
                 </div>
 
-                <div class="relative px-3 mb-6 lg:w-full md:mb-0">
-                    <label class="label-css" for="price">Price *</label>
-                    <input v-model="product.price" step="0.01" class="input-css" id="price" type="number" placeholder="" min="1" max="99999"  :class="{ 'ring ring-red-400': invalid.price }" />
-                    <span v-if="invalid.price" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
+                <div class="flex flex-col md:flex-row lg:w-full">
+                    <div class="relative px-3 mb-6 md:w-1/2 md:mb-0">
+                        <label class="label-css" for="price">Price *</label>
+                        <input
+                            v-model.number="product.price"
+                            step="0.01"
+                            class="input-css"
+                            id="price"
+                            type="number"
+                            placeholder=""
+                            min="1"
+                            max="99999"
+                            :class="{ 'ring ring-red-400': invalid.price }"
+                        />
+                        <span v-if="invalid.price" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
+                    </div>
+
+                    <div class="relative px-3 mb-6 md:w-1/2 md:mb-0">
+                        <label class="label-css" for="stock">quantity stock *</label>
+                        <input
+                            v-model.number="product.quantityStock"
+                            step="1"
+                            class="input-css"
+                            id="stock"
+                            type="number"
+                            placeholder=""
+                            min="1"
+                            max="9999"
+                            :class="{ 'ring ring-red-400': invalid.quantityStock }"
+                        />
+                        <span v-if="invalid.quantityStock" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
+                    </div>
                 </div>
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
@@ -61,21 +107,22 @@
                 </div>
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
-                    <label class="label-css" for="">color *</label>
-                    <div class="input-css" :class="{ 'ring ring-red-400': invalid.Color }">
-                        <input
-                            type="checkbox"
-                            name="color"
-                            class="w-8 h-8 m-2 rounded-full border-1 form-checkbox ring-transparent ring-4 ring-offset-2 focus:ring-offset-2 focus:ring-secondary active:ring-secondary checked:ring-primary"
-                            v-for="color in $store.getters.colors"
-                            :key="color.id"
-                            :style="{
-                                backgroundColor: `#${color.hexCode}`,
-                            }"
-                            
-                            :value="color"
-                            v-model="product.colors"
-                        />
+                    <label class="label-css">color *</label>
+                    <div class="input-css flex flex-wrap" :class="{ 'ring ring-red-400': invalid.Color }">
+                        <label :for="color.id" v-for="(color) in $store.getters.colors" :key="color.id" class="flex flex-col items-center cursor-pointer">
+                            <input
+                                :id="color.id"
+                                type="checkbox"
+                                name="color"
+                                class="w-8 h-8 my-2 mx-5 cursor-pointer rounded-full border-1 form-checkbox ring-transparent ring-4 ring-offset-2 focus:ring-offset-2 focus:ring-secondary active:ring-secondary checked:ring-primary"
+                                :style="{
+                                    backgroundColor: `#${color.hexCode}`,
+                                }"
+                                :value="color"
+                                v-model="product.colors"
+                            />
+                            <span :class="[color.id == this.product.colors.id ? 'text-red-600' : '']" >{{ color.label }}</span>
+                        </label>
                     </div>
                     <span v-if="invalid.Color" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-6 left-3 sm:-bottom-1 sm:left-1/2 sm:-translate-x-1/2"
                         >Please select product color</span
@@ -85,7 +132,7 @@
                 <div class="px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css">Upload Image</label>
                     <div class="relative input-css flex flex-wrap select-none overflow-hidden">
-                        <div v-for="(item, index) in preview_list" :key="index" class="m-5 relative">
+                        <div v-for="(item, index) in preview_list" :key="index" class="m-2 md:m-5 relative">
                             <div class="bg-white h-40 w-40 md:h-64 md:w-64 mb-2 rounded-md">
                                 <img :src="item" class="object-contain object-center w-full h-full rounded-md" />
                             </div>
@@ -93,14 +140,14 @@
                             <p class="text-sm font-light">size: {{ imageInfo[index].size / 1024 }}KB</p>
                             <div
                                 @click="deleteImg(index)"
-                                class="bg-red-600 absolute text-center pt-0.5 cursor-pointer -top-3 -right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white"
+                                class="bg-red-600 absolute text-center pt-0.5 cursor-pointer -top-3 right-3 md:-right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white"
                             >
                                 delete_forever
                             </div>
                         </div>
-                        <div class="self-start m-5" v-show="preview_list.length < 6">
+                        <div class="self-start m-2 md:m-5" v-show="preview_list.length < 6">
                             <label
-                                class="md:h-64 md:w-64 flex flex-col items-center px-4 justify-center bg-white text-blue rounded-md shadow-md tracking-wide uppercase border border-blue cursor-pointer transition hover:bg-primary hover:text-white"
+                                class="h-40 w-40 md:h-64 md:w-64 flex flex-col items-center px-4 justify-center bg-white text-blue rounded-md shadow-md tracking-wide uppercase border border-blue cursor-pointer transition hover:bg-primary hover:text-white"
                                 form="file"
                             >
                                 <span class="material-icons p-0.5 rounded-full border-2 border-current">
@@ -114,13 +161,13 @@
                 </div>
 
                 <div class="px-3 mb-6 lg:w-full md:mb-0 rounded-md">
-                    <div class="input-css">
+                    <div class="input-css ">
                         <table class="w-full">
                             <thead>
                                 <tr>
                                     <th class="w-5/12">Key</th>
                                     <th class="w-5/12">Value</th>
-                                    <th class="w-1/12"></th>
+                                    <th class="w-2/12"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -131,7 +178,7 @@
                                             type="text"
                                             placeholder="value"
                                             v-model="attributeText"
-                                            class="block w-full px-3 py-2 transition duration-100 ease-in-out border rounded shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed text-black placeholder-gray-400 bg-white border-gray-300 focus:border-blue-500 "
+                                            class="block w-full px-3 py-2 transition duration-100 ease-in-out border rounded shadow-sm focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed text-black placeholder-gray-400 bg-white border-gray-300 "
                                         />
                                     </td>
                                     <td class="pb-5">
@@ -209,12 +256,13 @@ export default {
                 brandName: "",
                 quantityStock: 0,
                 discount: null,
-                colors:[],
-                specs:[],
+                colors: [],
+                specs: [],
                 images: [],
-                catergories:[],
-                productSpecValues:[]
+                catergories: [],
+                productSpecValues: [],
             },
+
             invalid: {
                 category: false,
                 brand: false,
@@ -224,6 +272,7 @@ export default {
                 date: false,
                 img: false,
             },
+
             isLoad: true,
             imageFile: null,
 
@@ -261,28 +310,28 @@ export default {
             return 1;
         },
         submitForm() {
-           // axios
-          //  console.log(this.product)
-        //   let pro ={
-        //         id: this.id,
-        //         productName: this.productName,
-        //         description: this.description,
-        //         price: this.price,
-        //         brandName: this.brandName,
-        //         quantityStock: this.quantityStock,
-        //         discount: this.discount,
-        //         images: this.images,
-        //         catergories:this.catergories,
-        //       }
-         this.$store.dispatch('addProduct',this.product)
+            // axios
+            //  console.log(this.product)
+            //   let pro ={
+            //         id: this.id,
+            //         productName: this.productName,
+            //         description: this.description,
+            //         price: this.price,
+            //         brandName: this.brandName,
+            //         quantityStock: this.quantityStock,
+            //         discount: this.discount,
+            //         images: this.images,
+            //         catergories:this.catergories,
+            //       }
+            this.$store.dispatch("addProduct", this.product);
         },
-        chooseRootCategory(category){
-            this.selectRootCat = category
-            this.selectChildCat = {}
+        chooseRootCategory(category) {
+            this.selectRootCat = category;
+            this.selectChildCat = {};
         },
-        chooseSubCategory(category){
-            this.selectChildCat = category
-            this.product.catergories = [category]
+        chooseSubCategory(category) {
+            this.selectChildCat = category;
+            this.product.catergories = [category];
         },
         selected(choosed) {
             this.attributeSelect = choosed;
@@ -343,7 +392,6 @@ export default {
         },
     },
     computed: {
-   
         // isValid() {
         //     return this.brandName !== "" && this.name !== "" && this.price !== 0 && this.typeAdd !== "" && this.colorsAdd.length !== 0 && this.launchDate !== "";
         // },

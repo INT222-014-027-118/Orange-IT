@@ -49,7 +49,7 @@ const routes = [{
     component: () => import( /* webpackChunkName: "register" */ '../views/Register.vue')
   },
   {
-    path: '/:product_name',
+    path: '/:productId-:product_name',
     name: 'Product',
     props: true,
     component: () => import( /* webpackChunkName: "Product" */ '../views/Product.vue')
@@ -60,7 +60,7 @@ const routes = [{
     component: () => import( /* webpackChunkName: "form" */ '../views/Form.vue')
   },
   {
-    path: '/:categoryName',
+    path: '/result=:categoryName',
     name: 'resultProducts',
     props: true,
     component: () => import( /* webpackChunkName: "resultProducts" */ '../views/resultProducts.vue')

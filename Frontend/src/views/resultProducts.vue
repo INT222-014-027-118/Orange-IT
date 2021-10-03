@@ -85,26 +85,6 @@
             >
                 <BaseProduct :product="product" />
             </router-link>
-            <router-link
-                :to="{
-                    name: 'Product',
-                    params: { product_name: product.productName, productId: product.id, price: product.price, brand: product.brandName },
-                }"
-                v-for="product in $store.getters.products"
-                :key="product.id"
-            >
-                <BaseProduct :product="product" />
-            </router-link>
-            <router-link
-                :to="{
-                    name: 'Product',
-                    params: { product_name: product.productName, productId: product.id, price: product.price, brand: product.brandName },
-                }"
-                v-for="product in $store.getters.products"
-                :key="product.id"
-            >
-                <BaseProduct :product="product" />
-            </router-link>
         </div>
     </div>
 </template>
@@ -125,6 +105,14 @@ export default {
     },
     created() {
         this.categorysName.push(this.categoryName);
+    },
+    methods: {
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
+    },
+    mounted() {
+        this.scrollToTop();
     },
 };
 </script>

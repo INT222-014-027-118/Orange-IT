@@ -1,15 +1,20 @@
 import axios from 'axios'
 
 // const url = 'http://localhost:5000/products';
-const url = 'http://52.187.10.17/orange-it/product/list'
+const api = 'http://52.187.10.17/orange-it/product'
+const get_list = `${api}/list`
+// const get_product_by_name = `${api}/getByName/`
+
 // const get_images = `${api}/image/get/`
 
 const state = {
-    products: []
+    products: [],
+    product: {},
 }
 
 const getters = {
     products: state => state.products,
+    product: state => state.product,
 }
 
 const actions = {
@@ -17,7 +22,7 @@ const actions = {
         commit
     }) {
         try {
-            const response = await axios.get(url)
+            const response = await axios.get(get_list)
             commit('SET_PRODUCTS', response.data)
         } catch (error) {
             console.log(error);
@@ -32,14 +37,15 @@ const actions = {
         //     .catch(error => {
         //         console.log(error)
         //     })
-    }
+    },
 }
 
 
 const mutations = {
     SET_PRODUCTS(state, payload) {
         state.products = payload
-    }
+    },
+
 }
 
 export default {
