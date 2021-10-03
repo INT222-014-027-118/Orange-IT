@@ -17,6 +17,5 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         script: |
           cd Orange-IT
-          docker system prune -a
           git pull 
           docker-compose up -d --build 
