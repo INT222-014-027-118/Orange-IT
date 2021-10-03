@@ -336,3 +336,5 @@ INSERT INTO `products_has_colors` (`product_id`, `color_id`) VALUES ('1', '2'), 
 INSERT INTO `products_has_categories` (`product_id`, `category_id`) VALUES ('1', '6'), ('4', '4'), ('3', '2'), ('2', '2');
 
 INSERT INTO `product_spec_values` (`product_id`, `spec_id`, `spec_value`) VALUES ('2', '3', '50'), ('2', '5', 'Clicky');
+
+SET GLOBAL FOREIGN_KEY_CHECKS=0;

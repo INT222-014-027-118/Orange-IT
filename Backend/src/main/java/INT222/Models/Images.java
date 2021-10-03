@@ -1,8 +1,8 @@
 package INT222.Models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class Images {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column
@@ -22,12 +23,6 @@ public class Images {
     @Column
     private String label;
 
-
-
-
-
-//
-//    @ManyToOne
-//    @JoinColumn(name = "productid")
-//    private Products products;
+    @Column
+   private long product_id;
 }

@@ -5,8 +5,10 @@ import INT222.Exceptions.NotFoundException;
 
 import INT222.Exceptions.NotFoundNameException;
 import INT222.Exceptions.SameProductNameException;
+import INT222.Models.Images;
 import INT222.Models.Products;
 import INT222.Models.ProductsHome;
+import INT222.Repositories.ImageRepository;
 import INT222.Repositories.ProductHomeRepository;
 import INT222.Repositories.ProductRepository;
 
@@ -27,6 +29,9 @@ public class ProductController {
 
     @Autowired
     private ProductHomeRepository productHomeRepository;
+
+    @Autowired
+    private ImageRepository imageRepository;
 
     //Get all Product
     @GetMapping("/list")
@@ -51,17 +56,21 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public void addProduct(@RequestBody Products products) {
+    public Products addProduct(@RequestBody Products products) {
 
 
             if (productRepository.existsByProductName(products.getProductName())) {
 
                 throw new SameProductNameException(products.getProductName());
-            }
+            }else
             products.setId(productRepository.findTopByOrderByIdDesc().getId()+1);
+             List<Images> images =  products.getImages();
+        for (int i = 0; i < images.size(); i++) {
+            images.get(i).setId(imageRepository.findTopByOrderByIdDesc().getId()+1+i);
+        }
             productRepository.save(products);
         System.out.println(productRepository.findTopByOrderByIdDesc().getId()+1);
-
+          return products;
 
     }
 

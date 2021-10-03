@@ -39,7 +39,7 @@
                         >
                             Add to Cart
                         </button>
-                        <div class="text-xl text-green-600 font-bold flex items-center"><span class="material-icons"> check_circle_outline </span> {{stockCheck}}</div>
+                        <div class="text-xl text-green-600 font-bold flex items-center"><span class="material-icons"> check_circle_outline </span> {{ stockCheck }}</div>
                     </div>
                 </div>
 
@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Review from "../components/Review.vue";
 import Comments from "../components/Comment.vue";
 import Raring from "../components/Rating.vue";
@@ -103,6 +104,7 @@ export default {
             },
             colorPick: {},
             loading: false,
+            api: "http://52.187.10.17/orange-it/product",
         };
     },
     methods: {
@@ -160,10 +162,7 @@ export default {
         },
     },
     async created() {
-        console.log(this.productId);
-        this.$store.dispatch("loadProduct", this.productId);
-        this.product = await this.$store.getters.product;
-        console.log(this.product);
+        this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => res.data);
     },
 };
 </script>
