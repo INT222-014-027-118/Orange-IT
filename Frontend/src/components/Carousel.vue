@@ -1,10 +1,8 @@
 <template>
     <div class="bg-white dark:bg-gray-600 transition-colors rounded-lg shadow-md" v-if="renderComponent">
         <splide :options="primaryOptions" ref="primary" :class="[this.$route.name == 'Home' ? 'sm:px-14 md:px-16 lg:px-20' : 'md:pt-3']">
-            <splide-slide class="flex justify-center " v-for="slide in slides" :key="slide" @click="gogo">
-                <div class="">
-                    <img :src="slide" class="h-full w-full object-contain" alt="slide.alt" />
-                </div>
+            <splide-slide class="flex justify-center " v-for="slide in slides" :key="slide">
+                <img :src="slide" class="h-full w-full object-contain" alt="slide.alt" @load="check(slide)" />
             </splide-slide>
         </splide>
         <splide :options="secondaryOptions" ref="secondary" v-show="this.$route.name != 'Home'" class="sm:px-14 md:px-16 lg:px-20 py-2">
@@ -26,7 +24,7 @@ export default {
         SplideSlide,
     },
     props: {
-        images: Array
+        images: Array,
     },
     data() {
         return {
@@ -79,36 +77,44 @@ export default {
             prop_productId: "",
             slides: [],
             renderComponent: true,
+            loadCall: false,
+            count: 0,
         };
     },
     watch: {
         images() {
             this.slides = this.images;
-        }
+        },
     },
     methods: {
-        gogo() {
-            console.log("gogo");
-        },
         forceRerender() {
             this.renderComponent = false;
-
             this.$nextTick(() => {
                 this.renderComponent = true;
             });
         },
-    },
-    mounted() {
-        // Set the sync target.
-        setTimeout(() => {
-            this.forceRerender();
-        }, 100);
-        setTimeout(() => {
+        syncIamage() {
             this.$refs.primary.sync(this.$refs.secondary.splide);
-        }, 100);
+        },
+        check() {
+            this.count++;
+            if (this.slides.length >= this.count) {
+                this.resetImg();
+                this.$emit("endload");
+            }
+        },
+        resetImg() {
+            setTimeout(() => {
+                this.forceRerender();
+            }, 10);
+            setTimeout(() => {
+                this.syncIamage();
+            }, 10);
+        },
     },
     async created() {
-        this.slides = await this.images
+        this.slides = await this.images;
+        this.resetImg();
     },
 };
 </script>
@@ -164,6 +170,16 @@ export default {
     flex-shrink: 0;
     list-style-type: none !important;
     margin: 0;
+}
+.splide--nav > .splide__track > .splide__list > .splide__slide {
+    border: 3px solid transparent;
+    border-color: #f6ae2d;
+    cursor: pointer;
+    opacity: 0.6;
+}
+.splide--nav > .splide__track > .splide__list > .splide__slide.is-active {
+    border-color: #ec6907;
+    opacity: 1;
 }
 
 @media only screen and (max-width: 640px) {

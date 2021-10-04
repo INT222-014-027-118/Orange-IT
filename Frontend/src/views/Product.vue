@@ -1,13 +1,15 @@
 <template>
-    <div class="" v-if="showItem">
+    <div class="">
         <div class="mx-auto max-w-7xl sm:mt-5 dark:bg-gray-700">
             <div class="md:mt-0 md:px-5 lg:mx-auto grid gap-3 grid-cols-3 ">
                 <div class="py-0 lg:py-5 mx-0 col-span-3 lg:col-span-2">
-                    <Carousel :images="images" />
+                    <Carousel :images="images" :reImage="reImage" @endload="endload" />
                 </div>
 
                 <div class="px-1 py-5 sm:px-16 md:px-20 lg:p-5 col-span-3 lg:col-span-1 my-5 bg-white rounded-md shadow-md">
-                    <p class="px-2 text-primary">Brand : <span class="text-sm font-light"></span></p>
+                    <p class="px-2 text-primary">
+                        Brand : <span class="text-sm font-light"> {{ product.brandName }}</span>
+                    </p>
                     <p class="px-2 py-2 border-b border-black text-2xl font-semibold dark:border-gray-100 mb-2">{{ productName }}</p>
                     <div class="px-2 sm:px-3 space-y-3 lg:space-y-3">
                         <p class="text-2xl text-red-500 font-bold">฿ {{ product.price }}</p>
@@ -96,7 +98,8 @@ export default {
     data() {
         return {
             showItem: true,
-            images:[],
+            reImage: false,
+            images: [],
             product: {},
             reviews: {
                 totalCount: 123,
@@ -113,6 +116,9 @@ export default {
         },
         scrollToTop() {
             window.scrollTo(0, 0);
+        },
+        endload() {
+            this.loading = false;
         },
         addCartItem() {
             this.loading = true;
@@ -155,9 +161,13 @@ export default {
         this.scrollToTop();
     },
     async created() {
-        this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => res.data);
-        this.images = await this.product.images.map((img)=>{return `http://52.187.10.17/orange-it/image/get/${img.source}`})
-        console.log(this.images);
+        // this.loading = true;
+        this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => {
+            return res.data;
+        });
+        this.images = await this.product.images.map((img) => {
+            return `http://52.187.10.17/orange-it/image/get/${img.source}`;
+        });
     },
 };
 </script>
