@@ -8,7 +8,7 @@
 
                 <div class="px-1 py-5 sm:px-16 md:px-20 lg:p-5 col-span-3 lg:col-span-1 my-5 bg-white rounded-md shadow-md">
                     <p class="px-2 text-primary">Brand : <span class="text-sm font-light"></span></p>
-                    <p class="px-2 py-3 border-b border-black text-2xl font-semibold dark:border-gray-100 mb-2">{{ product_name }}</p>
+                    <p class="px-2 py-2 border-b border-black text-2xl font-semibold dark:border-gray-100 mb-2">{{ productName }}</p>
                     <div class="px-2 sm:px-3 space-y-3 lg:space-y-3">
                         <p class="text-2xl text-red-500 font-bold">฿ {{ product.price }}</p>
                         <p class="text-sm font-light">Product ID: {{ product.id }}</p>
@@ -21,7 +21,7 @@
                                         :id="color.id"
                                         type="radio"
                                         name="color"
-                                        class="w-8 h-8 my-2 mx-2  rounded-full form-input ring-transparent ring-4 ring-offset-2 focus:ring-4 focus:ring-offset-2 active:ring-secondary checked:ring-primary"
+                                        class="w-8 h-8 my-2 mx-2 border rounded-full form-input ring-transparent ring-4 ring-offset-2 focus:border-gray-500 focus:ring-4 focus:ring-offset-2 active:ring-secondary checked:ring-primary"
                                         :style="{
                                             backgroundColor: `#${color.hexCode}`,
                                         }"
@@ -45,7 +45,7 @@
 
                 <div class="my-5 w-full col-span-3">
                     <div class="p-1 sm:px-16 md:px-20 lg:px-5">
-                        <p class="font-semibold text-xl px-2">Attribute: {{ product_name }}</p>
+                        <p class="font-semibold text-xl px-2">Attribute: {{ productName }}</p>
                         <div class="overflow-hidden rounded p-1">
                             <table class="min-w-full bg-white">
                                 <tbody class="text-gray-700">
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="p-1 mb-5 w-full col-span-3 sm:px-16 md:px-20 lg:px-5">
-                    <p class="font-semibold text-xl px-2">Rating: {{ product_name }}</p>
+                    <p class="font-semibold text-xl px-2">Rating: {{ productName }}</p>
                     <Raring />
                 </div>
                 <Review class="col-span-3 lg:col-span-1 p-1 sm:px-16 md:px-20 lg:px-5 mb-5" />
@@ -90,7 +90,7 @@ export default {
         Raring,
     },
     props: {
-        product_name: String,
+        productName: String,
         productId: String,
     },
     data() {
@@ -129,7 +129,7 @@ export default {
                         // this.$swal.showLoading();
                         setTimeout(() => {
                             let itemDumy = {
-                                name: this.product_name,
+                                name: this.productName,
                                 price: this.price,
                                 quantity: 1,
                             };
@@ -139,16 +139,6 @@ export default {
                 });
             }, 500);
         },
-    },
-    mounted() {
-        this.scrollToTop();
-        // console.log(this.$store.getters.product);
-        // setTimeout(() => {
-        //     this.$store.dispatch("loadProduct", Number(this.productId));
-        //     this.product =  this.$store.getters.product;
-        //     console.log(this.product);
-
-        // }, 5000);
     },
     computed: {
         stockCheck() {
@@ -161,6 +151,9 @@ export default {
             }
         },
     },
+    mounted() {
+        this.scrollToTop();
+    },
     async created() {
         this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => res.data);
     },
@@ -169,5 +162,51 @@ export default {
 <style scoped>
 /* [type="radio"]:checked {
     background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='red' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+} */
+/* 
+[type="checkbox"],
+[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    display: inline-block;
+    vertical-align: middle;
+    background-origin: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    flex-shrink: 0;
+    height: 1rem;
+    width: 1rem;
+    color: #2563eb;
+    background-color: #fff;
+    border-color: #6b7280;
+    border-width: 0px;
+}
+
+[type="checkbox"]:focus,
+[type="radio"]:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    --tw-ring-inset: var(--tw-empty);
+    --tw-ring-offset-width: 2px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: #2563eb;
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+[type="checkbox"]:checked,
+[type="radio"]:checked {
+    border-color: transparent;
+    background-color: currentColor;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
 } */
 </style>

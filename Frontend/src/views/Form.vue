@@ -109,7 +109,7 @@
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css">color *</label>
                     <div class="input-css flex flex-wrap" :class="{ 'ring ring-red-400': invalid.Color }">
-                        <label :for="color.id" v-for="(color) in $store.getters.colors" :key="color.id" class="flex flex-col items-center cursor-pointer">
+                        <label :for="color.id" v-for="color in $store.getters.colors" :key="color.id" class="flex flex-col items-center cursor-pointer">
                             <input
                                 :id="color.id"
                                 type="checkbox"
@@ -121,7 +121,7 @@
                                 :value="color"
                                 v-model="product.colors"
                             />
-                            <span :class="[color.id == this.product.colors.id ? 'text-red-600' : '']" >{{ color.label }}</span>
+                            <span :class="[color.id == this.product.colors.id ? 'text-red-600' : '']">{{ color.label }}</span>
                         </label>
                     </div>
                     <span v-if="invalid.Color" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-6 left-3 sm:-bottom-1 sm:left-1/2 sm:-translate-x-1/2"
@@ -231,7 +231,7 @@
 
 <script>
 import RichSelect from "../components/RichSelect.vue";
-// import axios from 'axios';
+import axios from "axios";
 
 export default {
     components: {
@@ -323,7 +323,11 @@ export default {
             //         images: this.images,
             //         catergories:this.catergories,
             //       }
-            this.$store.dispatch("addProduct", this.product);
+            let data = new FormData();
+            console.log(this.imageInfo[0]);
+            data.append("orange", this.imageInfo[0]);
+            // this.$store.dispatch("addProduct", this.product);
+            axios.post("http://52.187.10.17/orange-it/image/add", data).then((res) => res);
         },
         chooseRootCategory(category) {
             this.selectRootCat = category;
@@ -387,7 +391,7 @@ export default {
 
         uploadImage() {
             let data = new FormData();
-            data.append("refun", this.imageFile);
+            data.append("refun", this.preview_list[0]);
             return data;
         },
     },
