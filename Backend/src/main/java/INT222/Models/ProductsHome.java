@@ -37,8 +37,8 @@ public class ProductsHome {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Discounts discount;
 
-    @OneToMany
-    @JoinColumn(name = "id",insertable = true, updatable = true)
+    @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id",insertable = true, updatable = true)
     private List<Images> images = new ArrayList<>();
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })

@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white dark:bg-gray-600 transition-colors rounded-lg shadow-md">
+    <div class="bg-white dark:bg-gray-600 transition-colors rounded-lg shadow-md" v-if="renderComponent">
         <splide :options="primaryOptions" ref="primary" :class="[this.$route.name == 'Home' ? 'sm:px-14 md:px-16 lg:px-20' : 'md:pt-3']">
             <splide-slide class="flex justify-center " v-for="slide in slides" :key="slide" @click="gogo">
                 <div class="">
@@ -25,8 +25,9 @@ export default {
         Splide,
         SplideSlide,
     },
-    props:{
-        images:Array
+    props: {
+        images: Array,
+        productId: String,
     },
     data() {
         return {
@@ -76,24 +77,39 @@ export default {
                     },
                 },
             },
-            slides: this.images?this.images:[
-                "https://image.bestreview.asia/wp-content/uploads/2020/03/best-gaming-chair.jpg", 
-                "https://kanexkane.com/wp-content/uploads/2020/04/kkblog-cover-review-logitech-g-pro-x-keyboard.jpg" ,
-                "https://instore.bnn.in.th/wp-content/uploads/2019/01/FTIM-10GamingGear.jpg" ,
-                "https://image.bestreview.asia/wp-content/uploads/2021/06/best-gaming-mouse.jpg" ,
-                "https://instore.bnn.in.th/wp-content/uploads/2020/05/gaming-gear-Cover-FB.jpg" ,
-                "https://mercular.s3.ap-southeast-1.amazonaws.com/images/articles/2020/10/Gaming-1000-bth-885x400.jpg" 
-            ],
+            prop_productId: "",
+            slides: {},
+            renderComponent: true,
         };
+    },
+    watch: {
+        images() {
+            this.slides = this.images;
+        },
+        productId() {
+            this.prop_productId = this.productId;
+        },
     },
     methods: {
         gogo() {
             console.log("gogo");
         },
+        forceRerender() {
+            this.renderComponent = false;
+
+            this.$nextTick(() => {
+                this.renderComponent = true;
+            });
+        },
     },
     mounted() {
         // Set the sync target.
-        this.$refs.primary.sync(this.$refs.secondary.splide);
+        setTimeout(() => {
+            this.forceRerender();
+        }, 100);
+        setTimeout(() => {
+            this.$refs.primary.sync(this.$refs.secondary.splide);
+        }, 100);
     },
 };
 </script>
