@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.ClientInfoStatus;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +51,12 @@ public class ProductController {
     @DeleteMapping("/delete/{id}")
     public void deleteProduct(@PathVariable long id) {
         if (this.productRepository.existsById(id)) {
+            Products product =  productRepository.getById(id);
+            List<Images> images = product.getImages();
+            for (int i = 0; i < images.size(); i++) {
+                this.imageRepository.deleteById(images.get(i).getId());
+            }
+
             this.productRepository.deleteById(id);
         } else
             throw new NotFoundException(id);
