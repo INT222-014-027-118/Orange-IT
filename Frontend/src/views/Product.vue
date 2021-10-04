@@ -3,7 +3,7 @@
         <div class="mx-auto max-w-7xl sm:mt-5 dark:bg-gray-700">
             <div class="md:mt-0 md:px-5 lg:mx-auto grid gap-3 grid-cols-3 ">
                 <div class="py-0 lg:py-5 mx-0 col-span-3 lg:col-span-2">
-                    <Carousel :images="images" />
+                    <Carousel :images="images" :productId="productId"/>
                 </div>
 
                 <div class="px-1 py-5 sm:px-16 md:px-20 lg:p-5 col-span-3 lg:col-span-1 my-5 bg-white rounded-md shadow-md">
