@@ -10,4 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface ImageRepository extends JpaRepository<Images,Long> {
 
     Images findTopByOrderByIdDesc();
+
+//    Images findFirstByProduct_id(long id);
+
 }
