@@ -14,29 +14,21 @@ const state = {
 
 const getters = {
     products: state => state.products,
-    product: state => state.product,
 }
 
 const actions = {
     async loadProducts({
         commit
     }) {
-        try {
-            const response = await axios.get(get_list)
-            commit('SET_PRODUCTS', response.data)
-        } catch (error) {
-            console.log(error);
-        }
-
-        // axios
-        //     .get(url)
-        //     .then(data => {
-        //         let products = data.data
-        //         commit('SET_PRODUCTS', products)
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //     })
+        axios
+            .get(get_list)
+            .then(res => {
+                let products = res.data
+                commit('SET_PRODUCTS', products)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     },
 }
 
