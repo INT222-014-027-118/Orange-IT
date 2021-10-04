@@ -7,7 +7,9 @@
                 </div>
 
                 <div class="px-1 py-5 sm:px-16 md:px-20 lg:p-5 col-span-3 lg:col-span-1 my-5 bg-white rounded-md shadow-md">
-                    <p class="px-2 text-primary">Brand : <span class="text-sm font-light"></span></p>
+                    <p class="px-2 text-primary">
+                        Brand : <span class="text-sm font-light"> {{ product.brandName }}</span>
+                    </p>
                     <p class="px-2 py-2 border-b border-black text-2xl font-semibold dark:border-gray-100 mb-2">{{ productName }}</p>
                     <div class="px-2 sm:px-3 space-y-3 lg:space-y-3">
                         <p class="text-2xl text-red-500 font-bold">฿ {{ product.price }}</p>
@@ -159,7 +161,7 @@ export default {
         this.scrollToTop();
     },
     async created() {
-        this.loading = true;
+        // this.loading = true;
         this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => {
             return res.data;
         });

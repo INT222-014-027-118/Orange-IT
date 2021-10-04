@@ -171,6 +171,16 @@ export default {
     list-style-type: none !important;
     margin: 0;
 }
+.splide--nav > .splide__track > .splide__list > .splide__slide {
+    border: 3px solid transparent;
+    border-color: #f6ae2d;
+    cursor: pointer;
+    opacity: 0.6;
+}
+.splide--nav > .splide__track > .splide__list > .splide__slide.is-active {
+    border-color: #ec6907;
+    opacity: 1;
+}
 
 @media only screen and (max-width: 640px) {
     /* .splide__pagination {
