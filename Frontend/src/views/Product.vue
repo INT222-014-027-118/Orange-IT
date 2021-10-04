@@ -3,7 +3,7 @@
         <div class="mx-auto max-w-7xl sm:mt-5 dark:bg-gray-700">
             <div class="md:mt-0 md:px-5 lg:mx-auto grid gap-3 grid-cols-3 ">
                 <div class="py-0 lg:py-5 mx-0 col-span-3 lg:col-span-2">
-                    <Carousel />
+                    <Carousel :images="product.images" />
                 </div>
 
                 <div class="px-1 py-5 sm:px-16 md:px-20 lg:p-5 col-span-3 lg:col-span-1 my-5 bg-white rounded-md shadow-md">
@@ -96,7 +96,7 @@ export default {
     data() {
         return {
             showItem: true,
-            // url: `http://137.116.145.41:9091`,
+            images:[],
             product: {},
             reviews: {
                 totalCount: 123,
@@ -163,6 +163,9 @@ export default {
     },
     async created() {
         this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => res.data);
+        for(let i=0; i < this.product.images.length ; i++){
+            this.images.push(`http://52.187.10.17/orange-it/image/get/${this.product.images[i].source}`) 
+        }
     },
 };
 </script>

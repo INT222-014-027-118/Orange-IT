@@ -3,13 +3,13 @@
         <splide :options="primaryOptions" ref="primary" :class="[this.$route.name == 'Home' ? 'sm:px-14 md:px-16 lg:px-20' : 'md:pt-3']">
             <splide-slide class="flex justify-center " v-for="slide in slides" :key="slide" @click="gogo">
                 <div class="">
-                    <img :src="slide.src" class="h-full w-full object-contain" alt="slide.alt" />
+                    <img :src="slide" class="h-full w-full object-contain" alt="slide.alt" />
                 </div>
             </splide-slide>
         </splide>
         <splide :options="secondaryOptions" ref="secondary" v-show="this.$route.name != 'Home'" class="sm:px-14 md:px-16 lg:px-20 py-2">
-            <splide-slide v-for="slide in slides" :key="slide.src">
-                <img :src="slide.src" alt="slide.alt" />
+            <splide-slide v-for="slide in slides" :key="slide">
+                <img :src="slide" alt="slide.alt" />
             </splide-slide>
         </splide>
     </div>
@@ -24,6 +24,9 @@ export default {
     components: {
         Splide,
         SplideSlide,
+    },
+    props:{
+        images:Array
     },
     data() {
         return {
@@ -73,13 +76,13 @@ export default {
                     },
                 },
             },
-            slides: [
-                { src: "https://image.bestreview.asia/wp-content/uploads/2020/03/best-gaming-chair.jpg" },
-                { src: "https://kanexkane.com/wp-content/uploads/2020/04/kkblog-cover-review-logitech-g-pro-x-keyboard.jpg" },
-                { src: "https://instore.bnn.in.th/wp-content/uploads/2019/01/FTIM-10GamingGear.jpg" },
-                { src: "https://image.bestreview.asia/wp-content/uploads/2021/06/best-gaming-mouse.jpg" },
-                { src: "https://instore.bnn.in.th/wp-content/uploads/2020/05/gaming-gear-Cover-FB.jpg" },
-                { src: "https://mercular.s3.ap-southeast-1.amazonaws.com/images/articles/2020/10/Gaming-1000-bth-885x400.jpg" },
+            slides: this.images?this.images:[
+                "https://image.bestreview.asia/wp-content/uploads/2020/03/best-gaming-chair.jpg", 
+                "https://kanexkane.com/wp-content/uploads/2020/04/kkblog-cover-review-logitech-g-pro-x-keyboard.jpg" ,
+                "https://instore.bnn.in.th/wp-content/uploads/2019/01/FTIM-10GamingGear.jpg" ,
+                "https://image.bestreview.asia/wp-content/uploads/2021/06/best-gaming-mouse.jpg" ,
+                "https://instore.bnn.in.th/wp-content/uploads/2020/05/gaming-gear-Cover-FB.jpg" ,
+                "https://mercular.s3.ap-southeast-1.amazonaws.com/images/articles/2020/10/Gaming-1000-bth-885x400.jpg" 
             ],
         };
     },

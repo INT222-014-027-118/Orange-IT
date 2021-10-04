@@ -78,7 +78,7 @@
             <router-link
                 :to="{
                     name: 'Product',
-                    params: { product_name: product.productName, productId: product.id, price: product.price, brand: product.brandName },
+                    params: { product_name: product.productName, productId: product.id},
                 }"
                 v-for="product in $store.getters.products"
                 :key="product.id"

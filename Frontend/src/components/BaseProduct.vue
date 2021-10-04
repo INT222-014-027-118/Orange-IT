@@ -2,7 +2,7 @@
     <div class="flex flex-col rounded-md shadow-md ring-2 ring-transparent hover:ring-primary cursor-pointer transition">
         <div class="overflow-hidden w-full relative pb-32 sm:pb-40 md:pb-44 lg:pb-44 select-none">
             <img
-                src="https://kanexkane.com/wp-content/uploads/2020/04/kkblog-cover-review-logitech-g-pro-x-keyboard.jpg"
+                :src="image"
                 class="absolute h-full w-full object-cover object-center select-none rounded-t-md dark:bg-gray-400 "
                 alt="Product image"
             />
@@ -25,7 +25,7 @@
 export default {
     data() {
         return {
-            image: "",
+            image: "https://kanexkane.com/wp-content/uploads/2020/04/kkblog-cover-review-logitech-g-pro-x-keyboard.jpg",
             hoverEditer: false,
             btnEditer: false,
         };
