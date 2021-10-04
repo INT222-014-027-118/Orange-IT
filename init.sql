@@ -343,8 +343,7 @@ INSERT INTO `images` (`id`, `source`, `label`, `product_id`) VALUES
   ('15', 'BlackSharkV2Pro2.png', 'BlackSharkV2Pro2', '4'),
   ('16', 'BlackSharkV2Pro3.jpg', 'BlackSharkV2Pro2', '4'),
   ('17', 'BlackSharkV2Pro4.jpg', 'BlackSharkV2Pro2', '4'),
-  ('18', 'BlackSharkV2Pro5.jpg', 'BlackSharkV2Pro2', '4'),
-  ;
+  ('18', 'BlackSharkV2Pro5.jpg', 'BlackSharkV2Pro2', '4');
 
 INSERT INTO `specs` (`id`, `spec`) VALUES ('1', 'Wired/Wireless'), ('2', 'Keyboard type'), ('3', 'Keyboard size'), 
   ('4', 'Switch'), ('5', 'Sound');

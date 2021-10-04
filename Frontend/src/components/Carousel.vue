@@ -26,8 +26,7 @@ export default {
         SplideSlide,
     },
     props: {
-        images: Array,
-        productId: String,
+        images: Array
     },
     data() {
         return {
@@ -78,17 +77,14 @@ export default {
                 },
             },
             prop_productId: "",
-            slides: {},
+            slides: [],
             renderComponent: true,
         };
     },
     watch: {
         images() {
             this.slides = this.images;
-        },
-        productId() {
-            this.prop_productId = this.productId;
-        },
+        }
     },
     methods: {
         gogo() {
@@ -110,6 +106,9 @@ export default {
         setTimeout(() => {
             this.$refs.primary.sync(this.$refs.secondary.splide);
         }, 100);
+    },
+    async created() {
+        this.slides = await this.images
     },
 };
 </script>
