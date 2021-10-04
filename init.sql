@@ -317,15 +317,34 @@ INSERT INTO `categories` (`id`, `category`, `parent_id`) VALUES ('2', 'Keyboard'
   ('3', 'Headset', NULL),('4', 'Wireless headset', '3'), ('5', 'Wireless mouse', '1'),(NULL, 'Wireless keyboard', '2');
 
 INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `brand_name`, `quantity_stock`, `discount_id`) VALUES
+  ('1', 'LOGITECH G G913 LIGHTSPEED WIRELESS RGB (GL CLICKY SWITCH) (RGB LED) (EN/TH)', '', '5990', 'Logitech', '55', NULL),
   ('2', 'RAZER HUNTSMAN ELITE (LINEAR OPTICAL SWITCH) (EN/TH)', '- Razer™ Opto-Mechanical 
   Switch with 45 G actuation force\r\n- 100 million keystroke lifespan\r\n- Chroma backlighting
   with 16.8 million customizable color options', '5990', 'Razer', '40', NULL),
   ('3', 'RAZER DEATHADDER V2', '- True 20,000 DPI Focus+ optical sensor\r\n- Up to 650 inches per second
   (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy', '1990', 'Razer', '20', NULL),
-  ('4', 'RAZER BLACKSHARK V2 PRO', 'Frequency Response : 12 Hz – 28 kHz\r\nImpedance : 32 Ω (1 kHz)', '6490', 'Razer', '50', NULL),
-  ('1', 'LOGITECH G G913 LIGHTSPEED WIRELESS RGB (GL CLICKY SWITCH) (RGB LED) (EN/TH)', '', '5990', 'Logitech', '55', NULL);
+  ('4', 'RAZER BLACKSHARK V2 PRO', 'Frequency Response : 12 Hz – 28 kHz\r\nImpedance : 32 Ω (1 kHz)', '6490', 'Razer', '50', NULL);
 
-INSERT INTO `images` (`id`, `source`, `label`, `product_id`) VALUES ('2', 'test.png', 'test', '4'), ('3', 'test1.png', 'test1', '3');
+INSERT INTO `images` (`id`, `source`, `label`, `product_id`) VALUES 
+  ('1', 'G913-1.png', 'G913-1', '1'), 
+  ('2', 'G913-2.png', 'G913-2', '1'), 
+  ('3', 'G913-3.png', 'G913-3', '1'), 
+  ('4', 'G913-4.png', 'G913-4', '1'), 
+  ('5', 'hmel-1-1.png', 'hmel-1-1', '2'), 
+  ('6', 'hmel-1-2.png', 'hmel-1-2', '2'), 
+  ('7', 'hmel-1-3.png', 'hmel-1-3', '2'), 
+  ('8', 'hmel-1-4.png', 'hmel-1-4', '2'), 
+  ('9', 'DeathAdder-V2-1.png', 'DeathAdder-V2-1', '3'),  
+  ('10', 'DeathAdder-V2-2.png', 'DeathAdder-V2-2', '3'),  
+  ('11', 'DeathAdder-V2-3.png', 'DeathAdder-V2-3', '3'),  
+  ('12', 'DeathAdder-V2-4.png', 'DeathAdder-V2-4', '3'),  
+  ('13', 'DeathAdder-V2-5.png', 'DeathAdder-V2-5', '3'), 
+  ('14', 'BlackSharkV2Pro1.png', 'BlackSharkV2Pro1', '4'), 
+  ('15', 'BlackSharkV2Pro2.png', 'BlackSharkV2Pro2', '4'),
+  ('16', 'BlackSharkV2Pro3.jpg', 'BlackSharkV2Pro2', '4'),
+  ('17', 'BlackSharkV2Pro4.jpg', 'BlackSharkV2Pro2', '4'),
+  ('18', 'BlackSharkV2Pro5.jpg', 'BlackSharkV2Pro2', '4'),
+  ;
 
 INSERT INTO `specs` (`id`, `spec`) VALUES ('1', 'Wired/Wireless'), ('2', 'Keyboard type'), ('3', 'Keyboard size'), 
   ('4', 'Switch'), ('5', 'Sound');

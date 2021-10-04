@@ -8,8 +8,8 @@
             />
         </div>
         <div class="z-10 p-3 bg-white dark:bg-gray-600 rounded-b-md relative">
-            <p class="h-9 font-normal text-sm mb-2 overflow-hidden overflow-ellipsis leading-tight">
-                {{ product.productName }}
+            <p class="h-9 font-normal text-sm mb-2 overflow-hidden overflow-ellipsis leading-tight text-black" :class="product.productName == '' ? 'text-opacity-40' : ''">
+                {{ product.productName == "" ? "Product name is not defined" : product.productName }}
             </p>
             <div class="bg-primary text-white px-3 inline-block font-light text-xs rounded-sm absolute bottom-10">Discount 99%</div>
             <div class="text-xl mt-6 flex justify-between items-center">
@@ -25,7 +25,7 @@
 export default {
     data() {
         return {
-            image: "https://kanexkane.com/wp-content/uploads/2020/04/kkblog-cover-review-logitech-g-pro-x-keyboard.jpg",
+            image: "",
             hoverEditer: false,
             btnEditer: false,
         };
@@ -48,6 +48,9 @@ export default {
                 return "in stock";
             }
         },
+    },
+    async created() {
+        this.image = await `http://52.187.10.17/orange-it/image/get/${this.product.images[0].source}`
     },
 };
 </script>

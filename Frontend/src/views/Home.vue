@@ -18,7 +18,7 @@
             <router-link
                 :to="{
                     name: 'Product',
-                    params: { product_name: product.productName, productId: product.id },
+                    params: { productName: product.productName == '' ? 'Product name is not defined' : product.productName, productId: product.id },
                 }"
                 v-for="product in $store.getters.products"
                 :key="product.id"
