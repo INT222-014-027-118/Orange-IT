@@ -1,6 +1,7 @@
 <template>
     <div class="flex p-1 py-3 mx-auto max-w-7xl ">
-        <div class="mx-1 w-full md:w-3/12 top-20 px-3 py-3 bg-white rounded-md shadow-md h-full">
+        <div class="fixed md:hidden" @click="showMore = !showMore" v-show="!showMore">back</div>
+        <div :class="[showMore ? 'w-full md:w-3/12' : 'hidden md:block']" class="mx-1 w-full  md:w-3/12 top-20 px-3 py-3 bg-white rounded-md shadow-md h-full">
             <div class="">
                 <div class="flex items-center ">
                     <div class="self-start py-1">
@@ -15,15 +16,16 @@
                     <!-- profile meta -->
                     <div class="w-full ml-2 overflow-hidden overflow-ellipsis">
                         <div class="md:flex md:flex-wrap md:items-center">
-                            <h2 class="inline-block mb-2 font-light lg:text-2xl sm:mr-5 sm:mb-0">
+                            <h2 class="inline-block mb-2 font-light lg:text-2xl sm:mr-5 sm:mb-0 truncate">
                                 mrtravlerrr_dasdqweewqe
                             </h2>
                             <!-- <a href="#" class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary rounded md:inline-block">Edit</a> -->
                             <router-link
                                 :to="{
                                     name: 'edit',
-                                    params: { editProfile: 'editProfile' },
+                                    params: { editProfile: 'account' },
                                 }"
+                                @click="showMore = !showMore"
                                 class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary rounded md:inline-block"
                                 >Edit</router-link
                             >
@@ -37,14 +39,22 @@
 
             <div class="border-b-2">
                 <div class="py-3 px-1 text-black">
-                    <span class="font-semibold">title setting</span>
+                    <router-link
+                        :to="{
+                            name: 'purchase',
+                            params: { purchaseDetail: 'purchase' },
+                        }"
+                        @click="showMore = !showMore"
+                    >
+                        <span class="font-semibold capitalize">my purchase list</span>
+                    </router-link>
                 </div>
-                <div class="mb-3 space-y-2 rounded-md">
+                <!-- <div class="mb-3 space-y-2 rounded-md">
+                    <a class="rounded-md hover:bg-gray-100 cursor-pointer px-3 block" value="text"> my purchase list </a>
                     <a class="rounded-md hover:bg-gray-100 cursor-pointer px-3 block" value="text"> sub title </a>
                     <a class="rounded-md hover:bg-gray-100 cursor-pointer px-3 block" value="text"> sub title </a>
                     <a class="rounded-md hover:bg-gray-100 cursor-pointer px-3 block" value="text"> sub title </a>
-                    <a class="rounded-md hover:bg-gray-100 cursor-pointer px-3 block" value="text"> sub title </a>
-                </div>
+                </div> -->
             </div>
 
             <div class="border-b-2">
@@ -58,12 +68,18 @@
             </div>
         </div>
 
-        <router-view class="mx-1 w-full md:w-9/12 top-20 px-3 py-3 bg-white rounded-md shadow-md h-full" />
+        <router-view class="mx-1 top-20 px-3 py-3 bg-white rounded-md shadow-md h-full" :class="[!showMore ? 'block  w-full md:w-9/12' : 'hidden md:block md:w-9/12']" />
     </div>
 </template>
 
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            showMore: true,
+        };
+    },
+};
 </script>
 
 <style></style>

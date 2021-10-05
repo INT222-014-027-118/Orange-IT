@@ -48,6 +48,11 @@ const routes = [{
       name: 'edit',
       props: true,
       component: () => import( /* webpackChunkName: "editProfile" */ '../views/setting/editProfile.vue')
+    }, {
+      path: ':purchaseDetail',
+      name: 'purchase',
+      props: true,
+      component: () => import( /* webpackChunkName: "purchase" */ '../views/setting/purchase.vue')
     }],
   },
   {
