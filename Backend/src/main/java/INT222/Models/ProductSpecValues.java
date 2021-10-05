@@ -16,6 +16,9 @@ import javax.persistence.Table;
 @Table(name = "Product_spec_values")
 public class ProductSpecValues {
     @Id
+    private long spec_id;
+
+    @Column
     private long product_id;
 
 
