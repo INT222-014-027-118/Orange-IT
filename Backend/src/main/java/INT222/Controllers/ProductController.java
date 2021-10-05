@@ -6,19 +6,23 @@ import INT222.Exceptions.NotFoundException;
 import INT222.Exceptions.NotFoundNameException;
 import INT222.Exceptions.SameProductNameException;
 import INT222.Models.Images;
+import INT222.Models.ProductSpecValues;
 import INT222.Models.Products;
 import INT222.Models.ProductsHome;
 import INT222.Repositories.ImageRepository;
 import INT222.Repositories.ProductHomeRepository;
 import INT222.Repositories.ProductRepository;
 
+import INT222.Repositories.ProductSpecValueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.ClientInfoStatus;
 import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/product")
@@ -34,6 +38,9 @@ public class ProductController {
     @Autowired
     private ImageRepository imageRepository;
 
+    @Autowired
+    private ProductSpecValueRepository productSpecValueRepository;
+
     //Get all Product
     @GetMapping("/list")
     public List<ProductsHome> getProduct() {
@@ -48,16 +55,30 @@ public class ProductController {
             throw new NotFoundException(id);
     }
 
+
     @DeleteMapping("/delete/{id}")
     public void deleteProduct(@PathVariable long id) {
+
         if (this.productRepository.existsById(id)) {
-            Products product =  productRepository.getById(id);
-            List<Images> images = product.getImages();
+
+long num =0;
+           Products products =  productRepository.getById(id);
+           List<Images> images = products.getImages();
             for (int i = 0; i < images.size(); i++) {
-                this.imageRepository.deleteById(images.get(i).getId());
+                Images image = imageRepository.getById(images.get(i).getId());
+                image.setProduct_id(num);
+                imageRepository.save(image);
+
+            }
+            List<ProductSpecValues> productSpecValues = products.getProductSpecValues();
+            for (int i = 0; i < productSpecValues.size(); i++) {
+                ProductSpecValues productSpecValue = productSpecValues.get(i);
+                productSpecValue.setProduct_id(num);
+                productSpecValueRepository.save(productSpecValue);
+
             }
 
-            this.productRepository.deleteById(id);
+    this.productRepository.deleteById(id);
         } else
             throw new NotFoundException(id);
     }
@@ -89,7 +110,7 @@ public class ProductController {
 //        Edit Product
     @PutMapping("/update")
     public void editProduct(@RequestBody Products products) {
-        if (productRepository.existsByProductName( products.getProductName())) {
+        if (productRepository.existsByProductName( products.getProductName()) && productRepository.existsById(products.getId())) {
             productRepository.save(products);
         }
         else throw new NotFoundException(products.getId());
