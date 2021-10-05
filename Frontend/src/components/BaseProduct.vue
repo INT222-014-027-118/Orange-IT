@@ -1,11 +1,7 @@
 <template>
     <div class="flex flex-col rounded-md shadow-md ring-2 ring-transparent hover:ring-primary cursor-pointer transition">
-        <div class="overflow-hidden w-full relative pb-32 sm:pb-40 md:pb-44 lg:pb-44 select-none">
-            <img
-                :src="image"
-                class="absolute h-full w-full object-cover object-center select-none rounded-t-md dark:bg-gray-400 "
-                alt="Product image"
-            />
+        <div class="overflow-hidden w-full relative pb-40 sm:pb-44 md:pb-48 lg:pb-56 select-none">
+            <img :src="image" class="absolute h-full w-full object-contain object-center select-none rounded-t-md bg-white" alt="Product image" />
         </div>
         <div class="z-10 p-3 bg-white dark:bg-gray-600 rounded-b-md relative">
             <p class="h-9 font-normal text-sm mb-2 overflow-hidden overflow-ellipsis leading-tight text-black" :class="product.productName == '' ? 'text-opacity-40' : ''">
@@ -50,7 +46,7 @@ export default {
         },
     },
     async created() {
-        this.image = await `http://52.187.10.17/orange-it/image/get/${this.product.images[0].source}`
+        this.image = await `http://52.187.10.17/orange-it/image/get/${this.product.images[0].source}`;
     },
 };
 </script>

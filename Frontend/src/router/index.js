@@ -41,7 +41,14 @@ const routes = [{
   {
     path: '/user',
     name: 'Profile',
-    component: () => import( /* webpackChunkName: "Profile" */ '../views/Profile.vue')
+    component: () => import( /* webpackChunkName: "Profile" */ '../views/Profile.vue'),
+    props: true,
+    children: [{
+      path: ':editProfile',
+      name: 'edit',
+      props: true,
+      component: () => import( /* webpackChunkName: "editProfile" */ '../views/setting/editProfile.vue')
+    }],
   },
   {
     path: '/register',

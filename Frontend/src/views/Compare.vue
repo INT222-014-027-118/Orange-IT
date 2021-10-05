@@ -1,7 +1,7 @@
 <template>
     <div class="p-1 mx-auto max-w-7xl sm:mt-5 dark:bg-gray-700">
         <div class="p-1 md:mt-0 md:p-5">
-            <h1 class="py-3 text-2xl font-bold">Compare products</h1>
+            <h1 class="py-3 text-2xl font-semibold">Compare products</h1>
             <!-- <div class="overflow-auto max-w-7xl"> -->
             <!-- component -->
             <!-- <table class="table-auto">

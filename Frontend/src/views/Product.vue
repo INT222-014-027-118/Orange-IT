@@ -35,12 +35,9 @@
                             </div>
                         </div>
 
-                        <button
-                            class="bg-primary text-white select-none block py-3 px-4 text-center w-full rounded-md hover:shadow-md hover:bg-primaryfocus cursor-pointer fixed sm:static bottom-12 left-0 z-40"
-                            @click="addCartItem()"
-                        >
-                            Add to Cart
-                        </button>
+                        <div class="fixed bottom-0 left-0 w-full px-5 py-2 bg-white pb-14 md:pb-0 md:px-0 md:static">
+                            <button class="w-full p-3 text-center text-white rounded-md bg-primary hover:bg-secondary z-40">Add to Cart</button>
+                        </div>
                         <div class="text-xl text-green-600 font-bold flex items-center"><span class="material-icons"> check_circle_outline </span> {{ stockCheck }}</div>
                     </div>
                 </div>
