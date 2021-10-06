@@ -41,7 +41,21 @@ const routes = [{
   {
     path: '/user',
     name: 'Profile',
-    component: () => import( /* webpackChunkName: "Profile" */ '../views/Profile.vue')
+    component: () => import( /* webpackChunkName: "Profile" */ '../views/Profile.vue'),
+    props: true,
+    children: [{
+        path: ':purchaseDetail',
+        name: 'purchase',
+        props: true,
+        component: () => import( /* webpackChunkName: "purchase" */ '../views/setting/purchase.vue')
+      },
+      {
+        path: ':manage',
+        name: 'manageProfile',
+        props: true,
+        component: () => import( /* webpackChunkName: "manageProfile" */ '../views/setting/manageProfile.vue')
+      },
+    ],
   },
   {
     path: '/register',

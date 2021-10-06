@@ -1,8 +1,8 @@
 <template>
     <div>
-        <Carousel class="container mx-auto lg:max-w-7xl" :images="promotionImages"/>
+        <Carousel class="container mx-auto lg:max-w-7xl" :images="promotionImages" />
 
-        <div class="container lg:max-w-7xl grid grid-cols-4 gap-1 md:gap-3 mx-auto my-3 md:my-7 px-1">
+        <div class="container lg:max-w-7xl grid grid-cols-4 gap-2 md:gap-3 mx-auto my-3 md:my-7 p-2 sm:px-5 md:px-3">
             <router-link :to="{ name: 'resultProducts', params: { categoryName: category.itmeName } }" v-for="category in categorys" :key="category">
                 <div class="grid-cols-5 transition bg-white rounded-md shadow-md cursor-pointer md:grid md:h-28 ring ring-transparent hover:ring-primary">
                     <div class="flex flex-col items-center justify-center col-span-3 p-3 text-center bg-white rounded-md sm:p-5 md:p-7 dark:bg-blue-900 md:bg-gradient-to-r from-secondary to-white">
@@ -14,7 +14,7 @@
             </router-link>
         </div>
 
-        <div class="container lg:max-w-7xl p-1 sm:px-5 md:px-0.5 mx-auto grid gap-1 md:gap-2 lg:gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+        <div class="container lg:max-w-7xl p-2 sm:px-5 md:px-3 mx-auto grid gap-1 md:gap-2 lg:gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
             <router-link
                 :to="{
                     name: 'Product',
@@ -26,6 +26,15 @@
                 <BaseProduct :product="product" />
             </router-link>
         </div>
+
+        <router-link
+            :to="{
+                name: 'purchase',
+                params: { purchaseDetail: 'purchase' },
+            }"
+            class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary rounded md:inline-block"
+            >Go to purchase</router-link
+        >
     </div>
 </template>
 
@@ -44,14 +53,14 @@ export default {
                 { itmeName: "keyboard", image: keyboard, icon: "keyboard" },
                 { itmeName: "mouse", image: mouse, icon: "mouse" },
             ],
-            promotionImages:[               
+            promotionImages: [
                 "https://image.bestreview.asia/wp-content/uploads/2020/03/best-gaming-chair.jpg",
-                "https://kanexkane.com/wp-content/uploads/2020/04/kkblog-cover-review-logitech-g-pro-x-keyboard.jpg" ,
-                "https://instore.bnn.in.th/wp-content/uploads/2019/01/FTIM-10GamingGear.jpg" ,
-                "https://image.bestreview.asia/wp-content/uploads/2021/06/best-gaming-mouse.jpg" ,
-                "https://instore.bnn.in.th/wp-content/uploads/2020/05/gaming-gear-Cover-FB.jpg" ,
-                "https://mercular.s3.ap-southeast-1.amazonaws.com/images/articles/2020/10/Gaming-1000-bth-885x400.jpg"
-            ]
+                "https://kanexkane.com/wp-content/uploads/2020/04/kkblog-cover-review-logitech-g-pro-x-keyboard.jpg",
+                "https://instore.bnn.in.th/wp-content/uploads/2019/01/FTIM-10GamingGear.jpg",
+                "https://image.bestreview.asia/wp-content/uploads/2021/06/best-gaming-mouse.jpg",
+                "https://instore.bnn.in.th/wp-content/uploads/2020/05/gaming-gear-Cover-FB.jpg",
+                "https://mercular.s3.ap-southeast-1.amazonaws.com/images/articles/2020/10/Gaming-1000-bth-885x400.jpg",
+            ],
         };
     },
     methods: {
