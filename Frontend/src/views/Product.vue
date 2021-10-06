@@ -8,15 +8,17 @@
 
                 <div class="px-1 py-5 sm:px-16 md:px-20 lg:p-5 col-span-3 lg:col-span-1 my-5 bg-white rounded-md shadow-md">
                     <p class="px-2 text-primary">
-                        Brand : <span class="text-sm font-light"> {{ product.brandName }}</span>
+                        {{ product.brandName }}
                     </p>
                     <p class="px-2 py-2 border-b border-black text-2xl font-semibold dark:border-gray-100 mb-2">{{ productName }}</p>
-                    <div class="px-2 sm:px-3 space-y-3 lg:space-y-3">
+                    <div class="px-2 sm:px-3 space-y-3 flex flex-col">
                         <p class="text-2xl text-red-500 font-bold">฿ {{ product.price }}</p>
                         <p class="text-sm font-light">Product ID: {{ product.id }}</p>
-                        <div class="bg-primary text-white px-4 py-1 inline-block text-xs rounded-sm">Discount 99%</div>
+                        <div class="inline-flex">
+                            <div class="bg-primary text-white px-4 py-1 text-xs rounded-sm">Discount 99%</div>
+                        </div>
                         <div class="w-full">
-                            <p class="text-sm">color</p>
+                            <p class="text-sm">color :</p>
                             <div class="w-full flex flex-wrap py-1">
                                 <label :for="color.id" v-for="color in product.colors" :key="color" class="flex flex-col items-center">
                                     <input
@@ -35,20 +37,28 @@
                             </div>
                         </div>
 
-                        <div class="fixed bottom-0 left-0 w-full px-5 py-2 bg-white pb-14 md:pb-0 md:px-0 md:static">
-                            <button class="w-full p-3 text-center text-white rounded-md bg-primary hover:bg-secondary z-40">Add to Cart</button>
+                        <div class="text-xl font-bold flex items-center" :class="[stockCheck.class]">
+                            <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
                         </div>
-                        <div class="text-xl text-green-600 font-bold flex items-center"><span class="material-icons"> check_circle_outline </span> {{ stockCheck }}</div>
+                        <div class="fixed bottom-0 left-0 w-full px-5 py-2 bg-white pb-14 md:pb-0 md:px-0 md:static">
+                            <button class="w-full p-3 text-center text-white rounded-md bg-primary hover:bg-secondary z-40" @click="addCartItem">Add to Cart</button>
+                        </div>
                     </div>
                 </div>
 
                 <div class="my-5 w-full col-span-3">
-                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md">Description: <span class="font-light text-base">{{ productName }}</span></p>
-                    <p class="px-5 py-5" :class="[product.description == '' ? 'text-black text-opacity-50' : '']">{{ product.description == "" ? "No description" : product.description }}</p>
+                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md capitalize">
+                        description: <span class="capitalize text-sm">{{ productName }}</span>
+                    </p>
+                    <p class="px-5 md:px-8 py-5 leading-relaxed" :class="[product.description == '' ? 'text-black text-opacity-50' : '']">
+                        {{ product.description == "" ? "No description" : product.description }}
+                    </p>
                 </div>
 
                 <div class="mb-5 w-full col-span-3">
-                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md">Attribute: <span class="font-light text-base">{{ productName }}</span></p>
+                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md capitalize">
+                        attribute: <span class="capitalize text-sm">{{ productName }}</span>
+                    </p>
                     <div class="overflow-hidden rounded p-2 sm:px-16 md:px-20 lg:px-5">
                         <table class="min-w-full bg-white">
                             <tbody class="text-gray-700">
@@ -62,7 +72,9 @@
                 </div>
 
                 <div class="mb-5 w-full col-span-3">
-                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md">Rating: <span class="font-light text-base">{{ productName }}</span></p>
+                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md capitalize">
+                        rating: <span class="capitalize text-sm">{{ productName }}</span>
+                    </p>
                     <Raring />
                 </div>
                 <p class="col-span-3 font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md">Customer reviews</p>
@@ -148,12 +160,16 @@ export default {
     },
     computed: {
         stockCheck() {
+            let stock = {};
             if (this.product.quantityStock == 0) {
-                return "out of stock";
-            } else if (this.product.quantityStock < 20) {
-                return "low stock";
+                stock = { class: "text-red-500", icon: "cancel", text: "out of stock" };
+                return stock;
+            } else if (this.product.quantityStock < 10) {
+                stock = { class: "text-yellow-500", icon: "error_outline", text: `low stock (${this.product.quantityStock} piece)` };
+                return stock;
             } else {
-                return "in stock";
+                stock = { class: "text-green-600", icon: "check_circle", text: "in stock" };
+                return stock;
             }
         },
     },
@@ -171,54 +187,4 @@ export default {
     },
 };
 </script>
-<style scoped>
-/* [type="radio"]:checked {
-    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='red' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
-} */
-/* 
-[type="checkbox"],
-[type="radio"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    padding: 0;
-    -webkit-print-color-adjust: exact;
-    color-adjust: exact;
-    display: inline-block;
-    vertical-align: middle;
-    background-origin: border-box;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    flex-shrink: 0;
-    height: 1rem;
-    width: 1rem;
-    color: #2563eb;
-    background-color: #fff;
-    border-color: #6b7280;
-    border-width: 0px;
-}
-
-[type="checkbox"]:focus,
-[type="radio"]:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-    --tw-ring-inset: var(--tw-empty);
-    --tw-ring-offset-width: 2px;
-    --tw-ring-offset-color: #fff;
-    --tw-ring-color: #2563eb;
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
-
-[type="checkbox"]:checked,
-[type="radio"]:checked {
-    border-color: transparent;
-    background-color: currentColor;
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-} */
-</style>
+<style scoped></style>

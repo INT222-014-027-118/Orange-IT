@@ -38,8 +38,8 @@ export default {
         stockCheck() {
             if (this.product.quantityStock == 0) {
                 return "out of stock";
-            } else if (this.product.quantityStock < 20) {
-                return "low stock";
+            } else if (this.product.quantityStock < 10) {
+                return `low stock (${this.product.quantityStock})`;
             } else {
                 return "in stock";
             }
