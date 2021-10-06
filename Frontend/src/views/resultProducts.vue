@@ -1,6 +1,6 @@
 <template>
     <div class="container flex p-1 py-11 lg:py-5 mx-auto lg:max-w-7xl ">
-        <div class="fixed left-0 z-30 mx-2 lg:w-3/12 top-12 sm:top-20 lg:static lg:bg-transparent">
+        <div class="fixed left-0 z-30 mx-2 lg:w-3/12 top-12 lg:top-26 my-5 sm:top-20 lg:bg-transparent">
             <div class="lg:hidden">
                 <button class="material-icons p-2 bg-white rounded-md shadow-md select-none cursor-pointer " @click="showFilter = !showFilter">
                     filter_list
@@ -74,7 +74,18 @@
                 </div>
             </div>
         </div>
-        <div class="container sm:px-5 md:px-0.5 mx-auto grid gap-1 md:gap-2 lg:gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 col-span-4">
+        <div class="mx-2 lg:w-3/12" />
+        <div class="container w-9/12 sm:px-5 md:px-0.5 mx-auto grid gap-1 md:gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 col-span-4">
+            <router-link
+                :to="{
+                    name: 'Product',
+                    params: { productName: product.productName == '' ? 'Product name is not defined' : product.productName, productId: product.id },
+                }"
+                v-for="product in $store.getters.products"
+                :key="product.id"
+            >
+                <BaseProduct :product="product" />
+            </router-link>
             <router-link
                 :to="{
                     name: 'Product',

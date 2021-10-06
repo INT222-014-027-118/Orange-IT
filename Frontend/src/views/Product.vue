@@ -43,28 +43,31 @@
                 </div>
 
                 <div class="my-5 w-full col-span-3">
-                    <div class="p-1 sm:px-16 md:px-20 lg:px-5">
-                        <p class="font-semibold text-xl px-2">Attribute: {{ productName }}</p>
-                        <div class="overflow-hidden rounded p-1">
-                            <table class="min-w-full bg-white">
-                                <tbody class="text-gray-700">
-                                    <tr :class="attribute % 2 == 0 ? 'bg-gray-100' : 'bg-gray-50'" v-for="attribute in [0, 1, 2, 3, 4]" :key="attribute">
-                                        <td class="w-1/3 text-left py-3 px-4">title</td>
-                                        <td class="w-1/3 text-left py-3 px-4">Smith</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md">Description: <span class="font-light text-base">{{ productName }}</span></p>
+                    <p class="px-5 py-5" :class="[product.description == '' ? 'text-black text-opacity-50' : '']">{{ product.description == "" ? "No description" : product.description }}</p>
+                </div>
+
+                <div class="mb-5 w-full col-span-3">
+                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md">Attribute: <span class="font-light text-base">{{ productName }}</span></p>
+                    <div class="overflow-hidden rounded p-2 sm:px-16 md:px-20 lg:px-5">
+                        <table class="min-w-full bg-white">
+                            <tbody class="text-gray-700">
+                                <tr :class="attribute % 2 == 0 ? 'bg-gray-100' : 'bg-gray-50'" v-for="attribute in [0, 1, 2, 3, 4]" :key="attribute">
+                                    <td class="w-1/3 text-left py-3 px-4">title</td>
+                                    <td class="w-1/3 text-left py-3 px-4">Smith</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <div class="p-1 mb-5 w-full col-span-3 sm:px-16 md:px-20 lg:px-5">
-                    <p class="font-semibold text-xl px-2">Rating: {{ productName }}</p>
+                <div class="mb-5 w-full col-span-3">
+                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md">Rating: <span class="font-light text-base">{{ productName }}</span></p>
                     <Raring />
                 </div>
+                <p class="col-span-3 font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md">Customer reviews</p>
                 <Review class="col-span-3 lg:col-span-1 p-1 sm:px-16 md:px-20 lg:px-5 mb-5" />
                 <div class="col-span-3 lg:col-span-2 sm:px-16 md:px-20 lg:px-5 my-6">
-                    <!-- <p class="font-semibold text-xl">Customer reviews</p> -->
                     <Comments />
                     <Comments />
                     <Comments />
