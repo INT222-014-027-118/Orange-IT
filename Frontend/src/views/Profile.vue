@@ -22,8 +22,8 @@
                             <!-- <a href="#" class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary rounded md:inline-block">Edit</a> -->
                             <router-link
                                 :to="{
-                                    name: 'edit',
-                                    params: { editProfile: 'account' },
+                                    name: 'manageProfile',
+                                    params: { manage: 'account' },
                                 }"
                                 @click="showMore = !showMore"
                                 class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary rounded md:inline-block"
