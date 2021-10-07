@@ -123,7 +123,7 @@ export default {
         },
     },
     mounted() {
-        this.scrollToTop();
+        this.$store.dispatch("loadProductsByCategory",this.categoryName);
     },
 };
 </script>

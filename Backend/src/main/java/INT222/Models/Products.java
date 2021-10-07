@@ -58,7 +58,7 @@ public class Products {
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "Products_has_categories", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Categories> catergories = new ArrayList<>();
+    private List<Categories> categories = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id",insertable = true, updatable = true)
