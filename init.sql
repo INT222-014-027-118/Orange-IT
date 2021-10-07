@@ -2,6 +2,9 @@ CREATE USER 'adminUser'@'%' IDENTIFIED BY 'password';
 
 GRANT ALL ON *.* TO 'adminUser'@'%';
 
+SET FOREIGN_KEY_CHECKS=0;
+SET GLOBAL FOREIGN_KEY_CHECKS=0;
+
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `category` VARCHAR(40) NOT NULL,
@@ -355,4 +358,4 @@ INSERT INTO `products_has_categories` (`product_id`, `category_id`) VALUES ('1',
 
 INSERT INTO `product_spec_values` (`product_id`, `spec_id`, `spec_value`) VALUES ('2', '3', '50'), ('2', '5', 'Clicky');
 
-SET GLOBAL FOREIGN_KEY_CHECKS=0;
+

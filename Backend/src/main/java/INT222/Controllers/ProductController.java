@@ -5,21 +5,17 @@ import INT222.Exceptions.NotFoundException;
 
 import INT222.Exceptions.NotFoundNameException;
 import INT222.Exceptions.SameProductNameException;
-import INT222.Models.Images;
-import INT222.Models.ProductSpecValues;
-import INT222.Models.Products;
-import INT222.Models.ProductsHome;
-import INT222.Repositories.ImageRepository;
-import INT222.Repositories.ProductHomeRepository;
-import INT222.Repositories.ProductRepository;
+import INT222.Models.*;
+import INT222.Repositories.*;
 
-import INT222.Repositories.ProductSpecValueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Array;
 import java.sql.ClientInfoStatus;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,11 +37,29 @@ public class ProductController {
     @Autowired
     private ProductSpecValueRepository productSpecValueRepository;
 
-    //Get all Product
+
+    //Get all Products
     @GetMapping("/list")
     public List<ProductsHome> getProduct() {
         return productHomeRepository.findAll();
     }
+
+    //Get Products by Category
+    @GetMapping("getByCategory/{category}")
+    public List<ProductsHome> getProductByCategory(@PathVariable("category") String category) {
+        List<ProductsHome> productsByCategory = new ArrayList<ProductsHome>();
+        List<ProductsHome> products = productHomeRepository.findAll();
+        for (int i = 0; i < products.size(); i++) {
+            List<Categories> categories = products.get(i).getCatergories();
+            for (int j = 0; j < categories.size(); j++) {
+                if(categories.get(j).getCategory().toLowerCase().equals(category.toLowerCase())){
+                    productsByCategory.add(products.get(i));
+                }
+            }
+        }
+        return productsByCategory;
+    }
+
 
     @GetMapping("/{id}")
     public Optional<Products> getProductById(@PathVariable(value = "id") long id) {
@@ -114,8 +128,6 @@ long num =0;
             productRepository.save(products);
         }
         else throw new NotFoundException(products.getId());
-
-
     }
 
 //    @RequestMapping("/product")

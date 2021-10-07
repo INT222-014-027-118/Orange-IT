@@ -17,14 +17,10 @@ public interface ProductRepository extends JpaRepository<Products,Long> {
 
 
    List<Products> findAllByBrandNameContaining(String name);
-
-  List<Products> findAllByProductNameContaining(String name);
-
-  Boolean existsByProductName(String name);
-
-  Boolean existsProductsByBrandNameContaining(String name);
-
-    Products findTopByOrderByIdDesc();
+   List<Products> findAllByProductNameContaining(String name);
+   Boolean existsByProductName(String name);
+   Boolean existsProductsByBrandNameContaining(String name);
+   Products findTopByOrderByIdDesc();
 
 
 
