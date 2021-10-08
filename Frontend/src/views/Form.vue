@@ -259,7 +259,7 @@ export default {
                 colors: [],
                 specs: [],
                 images: [],
-                catergories: [],
+                categories: [],
                 productSpecValues: [],
             },
 
@@ -314,31 +314,8 @@ export default {
                 return { id: 1, source: image.name, label: image.name.split(".")[0], product_id: 1 };
             });
             this.product.images = imagesArray;
+            this.product.categories = [this.selectRootCat,this.selectChildCat];
             this.$store.dispatch("addProduct", this.product);
-
-            // let data = new FormData();
-            // console.log(this.imageInfo[0]);
-            // data.append("orange", this.imageInfo[0]);
-            // axios
-            //     .post( `http://52.187.10.17/orange-it/image/add`, data,
-            //     )
-            //     .then(response => {
-            //         console.log("response: ", response)
-            //     })
-            // axios({
-            // method: 'post',
-            // headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            // url: 'http://52.187.10.17/orange-it/image/add',
-            // data: data
-            // }).then(function (response) {
-            //     console.log(response.data);
-            // });
-
-            // let data = new FormData();
-            // console.log(this.imageInfo[0]);
-            // data.append("orange", this.imageInfo[0]);
-            // axios.post("http://52.187.10.17/orange-it/image/add", data).then((res) => res);
-
             this.$store.dispatch("uploadImages", this.imageInfo);
         },
         chooseRootCategory(category) {
@@ -347,7 +324,6 @@ export default {
         },
         chooseSubCategory(category) {
             this.selectChildCat = category;
-            this.product.catergories = [category];
         },
         selected(choosed) {
             this.attributeSelect = choosed;

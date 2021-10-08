@@ -88,16 +88,6 @@
             >
                 <BaseProduct :product="product" />
             </router-link>
-            <router-link
-                :to="{
-                    name: 'Product',
-                    params: { productName: product.productName == '' ? 'Product name is not defined' : product.productName, productId: product.id },
-                }"
-                v-for="product in $store.getters.products"
-                :key="product.id"
-            >
-                <BaseProduct :product="product" />
-            </router-link>
         </div>
     </div>
 </template>

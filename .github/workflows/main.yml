@@ -17,5 +17,5 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         script: |
           cd Orange-IT
-          git pull 
+          git pull origin master
           docker-compose up -d --build 
