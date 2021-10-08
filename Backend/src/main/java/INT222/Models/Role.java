@@ -16,10 +16,10 @@ public class Role {
 
 
     @Id
-    private String roleName;
+    private String name;
 
     @Column
-    private String roleDescription;
+    private String description;
 
 
 }

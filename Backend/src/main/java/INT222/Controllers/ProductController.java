@@ -46,7 +46,7 @@ public class ProductController {
 
     //Get Products by Category
     @GetMapping("getByCategory/{category}")
-    public List<ProductsHome> getProductByCategory(@PathVariable("category") String category) {
+    public List<ProductsHome> getProductHomeByCategory(@PathVariable("category") String category) {
         List<ProductsHome> productsByCategory = new ArrayList<ProductsHome>();
         List<ProductsHome> products = productHomeRepository.findAll();
         for (int i = 0; i < products.size(); i++) {
@@ -58,6 +58,9 @@ public class ProductController {
             }
         }
         return productsByCategory;
+
+
+
     }
 
 

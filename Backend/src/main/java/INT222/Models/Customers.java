@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -26,10 +27,20 @@ public class Customers {
     @Column
     private int points;
 
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinTable(name = "Role",
+//            joinColumns = {
+//                    @JoinColumn(name = "USER_ID")
+//            },
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "ROLE_ID")
+//            }
+//    )
+//    private Set<Role> role;
 
-//    @ManyToOne
-//    @JoinColumn(name = "roleId")
-//    private Role role;
+    @JoinColumn(nullable = true)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    private Role role;
 
 
 }
