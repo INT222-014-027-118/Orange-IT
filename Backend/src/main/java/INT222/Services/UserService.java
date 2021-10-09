@@ -20,18 +20,19 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
 
-
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public Customers registerNewUser(Customers user) {
         Role role = roleRepository.findById("User").get();
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(role);
-        user.setRole((Role) userRoles);
+        user.setRole(userRoles);
         user.setPassword(getEncodedPassword(user.getPassword()));
 
         return userRepository.save(user);
     }
+
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
     }

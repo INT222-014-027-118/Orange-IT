@@ -15,7 +15,7 @@ import java.util.Set;
 public class Customers {
 
     @Id
-    private String userName;
+    private String username;
     @Column(name = "firstname")
     private String userFirstName;
     @Column(name = "lastname")
@@ -27,20 +27,15 @@ public class Customers {
     @Column
     private int points;
 
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(name = "Role",
-//            joinColumns = {
-//                    @JoinColumn(name = "USER_ID")
-//            },
-//            inverseJoinColumns = {
-//                    @JoinColumn(name = "ROLE_ID")
-//            }
-//    )
-//    private Set<Role> role;
-
-    @JoinColumn(nullable = true)
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    private Role role;
-
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "Customer_role",
+            joinColumns = {
+                    @JoinColumn(name = "user_name")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_name")
+            }
+    )
+    private Set<Role> role;
 
 }

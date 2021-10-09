@@ -29,7 +29,7 @@ public class JwtService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     public JwtResponse createJwtToken(JwtRequest jwtRequest) throws Exception {
@@ -50,7 +50,7 @@ public class JwtService implements UserDetailsService {
 
         if (user != null) {
             return new org.springframework.security.core.userdetails.User(
-                    user.getUserName(),
+                    user.getUsername(),
                     user.getPassword(),
                     getAuthority(user)
             );
@@ -61,9 +61,9 @@ public class JwtService implements UserDetailsService {
 
     private Set getAuthority(Customers user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-//        user.getRole().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName()));
-//        });
+        user.getRole().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        });
         return authorities;
     }
 
