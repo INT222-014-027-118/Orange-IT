@@ -13,14 +13,14 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "specs")
-public class Specs {
+@Table(name = "attributes")
+public class Attributes {
 
 
     @Id
     private long id;
 
     @Column
-    private String spec;
+    private String attribute;
 
 }

@@ -3,14 +3,10 @@ package INT222.Models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -49,8 +45,8 @@ public class Products {
     private List<Colors> colors = new ArrayList<>();
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "product_spec_values", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "spec_id"))
-    private List<Specs>  specs = new ArrayList<>();
+    @JoinTable(name = "products_has_attributes", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "attribute_id"))
+    private List<Attributes>  attributes = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id",insertable = true, updatable = true)
@@ -62,7 +58,7 @@ public class Products {
 
     @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id",insertable = true, updatable = true)
-    private List<ProductSpecValues> productSpecValues;
+    private List<ProductsHasAttributes> productsHasAttributes;
 
 
 //    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
