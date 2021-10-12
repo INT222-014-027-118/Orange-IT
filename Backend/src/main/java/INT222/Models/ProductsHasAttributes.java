@@ -13,16 +13,16 @@ import javax.persistence.Table;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Product_spec_values")
-public class ProductSpecValues {
+@Table(name = "products_has_attributes")
+public class ProductsHasAttributes {
     @Id
-    private long spec_id;
+    private long attribute_id;
 
     @Column
     private long product_id;
 
 
 
-    @Column(name = "spec_value")
-    private String specValue;
+    @Column(name = "attribute_value")
+    private String attribute_value;
 }

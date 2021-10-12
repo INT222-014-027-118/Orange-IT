@@ -10,12 +10,8 @@ import INT222.Repositories.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Array;
-import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -88,9 +84,9 @@ long num =0;
                 imageRepository.save(image);
 
             }
-            List<ProductSpecValues> productSpecValues = products.getProductSpecValues();
-            for (int i = 0; i < productSpecValues.size(); i++) {
-                ProductSpecValues productSpecValue = productSpecValues.get(i);
+            List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
+            for (int i = 0; i < productsHasAttributes.size(); i++) {
+                ProductsHasAttributes productSpecValue = productsHasAttributes.get(i);
                 productSpecValue.setProduct_id(num);
                 productSpecValueRepository.save(productSpecValue);
 

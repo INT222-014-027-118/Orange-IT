@@ -1,8 +1,6 @@
 package INT222.Controllers;
 
-import INT222.Models.Categories;
-import INT222.Models.Colors;
-import INT222.Models.Specs;
+import INT222.Models.Attributes;
 import INT222.Repositories.SpecRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +16,7 @@ public class SpecController {
     private SpecRepository specRepository;
 
     @GetMapping("/list")
-    public List<Specs> getSpec(){
+    public List<Attributes> getSpec(){
         return specRepository.findAll();
     }
 
@@ -28,12 +26,12 @@ public class SpecController {
     }
 
     @PutMapping("/update")
-    public void editSpec(@RequestBody Specs specs) {
+    public void editSpec(@RequestBody Attributes specs) {
         specRepository.save(specs);
     }
 
     @PostMapping("/add")
-    public void addSpec(@RequestBody Specs specs) {
+    public void addSpec(@RequestBody Attributes specs) {
         specRepository.save(specs);
     }
 }
