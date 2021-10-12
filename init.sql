@@ -28,13 +28,19 @@ CREATE TABLE IF NOT EXISTS `colors` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-CREATE TABLE IF NOT EXISTS `customers` (
+CREATE TABLE IF NOT EXISTS `roles` (
+  `name` VARCHAR(50) NOT NULL,
+  `description` VARCHAR(500) NOT NULL,
+  PRIMARY KEY (`name`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(50) NOT NULL,
   `password` VARCHAR(50) NOT NULL,
-  `firstname` VARCHAR(50) NOT NULL,
-  `lastname` VARCHAR(50) NOT NULL,
-  `email` VARCHAR(50) NOT NULL,
+  `firstname` VARCHAR(50) ,
+  `lastname` VARCHAR(50) ,
+  `email` VARCHAR(50) ,
   `points` INT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) ,
@@ -52,13 +58,13 @@ CREATE TABLE IF NOT EXISTS `delivery_details` (
   `sub_district` VARCHAR(50) NOT NULL,
   `postal_code` VARCHAR(5) NOT NULL,
   `address` VARCHAR(150) NOT NULL,
-  `customer_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `customer_id`),
-  INDEX `fk_Delivery_details_Customers_idx` (`customer_id` ASC) ,
+  `users_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_Delivery_details_Customers`
-    FOREIGN KEY (`customer_id`)
-    REFERENCES `customers` (`id`))
+  INDEX `fk_delivery_details_users1_idx` (`users_id` ASC) ,
+  CONSTRAINT `fk_delivery_details_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `users` (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -68,14 +74,13 @@ CREATE TABLE IF NOT EXISTS `shippings` (
   `company_shipping` VARCHAR(60) NOT NULL,
   `tracking_number` VARCHAR(13) NOT NULL,
   `delivery_detail_id` INT NOT NULL,
-  `customer_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `delivery_detail_id`, `customer_id`),
+  PRIMARY KEY (`id`),
   UNIQUE INDEX `tracking_number_UNIQUE` (`tracking_number` ASC) ,
-  INDEX `fk_Shippings_Delivery_details1_idx` (`delivery_detail_id` ASC, `customer_id` ASC) ,
+  INDEX `fk_Shippings_Delivery_details1_idx` (`delivery_detail_id` ASC) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Shippings_Delivery_details1`
-    FOREIGN KEY (`delivery_detail_id` , `customer_id`)
-    REFERENCES `delivery_details` (`id` , `customer_id`))
+    FOREIGN KEY (`delivery_detail_id`)
+    REFERENCES `delivery_details` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -90,14 +95,14 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `transaction_date` DATETIME NULL DEFAULT NULL,
   `slip_image` VARCHAR(50) NULL DEFAULT NULL,
   `paid_date` DATETIME NOT NULL,
-  `customer_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `customer_id`),
+  `users_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE INDEX `slip_image_UNIQUE` (`slip_image` ASC) ,
-  INDEX `fk_Payments_Customers1_idx` (`customer_id` ASC) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_Payments_Customers1`
-    FOREIGN KEY (`customer_id`)
-    REFERENCES `customers` (`id`))
+  INDEX `fk_payments_users1_idx` (`users_id` ASC) ,
+  CONSTRAINT `fk_payments_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `users` (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -117,22 +122,17 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `status` VARCHAR(30) NOT NULL,
   `order_date` DATETIME NOT NULL,
   `shipping_id` INT NOT NULL,
-  `delivery_detail_id` INT NOT NULL,
-  `customer_id` INT NOT NULL,
   `payments_id` INT NOT NULL,
-  `payments_customer_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `shipping_id`, `delivery_detail_id`, `customer_id`, `payments_id`, `payments_customer_id`),
-  INDEX `fk_Order_Shippings1_idx` (`shipping_id` ASC, `delivery_detail_id` ASC, `customer_id` ASC) ,
-  INDEX `fk_orders_payments1_idx` (`payments_id` ASC, `payments_customer_id` ASC) ,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Order_Shippings1_idx` (`shipping_id` ASC) ,
+  INDEX `fk_orders_payments1_idx` (`payments_id` ASC) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Order_Shippings1`
-    FOREIGN KEY (`shipping_id` , `delivery_detail_id` , `customer_id`)
-    REFERENCES `shippings` (`id` , `delivery_detail_id` , `customer_id`),
+    FOREIGN KEY (`shipping_id`)
+    REFERENCES `shippings` (`id`),
   CONSTRAINT `fk_orders_payments1`
-    FOREIGN KEY (`payments_id` , `payments_customer_id`)
-    REFERENCES `payments` (`id` , `customer_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    FOREIGN KEY (`payments_id`)
+    REFERENCES `payments` (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   `source` VARCHAR(50) NOT NULL,
   `label` VARCHAR(30) NOT NULL,
   `product_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `product_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_Images_Products1_idx` (`product_id` ASC) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Images_Products1`
@@ -172,22 +172,24 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   `quantity` INT NOT NULL,
   `discount_price` FLOAT NOT NULL,
   `order_id` INT NOT NULL,
-  `shipping_id` INT NOT NULL,
-  `delivery_detail_id` INT NOT NULL,
-  `customer_id` INT NOT NULL,
   `product_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `order_id`, `shipping_id`, `delivery_detail_id`, `customer_id`),
-  INDEX `fk_Order_items_Orders1_idx` (`order_id` ASC, `shipping_id` ASC, `delivery_detail_id` ASC, `customer_id` ASC) ,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Order_items_Orders1_idx` (`order_id` ASC) ,
   INDEX `fk_Order_items_Products1_idx` (`product_id` ASC) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Order_items_Orders1`
-    FOREIGN KEY (`order_id` , `shipping_id` , `delivery_detail_id` , `customer_id`)
-    REFERENCES `orders` (`id` , `shipping_id` , `delivery_detail_id` , `customer_id`),
+    FOREIGN KEY (`order_id`)
+    REFERENCES `orders` (`id`),
   CONSTRAINT `fk_Order_items_Products1`
     FOREIGN KEY (`product_id`)
     REFERENCES `products` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
+
+CREATE TABLE IF NOT EXISTS `user_roles` (
+  `username` VARCHAR(50) NOT NULL,
+  `roles_name` VARCHAR(50) NOT NULL)
+ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `products_has_categories` (
   `product_id` INT NOT NULL,
@@ -219,27 +221,27 @@ CREATE TABLE IF NOT EXISTS `products_has_colors` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-CREATE TABLE IF NOT EXISTS `specs` (
+CREATE TABLE IF NOT EXISTS `attributes` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `spec` VARCHAR(20) NOT NULL,
+  `attribute` VARCHAR(40) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-CREATE TABLE IF NOT EXISTS `product_spec_values` (
+CREATE TABLE IF NOT EXISTS `products_has_attributes` (
   `product_id` INT NOT NULL,
-  `spec_id` INT NOT NULL,
-  `spec_value` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`product_id`, `spec_id`),
-  INDEX `fk_Products_has_specs_specs1_idx` (`spec_id` ASC) ,
-  INDEX `fk_Products_has_specs_Products1_idx` (`product_id` ASC) ,
-  CONSTRAINT `fk_Products_has_specs_Products1`
+  `attribute_id` INT NOT NULL,
+  `attribute_value` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`product_id`, `attribute_id`),
+  INDEX `fk_products_has_attributes_attributes1_idx` (`attribute_id` ASC) VISIBLE,
+  INDEX `fk_products_has_attributes_products1_idx` (`product_id` ASC) VISIBLE,
+  CONSTRAINT `fk_products_has_attributes_products1`
     FOREIGN KEY (`product_id`)
-    REFERENCES `products` (`id`),
-  CONSTRAINT `fk_Products_has_specs_specs1`
-    FOREIGN KEY (`spec_id`)
-    REFERENCES `specs` (`id`))
+    REFERENCES `products` (`id`) ,
+  CONSTRAINT `fk_products_has_attributes_attributes1`
+    FOREIGN KEY (`attribute_id`)
+    REFERENCES `attributes` (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -248,13 +250,13 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   `star` INT NULL DEFAULT NULL,
   `comment` VARCHAR(100) NULL DEFAULT NULL,
   `review_date` DATETIME NOT NULL,
-  `customer_id` INT NOT NULL,
+  `users_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Reviews_Customers1_idx` (`customer_id` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_Reviews_Customers1`
-    FOREIGN KEY (`customer_id`)
-    REFERENCES `customers` (`id`))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_reviews_users1_idx` (`users_id` ASC) VISIBLE,
+  CONSTRAINT `fk_reviews_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `users` (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -263,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `ratings` (
   `name` VARCHAR(30) NOT NULL,
   `description` VARCHAR(100) NULL DEFAULT NULL,
   `category_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `category_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_Ratings_Categories1_idx` (`category_id` ASC) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Ratings_Categories1`
@@ -275,19 +277,18 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `rating_of_product` (
   `Reviews_id` INT NOT NULL,
   `Ratings_id` INT NOT NULL,
-  `Ratings_category_id` INT NOT NULL,
   `score` INT NOT NULL,
   `product_id` INT NOT NULL,
-  PRIMARY KEY (`Reviews_id`, `Ratings_id`, `Ratings_category_id`),
-  INDEX `fk_Reviews_has_Ratings_Ratings1_idx` (`Ratings_id` ASC, `Ratings_category_id` ASC) ,
+  PRIMARY KEY (`Reviews_id`, `Ratings_id`),
+  INDEX `fk_Reviews_has_Ratings_Ratings1_idx` (`Ratings_id` ASC) ,
   INDEX `fk_Reviews_has_Ratings_Reviews1_idx` (`Reviews_id` ASC) ,
   INDEX `fk_Rating_of_product_Products1_idx` (`product_id` ASC) ,
   CONSTRAINT `fk_Rating_of_product_Products1`
     FOREIGN KEY (`product_id`)
     REFERENCES `products` (`id`),
   CONSTRAINT `fk_Reviews_has_Ratings_Ratings1`
-    FOREIGN KEY (`Ratings_id` , `Ratings_category_id`)
-    REFERENCES `ratings` (`id` , `category_id`),
+    FOREIGN KEY (`Ratings_id`)
+    REFERENCES `ratings` (`id`),
   CONSTRAINT `fk_Reviews_has_Ratings_Reviews1`
     FOREIGN KEY (`Reviews_id`)
     REFERENCES `reviews` (`id`))
@@ -297,27 +298,29 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `cart_items` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `quantity` INT NOT NULL DEFAULT 0,
-  `customer_id` INT NOT NULL,
   `product_id` INT NOT NULL,
+  `users_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  INDEX `fk_Cart_items_customers1_idx` (`customer_id` ASC) ,
   INDEX `fk_Cart_items_products1_idx` (`product_id` ASC) ,
-  CONSTRAINT `fk_Cart_items_customers1`
-    FOREIGN KEY (`customer_id`)
-    REFERENCES `customers` (`id`),
+  INDEX `fk_cart_items_users1_idx` (`users_id` ASC) ,
   CONSTRAINT `fk_Cart_items_products1`
     FOREIGN KEY (`product_id`)
-    REFERENCES `products` (`id`))
+    REFERENCES `products` (`id`) ,
+  CONSTRAINT `fk_cart_items_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `users` (`id`) )
 ENGINE = InnoDB;
 
-INSERT INTO `colors` (`id`, `label`, `hex_code`) VALUES ('2', 'Black', '000000'),
-  ('3', 'White', 'FFFFFF'),('1', 'Red', 'ff0000'), ('4', 'Lavender', 'E6E6FA'),
-  ('5', 'Pink', 'E5A3CF'), ('6', 'Gray', '9AA0A8'),('7', 'Orange', 'FF7400'), 
-  ('8', 'Yellow', 'FFC100');
+INSERT INTO `colors` (`id`, `label`, `hex_code`) VALUES 
+  ('1', 'Red', 'ff0000'), ('2', 'Black', '000000'),
+  ('3', 'White', 'FFFFFF'),('4', 'Lavender', 'E6E6FA'),
+  ('5', 'Pink', 'E5A3CF'), ('6', 'Gray', '9AA0A8'),
+  ('7', 'Orange', 'FF7400'), ('8', 'Yellow', 'FFC100');
 
-INSERT INTO `categories` (`id`, `category`, `parent_id`) VALUES ('2', 'Keyboard', NULL),('1', 'Mouse', NULL), 
-  ('3', 'Headset', NULL),('4', 'Wireless headset', '3'), ('5', 'Wireless mouse', '1'),(NULL, 'Wireless keyboard', '2');
+INSERT INTO `categories` (`id`, `category`, `parent_id`) VALUES 
+  ('1', 'Keyboard', NULL),('2', 'Mouse', NULL), ('3', 'Headset', NULL), 
+  ('4', 'Wireless keyboard', '1'),('5', 'Wireless mouse', '2'),('6', 'Wireless headset', '3');
 
 INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `brand_name`, `quantity_stock`, `discount_id`) VALUES
   ('1', 'LOGITECH G G913 LIGHTSPEED WIRELESS RGB (GL CLICKY SWITCH) (RGB LED) (EN/TH)', '', '5990', 'Logitech', '55', NULL),
@@ -327,6 +330,17 @@ INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `brand_nam
   ('3', 'RAZER DEATHADDER V2', '- True 20,000 DPI Focus+ optical sensor\r\n- Up to 650 inches per second
   (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy', '1990', 'Razer', '20', NULL),
   ('4', 'RAZER BLACKSHARK V2 PRO', 'Frequency Response : 12 Hz – 28 kHz\r\nImpedance : 32 Ω (1 kHz)', '6490', 'Razer', '50', NULL);
+
+INSERT INTO `products_has_colors` (`product_id`, `color_id`) VALUES ('1', '2'), ('2', '2'), ('3', '2'), ('4','2');
+
+INSERT INTO `products_has_categories` (`product_id`, `category_id`) VALUES ('1', '1'),('1', '4'), ('2','1'),('3','2'),('4','3'),('4','6');
+
+INSERT INTO `attributes` (`id`, `attribute`) VALUES ('1', 'Wired/Wireless'), ('2', 'Keyboard type'), ('3', 'Keyboard size'), ('4', 'Switch'), ('5', 'Sound');
+
+INSERT INTO `products_has_attributes` (`product_id`, `attribute_id`, `attribute_value`) VALUES 
+  ('1', '1', 'Wireless'), ('1', '2', 'Mechanical'), ('1', '3', 'Full-Size'), ('1', '4', 'Logitech GL'), ('1', '5', 'Clicky, Silent'),
+  ('2', '1', 'Wired'), ('2', '2', 'Mecha-Optical'), ('2', '3', 'Full-Size'), ('2', '4', 'Razer'), ('2', '5', 'Clicky'),
+  ('3', '1', 'Wired'), ('4', '1', 'Wireless');
 
 INSERT INTO `images` (`id`, `source`, `label`, `product_id`) VALUES 
   ('1', 'G913-1.png', 'G913-1', '1'), 
@@ -348,14 +362,8 @@ INSERT INTO `images` (`id`, `source`, `label`, `product_id`) VALUES
   ('17', 'BlackSharkV2Pro4.jpg', 'BlackSharkV2Pro2', '4'),
   ('18', 'BlackSharkV2Pro5.jpg', 'BlackSharkV2Pro2', '4');
 
-INSERT INTO `specs` (`id`, `spec`) VALUES ('1', 'Wired/Wireless'), ('2', 'Keyboard type'), ('3', 'Keyboard size'), 
-  ('4', 'Switch'), ('5', 'Sound');
 
-INSERT INTO `products_has_colors` (`product_id`, `color_id`) VALUES ('1', '2'), ('1', '6'), ('1', '1'), ('4', '2'), ('4', '3'),
-  ('3', '4'), ('3', '3'), ('2', '5'), ('2', '4'), ('2', '8');
 
-INSERT INTO `products_has_categories` (`product_id`, `category_id`) VALUES ('1', '6'), ('4', '4'), ('3', '2'), ('2', '2');
 
-INSERT INTO `product_spec_values` (`product_id`, `spec_id`, `spec_value`) VALUES ('2', '3', '50'), ('2', '5', 'Clicky');
 
 
