@@ -234,8 +234,8 @@ CREATE TABLE IF NOT EXISTS `products_has_attributes` (
   `attribute_id` INT NOT NULL,
   `attribute_value` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`product_id`, `attribute_id`),
-  INDEX `fk_products_has_attributes_attributes1_idx` (`attribute_id` ASC) VISIBLE,
-  INDEX `fk_products_has_attributes_products1_idx` (`product_id` ASC) VISIBLE,
+  INDEX `fk_products_has_attributes_attributes1_idx` (`attribute_id` ASC) ,
+  INDEX `fk_products_has_attributes_products1_idx` (`product_id` ASC) ,
   CONSTRAINT `fk_products_has_attributes_products1`
     FOREIGN KEY (`product_id`)
     REFERENCES `products` (`id`) ,
@@ -252,8 +252,8 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   `review_date` DATETIME NOT NULL,
   `users_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_reviews_users1_idx` (`users_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_reviews_users1_idx` (`users_id` ASC) ,
   CONSTRAINT `fk_reviews_users1`
     FOREIGN KEY (`users_id`)
     REFERENCES `users` (`id`) )
