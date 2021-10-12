@@ -2,7 +2,7 @@ package INT222.Services;
 
 import INT222.Models.JwtRequest;
 import INT222.Models.JwtResponse;
-import INT222.Models.Customers;
+import INT222.Models.Users;
 import INT222.Repositories.UserRepository;
 
 import INT222.Util.JwtUtil;
@@ -40,13 +40,13 @@ public class JwtService implements UserDetailsService {
         UserDetails userDetails = loadUserByUsername(userName);
         String newGeneratedToken = jwtUtil.generateToken(userDetails);
 
-        Customers user = userRepository.findById(userName).get();
+        Users user = userRepository.findById(userName).get();
         return new JwtResponse(user, newGeneratedToken);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Customers user = userRepository.findById(username).get();
+        Users user = userRepository.findById(username).get();
 
         if (user != null) {
             return new org.springframework.security.core.userdetails.User(
@@ -59,7 +59,7 @@ public class JwtService implements UserDetailsService {
         }
     }
 
-    private Set getAuthority(Customers user) {
+    private Set getAuthority(Users user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         user.getRole().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));

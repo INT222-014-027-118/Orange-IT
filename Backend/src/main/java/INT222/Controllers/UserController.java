@@ -1,9 +1,8 @@
 package INT222.Controllers;
 
 
-import INT222.Models.Customers;
+import INT222.Models.Users;
 import INT222.Services.UserService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,7 @@ public class UserController {
 
 
     @PostMapping({"/registerNewUser"})
-    public Customers registerNewUser(@RequestBody Customers user) {
+    public Users registerNewUser(@RequestBody Users user) {
         return userService.registerNewUser(user);
     }
 

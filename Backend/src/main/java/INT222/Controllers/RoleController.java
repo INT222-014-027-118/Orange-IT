@@ -1,7 +1,6 @@
 package INT222.Controllers;
 
-import INT222.Models.Role;
-import INT222.Repositories.RoleRepository;
+import INT222.Models.Roles;
 
 import INT222.Services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class RoleController {
     private RoleService roleService;
 
     @PostMapping({"/createNewRole"})
-    public Role createNewRole(@RequestBody Role role) {
+    public Roles createNewRole(@RequestBody Roles role) {
         return roleService.createNewRole(role);
     }
 }

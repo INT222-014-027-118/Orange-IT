@@ -11,8 +11,8 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Customers")
-public class Customers {
+@Table(name = "Users")
+public class Users {
 
     @Id
     private String username;
@@ -28,14 +28,14 @@ public class Customers {
     private int points;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "Customer_role",
+    @JoinTable(name = "user_roles",
             joinColumns = {
-                    @JoinColumn(name = "user_name")
+                    @JoinColumn(name = "username")
             },
             inverseJoinColumns = {
-                    @JoinColumn(name = "role_name")
+                    @JoinColumn(name = "roles_name")
             }
     )
-    private Set<Role> role;
+    private Set<Roles> role;
 
 }

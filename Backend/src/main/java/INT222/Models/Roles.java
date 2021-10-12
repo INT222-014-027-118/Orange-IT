@@ -7,12 +7,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
+@Table(name = "Roles")
+public class Roles {
 
 
     @Id
