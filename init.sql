@@ -361,6 +361,9 @@ INSERT INTO `images` (`id`, `source`, `label`, `product_id`) VALUES
   ('16', 'BlackSharkV2Pro3.jpg', 'BlackSharkV2Pro2', '4'),
   ('17', 'BlackSharkV2Pro4.jpg', 'BlackSharkV2Pro2', '4'),
   ('18', 'BlackSharkV2Pro5.jpg', 'BlackSharkV2Pro2', '4');
+  
+INSERT INTO `roles` (`name`, `description`) VALUES ('Admin', '');
+INSERT INTO `roles` (`name`, `description`) VALUES ('User', '');
 
 
 
