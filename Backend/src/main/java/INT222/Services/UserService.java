@@ -1,7 +1,7 @@
 package INT222.Services;
 
-import INT222.Models.Role;
-import INT222.Models.Customers;
+import INT222.Models.Roles;
+import INT222.Models.Users;
 import INT222.Repositories.RoleRepository;
 import INT222.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Customers registerNewUser(Customers user) {
-        Role role = roleRepository.findById("User").get();
-        Set<Role> userRoles = new HashSet<>();
+    public Users registerNewUser(Users user) {
+        Roles role = roleRepository.findById("User").get();
+        Set<Roles> userRoles = new HashSet<>();
         userRoles.add(role);
         user.setRole(userRoles);
         user.setPassword(getEncodedPassword(user.getPassword()));

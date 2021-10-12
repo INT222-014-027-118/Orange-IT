@@ -2,19 +2,19 @@ package INT222.Models;
 
 public class JwtResponse {
 
-    private Customers user;
+    private Users user;
     private String jwtToken;
 
-    public JwtResponse(Customers user, String jwtToken) {
+    public JwtResponse(Users user, String jwtToken) {
         this.user = user;
         this.jwtToken = jwtToken;
     }
 
-    public Customers getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(Customers user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 

@@ -1,8 +1,6 @@
 package INT222.Controllers;
 
-import INT222.Models.Colors;
-import INT222.Models.Customers;
-import INT222.Repositories.ColorRepository;
+import INT222.Models.Users;
 import INT222.Repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +19,7 @@ public class CustomerController {
 
 
     @GetMapping("/list")
-    public List<Customers> getCustomer(){
+    public List<Users> getCustomer(){
         return customerRepository.findAll();
     }
 }

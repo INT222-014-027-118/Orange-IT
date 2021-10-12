@@ -1,6 +1,6 @@
 package INT222.Services;
 
-import INT222.Models.Role;
+import INT222.Models.Roles;
 import INT222.Repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ public class RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public Role createNewRole(Role role) {
+    public Roles createNewRole(Roles role) {
         return roleRepository.save(role);
     }
 
