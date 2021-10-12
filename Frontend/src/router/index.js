@@ -50,10 +50,16 @@ const routes = [{
         component: () => import( /* webpackChunkName: "purchase" */ '../views/setting/purchase.vue')
       },
       {
-        path: ':manage',
+        path: ':manage/edit',
         name: 'manageProfile',
         props: true,
         component: () => import( /* webpackChunkName: "manageProfile" */ '../views/setting/manageProfile.vue')
+      },
+      {
+        path: ':address-info',
+        name: 'Address',
+        props: true,
+        component: () => import( /* webpackChunkName: "Address" */ '../views/setting/Address.vue')
       },
     ],
   },

@@ -11,6 +11,7 @@ import INT222.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Array;
@@ -46,7 +47,7 @@ public class ProductController {
 
     //Get Products by Category
     @GetMapping("getByCategory/{category}")
-    public List<ProductsHome> getProductByCategory(@PathVariable("category") String category) {
+    public List<ProductsHome> getProductHomeByCategory(@PathVariable("category") String category) {
         List<ProductsHome> productsByCategory = new ArrayList<ProductsHome>();
         List<ProductsHome> products = productHomeRepository.findAll();
         for (int i = 0; i < products.size(); i++) {
@@ -58,6 +59,9 @@ public class ProductController {
             }
         }
         return productsByCategory;
+
+
+
     }
 
 
