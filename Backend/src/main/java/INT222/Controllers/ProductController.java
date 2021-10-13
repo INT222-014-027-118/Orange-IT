@@ -8,8 +8,12 @@ import INT222.Exceptions.SameProductNameException;
 import INT222.Models.*;
 import INT222.Repositories.*;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -130,16 +134,14 @@ long num =0;
         else throw new NotFoundException(products.getId());
     }
 
-//    @RequestMapping("/product")
-//    public List<Products> productList(@RequestParam(defaultValue = "0") Integer pageNo,
-//                              @RequestParam(defaultValue = "8") Integer pageSize,
-//                              @RequestParam(defaultValue = "msrp") String sortBy,
-//                              Model model) {
-//        Pageable paging = (Pageable) PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-//        Page<Products> pageResult = productRepository.findAll(paging);
-//        model.addAttribute("products",pageResult.getContent() );
-//        return  pageResult;
-//    }
+    @GetMapping("/page/{pageNo}/{pageSize}")
+    public Page<ProductsHome> productList(@PathVariable("pageNo") int pageNo,
+                                      @PathVariable("pageSize") int pageSize
+                                      ) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<ProductsHome> list = productHomeRepository.findAll(pageable);
+        return  list;
+    }
 
 
 

@@ -2,6 +2,7 @@ package INT222.Controllers;
 
 
 import INT222.Models.Users;
+import INT222.Repositories.UserRepository;
 import INT222.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,15 +11,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class UserController {
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     @PostMapping({"/registerNewUser"})
     public Users registerNewUser(@RequestBody Users user) {
+        user.setId(userRepository.findTopByOrderByIdDesc().getId()+1);
         return userService.registerNewUser(user);
     }
 
@@ -32,5 +39,10 @@ public class UserController {
     @PreAuthorize("hasRole('User')")
     public String forUser(){
         return "This URL is only accessible to the user";
+    }
+
+    @GetMapping({"/user/list"})
+    public List<Users> userList(){
+        return userRepository.findAll();
     }
 }
