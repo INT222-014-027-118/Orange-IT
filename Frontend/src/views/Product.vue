@@ -98,7 +98,6 @@ import Raring from "../components/Rating.vue";
 export default {
     name: "Item",
     components: {
-        // Carousel,
         Review,
         Comments,
         Raring,
@@ -119,7 +118,7 @@ export default {
             },
             colorPick: {},
             loading: false,
-            api: "http://52.187.10.17/orange-it/product",
+            api: `${process.env.VUE_APP_API}/product`,
         };
     },
     methods: {
@@ -177,12 +176,12 @@ export default {
         this.scrollToTop();
     },
     async created() {
-        // this.loading = true;
+        this.loading = true;
         this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => {
             return res.data;
         });
         this.images = await this.product.images.map((img) => {
-            return `http://52.187.10.17/orange-it/image/get/${img.source}`;
+            return `${process.env.VUE_APP_API}/image/get/${img.source}`;
         });
     },
 };

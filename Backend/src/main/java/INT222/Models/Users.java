@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -14,7 +15,10 @@ import java.util.Set;
 @Table(name = "Users")
 public class Users {
 
+
     @Id
+    private long id;
+    @Column
     private String username;
     @Column(name = "firstname")
     private String userFirstName;
@@ -37,5 +41,9 @@ public class Users {
             }
     )
     private Set<Roles> role;
+
+    @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+    @JoinColumn(name = "users_id")
+    private List<CartItems> cartItems;
 
 }
