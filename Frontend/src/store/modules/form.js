@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const api = 'http://52.187.10.17/orange-it'
+const api = process.env.VUE_APP_API
 const get_colors = `${api}/color/list`
 const get_categories = `${api}/category/list`
 const get_specs = `${api}/spec/list`
