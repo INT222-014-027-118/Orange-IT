@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const api = 'http://52.187.10.17/orange-it'
+const api = process.env.VUE_APP_API
 const get_list = `${api}/product/list`
 const get_by_category = `${api}/product/getByCategory`
 const get_categories = `${api}/category/list`
@@ -22,9 +22,7 @@ const getters = {
 }
 
 const actions = {
-    async loadProducts({
-        commit
-    }) {
+    async loadProducts({commit}) {
         axios
             .get(get_list)
             .then(res => {

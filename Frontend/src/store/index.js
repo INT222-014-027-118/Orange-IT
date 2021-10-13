@@ -1,11 +1,13 @@
 import Vuex from 'vuex';
 import products from './modules/products';
 import form from './modules/form';
+import authentication from './modules/authentication.js';
 
 export default new Vuex.Store({
   modules: {
     products,
-    form
+    form,
+    authentication
   },
   state: {
     itemTest: [],

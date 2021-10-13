@@ -118,7 +118,7 @@ export default {
             },
             colorPick: {},
             loading: false,
-            api: "http://52.187.10.17/orange-it/product",
+            api: `${process.env.VUE_APP_API}/product`,
         };
     },
     methods: {
@@ -181,7 +181,7 @@ export default {
             return res.data;
         });
         this.images = await this.product.images.map((img) => {
-            return `http://52.187.10.17/orange-it/image/get/${img.source}`;
+            return `${process.env.VUE_APP_API}/image/get/${img.source}`;
         });
     },
 };

@@ -39,7 +39,7 @@ export default {
     data() {
         return {
             categorys: [
-                { itemName: "headphone", image: headset, icon: "headphones" },
+                { itemName: "headset", image: headset, icon: "headphones" },
                 { itemName: "speaker", image: speaker, icon: "speaker" },
                 { itemName: "keyboard", image: keyboard, icon: "keyboard" },
                 { itemName: "mouse", image: mouse, icon: "mouse" },
