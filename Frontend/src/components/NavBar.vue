@@ -31,8 +31,7 @@
                             </div>
                         </div>
                         <span class="tracking-tight font-semibold">cart</span>
-                        <div class="absolute top-10 left-0 z-20 pt-10 transform -translate-y-10 w-16" 
-                        @mouseenter="showCart = true" @mouseleave="showCart = false">
+                        <div class="absolute top-10 left-0 z-20 pt-10 transform -translate-y-10 w-16" @mouseenter="showCart = true" @mouseleave="showCart = false">
                             <div
                                 v-show="showCart"
                                 class="w-48 py-2 absolute right-0 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:bg-gray-800 opacity-100 hover:text-black"
@@ -61,14 +60,6 @@
                 </div>
             </div>
         </div>
-        <div class="fixed bottom-5 right-5 p-2 z-50 cursor-pointer">
-            <div :class="{ hidden: !change }" @click="switchMode" class="">
-                <i class="mt-1 material-icons">light_mode</i>
-            </div>
-            <div :class="{ hidden: change }" @click="switchMode" class="">
-                <i class="mt-1 material-icons">dark_mode</i>
-            </div>
-        </div>
 
         <!-- <router-link
             to="/form"
@@ -81,11 +72,12 @@
             <span class="z-30 px-2 py-1 text-4xl bg-green-200 rounded-full shadow-md material-icons md:px-3 md:py-2 ring ring-green-400 dark:bg-green-700"> add </span>
             <span class="hidden py-4 pl-12 pr-4 -ml-10 bg-green-300 rounded-full shadow-md dark:bg-green-700 md:inline-flex" v-show="showAdd">Add Product</span>
         </router-link> -->
-        <div class="fixed bottom-0 bg-white w-full sm:hidden text-xs tracking-tighter px-4 py-0.5 z-50 select-none">
+        <div class="fixed bottom-0 bg-white w-full h-16 sm:hidden text-xs tracking-tighter px-4 py-0.5 z-50 select-none">
             <div class="flex flex-row justify-around font-semibold capitalize">
                 <div class="flex flex-col items-center w-16 p-1" @click="$router.push('/')">
                     <!-- <div class="material-icons">local_mall</div> -->
-                    <img src="../assets/orange.svg" alt="orange_icon" class="max-h-6" />
+                    <img v-show="this.$route.name === 'Home'" src="../assets/orange.svg" alt="orange_icon" class="max-h-6" />
+                    <div v-show="this.$route.name !== 'Home'" :class="[this.$route.name === 'Home' ? 'material-icons text-primary' : 'material-icons-outlined']">home</div>
                     <span class="">home</span>
                 </div>
                 <div class="flex flex-col items-center w-16 p-1">
@@ -97,13 +89,27 @@
                     <span class="">categories</span>
                 </div>
                 <div class="flex flex-col items-center w-16 p-1" @click="$router.push('/cart')">
-                    <div class="material-icons">shopping_cart</div>
+                    <div :class="[this.$route.name === 'Cart' ? 'material-icons text-primary' : 'material-icons-outlined']">shopping_cart</div>
                     <span class="">cart</span>
                 </div>
-                <div class="flex flex-col items-center w-16 p-1">
-                    <div class="material-icons">person</div>
-                    <span class="">account</span>
-                </div>
+                <router-link
+                    :to="{
+                        name: 'purchase',
+                        params: { purchaseDetail: 'purchase' },
+                    }"
+                    @click="this.$store.commit('setShowAccountPage', true)"
+                >
+                    <div class="flex flex-col items-center w-16 p-1">
+                        <div
+                            :class="[
+                                this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'material-icons text-primary' : 'material-icons-outlined',
+                            ]"
+                        >
+                            person
+                        </div>
+                        <span class="">account</span>
+                    </div>
+                </router-link>
             </div>
         </div>
     </div>

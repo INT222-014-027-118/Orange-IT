@@ -9,12 +9,20 @@ export default new Vuex.Store({
   },
   state: {
     itemTest: [],
-    cart: []
+    cart: [],
+    showAccountPage: true,
+    changeMode: false,
   },
   mutations: {
     addCartItem(state, item) {
       state.cart.push(item);
     },
+    setShowAccountPage(state, value = !state.showAccountPage) {
+      state.showAccountPage = value
+    },
+    setChangeMode(state, value = !state.changeMode) {
+      state.changeMode = value
+    }
   },
   actions: {
     addCartItem(context, item) {
@@ -25,8 +33,8 @@ export default new Vuex.Store({
     itemTest: state => state.itemTest,
     cart: state => state.cart,
     totalInCart: state => state.cart.length,
-    // totalInCart(state) {
-    //   return state.cart.length
-    // },
+    showAccountPage: state => state.showAccountPage,
+    changeMode: state => state.changeMode,
+
   }
 });

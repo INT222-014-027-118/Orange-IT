@@ -3,7 +3,7 @@
         <h1 class="text-3xl font-semibold p-3 capitalize">address</h1>
         <hr />
         <div class="px-3 py-4">
-            <div class="">
+            <div class="flex" :class="[showForm ? 'flex-row-reverse' : 'flex-row']">
                 <button
                     type="button"
                     class="px-4 py-2 text-white  rounded-md focus:outline-none capitalize"
@@ -13,16 +13,15 @@
                     {{ showForm ? "cancel" : "+ add" }}
                 </button>
             </div>
-            <div v-show="!showForm" v-for="(address, index) in addresses" :key="address" class="border p-2 m-3 relative">
-                <div class="absolute right-5 cursor-pointer text-red-500 p-2 font-semibold" @click="removeAddress(index)">remove</div>
-                <p>first name : {{ address.firstname }}</p>
-                <p>last name : {{ address.lastanme }}</p>
-                <p>phone : {{ address.phone }}</p>
-                <p>province : {{ address.province }}</p>
-                <p>district : {{ address.district }}</p>
-                <p>sub district : {{ address.sub_district }}</p>
-                <p>postal : {{ address.postal_code }}</p>
-                <p>address : {{ address.address }}</p>
+            <div v-show="!showForm" v-for="(address, index) in addresses" :key="address" class="border p-3 mt-4 relative">
+                <div class="absolute top-0 right-5 cursor-pointer text-red-500 p-2 font-semibold" @click="removeAddress(index)">remove</div>
+                <p class="capitalize">name : {{ address.firstname }} {{ address.lastanme }}</p>
+                <p class="capitalize">phone : {{ address.phone }}</p>
+                <p class="capitalize">
+                    address : {{ address.address == "" ? "" : ` ${address.address}, ` }}{{ address.sub_district == "" ? "" : `${address.sub_district}, ` }}
+                    {{ address.district == "" ? "" : `${address.district}, ` }}{{ address.province == "" ? "" : `${address.province}, ` }}
+                    {{ address.postal_code == "" ? "" : `${address.postal_code}` }}
+                </p>
             </div>
         </div>
         <div v-show="showForm">
@@ -100,7 +99,7 @@
                         <label for="postal" class="font-semibold block sm:w-2/6 sm:text-right pr-2">postal :</label>
                         <input
                             v-model="formAddress.postal_code"
-                            type="number"
+                            type="text"
                             id="postal"
                             minlength="5"
                             maxlength="5"
@@ -151,11 +150,11 @@ export default {
     },
     methods: {
         addAddress() {
-            this.addresses.push(this.formAddress);
+            let newAddress = {};
+            Object.assign(newAddress, this.formAddress);
+            this.addresses.push(newAddress);
             this.showForm = false;
-            // setTimeout(() => {
             this.resetForm();
-            // }, 1000);
         },
         removeAddress(index) {
             this.addresses.splice(index, 1);
@@ -174,22 +173,4 @@ export default {
 };
 </script>
 
-<style scpoed>
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-    -moz-appearance: textfield;
-}
-</style>
-
-// ,1, // ...... .ifL1 // .;1ttttLLf1, ;fffff, // :LCLfttfLLLLL: ,tffffffi // ,CCCLf11ff1tff; ,1Lffffffff. // iLttt11ifLLLfft. :iitffffffLi // ;t1111ii1fffff1 ffffft;i1. // ,1iiiiii1tt1it, ifffff, //
-;1i;;;;i1tff: .fffff1 // ,t1ii;:::;i; ifffff, // .,;11iii;: .fffff1 // ..,,.,,.,iftitGi... ifffff, // .,,,::::,,,,..;LLLGt::::,,,. .fffff1 // ;,,,,,,,,,,,,,.,;tfi,::,,::::, ;fffff, //
-::,,,,,,,,..,:,,.:ft,::,,:,,::. .fffff1 // ,i:,,,,,,,,..,,,,,,;,:::,:,,,:: ;fffff, // .1:,,,,,,,,..,,,:,,,::,,,:,,,,:, .fffff1 // ;;:,,,,,:, ..,,,::,,,:,,:,,,,::.,1tfff: //
-,1;:,,,,;f:.,,,,,,:,..,,:,..,,::, .., // ;i::,,,,,:,,:,,:,:::,,,;1:,.,,,:, // .;;;:,,,,,,,,,::::::::::LGC;,,,,:. // .;;:,,.,,,,,,,,,,,,,,:::;;:,,,,,: // ,:::,.....,,,,,,,,,,,:,,,,,,,,,:. //
-....,....,,,,,,.....,,,,,,,,,,,,. // ,,.. .,::;:........,,,,,... // :,,...... ............ // :,........... ....:,...,. // ,,............. ...,1;,,,,. // ..
+<style scpoed></style>
