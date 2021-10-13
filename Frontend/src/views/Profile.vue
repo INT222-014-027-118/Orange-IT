@@ -44,7 +44,7 @@
                         }"
                         @click="showFull = !showFull"
                         class="hover:text-primary block font-semibold capitalize"
-                        :class="[this.$route.name === 'manageProfile' ? 'text-primary hover:text-primaryfocus' : '']"
+                        :class="[this.$route.name === 'manageProfile' ? 'md:text-primary hover:text-primaryfocus' : '']"
                     >
                         my account
                     </router-link>
@@ -56,7 +56,7 @@
                             }"
                             @click="showFull = !showFull"
                             class="hover:text-primary block font-semibold capitalize"
-                            :class="[this.$route.name === 'Address' ? 'text-primary hover:text-primaryfocus' : '']"
+                            :class="[this.$route.name === 'Address' ? 'md:text-primary hover:text-primaryfocus' : '']"
                         >
                             address
                         </router-link>
@@ -69,7 +69,7 @@
                             }"
                             @click="showFull = !showFull"
                             class="hover:text-primary block font-semibold capitalize"
-                            :class="[this.$route.name === 'purchase' ? 'text-primaryfocus' : '']"
+                            :class="[this.$route.name === 'purchase' ? 'md:text-primary' : '']"
                         >
                             purchase
                         </router-link>

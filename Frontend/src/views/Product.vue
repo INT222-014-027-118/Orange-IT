@@ -98,7 +98,6 @@ import Raring from "../components/Rating.vue";
 export default {
     name: "Item",
     components: {
-        // Carousel,
         Review,
         Comments,
         Raring,
@@ -177,7 +176,7 @@ export default {
         this.scrollToTop();
     },
     async created() {
-        // this.loading = true;
+        this.loading = true;
         this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => {
             return res.data;
         });
