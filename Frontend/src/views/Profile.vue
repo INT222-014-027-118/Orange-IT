@@ -14,7 +14,7 @@
                     </div>
                     <div class="w-full ml-2 overflow-hidden overflow-ellipsis">
                         <div class="md:flex md:flex-wrap md:items-center">
-                            <h2 class="inline-block mb-2 font-light lg:text-2xl sm:mr-5 sm:mb-0 truncate">
+                            <h2 class="inline-block mb-2 font-light lg:text-xl sm:mr-5 sm:mb-0 truncate">
                                 mrtravlerrr_dasdqweewqe
                             </h2>
                             <!-- <a href="#" class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary rounded md:inline-block">Edit</a> -->
