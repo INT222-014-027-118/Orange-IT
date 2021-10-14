@@ -46,6 +46,7 @@
     </div>
 </template>
 <script>
+import axios from "axios"
 export default {
     data() {
         return {
@@ -55,8 +56,21 @@ export default {
     },
     methods: {
         login(){
-            let data = {userName:this.username,userPassword:this.password}
-            this.$store.dispatch("login",data);
+            axios
+                .post(`${process.env.VUE_APP_API}/authenticate`,{userName:this.username,userPassword:this.password})
+                .then(response => {
+                    if(response.status === 200){
+                        let userinfo = response.data
+                        localStorage.setItem('token',userinfo.jwtToken) 
+                        localStorage.setItem('userId',userinfo.user.id)
+                        this.$store.commit('SET_USERINFO', userinfo.user);
+                        this.$router.push('/')
+                    }
+                })
+                .catch(error => {
+                    alert('Fail!')
+                    console.log(error)
+                })
         }
     },
 

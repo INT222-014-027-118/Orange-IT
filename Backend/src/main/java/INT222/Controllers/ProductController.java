@@ -60,8 +60,6 @@ public class ProductController {
         }
         return productsByCategory;
 
-
-
     }
 
 
@@ -78,8 +76,7 @@ public class ProductController {
     public void deleteProduct(@PathVariable long id) {
 
         if (this.productRepository.existsById(id)) {
-
-long num =0;
+           long num =0;
            Products products =  productRepository.getById(id);
            List<Images> images = products.getImages();
             for (int i = 0; i < images.size(); i++) {
@@ -103,12 +100,11 @@ long num =0;
 
     @PostMapping("/add")
     public Products addProduct(@RequestBody Products products) {
-
-
             if (productRepository.existsByProductName(products.getProductName())) {
-
                 throw new SameProductNameException(products.getProductName());
-            }else
+            }
+
+            else
             products.setId(productRepository.findTopByOrderByIdDesc().getId()+1);
              List<Images> images =  products.getImages();
         for (int i = 0; i < images.size(); i++) {

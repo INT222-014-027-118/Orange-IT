@@ -19,10 +19,11 @@ public class CartItems {
     @Column
     private String quantity;
 
-//    @OneToOne
-//    private Products products;
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    private ProductCart productCart;
 
-//    @Column long users_id;
+
 
 
 }

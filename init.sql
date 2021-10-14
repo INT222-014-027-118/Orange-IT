@@ -187,8 +187,17 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 CREATE TABLE IF NOT EXISTS `user_roles` (
-  `username` VARCHAR(50) NOT NULL,
-  `roles_name` VARCHAR(50) NOT NULL)
+  `role_name` VARCHAR(50) NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`role_name`, `user_id`),
+  INDEX `fk_roles_has_users_users1_idx` (`user_id` ASC) ,
+  INDEX `fk_roles_has_users_roles1_idx` (`role_name` ASC) ,
+  CONSTRAINT `fk_roles_has_users_roles1`
+    FOREIGN KEY (`role_name`)
+    REFERENCES `roles` (`name`),
+  CONSTRAINT `fk_roles_has_users_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `users` (`id`))
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `products_has_categories` (
@@ -298,6 +307,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `cart_items` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `quantity` INT NOT NULL DEFAULT 0,
+  `color_id` INT NOT NULL,
   `product_id` INT NOT NULL,
   `users_id` INT NOT NULL,
   PRIMARY KEY (`id`),
