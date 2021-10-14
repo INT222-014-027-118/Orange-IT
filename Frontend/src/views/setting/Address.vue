@@ -6,7 +6,7 @@
             <div class="flex" :class="[showForm ? 'flex-row-reverse' : 'flex-row']">
                 <button
                     type="button"
-                    class="px-4 py-2 text-white  rounded-md focus:outline-none capitalize"
+                    class="px-4 py-2 text-white rounded-md focus:outline-none capitalize"
                     :class="[showForm ? 'bg-red-500' : 'bg-primary hover:bg-primaryfocus']"
                     @click="showForm = !showForm"
                 >
