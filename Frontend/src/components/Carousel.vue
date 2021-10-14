@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white dark:bg-gray-600 transition-colors rounded-lg shadow-md" v-if="renderComponent">
+    <div class="bg-white dark:bg-dark_tertiary transition-colors rounded-lg shadow-md" v-if="renderComponent">
         <splide :options="primaryOptions" ref="primary" :class="[this.$route.name == 'Home' ? 'sm:px-14 md:px-16 lg:px-20' : 'md:pt-3']">
             <splide-slide class="flex justify-center " v-for="slide in slides" :key="slide">
                 <img :src="slide" class="h-full w-full object-contain" alt="slide.alt" @load="check(slide)" />

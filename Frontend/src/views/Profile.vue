@@ -1,7 +1,7 @@
 <template>
     <div class="flex p-1 py-3 mx-auto max-w-7xl ">
         <div class="fixed md:hidden" @click="changetShowAccountPage" v-show="!this.$store.getters.showAccountPage">back</div>
-        <div :class="[this.$store.getters.showAccountPage ? 'w-full md:w-3/12' : 'hidden md:block']" class="mx-1 w-full  md:w-3/12 top-20 px-3 py-3 bg-white rounded-md shadow-md h-full">
+        <div :class="[this.$store.getters.showAccountPage ? 'w-full md:w-3/12' : 'hidden md:block']" class="mx-1 w-full overflow-hidden md:w-3/12 top-20 px-3 py-3 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full">
             <div class="">
                 <div class="flex items-center ">
                     <div class="self-start py-1">
@@ -15,7 +15,7 @@
                     <div class="w-full ml-2 overflow-hidden overflow-ellipsis">
                         <div class="md:flex md:flex-wrap md:items-center">
                             <h2 class="inline-block mb-2 font-light lg:text-xl sm:mr-5 sm:mb-0 truncate">
-                                mrtravlerrr_dasdqweewqe
+                                {{$store.getters.userinfo.username}}
                             </h2>
                             <!-- <a href="#" class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary rounded md:inline-block">Edit</a> -->
                             <router-link
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="px-1 py-3 border-b">
-                    <p class="text-base md:text-xl uppercase font-semibold">point : 99999</p>
+                    <p class="text-base md:text-xl uppercase font-semibold">point : {{$store.getters.userinfo.points}}</p>
                 </div>
             </div>
 
@@ -45,8 +45,8 @@
                         @click="changetShowAccountPage"
                         class="hover:text-primary flex font-semibold capitalize"
                         :class="[this.$route.name === 'manageProfile' ? 'md:text-primary hover:text-primaryfocus' : '']"
-                        ><span class="material-icons-outlined text-center w-2/12">manage_accounts</span>
-                        <span class="ml-1">my account</span> 
+                        ><span class="material-icons-outlined text-center w-14 md:w-16 ">manage_accounts</span>
+                        <span class="ml-1">my account</span>
                     </router-link>
                     <router-link
                         :to="{
@@ -57,8 +57,8 @@
                         class="hover:text-primary flex font-semibold capitalize items-center"
                         :class="[this.$route.name === 'Address' ? 'md:text-primary hover:text-primaryfocus' : '']"
                     >
-                        <span class="material-icons-outlined text-center w-2/12">location_on</span>
-                        <span class="ml-1">address</span> 
+                        <span class="material-icons-outlined text-center w-14 md:w-16 ">location_on</span>
+                        <span class="ml-1">address</span>
                     </router-link>
                     <router-link
                         :to="{
@@ -67,17 +67,22 @@
                         }"
                         @click="changetShowAccountPage"
                         class="hover:text-primary flex font-semibold capitalize"
-                        :class="[this.$route.name === 'purchase' ? 'md:text-primary' : '']"
-                        ><span class="material-icons-outlined text-center w-2/12">inventory</span>
-                        <span class="ml-1">purchase</span> 
+                        :class="[this.$route.name === 'purchase' ? 'md:text-primary hover:text-primaryfocus' : '']"
+                        ><span class="material-icons-outlined text-center w-14 md:w-16 ">inventory</span>
+                        <span class="ml-1">purchase</span>
                     </router-link>
-
-                    <div class="flex items-center cursor-pointer select-none " @click="changeSetChangeMode()">
-                        <div class="flex justify-center w-2/12 md:w-auto lg:w-2/12">
-                            <div class="rounded-full w-11 h-6 p-0.5" :class="[this.$store.getters.changeMode == true ? 'bg-gray-200' : 'bg-gray-900']">
+                    <hr />
+                    <button @click="logout" class="hover:text-red-500 flex font-semibold capitalize"
+                        :class="[this.$route.name === 'purchase' ? 'md:text-primary' : '']">
+                        <span class="material-icons-outlined text-center w-2/12">logout</span>
+                        <span class="ml-1">Logout</span> 
+                    </button>
+                    <div class="flex items-center flex-wrap cursor-pointer select-none " @click="changeSetChangeMode()">
+                        <div class="flex justify-center w-14 md:w-16">
+                            <div class="rounded-full w-11 h-6 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-gray-100 ring-primary' : 'bg-dark_secondary ring-gray-200']">
                                 <div
                                     class="rounded-full w-5 h-5 transform duration-300 ease-in-out flex items-center justify-center"
-                                    :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-white text-black' : 'translate-x-5 bg-gray-700 text-white']"
+                                    :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-white text-primary' : 'translate-x-5 bg-gray-700 text-white']"
                                 >
                                     <span class="material-icons-round text-base">{{ this.$store.getters.changeMode == true ? "wb_sunny" : "dark_mode" }}</span>
                                 </div>
@@ -89,7 +94,7 @@
             </div>
         </div>
 
-        <router-view class="mx-1 top-20 px-3 py-3 bg-white rounded-md shadow-md h-full" :class="[!this.$store.getters.showAccountPage ? 'block  w-full md:w-9/12' : 'hidden md:block md:w-9/12']" />
+        <router-view class="mx-1 top-20 px-3 py-3 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full" :class="[!this.$store.getters.showAccountPage ? 'block  w-full md:w-9/12' : 'hidden md:block md:w-9/12']" />
     </div>
 </template>
 
@@ -115,6 +120,14 @@ export default {
                 document.getElementById("dark");
             }
             this.mode();
+        },
+        logout(){
+            if(window.confirm('Are you sure?')){
+                localStorage.removeItem('token')
+                localStorage.removeItem('userId')
+                this.$store.commit('SET_USERINFO', null);
+                this.$router.push('/')
+            }
         },
         mode() {
             if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {

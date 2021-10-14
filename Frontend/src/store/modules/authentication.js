@@ -1,7 +1,7 @@
-
+import axios from 'axios'
 
 const state = {
-    userinfo: {}
+    userinfo: null
 }
 
 const getters = {
@@ -9,8 +9,20 @@ const getters = {
 }
 
 const actions = {
+    loadUserData({
+        commit
+    }) {
+        let userId = localStorage.getItem('userId')
+        if (userId) {
+            axios
+                .get(`${process.env.VUE_APP_API}/user/${userId}`)
+                .then(response => {
+                    commit('SET_USERINFO', response.data)
+                })
 
+        }
 
+    }
 }
 
 
