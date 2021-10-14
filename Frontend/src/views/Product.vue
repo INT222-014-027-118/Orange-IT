@@ -97,7 +97,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 import Review from "../components/Review.vue";
 import Comments from "../components/Comment.vue";
 import Raring from "../components/Rating.vue";
