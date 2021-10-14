@@ -1,12 +1,12 @@
 <template>
     <div class="">
-        <div class="mx-auto max-w-7xl sm:mt-5 dark:bg-gray-700">
+        <div class="mx-auto max-w-7xl sm:mt-5 ">
             <div class="md:mt-0 md:px-5 lg:mx-auto grid gap-3 grid-cols-3 ">
                 <div class="py-0 lg:py-5 mx-0 col-span-3 lg:col-span-2">
                     <Carousel :images="images" :reImage="reImage" @endload="endload" />
                 </div>
 
-                <div class="px-1 py-5 sm:px-16 md:px-20 lg:p-5 col-span-3 lg:col-span-1 my-5 bg-white rounded-md shadow-md">
+                <div class="px-1 py-5 sm:px-16 md:px-20 lg:p-5 col-span-3 lg:col-span-1 my-5 bg-white dark:bg-dark_tertiary rounded-md shadow-md">
                     <p class="px-2 text-primary">
                         {{ product.brandName }}
                     </p>
@@ -40,14 +40,16 @@
                         <div class="text-xl font-bold flex items-center" :class="[stockCheck.class]">
                             <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
                         </div>
-                        <div class="fixed bottom-0 left-0 w-full px-5 py-2 bg-white pb-14 md:pb-0 md:px-0 md:static">
+                        <div
+                            class="fixed bottom-0 left-0 w-full px-5 py-2 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary pb-16 sm:pb-5 sm:pt-5 md:px-0 md:static border-t md:border-0 dark:border-gray-600"
+                        >
                             <button class="w-full p-3 text-center text-white rounded-md bg-primary hover:bg-secondary z-40" @click="addCartItem">Add to Cart</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="my-5 w-full col-span-3">
-                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md capitalize">
+                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md capitalize">
                         description: <span class="capitalize text-sm">{{ productName }}</span>
                     </p>
                     <p class="px-5 md:px-8 py-5 leading-relaxed" :class="[product.description == '' ? 'text-black text-opacity-50' : '']">
@@ -56,15 +58,19 @@
                 </div>
 
                 <div class="mb-5 w-full col-span-3">
-                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md capitalize">
+                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md capitalize">
                         attribute: <span class="capitalize text-sm">{{ productName }}</span>
                     </p>
-                    <div class="overflow-hidden rounded p-2 sm:px-16 md:px-20 lg:px-5">
+                    <div class="overflow-hidden m-2 sm:mx-16 md:mx-20 lg:mx-40">
                         <table class="min-w-full bg-white">
-                            <tbody class="text-gray-700">
-                                <tr :class="attribute % 2 == 0 ? 'bg-gray-100' : 'bg-gray-50'" v-for="attribute in [0, 1, 2, 3, 4]" :key="attribute">
-                                    <td class="w-1/3 text-left py-3 px-4">title</td>
-                                    <td class="w-1/3 text-left py-3 px-4">Smith</td>
+                            <tbody class="text-black dark:text-gray-100 ">
+                                <tr
+                                    :class="index % 2 == 0 ? 'bg-gray-100 dark:bg-dark_primary dark:bg-opacity-90' : 'bg-gray-50 dark:bg-dark_secondary dark:bg-opacity-90'"
+                                    v-for="(Attribute, index) in Attribute"
+                                    :key="index"
+                                >
+                                    <td class="w-1/2 text-left py-3 px-4 font-bold tracking-wide">{{ Attribute.attribute }} :</td>
+                                    <td class="w-1/2 text-left py-3 px-4">{{ Attribute.value }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -72,12 +78,12 @@
                 </div>
 
                 <div class="mb-5 w-full col-span-3">
-                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md capitalize">
+                    <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md capitalize">
                         rating: <span class="capitalize text-sm">{{ productName }}</span>
                     </p>
                     <Raring />
                 </div>
-                <p class="col-span-3 font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white shadow-md rounded-md">Customer reviews</p>
+                <p class="col-span-3 font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md">Customer reviews</p>
                 <Review class="col-span-3 lg:col-span-1 p-1 sm:px-16 md:px-20 lg:px-5 mb-5" />
                 <div class="col-span-3 lg:col-span-2 sm:px-16 md:px-20 lg:px-5 my-6">
                     <Comments />
@@ -170,6 +176,17 @@ export default {
                 stock = { class: "text-green-600", icon: "check_circle", text: "in stock" };
                 return stock;
             }
+        },
+        Attribute() {
+            return this.product.attributes.map((att) => {
+                return {
+                    id: att.id,
+                    attribute: att.attribute,
+                    value: this.product.productsHasAttributes.filter((value) => {
+                        return value.attribute_id == att.id;
+                    })[0].attribute_value,
+                };
+            });
         },
     },
     mounted() {
