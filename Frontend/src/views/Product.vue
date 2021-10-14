@@ -186,30 +186,20 @@ export default {
                         return value.attribute_id == att.id;
                     })[0].attribute_value,
                 };
-
-                // return {
-                //     attribute: valueId.attribute_id.filter((id) => {
-                //         if (id == this.product.attributes.id) {
-                //             this.product.attributes.attribute
-                //         };
-                //     }),
-                //     value: value.attribute_value,
-                // };
             });
-            // return "hi";
         },
     },
     mounted() {
         this.scrollToTop();
     },
     async created() {
-        // this.loading = true;
-        // this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => {
-        //     return res.data;
-        // });
-        // this.images = await this.product.images.map((img) => {
-        //     return `${process.env.VUE_APP_API}/image/get/${img.source}`;
-        // });
+        this.loading = true;
+        this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => {
+            return res.data;
+        });
+        this.images = await this.product.images.map((img) => {
+            return `${process.env.VUE_APP_API}/image/get/${img.source}`;
+        });
     },
 };
 </script>
