@@ -34,10 +34,10 @@ public class Users {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",
             joinColumns = {
-                    @JoinColumn(name = "users_id")
+                    @JoinColumn(name = "user_id")
             },
             inverseJoinColumns = {
-                    @JoinColumn(name = "roles_name")
+                    @JoinColumn(name = "role_name")
             }
     )
     private Set<Roles> role;
