@@ -15,7 +15,7 @@
                     <div class="w-full ml-2 overflow-hidden overflow-ellipsis">
                         <div class="md:flex md:flex-wrap md:items-center">
                             <h2 class="inline-block mb-2 font-light lg:text-xl sm:mr-5 sm:mb-0 truncate">
-                                mrtravlerrr_dasdqweewqe
+                                {{$store.getters.userinfo.username}}
                             </h2>
                             <!-- <a href="#" class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary rounded md:inline-block">Edit</a> -->
                             <router-link
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="px-1 py-3 border-b">
-                    <p class="text-base md:text-xl uppercase font-semibold">point : 99999</p>
+                    <p class="text-base md:text-xl uppercase font-semibold">point : {{$store.getters.userinfo.points}}</p>
                 </div>
             </div>
 
@@ -71,6 +71,11 @@
                         ><span class="material-icons-outlined text-center w-2/12">inventory</span>
                         <span class="ml-1">purchase</span> 
                     </router-link>
+                    <button @click="logout" class="hover:text-red-500 flex font-semibold capitalize"
+                        :class="[this.$route.name === 'purchase' ? 'md:text-primary' : '']">
+                        <span class="material-icons-outlined text-center w-2/12">logout</span>
+                        <span class="ml-1">Logout</span> 
+                    </button>
 
                     <div class="flex items-center cursor-pointer select-none " @click="changeSetChangeMode()">
                         <div class="flex justify-center w-2/12 md:w-auto lg:w-2/12">
@@ -115,6 +120,14 @@ export default {
                 document.getElementById("dark");
             }
             this.mode();
+        },
+        logout(){
+            if(window.confirm('Are you sure?')){
+                localStorage.removeItem('token')
+                localStorage.removeItem('userId')
+                this.$store.commit('SET_USERINFO', null);
+                this.$router.push('/')
+            }
         },
         mode() {
             if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {

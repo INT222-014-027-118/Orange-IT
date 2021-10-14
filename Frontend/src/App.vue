@@ -31,6 +31,7 @@ export default {
         },
     },
     created() {
+        this.$store.dispatch("loadUserData");
         this.mode();
     },
 };

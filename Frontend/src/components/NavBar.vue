@@ -49,13 +49,13 @@
 
                     <div class="w-1 h-5 mx-2 my-auto border-r-2 border-gray-300 dark:border-gray-500 md:mx-3 lg:mx-4" />
 
-                    <button v-if="!$store.getters.userinfo.username" class="flex items-center cursor-pointer" @click="$router.push('/login')" :class="[this.$route.name === 'Login' ? 'text-primary' : '']">
+                    <button v-if="!$store.getters.userinfo" class="flex items-center cursor-pointer" @click="$router.push('/login')" :class="[this.$route.name === 'Login' ? 'text-primary' : '']">
                         <div class="w-9 h-9 lg:w-10 lg:h-10">
                             <span class="w-9 h-9 lg:w-10 lg:h-10 rounded-full p-0.5 border-primary  material-icons"> person </span>
                         </div>
                         <span class="block pl-2 pr-1 tracking-tight font-semibold">Login</span>
                     </button>
-                    <button v-else class="flex items-center cursor-pointer" @click="$router.push('/login')" :class="[this.$route.name === 'Login' ? 'text-primary' : '']">
+                    <button v-else class="flex items-center cursor-pointer" @click="$router.push('/user')" :class="[this.$route.name === 'Login' ? 'text-primary' : '']">
                         <div class="w-9 h-9 lg:w-10 lg:h-10">
                             <span class="w-9 h-9 lg:w-10 lg:h-10 rounded-full p-0.5 border-primary  material-icons"> person </span>
                         </div>
