@@ -23,7 +23,7 @@ public class CartItems {
     @JoinColumn(name = "product_id")
     private ProductCart productCart;
 
-//    @Column long users_id;
+
 
 
 }

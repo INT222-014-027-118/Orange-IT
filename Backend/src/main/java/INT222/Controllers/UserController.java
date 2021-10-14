@@ -6,12 +6,10 @@ import INT222.Repositories.UserRepository;
 import INT222.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -25,6 +23,9 @@ public class UserController {
 
     @PostMapping({"/registerNewUser"})
     public Users registerNewUser(@RequestBody Users user) {
+        if(userRepository.findTopByOrderByIdDesc() ==  null){
+            user.setId(1);
+        }else
         user.setId(userRepository.findTopByOrderByIdDesc().getId()+1);
         return userService.registerNewUser(user);
     }
@@ -44,5 +45,10 @@ public class UserController {
     @GetMapping({"/user/list"})
     public List<Users> userList(){
         return userRepository.findAll();
+    }
+
+    @GetMapping({"/user/{id}"})
+    public Optional<Users> getUserById(@PathVariable(value = "id") long id){
+        return userRepository.findById(id);
     }
 }

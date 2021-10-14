@@ -22,7 +22,7 @@ public class CategoryController {
         return categoryRepository.findAll();
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable(value = "id") long id) {
         categoryRepository.deleteById(id);
     }
