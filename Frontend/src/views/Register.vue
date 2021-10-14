@@ -122,8 +122,16 @@ export default {
             axios
                 .post(`${process.env.VUE_APP_API}/registerNewUser`,data)
                 .then(response => {
-                    console.log("response: ", response)
+                    console.log(response);
+                    if(response.status === 200){
+                        alert('Succeed')
+                        this.$router.push('/login')
+                    }
                 })
+                .catch(error=>{
+                    console.log(error);
+                })
+                
         },
     },
     created() {},

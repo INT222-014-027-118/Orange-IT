@@ -4,14 +4,9 @@ package INT222.Controllers;
 import INT222.Exceptions.NotFoundException;
 import INT222.Exceptions.SameProductNameException;
 import INT222.Models.Colors;
-import INT222.Models.OrderItems;
-import INT222.Models.Products;
 import INT222.Repositories.ColorRepository;
-
-import INT222.Repositories.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
