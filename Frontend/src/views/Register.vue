@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center bg-neutral dark:bg-gray-900">
+    <div class="flex items-center">
         <div class="container mx-auto">
             <div class="max-w-md mx-auto my-10">
                 <div class="text-center">
