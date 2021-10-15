@@ -76,8 +76,8 @@
                         <div class="flex justify-center w-14 md:w-16">
                             <div class="rounded-full w-11 h-6 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
                                 <div
-                                    class="rounded-full w-5 h-5 transform duration-300 ease-in-out flex items-center justify-center ring-1 "
-                                    :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-white text-primary ring-gray-300' : 'translate-x-5 bg-gray-700 text-blue-300 ring-gray-500']"
+                                    class="rounded-full w-5 h-5 transform duration-300 ease-in-out flex items-center justify-center ring-1 text-white"
+                                    :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-primary ring-primary' : 'translate-x-5 bg-blue-500 ring-blue-500']"
                                 >
                                     <span class="material-icons-round text-base">{{ this.$store.getters.changeMode == true ? "wb_sunny" : "dark_mode" }}</span>
                                 </div>
