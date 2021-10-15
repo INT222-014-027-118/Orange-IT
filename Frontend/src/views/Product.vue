@@ -40,7 +40,7 @@
                         <div class="text-xl font-bold flex items-center" :class="[stockCheck.class]">
                             <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
                         </div>
-                        <div class="fixed bottom-0 left-0 w-full px-5 py-2 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary pb-16 sm:pb-5 sm:pt-5 md:pb-0 md:pt-2 md:px-0 md:static border-t md:border-0 dark:border-gray-600">
+                        <div class="fixed bottom-0 z-10 left-0 w-full px-5 pt-5 pb-20 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary md:pb-0 md:pt-2 md:px-0 md:static border-t md:border-0 dark:border-gray-600">
                             <button class="w-full p-3 text-center text-white rounded-md bg-primary hover:bg-secondary z-40" @click="addCartItem">Add to Cart</button>
                         </div>
                     </div>

@@ -14,6 +14,7 @@ export default new Vuex.Store({
     cart: [],
     showAccountPage: true,
     changeMode: false,
+    countHistory: 0,
   },
   mutations: {
     addCartItem(state, item) {

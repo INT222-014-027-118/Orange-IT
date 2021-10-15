@@ -53,5 +53,10 @@ public class CartItemController {
         cartItemForAddRepository.save(cartItemForAdd);
     }
 
+    @GetMapping("/findByUserId/{id}")
+    public List<CartItems> getCartItemListByUserId(@PathVariable(value = "id") long userId){
+        return cartItemRepository.findAllByUserId(userId);
+    }
+
 
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="relative">
-        <div class="fixed top-0 z-50 w-full bg-white shadow-sm select-none dark:bg-dark_secondary dark:text-gray-100 border-b border-primary dark:border-gray-700">
+        <div class="fixed top-0 z-50 w-full bg-white shadow-sm select-none dark:bg-dark_secondary dark:text-gray-100 border-b border-primary dark:border-gray-600">
             <div class="flex items-center justify-around px-2 mx-auto max-w-7xl h-12 sm:h-16 md:h-20 lg:h-20 sm:px-0">
                 <div class="hidden sm:inline-flex lg:w-3/12">
                     <router-link to="/" class="flex items-end transition rounded-full cursor-pointer bg-gradient-to-r hover:from-secondary hover:to-primary hover:text-gray-100">
@@ -8,9 +8,11 @@
                         <span class="hidden font-bold tracking-tighter md:text-lg lg:text-2xl md:inline-flex md:w-24 lg:w-24 pb-1 -ml-4">range IT</span>
                     </router-link>
                 </div>
+                <div class="flex items-center justify-center sm:hidden w-10 h-12 cursor-pointer mr-3" v-show="this.$route.name == 'Product'" @click="checkHistory >= 3 ? $router.go(-1) : $router.push('/')">
+                    <span class="material-icons">arrow_back</span>
+                </div>
                 <Search class="relative w-full sm:w-6/12 lg:w-5/12 sm:mx-2"></Search>
                 <div class="justify-end flex text-xs md:text-sm lg:text-base lg:w-3/12 ">
-                    <!-- hidden sm:inline-flex -->
                     <button class="items-center p-1 rounded-full hidden sm:inline-flex" @click="$router.push('/compare')" :class="[this.$route.name === 'Compare' ? 'text-primary' : '']">
                         <div class="relative">
                             <span class="px-1 pt-1 material-icons"> compare_arrows </span>
@@ -84,8 +86,8 @@
                                     <div class="flex justify-center w-14 md:w-16">
                                         <div class="rounded-full w-11 h-6 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
                                             <div
-                                                class="rounded-full w-5 h-5 transform duration-300 ease-in-out flex items-center justify-center ring-1 "
-                                                :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-white text-primary ring-gray-300' : 'translate-x-5 bg-gray-700 text-blue-300 ring-gray-500']"
+                                                class="rounded-full w-5 h-5 transform duration-300 ease-in-out flex items-center justify-center ring-1 text-white"
+                                                :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-primary ring-primary' : 'translate-x-5 bg-blue-500 ring-blue-500']"
                                             >
                                                 <span class="material-icons-round text-base">{{ this.$store.getters.changeMode == true ? "wb_sunny" : "dark_mode" }}</span>
                                             </div>
@@ -145,8 +147,8 @@
                                     <div class="flex justify-center w-14 md:w-16">
                                         <div class="rounded-full w-11 h-6 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
                                             <div
-                                                class="rounded-full w-5 h-5 transform duration-300 ease-in-out flex items-center justify-center ring-1 "
-                                                :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-white text-primary ring-gray-300' : 'translate-x-5 bg-gray-700 text-blue-300 ring-gray-500']"
+                                                class="rounded-full w-5 h-5 transform duration-300 ease-in-out flex items-center justify-center ring-1 text-white"
+                                                :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-primary ring-primary' : 'translate-x-5 bg-blue-500 ring-blue-500']"
                                             >
                                                 <span class="material-icons-round text-base">{{ this.$store.getters.changeMode == true ? "wb_sunny" : "dark_mode" }}</span>
                                             </div>
@@ -162,18 +164,17 @@
                             </div>
                         </div>
                     </button>
-
-                    <div class="flex items-center justify-center sm:hidden w-10 h-12 cursor-pointer ml-3">
-                        <span class="material-icons"> more_vert </span>
-                    </div>
-
+                </div>
+                <div class="flex items-center justify-center sm:hidden w-10 h-12 cursor-pointer ml-3">
+                    <span class="material-icons"> more_vert </span>
                 </div>
             </div>
         </div>
 
-        <div class="fixed bottom-0 bg-white dark:bg-dark_secondary w-full h-16 sm:hidden text-xs tracking-tighter px-4 py-0.5 z-50 select-none">
+        <div class="fixed bottom-0 bg-white dark:bg-dark_secondary w-full h-16 sm:hidden text-xs tracking-tighter px-4 py-0.5 z-50 select-none border-t border-primary dark:border-gray-600">
+            <!-- v-if="this.$route.name === 'Home' || this.$route.name === 'Cart' || this.$route.name === 'Profile' || this.$route.name === 'Login' || this.$route.name === 'Register' ? 'text-primary' : ''" -->
             <div class="flex justify-around h-full items-center">
-                <button class="flex flex-col items-center w-16 p-1 font-semibold" @click="$router.push('/')" :class="[this.$route.name === 'Home' ? 'bg-primary rounded-full text-white' : '']">
+                <button class="flex flex-col items-center w-16 p-1 font-semibold" @click="$router.push('/')" :class="[this.$route.name === 'Home' ? 'text-primary' : '']">
                     <!-- <div class="material-icons">local_mall</div> -->
                     <img v-show="this.$route.name === 'Home'" src="../assets/orange.svg" alt="orange_icon" class="max-h-6" />
                     <div v-show="this.$route.name !== 'Home'" :class="[this.$route.name === 'Home' ? 'material-icons text-primary' : 'material-icons-outlined']">home</div>
@@ -187,12 +188,12 @@
                     </div>
                     <span class="">categories</span>
                 </button>
-                <button class="flex flex-col items-center w-16 p-1 font-semibold" @click="$router.push('/cart')" :class="[this.$route.name === 'Cart' ? 'bg-primary rounded-full text-white' : '']">
+                <button class="flex flex-col items-center w-16 p-1 font-semibold" @click="$router.push('/cart')" :class="[this.$route.name === 'Cart' ? 'text-primary' : '']">
                     <div :class="[this.$route.name === 'Cart' ? 'material-icons' : 'material-icons-outlined']">shopping_cart</div>
                     <span class="">cart</span>
                 </button>
 
-                <button v-if="!$store.getters.userinfo" class="flex items-center cursor-pointer" @click="$router.push('/login')" :class="[this.$route.name === 'Login' ? 'bg-primary rounded-full text-white' : '']">
+                <button v-if="!$store.getters.userinfo" class="flex items-center cursor-pointer" @click="$router.push('/login')" :class="[this.$route.name === 'Login' ? 'text-primary' : '']">
                     <div class="flex flex-col items-center w-16 p-1 font-semibold">
                         <span :class="[this.$route.name === 'Login' ? 'material-icons' : 'material-icons-outlined']"> person </span>
                         <span class="">login</span>
@@ -206,7 +207,7 @@
                     }"
                     v-else
                     @click="this.$store.commit('setShowAccountPage', true)"
-                    :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'bg-primary rounded-full text-white' : '']"
+                    :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'text-primary' : '']"
                 >
                     <div class="flex flex-col items-center w-16 p-1 font-semibold">
                         <div :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'material-icons' : 'material-icons-outlined']">
@@ -236,6 +237,7 @@ export default {
             showCart: false,
             menuUser: false,
             menuLogin: false,
+            // countHistory: 0,
         };
     },
     methods: {
@@ -270,7 +272,19 @@ export default {
                 this.$router.push("/");
             }
         },
+        // checkHistory() {
+        //     console.log(window.history.length);
+        //     this.countHistory = window.history.length;
+        // },
     },
+    computed: {
+        checkHistory() {
+            return window.history.length;
+        },
+    },
+    // mounted() {
+    //     this.checkHistory();
+    // },
 };
 </script>
 

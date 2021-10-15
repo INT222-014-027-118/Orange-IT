@@ -55,7 +55,7 @@
                         <div class="text-gray-500 dark:text-gray-300">tax estimate</div>
                         <div class="font-semibold">฿ 999999</div>
                     </div>
-                    <div class="fixed bottom-0 left-0 w-full px-5 py-2 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary pb-16 sm:pb-5 sm:pt-5 md:px-0 md:static border-t md:border-0 dark:border-gray-600">
+                    <div class="fixed bottom-0 left-0 w-full bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary px-5 pb-20 sm:pb-5 sm:pt-5 md:px-0 md:static border-t md:border-0 dark:border-gray-600">
                         <div class="flex justify-between py-4">
                             <div class="text-xl font-semibold">Oder total</div>
                             <div class="text-xl font-semibold md:text-2xl text-primary">฿ 999999</div>
