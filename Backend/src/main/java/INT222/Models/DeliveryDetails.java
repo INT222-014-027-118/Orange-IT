@@ -35,6 +35,6 @@ public class DeliveryDetails {
     private String postCode;
     @Column
     private String address;
-    @Column(name = "customer_id")
-    private long customerId;
+    @Column(name = "users_id")
+    private long userId;
 }
