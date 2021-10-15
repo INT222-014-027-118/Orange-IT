@@ -1,7 +1,7 @@
 <template>
     <div class="relative">
-        <div class="fixed top-0 z-50 w-full bg-white shadow-sm select-none dark:bg-dark_secondary dark:text-gray-100">
-            <div class="flex items-center justify-around px-2 mx-auto max-w-7xl h-12 sm:h-20 md:h-20 lg:h-20 sm:px-0">
+        <div class="fixed top-0 z-50 w-full bg-white shadow-sm select-none dark:bg-dark_secondary dark:text-gray-100 border-b border-primary dark:border-gray-700">
+            <div class="flex items-center justify-around px-2 mx-auto max-w-7xl h-12 sm:h-16 md:h-20 lg:h-20 sm:px-0">
                 <div class="hidden sm:inline-flex lg:w-3/12">
                     <router-link to="/" class="flex items-end transition rounded-full cursor-pointer bg-gradient-to-r hover:from-secondary hover:to-primary hover:text-gray-100">
                         <img src="../assets/orange.svg" alt="orange_icon" class="h-11 md:h-12 ml-2" />
@@ -40,9 +40,9 @@
                         </div>
                     </button>
 
-                    <div class="w-1 h-5 mx-2 my-auto border-r-2 border-gray-300 dark:border-gray-500 md:mx-3 lg:mx-4 hidden sm:inline-flex" />
+                    <div class="w-1 h-5 mx-2 my-auto border-r-2 border-gray-300 dark:border-gray-500 md:mx-3 lg:mx-4 hidden sm:inline-block" />
 
-                    <button v-if="!$store.getters.userinfo" class="items-center cursor-pointer relative hidden sm:inline-flex" :class="[this.$route.name === 'Login' ? 'text-primary' : '']">
+                    <button v-if="!$store.getters.userinfo" class="items-center cursor-pointer relative hidden sm:inline-block" :class="[this.$route.name === 'Login' ? 'text-primary' : '']">
                         <div class="flex items-center">
                             <span class="rounded-full text-3xl" :class="[this.$route.name === 'Login' ? 'material-icons' : 'material-icons-outlined']"> person </span>
                             <span class="block pl-2 pr-1 tracking-tight font-semibold">Login</span>
@@ -97,7 +97,7 @@
                         </div>
                     </button>
 
-                    <button v-else :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'text-primary rounded-full' : '']" class="relative hidden sm:inline-flex">
+                    <button v-else :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'text-primary rounded-full' : '']" class="relative hidden sm:inline-block">
                         <div class="flex items-center">
                             <span class="rounded-full text-3xl" :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'material-icons' : 'material-icons-outlined']">
                                 person
@@ -163,7 +163,7 @@
                         </div>
                     </button>
 
-                    <div class="flex items-center justify-center sm:hidden text-white w-10 h-12 cursor-pointer ml-3">
+                    <div class="flex items-center justify-center sm:hidden w-10 h-12 cursor-pointer ml-3">
                         <span class="material-icons"> more_vert </span>
                     </div>
 
