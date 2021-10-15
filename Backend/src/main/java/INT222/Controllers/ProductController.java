@@ -38,7 +38,8 @@ public class ProductController {
     @Autowired
     private ProductSpecValueRepository productSpecValueRepository;
 
-
+    @Autowired
+    private ProductHasAttributeRepository productHasAttributeRepository;
     //Get all Products
     @GetMapping("/list")
     public List<ProductsHome> getProduct() {
@@ -151,8 +152,16 @@ public class ProductController {
         else throw new NotFoundNameException(name);
     }
 
+    @PutMapping("/editAttribute")
+    public void editProduct(@RequestBody ProductsHasAttributes productsHasAttributes) {
+ productHasAttributeRepository.save(productsHasAttributes);
+    }
 
-
+//    @GetMapping("geta/list")
+//    public List<ProductsHasAttributes> getProductByBrandName() {
+// return productHasAttributeRepository.findAll();
+//
+//    }
 
 
 }

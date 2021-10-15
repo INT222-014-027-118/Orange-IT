@@ -4,6 +4,7 @@ import INT222.Exceptions.NotFoundImageException;
 import INT222.Exceptions.SameImageException;
 import INT222.Models.Images;
 import INT222.Repositories.ImageRepository;
+import INT222.Services.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -19,6 +20,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/image")
@@ -27,7 +31,11 @@ public class ImageController {
 
     @Autowired
     private ImageRepository imageRepository;
+
     private final Path path = Paths.get("images");
+
+    @Autowired
+    private FileStorageService fileStorageService;
 
     @GetMapping("/get/{id:.+}")
     public ResponseEntity<Resource> getImage(@PathVariable("id")String id) throws IOException {
@@ -70,7 +78,7 @@ public class ImageController {
 
 
     @PutMapping("/update/{id:.+}")
-    public void changeImage(@RequestParam("refun")MultipartFile file,@PathVariable("id")String id)throws IOException {
+    public void changeImage(@RequestParam("orange")MultipartFile file,@PathVariable("id")String id)throws IOException {
         boolean b = false;
         Path file1 = path.resolve(id);
         Path file2 = path.resolve(file.getOriginalFilename());
@@ -109,6 +117,19 @@ public class ImageController {
         System.out.println(id + " exist: " + myFile.exists());
     }
 
+    @PostMapping("/uploadMultipleFiles")
+    public List<Images> uploadMultipleFiles(@RequestParam("orange") MultipartFile[] files) {
+        return Arrays.asList(files)
+                .stream()
+                .map(file -> uploadFile(file))
+                .collect(Collectors.toList());
 
+    }
+
+    @PostMapping("/uploadFile")
+    public Images uploadFile(@RequestParam("orange") MultipartFile file) {
+        String fileName = fileStorageService.storeFile(file);
+        return imageRepository.findTopByOrderByIdDesc();
+    }
 
 }

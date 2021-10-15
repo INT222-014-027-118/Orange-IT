@@ -23,7 +23,10 @@ public class CartItems {
     @JoinColumn(name = "product_id")
     private ProductCart productCart;
 
+    @OneToOne
+    @JoinColumn(name = "color_id")
+    private Colors colors;
 
-
-
+    @Column(name = "users_id")
+    private long userId;
 }

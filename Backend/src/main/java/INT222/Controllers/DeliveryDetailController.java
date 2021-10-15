@@ -1,5 +1,6 @@
 package INT222.Controllers;
 
+import INT222.Models.CartItems;
 import INT222.Models.DeliveryDetails;
 import INT222.Repositories.DeliveryDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class DeliveryDetailController {
 
 
     @GetMapping("/list")
-    public List<DeliveryDetails> getReview() {
+    public List<DeliveryDetails> getDeliveryDetails() {
         return deliveryDetailRepository.findAll();
     }
 
@@ -26,12 +27,18 @@ public class DeliveryDetailController {
     }
 
     @PutMapping("/update")
-    public void editReview(@RequestBody DeliveryDetails deliveryDetails) {
+    public void editDeliveryDetails(@RequestBody DeliveryDetails deliveryDetails) {
         deliveryDetailRepository.save(deliveryDetails);
     }
 
     @PostMapping("/add")
-    public void addReview(@RequestBody DeliveryDetails deliveryDetails) {
+    public void addDeliveryDetails(@RequestBody DeliveryDetails deliveryDetails) {
         deliveryDetailRepository.save(deliveryDetails);
     }
+
+    @GetMapping("/findByUserId/{id}")
+    public List<DeliveryDetails> getDeliveryDetailListByUserId(@PathVariable(value = "id") long userId){
+        return deliveryDetailRepository.findAllByUserId(userId);
+    }
+
 }
