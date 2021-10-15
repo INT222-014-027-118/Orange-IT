@@ -1,7 +1,7 @@
 <template>
     <div class="relative">
-        <div class="fixed top-0 z-50 w-full bg-white shadow-sm select-none dark:bg-dark_secondary dark:text-gray-100">
-            <div class="flex items-center justify-around px-2 mx-auto max-w-7xl h-12 sm:h-20 md:h-20 lg:h-20 sm:px-0">
+        <div class="fixed top-0 z-50 w-full bg-white shadow-sm select-none dark:bg-dark_secondary dark:text-gray-100 border-b border-primary dark:border-gray-700">
+            <div class="flex items-center justify-around px-2 mx-auto max-w-7xl h-12 sm:h-16 md:h-20 lg:h-20 sm:px-0">
                 <div class="hidden sm:inline-flex lg:w-3/12">
                     <router-link to="/" class="flex items-end transition rounded-full cursor-pointer bg-gradient-to-r hover:from-secondary hover:to-primary hover:text-gray-100">
                         <img src="../assets/orange.svg" alt="orange_icon" class="h-11 md:h-12 ml-2" />
@@ -9,8 +9,9 @@
                     </router-link>
                 </div>
                 <Search class="relative w-full sm:w-6/12 lg:w-5/12 sm:mx-2"></Search>
-                <div class="justify-end hidden text-xs md:text-sm lg:text-base sm:inline-flex lg:w-3/12 ">
-                    <button class="flex items-center p-1 rounded-full" @click="$router.push('/compare')" :class="[this.$route.name === 'Compare' ? 'text-primary' : '']">
+                <div class="justify-end flex text-xs md:text-sm lg:text-base lg:w-3/12 ">
+                    <!-- hidden sm:inline-flex -->
+                    <button class="items-center p-1 rounded-full hidden sm:inline-flex" @click="$router.push('/compare')" :class="[this.$route.name === 'Compare' ? 'text-primary' : '']">
                         <div class="relative">
                             <span class="px-1 pt-1 material-icons"> compare_arrows </span>
                             <div class="absolute px-2 text-xs text-white bg-primary rounded-full -top-1 -right-3 md:-top-2 sm:-right-3">VS</div>
@@ -18,7 +19,7 @@
                         <span class="tracking-tight font-semibold">compare</span>
                     </button>
 
-                    <button class="relative flex items-center p-1 rounded-full" @mouseenter="showCart = true" @click="$router.push('/cart')" :class="[this.$route.name === 'Cart' ? 'text-primary' : '']">
+                    <button class="relative items-center p-1 rounded-full hidden sm:inline-flex" @mouseenter="showCart = true" @click="$router.push('/cart')" :class="[this.$route.name === 'Cart' ? 'text-primary' : '']">
                         <div class="relative">
                             <span class="px-1 pt-1" :class="[this.$route.name === 'Cart' ? 'material-icons' : 'material-icons-outlined']"> shopping_cart </span>
                             <div class="absolute px-2 text-xs text-white bg-primary rounded-full -top-1 -right-3 md:-top-2 sm:-right-3">
@@ -26,42 +27,146 @@
                             </div>
                         </div>
                         <span class="tracking-tight font-semibold">cart</span>
-                        <div class="absolute top-10 left-0 z-20 pt-10 transform -translate-y-10 w-16" @mouseenter="showCart = true" @mouseleave="showCart = false">
+                        <div class="absolute top-10 left-0 z-20 pt-10 transform -translate-y-10 w-full" @mouseenter="showCart = true" @mouseleave="showCart = false">
                             <div
                                 v-show="showCart"
-                                class="w-48 py-2 absolute right-0 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:bg-gray-800 opacity-100 hover:text-black"
+                                class="w-64 py-2 absolute right-0 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
                                 :class="$store.getters.totalInCart == 0 ? 'hidden' : ''"
                             >
-                                testing
-                                <div v-for="cart in $store.getters.cart" :key="cart.name">
+                                <div v-for="cart in $store.getters.cart" :key="cart.name" class="hover:text-primary">
                                     <span>{{ cart.name }}</span>
-                                    <span>{{ cart.price }} </span>
-                                    <span>{{ cart.type }} </span>
                                 </div>
                             </div>
                         </div>
                     </button>
 
-                    <div class="w-1 h-5 mx-2 my-auto border-r-2 border-gray-300 dark:border-gray-500 md:mx-3 lg:mx-4" />
+                    <div class="w-1 h-5 mx-2 my-auto border-r-2 border-gray-300 dark:border-gray-500 md:mx-3 lg:mx-4 hidden sm:inline-block" />
 
-                    <button v-if="!$store.getters.userinfo" class="flex items-center cursor-pointer" @click="$router.push('/login')" :class="[this.$route.name === 'Login' ? 'text-primary' : '']">
-                        <span class="rounded-full text-3xl" :class="[this.$route.name === 'Login' ? 'material-icons' : 'material-icons-outlined']"> person </span>
-                        <span class="block pl-2 pr-1 tracking-tight font-semibold">Login</span>
+                    <button v-if="!$store.getters.userinfo" class="items-center cursor-pointer relative hidden sm:inline-block" :class="[this.$route.name === 'Login' ? 'text-primary' : '']">
+                        <div class="flex items-center">
+                            <span class="rounded-full text-3xl" :class="[this.$route.name === 'Login' ? 'material-icons' : 'material-icons-outlined']"> person </span>
+                            <span class="block pl-2 pr-1 tracking-tight font-semibold">Login</span>
+                        </div>
+                        <div class="absolute top-10 left-0 z-20 transform -translate-y-10 w-full" @mouseenter="menuLogin = true" @mouseleave="menuLogin = false">
+                            <div
+                                @click="
+                                    menuLogin = true;
+                                    $router.push('/login');
+                                "
+                                class="block cursor-pointer h-10"
+                            ></div>
+                            <div
+                                v-show="menuLogin"
+                                class="w-40 py-3 absolute space-y-3 right-0 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
+                            >
+                                <div
+                                    @click="
+                                        menuLogin = true;
+                                        $router.push('/login');
+                                    "
+                                    class="hover:text-primary flex font-semibold capitalize items-center"
+                                >
+                                    <span class="material-icons-outlined text-center w-14 md:w-16 ">login</span>
+                                    <span class="ml-1">login</span>
+                                </div>
+                                <div
+                                    @click="
+                                        $router.push('/register');
+                                        menuLogin = false;
+                                    "
+                                    class="hover:text-primary flex font-semibold capitalize items-center"
+                                >
+                                    <span class="material-icons-outlined text-center w-14 md:w-16 ">person_add</span>
+                                    <span class="ml-1">singin</span>
+                                </div>
+                                <hr class="dark:border-gray-500" />
+                                <div class="flex items-center flex-wrap cursor-pointer select-none " @click="changeSetChangeMode()">
+                                    <div class="flex justify-center w-14 md:w-16">
+                                        <div class="rounded-full w-11 h-6 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
+                                            <div
+                                                class="rounded-full w-5 h-5 transform duration-300 ease-in-out flex items-center justify-center ring-1 "
+                                                :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-white text-primary ring-gray-300' : 'translate-x-5 bg-gray-700 text-blue-300 ring-gray-500']"
+                                            >
+                                                <span class="material-icons-round text-base">{{ this.$store.getters.changeMode == true ? "wb_sunny" : "dark_mode" }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="font-semibold capitalize ml-1">{{ this.$store.getters.changeMode == true ? "light mode" : "dark mode" }}</span>
+                                </div>
+                            </div>
+                        </div>
                     </button>
-                    <button v-else :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'text-primary rounded-full' : '']">
-                        <router-link
-                            :to="{
-                                name: 'purchase',
-                                params: { purchaseDetail: 'purchase' },
-                            }"
-                            class="flex items-center cursor-pointer"
-                        >
+
+                    <button v-else :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'text-primary rounded-full' : '']" class="relative hidden sm:inline-block">
+                        <div class="flex items-center">
                             <span class="rounded-full text-3xl" :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'material-icons' : 'material-icons-outlined']">
                                 person
                             </span>
-                            <span class="block pl-2 pr-1 tracking-tight font-semibold">{{ $store.getters.userinfo.username }}</span>
-                        </router-link>
+                            <span class="block pl-2 pr-1 tracking-tight font-semibold">{{ $store.getters.userinfo === null ? "" : $store.getters.userinfo.username }}</span>
+                        </div>
+                        <div class="absolute top-10 left-0 z-20 transform -translate-y-10 w-full" @mouseenter="menuUser = true" @mouseleave="menuUser = false">
+                            <router-link
+                                :to="{
+                                    name: 'purchase',
+                                    params: { purchaseDetail: 'purchase' },
+                                }"
+                                @click="menuUser = true"
+                                class="block cursor-pointer h-10"
+                            >
+                            </router-link>
+                            <div
+                                v-show="menuUser"
+                                class="w-52 py-3 absolute space-y-3 right-0 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
+                            >
+                                <router-link
+                                    :to="{
+                                        name: 'manageProfile',
+                                        params: { manage: 'account' },
+                                    }"
+                                    @click="menuUser = false"
+                                    class="hover:text-primary flex font-semibold capitalize items-center"
+                                    :class="[this.$route.name === 'manageProfile' ? 'md:text-primary hover:text-primaryfocus' : '']"
+                                    ><span class="material-icons-outlined text-center w-14 md:w-16 ">manage_accounts</span>
+                                    <span class="ml-1">my account</span>
+                                </router-link>
+                                <router-link
+                                    :to="{
+                                        name: 'purchase',
+                                        params: { purchaseDetail: 'purchase' },
+                                    }"
+                                    @click="menuUser = false"
+                                    class="hover:text-primary flex font-semibold capitalize items-center"
+                                    :class="[this.$route.name === 'purchase' ? 'md:text-primary hover:text-primaryfocus' : '']"
+                                    ><span class="material-icons-outlined text-center w-14 md:w-16 ">inventory</span>
+                                    <span class="ml-1">purchase</span>
+                                </router-link>
+                                <hr class="dark:border-gray-500" />
+                                <div class="flex items-center flex-wrap cursor-pointer select-none " @click="changeSetChangeMode()">
+                                    <div class="flex justify-center w-14 md:w-16">
+                                        <div class="rounded-full w-11 h-6 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
+                                            <div
+                                                class="rounded-full w-5 h-5 transform duration-300 ease-in-out flex items-center justify-center ring-1 "
+                                                :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-white text-primary ring-gray-300' : 'translate-x-5 bg-gray-700 text-blue-300 ring-gray-500']"
+                                            >
+                                                <span class="material-icons-round text-base">{{ this.$store.getters.changeMode == true ? "wb_sunny" : "dark_mode" }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="font-semibold capitalize ml-1">{{ this.$store.getters.changeMode == true ? "light mode" : "dark mode" }}</span>
+                                </div>
+                                <hr class="dark:border-gray-500" />
+                                <button @click="logout" class="hover:text-red-500 flex capitalize font-bold">
+                                    <span class="material-icons-outlined text-center w-14 md:w-16 ">logout</span>
+                                    <span class="ml-1">Logout</span>
+                                </button>
+                            </div>
+                        </div>
                     </button>
+
+                    <div class="flex items-center justify-center sm:hidden w-10 h-12 cursor-pointer ml-3">
+                        <span class="material-icons"> more_vert </span>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -128,14 +233,42 @@ export default {
     },
     data() {
         return {
-            showAdd: false,
-            profile: "http://daisyui.com/tailwind-css-component-profile-1@94w.png",
             showCart: false,
+            menuUser: false,
+            menuLogin: false,
         };
     },
     methods: {
         switchMode() {
             this.$emit("switch-mode");
+        },
+        changeSetChangeMode() {
+            this.$store.commit("setChangeMode");
+            if (this.$store.getters.changeMode == true) {
+                localStorage.theme = "light";
+                document.getElementById("light");
+            } else {
+                localStorage.theme = "dark";
+                document.getElementById("dark");
+            }
+            this.mode();
+        },
+        mode() {
+            if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+                this.$store.commit("setChangeMode", false);
+                document.documentElement.classList.add("dark");
+            } else {
+                this.$store.commit("setChangeMode", true);
+                document.documentElement.classList.remove("dark");
+            }
+        },
+        logout() {
+            if (window.confirm("Are you sure?")) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("userId");
+                this.$store.commit("SET_USERINFO", null);
+                this.$router.push("/");
+            }
         },
     },
 };
