@@ -59,7 +59,7 @@
                             <span class="rounded-full text-3xl" :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'material-icons' : 'material-icons-outlined']">
                                 person
                             </span>
-                            <span class="block pl-2 pr-1 tracking-tight font-semibold">{{ $store.getters.userinfo.username }}</span>
+                            <span class="block pl-2 pr-1 tracking-tight font-semibold">{{ $store.getters.userinfo === null ? "" : $store.getters.userinfo.username }}</span>
                         </router-link>
                     </button>
                 </div>

@@ -1,10 +1,7 @@
 <template>
     <div class="flex p-1 py-3 mx-auto max-w-7xl ">
         <div class="fixed md:hidden" @click="changetShowAccountPage" v-show="!this.$store.getters.showAccountPage">back</div>
-        <div
-            :class="[this.$store.getters.showAccountPage ? 'w-full md:w-3/12' : 'hidden md:block']"
-            class="mx-1 w-full overflow-hidden md:w-3/12 top-20 px-3 py-3 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full"
-        >
+        <div :class="[this.$store.getters.showAccountPage ? 'w-full md:w-3/12' : 'hidden md:block']" class="mx-1 w-full overflow-hidden md:w-3/12 top-20 px-3 py-3 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full">
             <div class="">
                 <div class="flex items-center ">
                     <div class="self-start py-1">
@@ -18,7 +15,7 @@
                     <div class="w-full ml-2 overflow-hidden overflow-ellipsis">
                         <div class="md:flex md:flex-wrap md:items-center">
                             <h2 class="inline-block mb-2 font-light lg:text-xl sm:mr-5 sm:mb-0 truncate">
-                                {{ $store.getters.userinfo.username }}
+                                {{ $store.getters.userinfo === null ? "" : $store.getters.userinfo.username }}
                             </h2>
                             <!-- <a href="#" class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary rounded md:inline-block">Edit</a> -->
                             <router-link
@@ -34,7 +31,7 @@
                     </div>
                 </div>
                 <div class="px-1 py-3 border-b">
-                    <p class="text-base md:text-xl uppercase font-semibold">point : {{ $store.getters.userinfo.points }}</p>
+                    <p class="text-base md:text-xl uppercase font-semibold">point : {{ $store.getters.userinfo === null ? "" : $store.getters.userinfo.points }}</p>
                 </div>
             </div>
 
@@ -97,10 +94,7 @@
             </div>
         </div>
 
-        <router-view
-            class="mx-1 top-20 px-3 py-3 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full"
-            :class="[!this.$store.getters.showAccountPage ? 'block  w-full md:w-9/12' : 'hidden md:block md:w-9/12']"
-        />
+        <router-view class="mx-1 top-20 px-3 py-3 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full" :class="[!this.$store.getters.showAccountPage ? 'block  w-full md:w-9/12' : 'hidden md:block md:w-9/12']" />
     </div>
 </template>
 

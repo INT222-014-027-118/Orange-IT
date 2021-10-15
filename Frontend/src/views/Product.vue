@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <div class="mx-auto max-w-7xl">
-            <div class="lg:mx-auto md:y-5 grid gap-3 lg:py-5 grid-cols-3 ">
+            <div class="lg:mx-auto grid gap-3 lg:py-3 grid-cols-3 ">
                 <div class="col-span-3 lg:col-span-2">
                     <Carousel :images="images" :reImage="reImage" @endload="endload" />
                 </div>

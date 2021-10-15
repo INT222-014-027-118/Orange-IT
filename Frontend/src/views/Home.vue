@@ -1,5 +1,5 @@
 <template>
-    <div class="sm:pt-2 md:pt-4">
+    <div class="sm:pt-2 md:pt-3">
         <Carousel class="container mx-auto lg:max-w-7xl" :images="promotionImages" />
 
         <div class="container lg:max-w-7xl grid grid-cols-4 gap-2 md:gap-3 mx-auto my-3 md:my-7 p-2 sm:px-5 md:px-3">
