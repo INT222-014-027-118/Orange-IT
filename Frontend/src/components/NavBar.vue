@@ -26,17 +26,14 @@
                             </div>
                         </div>
                         <span class="tracking-tight font-semibold">cart</span>
-                        <div class="absolute top-10 left-0 z-20 pt-10 transform -translate-y-10 w-16" @mouseenter="showCart = true" @mouseleave="showCart = false">
+                        <div class="absolute top-10 left-0 z-20 pt-10 transform -translate-y-10 w-full" @mouseenter="showCart = true" @mouseleave="showCart = false">
                             <div
                                 v-show="showCart"
-                                class="w-48 py-2 absolute right-0 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:bg-gray-800 opacity-100 hover:text-black"
+                                class="w-64 py-2 absolute right-0 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
                                 :class="$store.getters.totalInCart == 0 ? 'hidden' : ''"
                             >
-                                testing
-                                <div v-for="cart in $store.getters.cart" :key="cart.name">
+                                <div v-for="cart in $store.getters.cart" :key="cart.name" class="hover:text-primary">
                                     <span>{{ cart.name }}</span>
-                                    <span>{{ cart.price }} </span>
-                                    <span>{{ cart.type }} </span>
                                 </div>
                             </div>
                         </div>
@@ -48,19 +45,71 @@
                         <span class="rounded-full text-3xl" :class="[this.$route.name === 'Login' ? 'material-icons' : 'material-icons-outlined']"> person </span>
                         <span class="block pl-2 pr-1 tracking-tight font-semibold">Login</span>
                     </button>
-                    <button v-else :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'text-primary rounded-full' : '']">
-                        <router-link
-                            :to="{
-                                name: 'purchase',
-                                params: { purchaseDetail: 'purchase' },
-                            }"
-                            class="flex items-center cursor-pointer"
-                        >
+                    <button v-else :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'text-primary rounded-full' : '']" class="relative">
+                        <div class="flex items-center">
                             <span class="rounded-full text-3xl" :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'material-icons' : 'material-icons-outlined']">
                                 person
                             </span>
                             <span class="block pl-2 pr-1 tracking-tight font-semibold">{{ $store.getters.userinfo === null ? "" : $store.getters.userinfo.username }}</span>
-                        </router-link>
+                        </div>
+
+                        <div class="absolute top-10 left-0 z-20 transform -translate-y-10 w-full" @mouseenter="showMenu = true" @mouseleave="showMenu = false">
+                            <router-link
+                                :to="{
+                                    name: 'purchase',
+                                    params: { purchaseDetail: 'purchase' },
+                                }"
+                                @click="showMenu = true"
+                                class="block cursor-pointer h-10"
+                            >
+                            </router-link>
+                            <div
+                                v-show="showMenu"
+                                class="w-52 py-3 absolute space-y-3 right-0 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
+                            >
+                                <router-link
+                                    :to="{
+                                        name: 'manageProfile',
+                                        params: { manage: 'account' },
+                                    }"
+                                    @click="showMenu = false"
+                                    class="hover:text-primary flex font-semibold capitalize items-center"
+                                    :class="[this.$route.name === 'manageProfile' ? 'md:text-primary hover:text-primaryfocus' : '']"
+                                    ><span class="material-icons-outlined text-center w-14 md:w-16 ">manage_accounts</span>
+                                    <span class="ml-1">my account</span>
+                                </router-link>
+                                <router-link
+                                    :to="{
+                                        name: 'purchase',
+                                        params: { purchaseDetail: 'purchase' },
+                                    }"
+                                    @click="showMenu = false"
+                                    class="hover:text-primary flex font-semibold capitalize items-center"
+                                    :class="[this.$route.name === 'purchase' ? 'md:text-primary hover:text-primaryfocus' : '']"
+                                    ><span class="material-icons-outlined text-center w-14 md:w-16 ">inventory</span>
+                                    <span class="ml-1">purchase</span>
+                                </router-link>
+                                <hr class="dark:border-gray-500" />
+                                <div class="flex items-center flex-wrap cursor-pointer select-none " @click="changeSetChangeMode()">
+                                    <div class="flex justify-center w-14 md:w-16">
+                                        <div class="rounded-full w-11 h-6 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
+                                            <div
+                                                class="rounded-full w-5 h-5 transform duration-300 ease-in-out flex items-center justify-center ring-1 "
+                                                :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-white text-primary ring-gray-300' : 'translate-x-5 bg-gray-700 text-blue-300 ring-gray-500']"
+                                            >
+                                                <span class="material-icons-round text-base">{{ this.$store.getters.changeMode == true ? "wb_sunny" : "dark_mode" }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="font-semibold capitalize ml-1">{{ this.$store.getters.changeMode == true ? "light mode" : "dark mode" }}</span>
+                                </div>
+                                <hr class="dark:border-gray-500" />
+                                <button @click="logout" class="hover:text-red-500 flex capitalize font-bold">
+                                    <span class="material-icons-outlined text-center w-14 md:w-16 ">logout</span>
+                                    <span class="ml-1">Logout</span>
+                                </button>
+                            </div>
+                        </div>
                     </button>
                 </div>
             </div>
@@ -128,14 +177,41 @@ export default {
     },
     data() {
         return {
-            showAdd: false,
-            profile: "http://daisyui.com/tailwind-css-component-profile-1@94w.png",
             showCart: false,
+            showMenu: false,
         };
     },
     methods: {
         switchMode() {
             this.$emit("switch-mode");
+        },
+        changeSetChangeMode() {
+            this.$store.commit("setChangeMode");
+            if (this.$store.getters.changeMode == true) {
+                localStorage.theme = "light";
+                document.getElementById("light");
+            } else {
+                localStorage.theme = "dark";
+                document.getElementById("dark");
+            }
+            this.mode();
+        },
+        mode() {
+            if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+                this.$store.commit("setChangeMode", false);
+                document.documentElement.classList.add("dark");
+            } else {
+                this.$store.commit("setChangeMode", true);
+                document.documentElement.classList.remove("dark");
+            }
+        },
+        logout() {
+            if (window.confirm("Are you sure?")) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("userId");
+                this.$store.commit("SET_USERINFO", null);
+                this.$router.push("/");
+            }
         },
     },
 };
