@@ -15,7 +15,7 @@
                     <div class="w-full ml-2 overflow-hidden overflow-ellipsis">
                         <div class="md:flex md:flex-wrap md:items-center">
                             <h2 class="inline-block mb-2 font-light lg:text-xl sm:mr-5 sm:mb-0 truncate">
-                                {{$store.getters.userinfo.username}}
+                                {{ $store.getters.userinfo === null ? "" : $store.getters.userinfo.username }}
                             </h2>
                             <!-- <a href="#" class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary rounded md:inline-block">Edit</a> -->
                             <router-link
@@ -31,12 +31,12 @@
                     </div>
                 </div>
                 <div class="px-1 py-3 border-b">
-                    <p class="text-base md:text-xl uppercase font-semibold">point : {{$store.getters.userinfo.points}}</p>
+                    <p class="text-base md:text-xl uppercase font-semibold">point : {{ $store.getters.userinfo === null ? "" : $store.getters.userinfo.points }}</p>
                 </div>
             </div>
 
             <div class="">
-                <div class="py-5 px-1 space-y-5">
+                <div class="pt-5 pb-4 px-1 space-y-5">
                     <router-link
                         :to="{
                             name: 'manageProfile',
@@ -72,17 +72,12 @@
                         <span class="ml-1">purchase</span>
                     </router-link>
                     <hr />
-                    <button @click="logout" class="hover:text-red-500 flex font-semibold capitalize"
-                        :class="[this.$route.name === 'purchase' ? 'md:text-primary' : '']">
-                        <span class="material-icons-outlined text-center w-2/12">logout</span>
-                        <span class="ml-1">Logout</span> 
-                    </button>
                     <div class="flex items-center flex-wrap cursor-pointer select-none " @click="changeSetChangeMode()">
                         <div class="flex justify-center w-14 md:w-16">
-                            <div class="rounded-full w-11 h-6 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-gray-100 ring-primary' : 'bg-dark_secondary ring-gray-200']">
+                            <div class="rounded-full w-11 h-6 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
                                 <div
-                                    class="rounded-full w-5 h-5 transform duration-300 ease-in-out flex items-center justify-center"
-                                    :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-white text-primary' : 'translate-x-5 bg-gray-700 text-white']"
+                                    class="rounded-full w-5 h-5 transform duration-300 ease-in-out flex items-center justify-center ring-1 "
+                                    :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-white text-primary ring-gray-300' : 'translate-x-5 bg-gray-700 text-blue-300 ring-gray-500']"
                                 >
                                     <span class="material-icons-round text-base">{{ this.$store.getters.changeMode == true ? "wb_sunny" : "dark_mode" }}</span>
                                 </div>
@@ -90,6 +85,11 @@
                         </div>
                         <span class="font-semibold capitalize ml-1">{{ this.$store.getters.changeMode == true ? "light mode" : "dark mode" }}</span>
                     </div>
+                    <hr />
+                    <button @click="logout" class="hover:text-red-500 flex capitalize font-bold">
+                        <span class="material-icons-outlined text-center w-14 md:w-16 ">logout</span>
+                        <span class="ml-1">Logout</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -101,10 +101,7 @@
 <script>
 export default {
     data() {
-        return {
-            // switchMode: false,
-            // onswitchMode: false,
-        };
+        return {};
     },
     methods: {
         changetShowAccountPage() {
@@ -121,12 +118,12 @@ export default {
             }
             this.mode();
         },
-        logout(){
-            if(window.confirm('Are you sure?')){
-                localStorage.removeItem('token')
-                localStorage.removeItem('userId')
-                this.$store.commit('SET_USERINFO', null);
-                this.$router.push('/')
+        logout() {
+            if (window.confirm("Are you sure?")) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("userId");
+                this.$store.commit("SET_USERINFO", null);
+                this.$router.push("/");
             }
         },
         mode() {

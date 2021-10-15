@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen w-screen bg-gray-700 bg-opacity-40 fixed top-0 z-50">
+    <div class="h-screen w-screen bg-gray-700 dark:bg-gray-800 bg-opacity-50 dark:bg-opacity-80  fixed top-0 z-50">
         <div class="flex justify-center items-center h-full">
             <!-- <span class="material-icons mx-auto my-auto animate-spin text-white text-4xl">autorenew</span> -->
             <svg class="animate-spin -ml-1 mr-3 h-16 w-16 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
