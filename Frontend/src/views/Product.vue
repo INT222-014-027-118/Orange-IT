@@ -147,10 +147,11 @@ export default {
                         setTimeout(() => {
                             let itemDumy = {
                                 name: this.productName,
-                                price: this.price,
+                                price: this.product.price,
                                 quantity: 1,
                             };
                             this.$store.dispatch("addCartItem", itemDumy);
+                            localStorage.setItem("cart", JSON.stringify(itemDumy));
                         }, 500);
                     },
                 });

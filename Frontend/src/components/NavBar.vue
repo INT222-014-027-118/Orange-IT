@@ -157,7 +157,6 @@
         </div>
 
         <div class="fixed bottom-0 bg-white dark:bg-dark_secondary w-full h-16 sm:hidden text-xs tracking-tighter px-4 py-0.5 z-50 select-none border-t border-primary dark:border-gray-600">
-            <!-- v-if="this.$route.name === 'Home' || this.$route.name === 'Cart' || this.$route.name === 'Profile' || this.$route.name === 'Login' || this.$route.name === 'Register' ? 'text-primary' : ''" -->
             <div class="flex justify-around h-full items-center">
                 <button class="flex flex-col items-center w-16 p-1 font-semibold" @click="$router.push('/')" :class="[this.$route.name === 'Home' ? 'text-primary' : '']">
                     <img v-show="this.$route.name === 'Home'" src="../assets/orange.svg" alt="orange_icon" class="max-h-6" />
@@ -166,8 +165,6 @@
                 </button>
                 <button class="flex flex-col items-center w-16 p-1 font-semibold">
                     <div class="material-icons">
-                        <!-- apps -->
-                        <!-- manage_search -->
                         grid_view
                     </div>
                     <span class="">categories</span>
@@ -179,7 +176,6 @@
                         {{ $store.getters.totalInCart == 0 ? "" : $store.getters.totalInCart }}
                     </div>
                 </button>
-
                 <button
                     @click="
                         this.$store.commit('setShowAccountPage', true);
@@ -250,8 +246,7 @@ export default {
             return history.length;
         },
     },
-    created() {
-    },
+    created() {},
 };
 </script>
 
