@@ -1,8 +1,8 @@
 <template>
-    <div class="container flex py-11 lg:px-0 lg:py-5 mx-auto lg:max-w-7xl">
+    <div class="container flex py-14 lg:px-0 lg:py-5 mx-auto lg:max-w-7xl">
         <div class="lg:w-3/12 relative">
             <div class="absolute left-0 z-30 w-3/12 lg:bg-transparent">
-                <div class="fixed left-2 top-12 sm:top-20 lg:hidden">
+                <div class="fixed left-2 top-16 sm:top-20 lg:hidden">
                     <button class="p-2 bg-white rounded-md shadow-md select-none cursor-pointer flex items-center" @click="showFilter = !showFilter">
                         <span class="text-black material-icons">filter_list</span>
                         <span class="text-black px-2 capitalize">fliter</span>

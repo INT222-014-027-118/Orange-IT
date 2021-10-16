@@ -46,7 +46,7 @@ export default {
         },
     },
     async created() {
-        this.image = await `http://52.187.10.17/orange-it/image/get/${this.product.images[0].source}`;
+        this.image = await `${process.env.VUE_APP_API}/image/get/${this.product.images[0].source}`;
     },
 };
 </script>
