@@ -151,7 +151,7 @@ export default {
                                 quantity: 1,
                             };
                             this.$store.dispatch("addCartItem", itemDumy);
-                            localStorage.setItem("cart", JSON.stringify(itemDumy));
+                            localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
                         }, 500);
                     },
                 });

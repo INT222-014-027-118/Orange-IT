@@ -32,6 +32,13 @@ export default {
     },
     created() {
         this.$store.dispatch("loadUserData");
+        if (localStorage.getItem("cart")) {
+            let products = [];
+            products = JSON.parse(localStorage.getItem("cart"));
+            console.log(JSON.parse(localStorage.getItem("cart")));
+            console.log(this.$store.getters.cart);
+            this.$store.commit("fullCartItem", products);
+        }
         this.mode();
     },
 };

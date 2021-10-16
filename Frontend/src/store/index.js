@@ -20,6 +20,9 @@ export default new Vuex.Store({
     addCartItem(state, item) {
       state.cart.push(item);
     },
+    fullCartItem(state, item) {
+      state.cart = item;
+    },
     setShowAccountPage(state, value = !state.showAccountPage) {
       state.showAccountPage = value
     },
