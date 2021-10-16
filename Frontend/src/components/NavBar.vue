@@ -1,16 +1,25 @@
 <template>
     <div class="relative">
         <div class="fixed top-0 z-50 w-full bg-white shadow-sm select-none dark:bg-dark_secondary dark:text-gray-100 border-b border-primary dark:border-gray-600">
-            <div class="flex items-center justify-around px-2 mx-auto max-w-7xl h-12 sm:h-16 md:h-20 lg:h-20 sm:px-0">
+            <div class="flex items-center justify-around px-2 mx-auto max-w-7xl h-14 sm:h-16 md:h-20 lg:h-20 sm:px-0">
                 <div class="hidden sm:inline-flex lg:w-3/12">
                     <router-link to="/" class="flex items-end transition rounded-full cursor-pointer bg-gradient-to-r hover:from-secondary hover:to-primary hover:text-gray-100">
                         <img src="../assets/orange.svg" alt="orange_icon" class="h-11 md:h-12 ml-2" />
                         <span class="hidden font-bold tracking-tighter md:text-lg lg:text-2xl md:inline-flex md:w-24 lg:w-24 pb-1 -ml-4">range IT</span>
                     </router-link>
                 </div>
-                <div class="flex items-center justify-center sm:hidden w-10 h-12 cursor-pointer mr-3" v-show="this.$route.name == 'Product'" @click="checkHistory >= 3 ? $router.go(-1) : $router.push('/')">
+                <button
+                    class="flex items-center justify-center sm:hidden w-10 h-12 cursor-pointer mr-3 relative"
+                    v-show="this.$route.name == 'Product' || !this.$store.getters.showAccountPage"
+                    @click="
+                        checkHistory();
+                        this.$store.getters.showAccountPage ? (checkHistory() >= 3 ? $router.go(-1) : $router.push('/')) : '';
+                        this.$store.commit('setShowAccountPage', true);
+                    "
+                >
+                    <!-- @click="changetShowAccountPage" v-show="!this.$store.getters.showAccountPage" -->
                     <span class="material-icons">arrow_back</span>
-                </div>
+                </button>
                 <Search class="relative w-full sm:w-6/12 lg:w-5/12 sm:mx-2"></Search>
                 <div class="justify-end flex text-xs md:text-sm lg:text-base lg:w-3/12 ">
                     <button class="items-center p-1 rounded-full hidden sm:inline-flex" @click="$router.push('/compare')" :class="[this.$route.name === 'Compare' ? 'text-primary' : '']">
@@ -52,7 +61,7 @@
                         <div class="absolute top-10 left-0 z-20 transform -translate-y-10 w-full" @mouseenter="menuLogin = true" @mouseleave="menuLogin = false">
                             <div
                                 @click="
-                                    menuLogin = true;
+                                    menuLogin = false;
                                     $router.push('/login');
                                 "
                                 class="block cursor-pointer h-10"
@@ -63,7 +72,7 @@
                             >
                                 <div
                                     @click="
-                                        menuLogin = true;
+                                        menuLogin = false;
                                         $router.push('/login');
                                     "
                                     class="hover:text-primary flex font-semibold capitalize items-center"
@@ -112,7 +121,7 @@
                                     name: 'purchase',
                                     params: { purchaseDetail: 'purchase' },
                                 }"
-                                @click="menuUser = true"
+                                @click="menuUser = false"
                                 class="block cursor-pointer h-10"
                             >
                             </router-link>
@@ -165,8 +174,31 @@
                         </div>
                     </button>
                 </div>
-                <div class="flex items-center justify-center sm:hidden w-10 h-12 cursor-pointer ml-3">
-                    <span class="material-icons"> more_vert </span>
+                <div class="flex items-center justify-center sm:hidden cursor-pointer ml-3">
+                    <span class="material-icons px-2 py-4"  @click="moreVert = !moreVert"> more_vert </span>
+                    <div
+                        v-show="moreVert"
+                        class="w-28 py-1 absolute top-12 right-2 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
+                    >
+                        <button
+                            @click="
+                                $router.push('/');
+                                moreVert = !moreVert;
+                            "
+                            class="hover:text-primary w-full py-2 font-semibold capitalize "
+                        >
+                            <p class="text-left ml-3">home</p>
+                        </button>
+                        <button
+                            @click="
+                                moreVert = !moreVert;
+                                $store.getters.userinfo == null ? $router.push('/login') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
+                            "
+                            class="hover:text-primary w-full py-2 font-semibold capitalize "
+                        >
+                            <p class="text-left ml-3">{{ $store.getters.userinfo == null ? "login" : "my account" }}</p>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -188,9 +220,12 @@
                     </div>
                     <span class="">categories</span>
                 </button>
-                <button class="flex flex-col items-center w-16 p-1 font-semibold" @click="$router.push('/cart')" :class="[this.$route.name === 'Cart' ? 'text-primary' : '']">
+                <button class="flex flex-col items-center w-16 p-1 font-semibold relative" @click="$router.push('/cart')" :class="[this.$route.name === 'Cart' ? 'text-primary' : '']">
                     <div :class="[this.$route.name === 'Cart' ? 'material-icons' : 'material-icons-outlined']">shopping_cart</div>
                     <span class="">cart</span>
+                    <div class="absolute px-2 text-xs text-white bg-primary rounded-full -top-1 right-2 md:-top-2 sm:-right-3">
+                        {{ $store.getters.totalInCart == 0 ? "" : $store.getters.totalInCart }}
+                    </div>
                 </button>
 
                 <button v-if="!$store.getters.userinfo" class="flex items-center cursor-pointer" @click="$router.push('/login')" :class="[this.$route.name === 'Login' ? 'text-primary' : '']">
@@ -200,14 +235,16 @@
                     </div>
                 </button>
 
-                <router-link
-                    :to="{
-                        name: 'purchase',
-                        params: { purchaseDetail: 'purchase' },
-                    }"
+                <button
                     v-else
-                    @click="this.$store.commit('setShowAccountPage', true)"
-                    :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'text-primary' : '']"
+                    @click="
+                        this.$store.commit('setShowAccountPage', true);
+                        this.$router.push({
+                            name: 'purchase',
+                            params: { purchaseDetail: 'purchase' },
+                        });
+                    "
+                    :class="[this.$route.name === 'Profile' || this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'text-primary' : '']"
                 >
                     <div class="flex flex-col items-center w-16 p-1 font-semibold">
                         <div :class="[this.$route.name === 'purchase' || this.$route.name === 'manageProfile' || this.$route.name === 'Address' ? 'material-icons' : 'material-icons-outlined']">
@@ -215,7 +252,7 @@
                         </div>
                         <span class="">account</span>
                     </div>
-                </router-link>
+                </button>
             </div>
         </div>
     </div>
@@ -237,6 +274,7 @@ export default {
             showCart: false,
             menuUser: false,
             menuLogin: false,
+            moreVert: false,
             // countHistory: 0,
         };
     },
@@ -272,19 +310,10 @@ export default {
                 this.$router.push("/");
             }
         },
-        // checkHistory() {
-        //     console.log(window.history.length);
-        //     this.countHistory = window.history.length;
-        // },
-    },
-    computed: {
         checkHistory() {
-            return window.history.length;
+            return history.length;
         },
     },
-    // mounted() {
-    //     this.checkHistory();
-    // },
 };
 </script>
 
