@@ -63,7 +63,7 @@ export default {
                         let userinfo = response.data
                         localStorage.setItem('token',userinfo.jwtToken) 
                         localStorage.setItem('userId',userinfo.user.id)
-                        this.$store.commit('SET_USERINFO', userinfo.user);
+                        this.$store.commit('setUserInfo', userinfo.user);
                         this.$router.push('/')
                     }
                 })

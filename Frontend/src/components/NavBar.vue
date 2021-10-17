@@ -32,7 +32,12 @@
                         <span class="tracking-tight font-semibold">compare</span>
                     </button>
 
-                    <button class="relative items-center p-1 rounded-full hidden sm:inline-flex" @mouseenter="showCart = true" @click="$router.push('/cart')" :class="[this.$route.name === 'Cart' ? 'text-primary' : '']">
+                    <button
+                        class="relative items-center p-1 rounded-full hidden sm:inline-flex"
+                        @mouseenter="showCart = true"
+                        @click="$router.push('/cart')"
+                        :class="[this.$route.name === 'Cart' ? 'text-primary' : '']"
+                    >
                         <div class="relative">
                             <span class="px-1 pt-1" :class="[this.$route.name === 'Cart' ? 'material-icons' : 'material-icons-outlined']"> shopping_cart </span>
                             <div class="absolute px-2 text-xs text-white bg-primary rounded-full -top-1 -right-3 md:-top-2 sm:-right-3">
@@ -60,13 +65,13 @@
                             <span class="rounded-full text-3xl" :class="[routerBTN.includes(this.$route.name) ? 'material-icons' : 'material-icons-outlined']">
                                 person
                             </span>
-                            <span class="block pr-1 tracking-tight font-semibold w-16 text-left truncate">{{ $store.getters.userinfo === null ? "Login" : $store.getters.userinfo.username }}</span>
+                            <span class="block pr-1 tracking-tight font-semibold w-16 text-left truncate">{{ $store.getters.userInfo === null ? "Login" : $store.getters.userInfo.username }}</span>
                         </div>
                         <div class="absolute top-10 left-0 z-20 transform -translate-y-10 w-full" @mouseenter="menuUser = true" @mouseleave="menuUser = false">
                             <div
                                 @click="
                                     menuUser = false;
-                                    $store.getters.userinfo === null ? $router.push('/login') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
+                                    $store.getters.userInfo === null ? $router.push('/login') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
                                 "
                                 class="block cursor-pointer h-10"
                             ></div>
@@ -77,27 +82,30 @@
                                 <div
                                     @click="
                                         menuUser = false;
-                                        $store.getters.userinfo === null ? $router.push('/login') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
+                                        $store.getters.userInfo === null ? $router.push('/login') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
                                     "
                                     class="hover:text-primary flex font-semibold capitalize items-center"
                                 >
-                                    <span class="material-icons-outlined text-center w-14 md:w-16 ">{{ $store.getters.userinfo === null ? "login" : "manage_accounts" }}</span>
-                                    <span class="ml-1">{{ $store.getters.userinfo === null ? "login" : "my account" }}</span>
+                                    <span class="material-icons-outlined text-center w-14 md:w-16 ">{{ $store.getters.userInfo === null ? "login" : "manage_accounts" }}</span>
+                                    <span class="ml-1">{{ $store.getters.userInfo === null ? "login" : "my account" }}</span>
                                 </div>
                                 <div
                                     @click="
                                         menuUser = false;
-                                        $store.getters.userinfo === null ? $router.push('/register') : $router.push({ name: 'manageProfile', params: { manage: 'account' } });
+                                        $store.getters.userInfo === null ? $router.push('/register') : $router.push({ name: 'manageProfile', params: { manage: 'account' } });
                                     "
                                     class="hover:text-primary flex font-semibold capitalize items-center"
                                 >
-                                    <span class="material-icons-outlined text-center w-14 md:w-16 "> {{ $store.getters.userinfo === null ? "person_add" : "inventory" }}</span>
-                                    <span class="ml-1">{{ $store.getters.userinfo === null ? "singin" : "purchase" }}</span>
+                                    <span class="material-icons-outlined text-center w-14 md:w-16 "> {{ $store.getters.userInfo === null ? "person_add" : "inventory" }}</span>
+                                    <span class="ml-1">{{ $store.getters.userInfo === null ? "singin" : "purchase" }}</span>
                                 </div>
                                 <hr class="dark:border-gray-500" />
                                 <div class="flex items-center flex-wrap cursor-pointer select-none " @click="changeSetChangeMode()">
                                     <div class="flex justify-center w-14 md:w-16">
-                                        <div class="rounded-full w-9 h-5 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
+                                        <div
+                                            class="rounded-full w-9 h-5 p-0.5 ring-2 "
+                                            :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']"
+                                        >
                                             <div
                                                 class="rounded-full w-4 h-4 transform duration-300 ease-in-out flex items-center justify-center ring-1 text-white"
                                                 :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-primary ring-primary' : 'translate-x-4 bg-blue-500 ring-blue-500']"
@@ -108,7 +116,7 @@
                                     </div>
                                     <span class="font-semibold capitalize ml-1">{{ this.$store.getters.changeMode == true ? "light mode" : "dark mode" }}</span>
                                 </div>
-                                <div v-if="$store.getters.userinfo">
+                                <div v-if="$store.getters.userInfo">
                                     <hr class="dark:border-gray-500 mb-3" />
                                     <button @click="logout" class="hover:text-red-500 flex capitalize font-bold">
                                         <span class="material-icons-outlined text-center w-14 md:w-16 ">logout</span>
@@ -122,7 +130,10 @@
 
                 <div class="flex items-center justify-center sm:hidden cursor-pointer ml-2">
                     <button class="material-icons px-2 py-4" @click="moreVert = !moreVert">more_vert</button>
-                    <div v-show="moreVert" class="w-28 py-1 absolute top-12 right-2 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black">
+                    <div
+                        v-show="moreVert"
+                        class="w-28 py-1 absolute top-12 right-2 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
+                    >
                         <button
                             @click="
                                 $router.push('/');
@@ -135,11 +146,11 @@
                         <button
                             @click="
                                 moreVert = !moreVert;
-                                $store.getters.userinfo == null ? $router.push('/login') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
+                                $store.getters.userInfo == null ? $router.push('/login') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
                             "
                             class="hover:text-primary w-full py-2 font-semibold capitalize"
                         >
-                            <p class="text-left ml-3">{{ $store.getters.userinfo == null ? "login" : "my account" }}</p>
+                            <p class="text-left ml-3">{{ $store.getters.userInfo == null ? "login" : "my account" }}</p>
                         </button>
                         <hr class="dark:border-gray-500" />
                         <button
@@ -179,13 +190,13 @@
                 <button
                     @click="
                         this.$store.commit('setShowAccountPage', true);
-                        $store.getters.userinfo === null ? $router.push('/login') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
+                        $store.getters.userInfo === null ? $router.push('/login') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
                     "
                     :class="[routerBTN.includes(this.$route.name) ? 'text-primary' : '']"
                 >
                     <div class="flex flex-col items-center w-16 p-1 font-semibold">
                         <div :class="[routerBTN.includes(this.$route.name) ? 'material-icons' : 'material-icons-outlined']">person</div>
-                        <span class="">{{ $store.getters.userinfo === null ? "login" : "account" }}</span>
+                        <span class="">{{ $store.getters.userInfo === null ? "login" : "account" }}</span>
                     </div>
                 </button>
             </div>
@@ -235,10 +246,7 @@ export default {
             }
         },
         logout() {
-            if (window.confirm("Are you sure?")) {
-                localStorage.removeItem("token");
-                localStorage.removeItem("userId");
-                this.$store.commit("SET_USERINFO", null);
+            if (this.$store.dispatch("logout")) {
                 this.$router.push("/");
             }
         },

@@ -40,7 +40,9 @@
                         <div class="text-xl font-bold flex items-center" :class="[stockCheck.class]">
                             <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
                         </div>
-                        <div class="fixed bottom-0 z-10 left-0 w-full px-5 pt-5 pb-20 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary md:pb-0 md:pt-2 md:px-0 md:static border-t md:border-0 dark:border-gray-600">
+                        <div
+                            class="fixed bottom-0 z-10 left-0 w-full px-5 pt-5 pb-20 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary md:pb-0 md:pt-2 md:px-0 md:static border-t md:border-0 dark:border-gray-600"
+                        >
                             <button class="w-full p-3 text-center text-white rounded-md bg-primary hover:bg-secondary z-40" @click="addCartItem">Add to Cart</button>
                         </div>
                     </div>
@@ -62,7 +64,11 @@
                     <div class="overflow-hidden m-2 sm:mx-16 md:mx-20 lg:mx-40">
                         <table class="min-w-full bg-white">
                             <tbody class="text-black dark:text-gray-100 ">
-                                <tr :class="index % 2 == 0 ? 'bg-gray-100 dark:bg-dark_primary dark:bg-opacity-90' : 'bg-gray-50 dark:bg-dark_secondary dark:bg-opacity-90'" v-for="(Attribute, index) in Attribute" :key="index">
+                                <tr
+                                    :class="index % 2 == 0 ? 'bg-gray-100 dark:bg-dark_primary dark:bg-opacity-90' : 'bg-gray-50 dark:bg-dark_secondary dark:bg-opacity-90'"
+                                    v-for="(Attribute, index) in Attribute"
+                                    :key="index"
+                                >
                                     <td class="w-1/2 text-left py-3 px-4 font-bold tracking-wide">{{ Attribute.attribute }} :</td>
                                     <td class="w-1/2 text-left py-3 px-4">{{ Attribute.value }}</td>
                                 </tr>
@@ -117,7 +123,7 @@ export default {
                 totalCount: 123,
                 average: 4,
             },
-            colorPick: {},
+            colorPick: null,
             loading: false,
             api: `${process.env.VUE_APP_API}/product`,
         };
@@ -133,11 +139,20 @@ export default {
             this.loading = false;
         },
         addCartItem() {
+            if (!this.colorPick) {
+                alert("Please choose color.");
+                return;
+            }
+            if (!localStorage.getItem("userId")) {
+                alert("Please login");
+                return;
+            }
             this.loading = true;
             setTimeout(() => {
                 this.loading = false;
                 this.$swal({
-                    title: "<div class='flex items-center justify-center text-primary'><span class='material-icons pt-1 px-1 text-3xl'> shopping_cart </span><span class='font-bold text-2xl'>Shopping Cart</span></div>",
+                    title:
+                        "<div class='flex items-center justify-center text-primary'><span class='material-icons pt-1 px-1 text-3xl'> shopping_cart </span><span class='font-bold text-2xl'>Shopping Cart</span></div>",
                     text: "The item has been added to your shopping cart",
                     showCloseButton: true,
                     confirmButtonColor: "#EC6907",
@@ -145,13 +160,15 @@ export default {
                     willOpen: () => {
                         // this.$swal.showLoading();
                         setTimeout(() => {
-                            let itemDumy = {
-                                name: this.productName,
-                                price: this.product.price,
-                                quantity: 1,
+                            let cartItem = {
+                                id: 1,
+                                quantity: "1",
+                                productId: this.productId,
+                                userId: localStorage.getItem("userId"),
+                                colorId: this.colorPick.id,
                             };
-                            this.$store.dispatch("addCartItem", itemDumy);
-                            localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
+                            this.$store.dispatch("addCartItem", cartItem);
+                            // localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
                         }, 500);
                     },
                 });

@@ -1,11 +1,13 @@
 import axios from 'axios'
 
 const state = {
-    userinfo: null
+    userInfo: null,
+    loginStatus:false
 }
 
 const getters = {
-    userinfo: state => state.userinfo,
+    userInfo: state => state.userInfo,
+    isLogin: state => state.loginStatus = localStorage.getItem('userId')?true:false
 }
 
 const actions = {
@@ -17,19 +19,33 @@ const actions = {
             axios
                 .get(`${process.env.VUE_APP_API}/user/${userId}`)
                 .then(response => {
-                    commit('SET_USERINFO', response.data)
+                    commit('setUserInfo', response.data)
                 })
-
         }
-
-    }
+    },
+    logout({
+        commit
+    }) {
+        if (window.confirm("Are you sure?")) {
+            localStorage.removeItem("token")
+            localStorage.removeItem("userId")
+            commit('setUserInfo', null)
+            commit('setLoginStatus',false)
+            return true
+        }
+        return false
+    },
 }
 
 
 const mutations = {
-    SET_USERINFO(state, data) {
-        state.userinfo = data
-    }
+    setUserInfo(state, data) {
+        state.userInfo = data
+    },
+    setLoginStatus(state, data) {
+        state.loginStatus = data
+    },
+
 }
 
 export default {
