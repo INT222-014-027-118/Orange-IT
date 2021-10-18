@@ -26,7 +26,7 @@ const routes = [{
   {
     path: '/cart',
     name: 'Cart',
-    component: () => import( /* webpackChunkName: "cart" */ '../views/Cart.vue')
+    component: () => import( /* webpackChunkName: "cart" */ '../views/cart/Cart.vue')
   },
   {
     path: '/login',
@@ -34,32 +34,27 @@ const routes = [{
     component: () => import( /* webpackChunkName: "login" */ '../views/Login.vue')
   },
   {
-    path: '/tester',
-    name: 'tester',
-    component: () => import( /* webpackChunkName: "tester" */ '../views/tester.vue')
-  },
-  {
     path: '/user',
-    name: 'Profile',
-    component: () => import( /* webpackChunkName: "Profile" */ '../views/Profile.vue'),
+    name: 'Account',
+    component: () => import( /* webpackChunkName: "Account" */ '../views/userAccount/Account.vue'),
     props: true,
     children: [{
         path: ':purchaseDetail',
         name: 'purchase',
         props: true,
-        component: () => import( /* webpackChunkName: "purchase" */ '../views/setting/purchase.vue')
+        component: () => import( /* webpackChunkName: "purchase" */ '../views/userAccount/purchase.vue')
       },
       {
         path: ':manage/edit',
         name: 'manageProfile',
         props: true,
-        component: () => import( /* webpackChunkName: "manageProfile" */ '../views/setting/manageProfile.vue')
+        component: () => import( /* webpackChunkName: "manageProfile" */ '../views/userAccount/manageProfile.vue')
       },
       {
         path: ':address-info',
         name: 'Address',
         props: true,
-        component: () => import( /* webpackChunkName: "Address" */ '../views/setting/Address.vue')
+        component: () => import( /* webpackChunkName: "Address" */ '../views/userAccount/Address.vue')
       },
     ],
   },
@@ -77,7 +72,7 @@ const routes = [{
   {
     path: '/form',
     name: 'form',
-    component: () => import( /* webpackChunkName: "form" */ '../views/Form.vue')
+    component: () => import( /* webpackChunkName: "form" */ '../views/admin/Form.vue')
   },
   {
     path: '/:categoryName',

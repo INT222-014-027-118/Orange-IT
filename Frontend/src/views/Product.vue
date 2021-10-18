@@ -61,7 +61,7 @@
                     <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md capitalize">
                         attribute: <span class="capitalize text-sm">{{ productName }}</span>
                     </p>
-                    <div class="overflow-hidden m-2 sm:mx-16 md:mx-20 lg:mx-40">
+                    <div class="overflow-hidden m-2 sm:mx-16 md:mx-20 lg:mx-48">
                         <table class="min-w-full bg-white">
                             <tbody class="text-black dark:text-gray-100 ">
                                 <tr
@@ -98,9 +98,9 @@
 
 <script>
 import axios from "axios";
-import Review from "../components/Review.vue";
-import Comments from "../components/Comment.vue";
-import Raring from "../components/Rating.vue";
+import Review from "../components/product/Review.vue";
+import Comments from "../components/product/Comment.vue";
+import Raring from "../components/product/Rating.vue";
 export default {
     name: "Item",
     components: {
