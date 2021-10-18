@@ -239,12 +239,14 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 CREATE TABLE IF NOT EXISTS `products_has_attributes` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `product_id` INT NOT NULL,
   `attribute_id` INT NOT NULL,
   `attribute_value` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`product_id`, `attribute_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_products_has_attributes_attributes1_idx` (`attribute_id` ASC) ,
   INDEX `fk_products_has_attributes_products1_idx` (`product_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_products_has_attributes_products1`
     FOREIGN KEY (`product_id`)
     REFERENCES `products` (`id`) ,
@@ -284,14 +286,16 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 CREATE TABLE IF NOT EXISTS `rating_of_product` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `Reviews_id` INT NOT NULL,
   `Ratings_id` INT NOT NULL,
   `score` INT NOT NULL,
   `product_id` INT NOT NULL,
-  PRIMARY KEY (`Reviews_id`, `Ratings_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_Reviews_has_Ratings_Ratings1_idx` (`Ratings_id` ASC) ,
   INDEX `fk_Reviews_has_Ratings_Reviews1_idx` (`Reviews_id` ASC) ,
   INDEX `fk_Rating_of_product_Products1_idx` (`product_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   CONSTRAINT `fk_Rating_of_product_Products1`
     FOREIGN KEY (`product_id`)
     REFERENCES `products` (`id`),
@@ -341,7 +345,7 @@ INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `brand_nam
   (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy', '1990', 'Razer', '20', NULL),
   ('4', 'RAZER BLACKSHARK V2 PRO', 'Frequency Response : 12 Hz – 28 kHz\r\nImpedance : 32 Ω (1 kHz)', '6490', 'Razer', '50', NULL);
 
-INSERT INTO `products_has_colors` (`product_id`, `color_id`) VALUES ('1', '2'), ('2', '2'), ('3', '2'), ('4','2');
+INSERT INTO `products_has_colors` (`product_id`, `color_id`) VALUES ('1', '2'),('1', '3'), ('2', '2'),('2', '3'), ('3', '2'), ('4','2');
 
 INSERT INTO `products_has_categories` (`product_id`, `category_id`) VALUES ('1', '1'),('1', '4'), ('2','1'),('3','2'),('4','3'),('4','6');
 
