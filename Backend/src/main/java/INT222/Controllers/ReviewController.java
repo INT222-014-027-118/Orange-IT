@@ -20,7 +20,7 @@ public class ReviewController {
 
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/getByProductId/{id}")
     public List<Reviews> getReviewByProductId(@PathVariable(value = "id") long id) {
         List<Reviews> reviews = new ArrayList<>();
         for (int i = 0; i < reviewRepository.findAll().size(); i++) {

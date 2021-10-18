@@ -44,4 +44,39 @@ public class ExceptionAdvice {
         return ex.getMessage();
     }
 
+    @ResponseBody
+    @ExceptionHandler(NotFoundDeliveryDetailException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String NotFoundDeliveryDetail(NotFoundDeliveryDetailException ex){
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(SameColorNameException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    String colorSameName(SameColorNameException ex){
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(SameColorHexException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    String colorSameHexCode(SameColorHexException ex){
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(NotFoundColorIdException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String NotFoundColor(NotFoundColorIdException ex){
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(SameRoleException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    String sameRoleName(SameRoleException ex){
+        return ex.getMessage();
+    }
+
 }

@@ -3,6 +3,9 @@ package INT222.Services;
 
 import INT222.Exceptions.FileStorageException;
 import INT222.Exceptions.MyFileNotFoundException;
+import INT222.Exceptions.SameImageException;
+import INT222.Repositories.ImageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +22,9 @@ import org.springframework.core.io.UrlResource;
 public class FileStorageService {
     private final Path fileStorageLocation= Paths.get("images");
 
+    @Autowired
+    private ImageRepository imageRepository;
+
 
 
     public String storeFile(MultipartFile file) {
@@ -30,6 +36,9 @@ public class FileStorageService {
             if(fileName.contains("..")) {
               throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
+            if(imageRepository.existsImagesBySource(fileName)){
+                throw new SameImageException(fileName);
+            }
 
             // Copy file to the target location (Replacing existing file with the same name)
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
@@ -39,6 +48,7 @@ public class FileStorageService {
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
         }
+        
     }
 
     public Resource loadFileAsResource(String fileName) {

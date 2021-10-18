@@ -17,6 +17,8 @@ public interface ImageRepository extends JpaRepository<Images,Long> {
 
     Images findTopByOrderByIdDesc();
 
+    Boolean existsImagesBySource(String source);
+
 
 
 
