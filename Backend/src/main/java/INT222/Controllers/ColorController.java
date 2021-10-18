@@ -1,8 +1,7 @@
 package INT222.Controllers;
 
 
-import INT222.Exceptions.NotFoundException;
-import INT222.Exceptions.SameProductNameException;
+import INT222.Exceptions.*;
 import INT222.Models.Colors;
 import INT222.Repositories.ColorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +22,23 @@ public class ColorController {
     }
 
     @PostMapping("/add")
-    public void addProduct(@RequestBody Colors colors) {
+    public Colors addColor(@RequestBody Colors colors) {
 
 
-        if (colorRepository.existsColorsByHexCodeOrLabel(colors.getHexCode(),colors.getLabel())) {
+        if (colorRepository.existsColorsByLabel(colors.getLabel())) {
+            throw new SameColorNameException(colors.getLabel());
 
-            throw new SameProductNameException(colors.getLabel());
-        }
-        else
+        }if(colorRepository.existsColorsByHexCode(colors.getHexCode())){
+            throw new SameColorHexException(colors.getHexCode());
+        }else if(colorRepository.findTopByOrderByIdDesc() == null){
+            colors.setId(1);
             colorRepository.save(colors);
+            return colors;
+        }else
+
+            colors.setId(colorRepository.findTopByOrderByIdDesc().getId()+1);
+            colorRepository.save(colors);
+        return colors;
 
 
     }
@@ -41,7 +48,7 @@ public class ColorController {
         if (this.colorRepository.existsById(id)) {
             this.colorRepository.deleteById(id);
         } else
-            throw new NotFoundException(id);
+            throw new NotFoundColorIdException(id);
     }
 
 

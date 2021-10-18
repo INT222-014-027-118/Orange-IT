@@ -1,5 +1,6 @@
 package INT222.Controllers;
 
+import INT222.Exceptions.NotFoundDeliveryDetailException;
 import INT222.Models.CartItems;
 import INT222.Models.DeliveryDetails;
 import INT222.Repositories.DeliveryDetailRepository;
@@ -23,17 +24,29 @@ public class DeliveryDetailController {
 
     @DeleteMapping("{id}")
     public void deleteById(@PathVariable(value = "id") long id) {
-        deliveryDetailRepository.deleteById(id);
+        if (deliveryDetailRepository.existsById(id)) {
+            deliveryDetailRepository.deleteById(id);
+        }else throw new NotFoundDeliveryDetailException(id);
     }
 
     @PutMapping("/update")
-    public void editDeliveryDetails(@RequestBody DeliveryDetails deliveryDetails) {
-        deliveryDetailRepository.save(deliveryDetails);
+    public DeliveryDetails editDeliveryDetails(@RequestBody DeliveryDetails deliveryDetails) {
+        if(deliveryDetailRepository.existsById(deliveryDetails.getId())) {
+            deliveryDetailRepository.save(deliveryDetails);
+            return deliveryDetails;
+        }else throw new NotFoundDeliveryDetailException(deliveryDetails.getId());
     }
 
     @PostMapping("/add")
-    public void addDeliveryDetails(@RequestBody DeliveryDetails deliveryDetails) {
+    public DeliveryDetails addDeliveryDetails(@RequestBody DeliveryDetails deliveryDetails) {
+        if(deliveryDetailRepository.findTopByOrderByIdDesc() == null ) {
+            deliveryDetails.setId(1);
+            deliveryDetailRepository.save(deliveryDetails);
+            return deliveryDetails;
+        }else
+            deliveryDetails.setId(deliveryDetailRepository.findTopByOrderByIdDesc().getId()+1);
         deliveryDetailRepository.save(deliveryDetails);
+        return deliveryDetails;
     }
 
     @GetMapping("/findByUserId/{id}")

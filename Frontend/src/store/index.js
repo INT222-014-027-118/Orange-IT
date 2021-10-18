@@ -2,27 +2,22 @@ import Vuex from 'vuex';
 import products from './modules/products';
 import form from './modules/form';
 import authentication from './modules/authentication.js';
+import cart from './modules/cart.js'
 
 export default new Vuex.Store({
   modules: {
     products,
     form,
-    authentication
+    authentication,
+    cart
   },
   state: {
     itemTest: [],
-    cart: [],
     showAccountPage: true,
     changeMode: false,
     countHistory: 0,
   },
   mutations: {
-    addCartItem(state, item) {
-      state.cart.push(item);
-    },
-    fullCartItem(state, item) {
-      state.cart = item;
-    },
     setShowAccountPage(state, value = !state.showAccountPage) {
       state.showAccountPage = value
     },
@@ -31,14 +26,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    addCartItem(context, item) {
-      context.commit('addCartItem', item)
-    },
   },
   getters: {
     itemTest: state => state.itemTest,
-    cart: state => state.cart,
-    totalInCart: state => state.cart.length,
     showAccountPage: state => state.showAccountPage,
     changeMode: state => state.changeMode,
 

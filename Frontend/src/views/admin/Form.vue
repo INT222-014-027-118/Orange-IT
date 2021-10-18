@@ -230,7 +230,7 @@
 </template>
 
 <script>
-import RichSelect from "../components/RichSelect.vue";
+import RichSelect from "../../components/form/RichSelect.vue";
 // import axios from "axios";
 
 export default {

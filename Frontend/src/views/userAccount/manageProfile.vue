@@ -6,16 +6,16 @@
             <div class="space-y-5">
                 <div class="sm:flex items-center mb-2">
                     <p class="font-semibold sm:w-2/6 sm:text-right pr-2">User name :</p>
-                    <p class="lg:w-4/6 text-xl font-light">{{$store.getters.userinfo.username}}</p>
+                    <p class="lg:w-4/6 text-xl font-light">{{$store.getters.userInfo.username}}</p>
                 </div>
                 <div class="sm:flex items-center mb-2">
                     <p class="font-semibold sm:w-2/6 sm:text-right pr-2">full name :</p>
-                    <p class="lg:w-4/6 text-xl font-light">{{$store.getters.userinfo.userFirstName}}  {{$store.getters.userinfo.userLastName}}</p>
+                    <p class="lg:w-4/6 text-xl font-light">{{$store.getters.userInfo.userFirstName}}  {{$store.getters.userInfo.userLastName}}</p>
                 </div>
                 <div class="sm:flex items-center mb-2">
                     <p class="font-semibold sm:w-2/6 sm:text-right pr-2">email address :</p>
                     <div class="flex w-full sm:w-4/6 justify-between items-center">
-                        <p class="sm:w-3/6 text-xl font-light" v-show="!editEmail">{{$store.getters.userinfo.email}}</p>
+                        <p class="sm:w-3/6 text-xl font-light" v-show="!editEmail">{{$store.getters.userInfo.email}}</p>
                         <input
                             v-show="editEmail"
                             type="email"
