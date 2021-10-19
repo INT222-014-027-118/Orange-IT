@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -25,7 +23,13 @@ public class Orders {
     @Column(name = "order_date")
     private String orderDate;
 
+    @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id",insertable = true, updatable = true)
+    private List<OrderItems> orderItems;
 
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(nullable = true,name = "payments_id")
+    private Payments payments;
 
 
 

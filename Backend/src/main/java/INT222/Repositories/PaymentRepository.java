@@ -1,0 +1,17 @@
+package INT222.Repositories;
+
+import INT222.Models.Payments;
+import INT222.Models.ProductsHasAttributes;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface PaymentRepository extends JpaRepository<Payments,Long> {
+
+    Payments findTopByOrderByIdDesc();
+
+    List<Payments> findAllByUserId(long id);
+
+}

@@ -13,8 +13,9 @@ import javax.persistence.Table;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Shippings")
-public class Shippings {
+@Table(name = "Orders")
+public class OrderForAdd {
+
 
     @Id
     private long id;
@@ -22,15 +23,14 @@ public class Shippings {
     @Column
     private String status;
 
-    @Column(name = "company_shipping")
-    private String companyShipping;
+    @Column(name = "order_date")
+    private String orderDate;
 
-    @Column(name = "tracking_number ")
-    private String trackingNumber;
+    @Column(name = "shipping_id")
+    private long shippingId;
 
-    @Column(name = "delivery_detail_id")
-    private long deliveryDetailId;
-
+    @Column(name = "payments_id")
+    private long paymentsId;
 
 
 

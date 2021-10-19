@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Payment")
+@Table(name = "Payments")
 public class Payments {
 
     @Id
@@ -45,4 +45,8 @@ public class Payments {
 
     @Column(name = "paid_date ")
     private String paidDate;
+
+    @Column(name = "users_id")
+    private long userId;
+
 }
