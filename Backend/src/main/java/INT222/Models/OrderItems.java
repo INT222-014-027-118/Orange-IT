@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -22,9 +23,12 @@ public class OrderItems {
     @Column(name = "discount_price")
     private float discountPrice;
 
-    @OneToOne
-    @JoinColumn(name = "id" )
-    private Products products;
+
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(nullable = true,name = "product_id")
+    private ProductCart products;
+
+
 
 
 

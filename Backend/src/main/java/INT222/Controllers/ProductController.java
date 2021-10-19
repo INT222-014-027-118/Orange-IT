@@ -154,7 +154,13 @@ public class ProductController {
 
     @PutMapping("/editAttribute")
     public void editProduct(@RequestBody ProductsHasAttributes productsHasAttributes) {
- productHasAttributeRepository.save(productsHasAttributes);
+        productHasAttributeRepository.save(productsHasAttributes);
+    }
+
+    @GetMapping("stock/{id}")
+    public int getProductByBrandName(@PathVariable long id) {
+        return productHomeRepository.getById(id).getQuantityStock();
+
     }
 
 //    @GetMapping("geta/list")

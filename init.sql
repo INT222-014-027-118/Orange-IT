@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `type` VARCHAR(40) NOT NULL,
   `status` VARCHAR(40) NOT NULL,
   `card_number` VARCHAR(16) NULL DEFAULT NULL,
-  `security code` VARCHAR(3) NULL DEFAULT NULL,
+  `security_code` VARCHAR(3) NULL DEFAULT NULL,
   `expired_card` VARCHAR(5) NULL DEFAULT NULL,
   `provider` VARCHAR(40) NULL DEFAULT NULL,
   `transaction_date` DATETIME NULL DEFAULT NULL,
