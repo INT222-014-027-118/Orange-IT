@@ -1,13 +1,11 @@
 import axios from 'axios'
 
 const state = {
-    userInfo: null,
-    loginStatus:false
+    userInfo: null
 }
 
 const getters = {
-    userInfo: state => state.userInfo,
-    isLogin: state => state.loginStatus = localStorage.getItem('userId')?true:false
+    userInfo: state => state.userInfo
 }
 
 const actions = {

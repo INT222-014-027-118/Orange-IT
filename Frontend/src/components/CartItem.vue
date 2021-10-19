@@ -8,7 +8,7 @@
                 <div class="flex flex-col justify-between w-11/12">
                     <div>
                         <p class="text-sm sm:text-base">{{ product.productCart.productName }}</p>
-                        <p class="text-sm text-gray-500 dark:text-gray-300">white</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-300">{{ product.colors.label }}</p>
                     </div>
                     <div>
                         <div class="flex items-center py-3 text-sm font-medium text-green-600"><span class="material-icons"> check_circle_outline </span> In stork</div>
@@ -22,7 +22,7 @@
                     <form @submit.prevent class="w-1/2 sm:w-full">
                         <div class="flex items-center justify-center bg-gray-200  dark:bg-gray-600 dark:bg-opacity-70 rounded-md">
                             <button type="button" class="w-full px-1 font-semibold" @click="minus">-</button>
-                            <input
+                            <!-- <input
                                 type="number"
                                 class="w-full p-1 text-right rounded-md shadow-inner cursor-pointer sm:w-9 bg-gray-50 dark:bg-dark_secondary focus:outline-none"
                                 step="1"
@@ -30,7 +30,10 @@
                                 min="1"
                                 required
                                 v-model="quantity"
-                            />
+                            /> -->
+                            <div class="w-full p-1 text-right rounded-md shadow-inner cursor-pointer sm:w-9 bg-gray-50 dark:bg-dark_secondary focus:outline-none">
+                                {{ this.$store.getters.cart[this.index].quantity }}
+                            </div>
                             <button type="button" class="w-full px-1 font-semibold" @click="plus">+</button>
                         </div>
                     </form>
@@ -48,35 +51,27 @@
 export default {
     props: {
         product: Object,
-        index:Number
+        index: Number,
     },
     data() {
         return {
-            image:'',
-            quantity:0
-        }
+            image: "",
+            quantity: 0,
+        };
     },
     methods: {
         minus() {
-            if (this.quantity > 0) {
-                this.quantity -= 1;
-                if (this.quantity <= 0) {
-                    console.log("remove");
-                }
-            }
+            this.$store.commit("cartItemQuantityMinus", this.index);
         },
         plus() {
-            if (this.quantity < this.stork) {
-                this.quantity += 1;
-            }
+            this.$store.commit("cartItemQuantityPlus", this.index);
         },
-        remove(){
+        remove() {
             this.$store.dispatch("removeCartItem", this.index);
-        }
+        },
     },
     created() {
-        this.quantity = this.product.quantity
-        this.image = `${process.env.VUE_APP_API}/image/get/${this.product.productCart.images[0].source}`
+        this.image = `${process.env.VUE_APP_API}/image/get/${this.product.productCart.images[0].source}`;
     },
 };
 </script>

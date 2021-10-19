@@ -14,7 +14,7 @@
             <div class="col-span-3 pb-28 md:col-span-1">
                 <h1 class="py-3 text-2xl font-semibold">Order summary</h1>
                 <div class="w-full px-5 pb-5 bg-white dark:bg-dark_tertiary rounded-md lg:px-6">
-                    <div class="flex justify-between py-4 border-b">
+                    <!-- <div class="flex justify-between py-4 border-b">
                         <div class="text-gray-500 dark:text-gray-300">Subtotal</div>
                         <div class="font-semibold">฿ 999999</div>
                     </div>
@@ -25,7 +25,7 @@
                     <div class="flex justify-between py-4 border-b">
                         <div class="text-gray-500 dark:text-gray-300">tax estimate</div>
                         <div class="font-semibold">฿ 999999</div>
-                    </div>
+                    </div> -->
                     <div class="fixed bottom-0 left-0 w-full bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary px-5 pb-20 sm:pb-5 sm:pt-5 md:px-0 md:static border-t md:border-0 dark:border-gray-600">
                         <div class="flex justify-between py-4">
                             <div class="text-xl font-semibold">Order total</div>
