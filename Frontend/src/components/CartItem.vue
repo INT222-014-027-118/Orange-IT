@@ -21,7 +21,7 @@
                 <div class="">
                     <form @submit.prevent class="w-1/2 sm:w-full">
                         <div class="flex items-center justify-center bg-gray-200  dark:bg-gray-600 dark:bg-opacity-70 rounded-md">
-                            <button type="button" class="w-full px-1 font-semibold" @click="minus">-</button>
+                            <!-- <button type="button" class="w-full px-1 font-semibold" @click="minus">-</button> -->
                             <!-- <input
                                 type="number"
                                 class="w-full p-1 text-right rounded-md shadow-inner cursor-pointer sm:w-9 bg-gray-50 dark:bg-dark_secondary focus:outline-none"
@@ -31,17 +31,20 @@
                                 required
                                 v-model="quantity"
                             /> -->
-                            <div class="w-full p-1 text-right rounded-md shadow-inner cursor-pointer sm:w-9 bg-gray-50 dark:bg-dark_secondary focus:outline-none">
+                            <select name="" id="" v-model="quantity">
+                                <option value="num" v-for="num in numberArray" :key="num">{{ num }}</option>
+                            </select>
+                            <!-- <div class="w-full p-1 text-right rounded-md shadow-inner cursor-pointer sm:w-9 bg-gray-50 dark:bg-dark_secondary focus:outline-none">
                                 {{ this.$store.getters.cart[this.index].quantity }}
-                            </div>
-                            <button type="button" class="w-full px-1 font-semibold" @click="plus">+</button>
+                            </div> -->
+                            <!-- <button type="button" class="w-full px-1 font-semibold" @click="plus">+</button> -->
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="flex flex-col justify-between w-4/12 font-semibold text-right" @click="remove">
+            <div class="flex flex-col justify-between w-4/12 font-semibold text-right">
                 <span class="text-xl md:text-2xl text-primary">฿ {{ product.productCart.price }}</span>
-                <div class="inline-flex justify-end"><button class="px-1 rounded-md hover:bg-gray-200">remove</button></div>
+                <div class="inline-flex justify-end"><button class="px-1 rounded-md hover:bg-gray-200" @click="remove">remove</button></div>
             </div>
         </div>
     </div>
@@ -57,6 +60,7 @@ export default {
         return {
             image: "",
             quantity: 0,
+            numberArray: [],
         };
     },
     methods: {
@@ -72,6 +76,10 @@ export default {
     },
     created() {
         this.image = `${process.env.VUE_APP_API}/image/get/${this.product.productCart.images[0].source}`;
+
+        for (var i = 1; i <= 20; i++) {
+            this.numberArray.push(i);
+        }
     },
 };
 </script>

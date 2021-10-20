@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div v-show="changeAddress" class="space-y-2 p-2">
-                        <label for="A1" class="flex items-center">
+                        <label for="A1" class="flex items-center ">
                             <input type="radio" id="A1" name="drone" class="flex p-2 mr-2" />
                             <div class="w-2/6 font-bold">
                                 {lkjasdoert5hna sdkfjha23423s} {08723423423}
@@ -28,7 +28,7 @@
                                 <p>{addresssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss}</p>
                             </div>
                         </label>
-                        <label for="A2" class="flex items-center">
+                        <label for="A2" class="flex items-center ">
                             <input type="radio" id="A2" name="drone" class="flex p-2 mr-2" />
                             <div class="w-2/6 font-bold">
                                 {lkjasdoert5hna sdkfjha23423s} {08723423423}
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="felx flex-col capitalize bg-white p-3 mb-3">
-                    <div class="flex justify-between">
+                    <div class="flex justify-between mb-4 ">
                         <div class="text-xl font-semibold flex items-center">ordered</div>
                         <div class="w-1/4 flex justify-between pr-2">
                             <span class="w-1/2 text-center">quantity</span>
@@ -108,11 +108,22 @@
                     <div class="flex justify-between">
                         <h1 class="mb-4 text-xl font-semibold flex items-center"><span class="material-icons mr-3"> payments </span>payment method</h1>
                     </div>
-                    <div class="flex p-2"></div>
-                </div>
+                    <div class="flex p-2">
+                        <input id="1" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="เก็บเงินปลาย" />
+                        <label for="1"> เก็บเงินปลาย</label>
+                        <input id="2" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="โอน/ชำระผ่านบัญชีธนาคาร" />
+                        <label for="2"> โอน/ชำระผ่านบัญชีธนาคาร</label>
+                        <input id="3" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="ทางบัตรเครดิต/บัตรเดบิต" />
+                        <label for="3"> ทางบัตรเครดิต/บัตรเดบิต</label>
+                    </div>
 
-                <div class="flex-col col-span-3 md:col-span-2 felx capitalize">
-                    <h1 class="mb-4 text-xl font-semibold">Checkout</h1>
+                    {{ paymentMethod }}
+
+                    <div class="text-xl font-semibold flex items-center justify-between">
+                        <h1>Checkout :</h1>
+
+                        <button class="bg-primary px-3 py-1">checkout</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,6 +138,7 @@ export default {
             addresses: [
                 { firstname: "Jakkapong", lastanme: "Praditthanachot", phone: "0877616878", province: "สมุทรปราการ", district: "บางบ่อ", sub_district: "", postal_code: "10560", address: "66/61 วโรชา หมู่ 2" },
             ],
+            paymentMethod: "",
         };
     },
 };
