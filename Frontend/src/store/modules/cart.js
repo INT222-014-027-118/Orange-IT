@@ -8,14 +8,18 @@ const state = {
 
 const getters = {
     cart: state => state.cart,
-    totalInCart: state => state.cart.length,
+    totalInCart: state => state.cart.length > 0 ?
+        state.cart
+        .map(cartItem => cartItem.quantity)
+        .reduce((previouItem, currentItem) => {
+            return previouItem + currentItem
+        }) : 0,
     orderTotalPrice: state => state.cart.length > 0 ?
         state.cart
         .map(cartItem => cartItem.productCart.price * cartItem.quantity)
         .reduce((previousPrice, currentPrice) => {
             return previousPrice + currentPrice
         }) : 0
-
 }
 const actions = {
     loadCartData({
