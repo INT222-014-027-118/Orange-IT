@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -18,6 +19,9 @@ public interface ImageRepository extends JpaRepository<Images,Long> {
     Images findTopByOrderByIdDesc();
 
     Boolean existsImagesBySource(String source);
+
+    @Transactional
+    Long deleteByProductId(long id);
 
 
 

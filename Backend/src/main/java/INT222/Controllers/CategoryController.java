@@ -1,5 +1,7 @@
 package INT222.Controllers;
 
+import INT222.Exceptions.NotFoundCategoryException;
+import INT222.Exceptions.SameCategoryException;
 import INT222.Models.Categories;
 import INT222.Models.Colors;
 import INT222.Models.DeliveryDetails;
@@ -28,13 +30,25 @@ public class CategoryController {
     }
 
     @PutMapping("/update")
-    public void editCategory(@RequestBody Categories categories) {
+    public Categories editCategory(@RequestBody Categories categories) {
         categoryRepository.save(categories);
+        return categories;
     }
 
     @PostMapping("/add")
-    public void addCategory(@RequestBody Categories categories) {
+    public Categories addCategory(@RequestBody Categories categories) {
+        if (categoryRepository.existsAllByCategory(categories.getCategory())) {
+        throw new SameCategoryException(categories.getCategory());
+        }
+
+        if (categoryRepository.findTopByOrderByIdDesc() == null){
+            categories.setId(1);
+            categoryRepository.save(categories);
+            return categories;
+        }else
+            categories.setId(categoryRepository.findTopByOrderByIdDesc().getId()+1);
         categoryRepository.save(categories);
+        return categories;
     }
 
 
