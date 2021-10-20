@@ -28,7 +28,9 @@ const actions = {
                     commit('setCart', response.data)
                 })
         } else {
-            commit('setCart', JSON.parse(localStorage.getItem('cart')))
+            if (localStorage.getItem('cart')) {
+                commit('setCart', JSON.parse(localStorage.getItem('cart')))
+            }
         }
 
     },
@@ -76,7 +78,7 @@ const mutations = {
     },
     cartItemQuantityPlus(state, index) {
         state.cart[index].quantity++
-    
+
         //สำหรับติดต่อฐานข้อมูล
         // console.log(state.cart.map((cartItem) => {
         //     return {

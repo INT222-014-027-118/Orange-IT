@@ -64,7 +64,17 @@
 
                     <div class="relative px-3 mb-6 md:w-1/2 md:mb-0">
                         <label class="label-css" for="stock">quantity stock *</label>
-                        <input v-model.number="product.quantityStock" step="1" class="input-css" id="stock" type="number" placeholder="" min="1" max="9999" :class="{ 'ring ring-red-400': invalid.quantityStock }" />
+                        <input
+                            v-model.number="product.quantityStock"
+                            step="1"
+                            class="input-css"
+                            id="stock"
+                            type="number"
+                            placeholder=""
+                            min="1"
+                            max="9999"
+                            :class="{ 'ring ring-red-400': invalid.quantityStock }"
+                        />
                         <span v-if="invalid.quantityStock" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
                     </div>
                 </div>
@@ -92,7 +102,9 @@
                             <span :class="[color.id == this.product.colors.id ? 'text-red-600' : '']">{{ color.label }}</span>
                         </label>
                     </div>
-                    <span v-if="invalid.Color" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-6 left-3 sm:-bottom-1 sm:left-1/2 sm:-translate-x-1/2">Please select product color</span>
+                    <span v-if="invalid.Color" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-6 left-3 sm:-bottom-1 sm:left-1/2 sm:-translate-x-1/2"
+                        >Please select product color</span
+                    >
                 </div>
 
                 <div class="px-3 mb-6 lg:w-full md:mb-0">
