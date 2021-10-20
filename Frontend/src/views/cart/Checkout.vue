@@ -12,7 +12,7 @@
                             {lkjasdoert5hna sdkfjha23423s} {08723423423}
                         </div>
                         <div class="w-3/6">
-                            <p>{addresssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss}</p>
+                            <p>{addresssssss ssssssssssssssss sssssssssss ssssssssss sssssssssss sssss sssss}</p>
                         </div>
                         <div class="w-1/6 flex justify-center">
                             <button type="button" @click="changeAddress = !changeAddress" v-show="!changeAddress">change</button>
@@ -108,21 +108,29 @@
                     <div class="flex justify-between">
                         <h1 class="mb-4 text-xl font-semibold flex items-center"><span class="material-icons mr-3"> payments </span>payment method</h1>
                     </div>
-                    <div class="flex p-2">
-                        <input id="1" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="เก็บเงินปลาย" />
+                    <div class="flex flex-wrap p-2">
+                        <!-- <input id="1" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="เก็บเงินปลาย" />
                         <label for="1"> เก็บเงินปลาย</label>
                         <input id="2" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="โอน/ชำระผ่านบัญชีธนาคาร" />
                         <label for="2"> โอน/ชำระผ่านบัญชีธนาคาร</label>
                         <input id="3" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="ทางบัตรเครดิต/บัตรเดบิต" />
-                        <label for="3"> ทางบัตรเครดิต/บัตรเดบิต</label>
+                        <label for="3"> ทางบัตรเครดิต/บัตรเดบิต</label> -->
+                        <div
+                            class="border-2 px-5 py-2 flex items-center mx-3 relative rounded-md cursor-pointer"
+                            v-for="pay in paymentMethod"
+                            :key="pay"
+                            @click="selectPaymentMethod === pay ? (selectPaymentMethod = pay) : (selectPaymentMethod = selectPaymentMethod)"
+                            :class="[selectPaymentMethod === pay ? 'border-primary' : 'cursor-not-allowed']"
+                        >
+                            <span class="material-icons absolute left-0 h-full py-2 text-base font-bold text-white bg-primary " :class="[selectPaymentMethod === pay ? '' : 'hidden']"> check </span>
+                            <span class="">{{ pay }}</span>
+                        </div>
                     </div>
 
-                    {{ paymentMethod }}
-
-                    <div class="text-xl font-semibold flex items-center justify-between">
+                    <hr class="my-3"/>
+                    <div class="text-2xl font-semibold flex items-center justify-between my-2 p-2">
                         <h1>Checkout :</h1>
-
-                        <button class="bg-primary px-3 py-1">checkout</button>
+                        <button class="bg-primary px-5 py-2 text-white rounded-md">checkout</button>
                     </div>
                 </div>
             </div>
@@ -138,7 +146,8 @@ export default {
             addresses: [
                 { firstname: "Jakkapong", lastanme: "Praditthanachot", phone: "0877616878", province: "สมุทรปราการ", district: "บางบ่อ", sub_district: "", postal_code: "10560", address: "66/61 วโรชา หมู่ 2" },
             ],
-            paymentMethod: "",
+            paymentMethod: ["เก็บเงินปลาย", "โอน/ชำระผ่านบัญชีธนาคาร", "ทางบัตรเครดิต/บัตรเดบิต"],
+            selectPaymentMethod: "เก็บเงินปลาย",
         };
     },
 };
