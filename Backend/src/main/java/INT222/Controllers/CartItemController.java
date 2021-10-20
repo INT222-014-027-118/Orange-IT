@@ -1,5 +1,6 @@
 package INT222.Controllers;
 
+import INT222.Exceptions.NotFoundCartItemException;
 import INT222.Models.CartItemForAdd;
 import INT222.Models.CartItems;
 import INT222.Models.Categories;
@@ -50,7 +51,9 @@ public class CartItemController {
 
     @PutMapping("/update")
     public void editCartItem(@RequestBody CartItemForAdd cartItemForAdd) {
+        if(cartItemForAddRepository.existsById(cartItemForAdd.getId())){
         cartItemForAddRepository.save(cartItemForAdd);
+    }else throw new NotFoundCartItemException(cartItemForAdd.getId());
     }
 
     @GetMapping("/findByUserId/{id}")

@@ -23,6 +23,6 @@ public class Images {
     @Column
     private String label;
 
-    @Column
-   private long product_id;
+    @Column(name = "product_id")
+   private long productId;
 }

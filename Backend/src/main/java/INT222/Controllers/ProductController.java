@@ -77,30 +77,32 @@ public class ProductController {
     public void deleteProduct(@PathVariable long id) {
 
         if (this.productRepository.existsById(id)) {
-           long num =0;
-           Products products =  productRepository.getById(id);
-           List<Images> images = products.getImages();
-            for (int i = 0; i < images.size(); i++) {
-                Images image = imageRepository.getById(images.get(i).getId());
-                image.setProduct_id(num);
-                imageRepository.save(image);
+//           long num =0;
+//           Products products =  productRepository.getById(id);
+//           List<Images> images = products.getImages();
+//            for (int i = 0; i < images.size(); i++) {
+//                Images image = imageRepository.getById(images.get(i).getId());
+//                image.setProduct_id(num);
+//                imageRepository.save(image);
+//
+//            }
+//            List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
+//            for (int i = 0; i < productsHasAttributes.size(); i++) {
+//                ProductsHasAttributes productSpecValue = productsHasAttributes.get(i);
+//                productSpecValue.setProduct_id(num);
+//                productSpecValueRepository.save(productSpecValue);
+//
+//            }
 
-            }
-            List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
-            for (int i = 0; i < productsHasAttributes.size(); i++) {
-                ProductsHasAttributes productSpecValue = productsHasAttributes.get(i);
-                productSpecValue.setProduct_id(num);
-                productSpecValueRepository.save(productSpecValue);
-
-            }
-
+    this.deleteProductHasAttribute(id);
+    this.deleteProductImage(id);
     this.productRepository.deleteById(id);
         } else
             throw new NotFoundException(id);
     }
 
     @PostMapping("/add")
-    public Products addProduct(@RequestBody Products products) {
+    public Optional<Products> addProduct(@RequestBody Products products) {
             if (productRepository.existsByProductName(products.getProductName())) {
                 throw new SameProductNameException(products.getProductName());
             }
@@ -108,12 +110,17 @@ public class ProductController {
             else
             products.setId(productRepository.findTopByOrderByIdDesc().getId()+1);
              List<Images> images =  products.getImages();
+             List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
         for (int i = 0; i < images.size(); i++) {
             images.get(i).setId(imageRepository.findTopByOrderByIdDesc().getId()+1+i);
         }
+        for (int i = 0; i < productsHasAttributes.size(); i++) {
+            productsHasAttributes.get(i).setId(productHasAttributeRepository.findTopByOrderByIdDesc().getId()+1+i);
+            productsHasAttributes.get(i).setProductId(products.getId());
+        }
             productRepository.save(products);
-        System.out.println(productRepository.findTopByOrderByIdDesc().getId()+1);
-          return products;
+
+          return getProductById(products.getId());
 
     }
 
@@ -160,6 +167,19 @@ public class ProductController {
     @GetMapping("stock/{id}")
     public int getProductByBrandName(@PathVariable long id) {
         return productHomeRepository.getById(id).getQuantityStock();
+
+    }
+
+
+    @DeleteMapping("/deleteP/{id}")
+    public void deleteProductHasAttribute(@PathVariable long id) {
+        productHasAttributeRepository.deleteByProductId(id);
+
+    }
+
+    @DeleteMapping("/deleteI/{id}")
+    public void deleteProductImage(@PathVariable long id) {
+        imageRepository.deleteByProductId(id);
 
     }
 
