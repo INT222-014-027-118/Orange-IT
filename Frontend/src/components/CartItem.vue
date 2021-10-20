@@ -14,30 +14,13 @@
                         <div class="flex items-center py-3 text-sm font-medium text-green-600"><span class="material-icons"> check_circle_outline </span> In stork</div>
                     </div>
                 </div>
-                <!-- <select name="" id="" class="self-start p-1 bg-gray-200 rounded-md cursor-pointer focus:outline-none">
-                                <option value="1" class="">1</option>
-                                <option value="2" class="">2</option>
-                            </select> -->
+
                 <div class="">
                     <form @submit.prevent class="w-1/2 sm:w-full">
                         <div class="flex items-center justify-center bg-gray-200  dark:bg-gray-600 dark:bg-opacity-70 rounded-md">
-                            <!-- <button type="button" class="w-full px-1 font-semibold" @click="minus">-</button> -->
-                            <!-- <input
-                                type="number"
-                                class="w-full p-1 text-right rounded-md shadow-inner cursor-pointer sm:w-9 bg-gray-50 dark:bg-dark_secondary focus:outline-none"
-                                step="1"
-                                max="10"
-                                min="1"
-                                required
-                                v-model="quantity"
-                            /> -->
-                            <select name="" id="" v-model="quantity">
-                                <option value="num" v-for="num in numberArray" :key="num">{{ num }}</option>
+                            <select name="quantity" id="quantity" v-model="quantity" class="self-start p-1 bg-gray-200 rounded-md cursor-pointer focus:outline-none" @change="editQuantity">
+                                <option class="overflow-auto" v-for="choice in choices" :key="choice" :value="choice" :id="`choice-${choice}`">{{ choice }}</option>
                             </select>
-                            <!-- <div class="w-full p-1 text-right rounded-md shadow-inner cursor-pointer sm:w-9 bg-gray-50 dark:bg-dark_secondary focus:outline-none">
-                                {{ this.$store.getters.cart[this.index].quantity }}
-                            </div> -->
-                            <!-- <button type="button" class="w-full px-1 font-semibold" @click="plus">+</button> -->
                         </div>
                     </form>
                 </div>
@@ -60,26 +43,22 @@ export default {
         return {
             image: "",
             quantity: 0,
-            numberArray: [],
+            choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         };
     },
     methods: {
-        minus() {
-            this.$store.commit("cartItemQuantityMinus", this.index);
-        },
-        plus() {
-            this.$store.commit("cartItemQuantityPlus", this.index);
-        },
         remove() {
             this.$store.dispatch("removeCartItem", this.index);
         },
+        editQuantity() {
+            let payload = { index: this.index, quantity: Number(this.quantity) };
+            this.$store.dispatch("editQuantity", payload);
+        },
     },
-    created() {
+    async created() {
         this.image = `${process.env.VUE_APP_API}/image/get/${this.product.productCart.images[0].source}`;
-
-        for (var i = 1; i <= 20; i++) {
-            this.numberArray.push(i);
-        }
+        this.quantity = await this.product.quantity;
+        document.getElementById(`choice-${this.product.quantity}`).setAttribute("selected", "");
     },
 };
 </script>

@@ -26,6 +26,20 @@ const actions = {
         commit
     }) {
         if (this.getters.isLogin) {
+            if (localStorage.getItem('cart')) {
+                for (let i = 0; i < state.cart.length; i++) {
+                    let cartItem = {
+                        colorId: state.cart[i].colors.id,
+                        id: 1,
+                        productId: state.cart[i].productCart.id,
+                        quantity: state.cart[i].quantity,
+                        userId: localStorage.getItem('userId')
+                    }
+                    console.log(cartItem);
+                    this.dispatch('addCartItem', cartItem)
+                }
+                localStorage.removeItem('cart')
+            }
             axios
                 .get(`${process.env.VUE_APP_API}/cartItem/findByUserId/${localStorage.getItem('userId')}`)
                 .then(response => {
@@ -41,7 +55,7 @@ const actions = {
     addCartItem({
         commit
     }, cartItem) {
-        if (this.state.loginStatus) {
+        if (this.getters.isLogin) {
             axios
                 .post(`${process.env.VUE_APP_API}/cartItem/add_item/${localStorage.getItem('userId')}/${cartItem.productId}`, cartItem)
                 .then(response => {
@@ -55,24 +69,63 @@ const actions = {
     removeCartItem({
         commit
     }, index) {
-        axios
-            .delete(`${process.env.VUE_APP_API}/cartItem/delete/${state.cart[index].id}`)
-            .then((response) => {
-                console.log(response);
-                commit('reduceCartItem', index)
-            })
+        if (this.getters.isLogin) {
+            axios
+                .delete(`${process.env.VUE_APP_API}/cartItem/delete/${state.cart[index].id}`)
+                .then((response) => {
+                    console.log(response);
+                    commit('reduceCartItem', index)
+                })
+        } else {
+            commit('reduceCartItem', index)
+            localStorage.setItem('cart', JSON.stringify(state.cart))
+        }
+
     },
-    // mergeCart({
-    //     commit
-    // }){
+    editQuantity({
+        commit
+    }, payload) {
+        if (this.getters.isLogin) {
+            let cartItem = {
+                id: state.cart[payload.index].id,
+                quantity: Number(payload.quantity),
+                productId: state.cart[payload.index].productCart.id,
+                userId: state.cart[payload.index].userId,
+                colorId: state.cart[payload.index].colors.id
+            }
+            axios
+                .put(`${process.env.VUE_APP_API}/cartItem/update`, cartItem)
+                .then(response => {
+                    if (response.status === 200) {
+                        commit('setCartItemQuantity', payload)
+                    }
+                    console.log(response)
+                })
+            console.log(state.cart);
+        } else {
+            commit('setCartItemQuantity', payload)
+            localStorage.setItem('cart', JSON.stringify(state.cart))
+        }
 
-
-    // }
+    },
+    clearCart({
+        commit
+    }) {
+        commit('setCart', [])
+        localStorage.removeItem('cart')
+    }
 }
 
 const mutations = {
     increaseCartItem(state, item) {
-        state.cart.push(item);
+        let checkProduct = state.cart.map(element => element.productCart.id).includes(item.productCart.id)
+        let checkColor = state.cart.map(element => element.colors.id).includes(item.colors.id)
+        if (checkProduct && checkColor) {
+            let index = state.cart.findIndex(element => element.productCart.id === item.productCart.id)
+            state.cart[index].quantity = state.cart[index].quantity + item.quantity > 10 ? 10 : state.cart[index].quantity + item.quantity
+        } else {
+            state.cart.push(item);
+        }
     },
     setCart(state, cart) {
         state.cart = cart;
@@ -80,34 +133,9 @@ const mutations = {
     reduceCartItem(state, index) {
         state.cart.splice(index, 1)
     },
-    cartItemQuantityPlus(state, index) {
-        state.cart[index].quantity++
-
-        //สำหรับติดต่อฐานข้อมูล
-        // console.log(state.cart.map((cartItem) => {
-        //     return {
-        //         id: cartItem.id,
-        //         quantity: cartItem.quantity,
-        //         productId: cartItem.productCart.id,
-        //         userId: cartItem.userId,
-        //         colorId:cartItem.colors.id
-        //     }
-        // })[index]);
-        // axios
-        //     .put(`${process.env.VUE_APP_API}/cartItem/update`, state.cart[index])
-        //     .then(response => console.log(response))
-    },
-    cartItemQuantityMinus(state, index) {
-        if (state.cart[index].quantity > 1) {
-            --state.cart[index].quantity
-        } else {
-            this.dispatch('removeCartItem', index)
-        }
-    },
-    //ยังไม่ใช้ดูก่อน
-    // cartItemQuantitySet(state, index, number) {
-    //     state.cart[index].quantity = number
-    // }
+    setCartItemQuantity(state, payload) {
+        state.cart[payload.index].quantity = payload.quantity
+    }
 }
 
 export default {
