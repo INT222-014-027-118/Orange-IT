@@ -8,37 +8,26 @@
                 <div class="flex flex-col justify-between w-11/12">
                     <div>
                         <p class="text-sm sm:text-base">{{ product.productCart.productName }}</p>
-                        <p class="text-sm text-gray-500 dark:text-gray-300">white</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-300">{{ product.colors.label }}</p>
                     </div>
                     <div>
                         <div class="flex items-center py-3 text-sm font-medium text-green-600"><span class="material-icons"> check_circle_outline </span> In stork</div>
                     </div>
                 </div>
-                <!-- <select name="" id="" class="self-start p-1 bg-gray-200 rounded-md cursor-pointer focus:outline-none">
-                                <option value="1" class="">1</option>
-                                <option value="2" class="">2</option>
-                            </select> -->
+
                 <div class="">
                     <form @submit.prevent class="w-1/2 sm:w-full">
                         <div class="flex items-center justify-center bg-gray-200  dark:bg-gray-600 dark:bg-opacity-70 rounded-md">
-                            <button type="button" class="w-full px-1 font-semibold" @click="minus">-</button>
-                            <input
-                                type="number"
-                                class="w-full p-1 text-right rounded-md shadow-inner cursor-pointer sm:w-9 bg-gray-50 dark:bg-dark_secondary focus:outline-none"
-                                step="1"
-                                max="10"
-                                min="1"
-                                required
-                                v-model="quantity"
-                            />
-                            <button type="button" class="w-full px-1 font-semibold" @click="plus">+</button>
+                            <select name="quantity" id="quantity" v-model="quantity" class="self-start p-1 bg-gray-200 rounded-md cursor-pointer focus:outline-none" @change="editQuantity">
+                                <option class="overflow-auto" v-for="choice in choices" :key="choice" :value="choice" :id="`choice-${choice}`">{{ choice }}</option>
+                            </select>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="flex flex-col justify-between w-4/12 font-semibold text-right" @click="remove">
+            <div class="flex flex-col justify-between w-4/12 font-semibold text-right">
                 <span class="text-xl md:text-2xl text-primary">฿ {{ product.productCart.price }}</span>
-                <div class="inline-flex justify-end"><button class="px-1 rounded-md hover:bg-gray-200">remove</button></div>
+                <div class="inline-flex justify-end"><button class="px-1 rounded-md hover:bg-gray-200" @click="remove">remove</button></div>
             </div>
         </div>
     </div>
@@ -48,35 +37,28 @@
 export default {
     props: {
         product: Object,
-        index:Number
+        index: Number,
     },
     data() {
         return {
-            image:'',
-            quantity:0
-        }
+            image: "",
+            quantity: 0,
+            choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        };
     },
     methods: {
-        minus() {
-            if (this.quantity > 0) {
-                this.quantity -= 1;
-                if (this.quantity <= 0) {
-                    console.log("remove");
-                }
-            }
-        },
-        plus() {
-            if (this.quantity < this.stork) {
-                this.quantity += 1;
-            }
-        },
-        remove(){
+        remove() {
             this.$store.dispatch("removeCartItem", this.index);
-        }
+        },
+        editQuantity() {
+            let payload = { index: this.index, quantity: Number(this.quantity) };
+            this.$store.dispatch("editQuantity", payload);
+        },
     },
-    created() {
-        this.quantity = this.product.quantity
-        this.image = `${process.env.VUE_APP_API}/image/get/${this.product.productCart.images[0].source}`
+    async created() {
+        this.image = `${process.env.VUE_APP_API}/image/get/${this.product.productCart.images[0].source}`;
+        this.quantity = await this.product.quantity;
+        document.getElementById(`choice-${this.product.quantity}`).setAttribute("selected", "");
     },
 };
 </script>

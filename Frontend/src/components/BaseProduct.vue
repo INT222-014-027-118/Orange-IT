@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col rounded-md shadow-md ring-2 ring-transparent hover:ring-primary cursor-pointer transition">
         <div class="overflow-hidden w-full relative pb-40 sm:pb-44 md:pb-48 lg:pb-56 select-none">
-            <img :src="image" class="absolute h-full w-full object-contain object-center select-none rounded-t-md bg-white" alt="Product image" />
+            <img :src="image" class="absolute h-full w-full object-contain object-center select-none rounded-t-md bg-white" alt="Product image" @load="check" />
         </div>
         <div class="z-10 p-3 bg-white dark:bg-dark_tertiary rounded-b-md relative">
             <p class="h-9 font-normal text-sm mb-2 overflow-hidden overflow-ellipsis leading-tight" :class="product.productName == '' ? 'text-black text-opacity-40' : ''">
@@ -10,7 +10,6 @@
             <div class="bg-primary text-white px-3 font-light text-xs rounded-sm absolute sm:bottom-10">Discount 99%</div>
             <div class="text-xl mt-6 flex flex-col sm:flex-row justify-between sm:items-center">
                 <span class="text-red-500 font-bold">฿ {{ product.price }}</span>
-                <!-- <span class="text-xs" v-if="product.quantityStock < 10 ">{{ product.quantityStock }}</span> -->
                 <span class="text-xs md:text-sm opacity-70 capitalize">{{ stockCheck }}</span>
             </div>
         </div>
@@ -24,15 +23,19 @@ export default {
             image: "",
             hoverEditer: false,
             btnEditer: false,
+            count: 0,
         };
     },
     props: {
         product: Object,
     },
     methods: {
-        editItem() {},
-
-        deleteItem() {},
+        check() {
+            this.count++;
+            if (1 >= this.count) {
+                this.$emit("endload");
+            }
+        },
     },
     computed: {
         stockCheck() {

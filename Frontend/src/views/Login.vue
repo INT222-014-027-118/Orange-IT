@@ -64,6 +64,7 @@ export default {
                         localStorage.setItem('token',userinfo.jwtToken) 
                         localStorage.setItem('userId',userinfo.user.id)
                         this.$store.commit('setUserInfo', userinfo.user);
+                        this.$store.dispatch("loadCartData");
                         this.$router.push('/')
                     }
                 })

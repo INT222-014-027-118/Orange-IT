@@ -16,12 +16,13 @@ import javax.persistence.Table;
 @Table(name = "products_has_attributes")
 public class ProductsHasAttributes {
     @Id
-    private long attribute_id;
+    private long id;
 
-    @Column
-    private long product_id;
+    @Column(name = "attribute_id")
+    private long attributeId;
 
-
+    @Column(name = "product_id")
+    private long productId;
 
     @Column(name = "attribute_value")
     private String attribute_value;

@@ -14,6 +14,11 @@ const routes = [{
     component: () => import( /* webpackChunkName: "NotFound" */ '../views/NotFound.vue')
   },
   {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import( /* webpackChunkName: "admin" */ '../views/admin/adminHome.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import( /* webpackChunkName: "about" */ '../views/About.vue')
@@ -27,6 +32,11 @@ const routes = [{
     path: '/cart',
     name: 'Cart',
     component: () => import( /* webpackChunkName: "cart" */ '../views/cart/Cart.vue')
+  },
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: () => import( /* webpackChunkName: "checkout" */ '../views/cart/Checkout.vue')
   },
   {
     path: '/login',

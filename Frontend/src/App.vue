@@ -33,8 +33,8 @@ export default {
     created() {
         if (this.$store.getters.isLogin) {
             this.$store.dispatch("loadUserData");
-            this.$store.dispatch("loadCartData");
         }
+        this.$store.dispatch("loadCartData");
         // if (localStorage.getItem("cart")) {
         //     let products = [];
         //     products = JSON.parse(localStorage.getItem("cart"));

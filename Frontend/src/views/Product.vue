@@ -143,10 +143,7 @@ export default {
                 alert("Please choose color.");
                 return;
             }
-            if (!localStorage.getItem("userId")) {
-                alert("Please login");
-                return;
-            }
+
             this.loading = true;
             setTimeout(() => {
                 this.loading = false;
@@ -160,15 +157,32 @@ export default {
                     willOpen: () => {
                         // this.$swal.showLoading();
                         setTimeout(() => {
-                            let cartItem = {
-                                id: 1,
-                                quantity: "1",
-                                productId: this.productId,
-                                userId: localStorage.getItem("userId"),
-                                colorId: this.colorPick.id,
-                            };
-                            this.$store.dispatch("addCartItem", cartItem);
-                            // localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
+                            if (this.$store.getters.isLogin) {
+                                let cartItem = {
+                                    id: 1,
+                                    quantity: "1",
+                                    productId: this.productId,
+                                    userId: localStorage.getItem("userId"),
+                                    colorId: this.colorPick.id,
+                                };
+                                this.$store.dispatch("addCartItem", cartItem);
+                            } else {
+                                let cartItem = {
+                                    quantity: 1,
+                                    productCart: {
+                                        id: this.product.id,
+                                        productName: this.product.productName,
+                                        price: this.product.price,
+                                        quantityStock: this.product.quantityStock,
+                                        discount: null,
+                                        images: [this.product.images[0]],
+                                    },
+                                    colors: this.colorPick,
+                                    userId: null,
+                                };
+                                this.$store.dispatch("addCartItem", cartItem);
+                                localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
+                                }
                         }, 500);
                     },
                 });

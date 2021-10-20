@@ -51,8 +51,8 @@
                                 class="w-64 py-2 absolute right-0 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
                                 :class="$store.getters.totalInCart == 0 ? 'hidden' : ''"
                             >
-                                <div v-for="cart in $store.getters.cart" :key="cart.name" class="hover:text-primary">
-                                    <span>{{ cart.name }}</span>
+                                <div v-for="cartItem in $store.getters.cart" :key="cartItem.id" class="hover:text-primary">
+                                    <span>{{ cartItem.productCart.productName }}</span>
                                 </div>
                             </div>
                         </div>

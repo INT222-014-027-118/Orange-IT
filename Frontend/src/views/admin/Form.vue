@@ -43,9 +43,7 @@
 
                         <option v-for="brand in $store.getters.brands" :key="brand" :value="brand" class="text-lg">{{ brand }}</option>
                     </select>
-                    <span v-if="invalid.brand" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2"
-                        >Please select Brand</span
-                    >
+                    <span v-if="invalid.brand" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2">Please select Brand</span>
                 </div>
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
@@ -53,34 +51,14 @@
                         <label class="label-css" for="" ref="name">Product Name *</label>
                         <p class="label-css">{{ countText }}/40</p>
                     </div>
-                    <input
-                        v-model="product.productName"
-                        class="input-css"
-                        id=""
-                        type="text"
-                        placeholder="Please input name 40 characters"
-                        maxlength="40"
-                        :class="{ 'ring ring-red-400': invalid.name }"
-                    />
-                    <span v-if="invalid.name" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2"
-                        >Please input product name</span
-                    >
+                    <input v-model="product.productName" class="input-css" id="" type="text" placeholder="Please input name 40 characters" maxlength="40" :class="{ 'ring ring-red-400': invalid.name }" />
+                    <span v-if="invalid.name" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2">Please input product name</span>
                 </div>
 
                 <div class="flex flex-col md:flex-row lg:w-full">
                     <div class="relative px-3 mb-6 md:w-1/2 md:mb-0">
                         <label class="label-css" for="price">Price *</label>
-                        <input
-                            v-model.number="product.price"
-                            step="0.01"
-                            class="input-css"
-                            id="price"
-                            type="number"
-                            placeholder=""
-                            min="1"
-                            max="99999"
-                            :class="{ 'ring ring-red-400': invalid.price }"
-                        />
+                        <input v-model.number="product.price" step="0.01" class="input-css" id="price" type="number" placeholder="" min="1" max="99999" :class="{ 'ring ring-red-400': invalid.price }" />
                         <span v-if="invalid.price" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
                     </div>
 
@@ -314,7 +292,7 @@ export default {
                 return { id: 1, source: image.name, label: image.name.split(".")[0], product_id: 1 };
             });
             this.product.images = imagesArray;
-            this.product.categories = [this.selectRootCat,this.selectChildCat];
+            this.product.categories = [this.selectRootCat, this.selectChildCat];
             this.$store.dispatch("addProduct", this.product);
             this.$store.dispatch("uploadImages", this.imageInfo);
         },
@@ -395,18 +373,6 @@ export default {
 </script>
 
 <style scoped>
-.input-css {
-    @apply w-full border border-gray-500 focus:outline-none rounded focus:bg-gray-50 dark:focus:bg-gray-500 py-3 px-5 md:px-10 mb-7 bg-gray-100 dark:bg-gray-600;
-}
-
-.label-css {
-    @apply block uppercase tracking-wide text-xs font-bold mb-2;
-}
-
-.btn {
-    @apply bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4;
-}
-
 [type="checkbox"]:checked {
     background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='rgb(236, 105, 7)' stroke-width='2%' stroke-linecap='round' stroke='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
 }
