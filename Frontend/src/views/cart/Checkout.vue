@@ -1,9 +1,9 @@
 <template>
     <div class="pt-1">
-        <div class="mx-auto max-w-7xl sm:mt-5">
+        <div class="mx-auto max-w-7xl">
             <div class="relative p-1 md:mt-0 md:p-2 lg:mx-auto">
-                <div class="felx flex-col capitalize bg-white p-1 md:p-3 mb-3 relative">
-                    <div class="mb-4 text-xl font-semibold flex items-center" :class="[changeAddress ? 'mb-10 md:mb-4' : '']"><span class="material-icons mr-3"> place </span>delivery address</div>
+                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary rounded-md p-1 md:p-3 mb-3 relative">
+                    <div class="mb-4 text-xl font-semibold flex items-center" :class="[changeAddress ? 'mb-10 md:mb-4' : '']"><span class="material-icons mr-3 "> place </span>delivery address</div>
                     <button
                         type="button"
                         @click="
@@ -11,7 +11,7 @@
                             this.$store.commit('setShowAccountPage');
                         "
                         v-show="changeAddress"
-                        class="bg-gray-200 px-3 py-2 leading-none tracking-tighter inline-block absolute top-10 md:top-3 right-1 md:right-5"
+                        class="bg-primary rounded-md text-white px-3 py-2 leading-none tracking-tighter inline-block absolute top-10 md:top-3 right-1 md:right-5"
                     >
                         address manage
                     </button>
@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="md:w-1/6 py-3 md:py-0 flex md:justify-center">
-                            <button type="button" class="md:text-center cursor-pointer px-4 py-2 md:px-3 md:py-0 bg-gray-200" @click="changeAddress = !changeAddress" v-show="!changeAddress">change</button>
+                            <button type="button" class="md:text-center cursor-pointer px-4 py-2 md:px-3 md:py-0 bg-primary rounded-md text-white" @click="changeAddress = !changeAddress" v-show="!changeAddress">change</button>
                         </div>
                     </div>
                     <div v-show="changeAddress" class="space-y-2 py-2 md:p-2">
@@ -53,13 +53,12 @@
                         </div>
                     </div>
 
-                    <div class="py-3 md:py-3 md:px-3" v-show="changeAddress">
-                        <button type="button" class="bg-gray-200 px-3 py-2 mr-3" @click="changeAddress = false">OK</button>
-                        <button type="button" class="bg-gray-200 px-3 py-2" @click="changeAddress = false">cancle</button>
+                    <div class="py-3 md:py-3 md:px-2" v-show="changeAddress">
+                        <button type="button" class="bg-primary rounded-md text-white px-3 py-2 mr-3 w-20" @click="changeAddress = false">OK</button>
                     </div>
                 </div>
 
-                <div class="felx flex-col capitalize bg-white p-1 md:p-3 mb-3">
+                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary rounded-md p-1 md:p-3 mb-3">
                     <div class="flex justify-between mb-4 ">
                         <div class="text-xl font-semibold flex items-center">ordered</div>
                         <div class="w-2/4 hidden md:inline-flex justify-between pr-2">
@@ -72,7 +71,7 @@
                     <div class="p-2 space-y-2">
                         <div class="md:flex overflow-hidden">
                             <div class="md:w-2/4 font-bold flex flex-shrink-0 items-center">
-                                <div class="border border-gray-200 rounded-md w-14 h-14 sm:w-14 sm:h-14 flex flex-shrink-0">
+                                <div class="border border-gray-200 rounded-md w-14 h-14 sm:w-14 sm:h-14 flex flex-shrink-0 overflow-hidden">
                                     <img src="http://20.205.201.136/orange-it/image/get/BlackSharkV2Pro1.png" class="object-cover object-center w-full h-full" alt="Product image" />
                                 </div>
                                 <span class="ml-2">{addresssssssssssss ssssssssssssss ssssssssdsf sdf sdssssssss ssssssssssssssssssssss}</span>
@@ -87,7 +86,7 @@
                     </div>
                 </div>
 
-                <div class="capitalize bg-white p-1 md:p-3 mb-3">
+                <div class="capitalize bg-white dark:bg-dark_secondary rounded-md p-1 md:p-3 mb-3">
                     <div class="mb-4 text-xl font-semibold flex items-center"><span class="material-icons mr-3"> local_shipping </span>Shipping</div>
                     <div class="flex flex-wrap justify-between md:flex-none p-2">
                         <div class="md:flex justify-between w-3/4">
@@ -104,7 +103,7 @@
                     </div>
                 </div>
 
-                <div class="felx flex-col capitalize bg-white p-1 md:p-3">
+                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary rounded-md p-1 md:p-3">
                     <h1 class="mb-4 text-xl font-semibold flex items-center"><span class="material-icons mr-3"> payments </span>payment method</h1>
                     <div class="flex flex-wrap">
                         <!-- <input id="1" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="เก็บเงินปลาย" />
@@ -114,7 +113,7 @@
                         <input id="3" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="ทางบัตรเครดิต/บัตรเดบิต" />
                         <label for="3"> ทางบัตรเครดิต/บัตรเดบิต</label> -->
                         <div
-                            class="border-2 px-5 py-2 flex items-center mb-3 mx-2 relative rounded-md cursor-pointer"
+                            class="border-2 px-6 py-2 flex items-center mb-3 mx-2 relative rounded-md cursor-pointer"
                             v-for="pay in paymentMethod"
                             :key="pay"
                             @click="selectPaymentMethod === pay ? (selectPaymentMethod = pay) : (selectPaymentMethod = selectPaymentMethod)"
