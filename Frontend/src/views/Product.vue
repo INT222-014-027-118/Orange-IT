@@ -182,7 +182,7 @@ export default {
                                 };
                                 this.$store.dispatch("addCartItem", cartItem);
                                 localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
-                            }
+                                }
                         }, 500);
                     },
                 });
