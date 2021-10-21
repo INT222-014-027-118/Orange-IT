@@ -217,7 +217,7 @@ export default {
                 id: att.id,
                 attribute: att.attribute,
                 value: this.product.productsHasAttributes.filter((value) => {
-                    return value.attribute_id == att.id;
+                    return value.attributeId == att.id;
                 })[0].attribute_value,
             };
         });
