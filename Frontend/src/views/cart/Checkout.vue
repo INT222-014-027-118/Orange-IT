@@ -37,11 +37,11 @@
                             v-for="address in addresses"
                             :key="address"
                             @click="selectedAddress = address"
-                            :class="[selectedAddress == address ? 'border-primary' : '']"
+                            :class="[selectedAddress.id == address.id ? 'border-primary' : '']"
                         >
                             <div class="md:w-2/6 font-bold">{{ address.firstname }} {{ address.lastanme }} ( {{ address.phone }})</div>
                             <div class="absolute left-0 top-0 h-full text-white bg-primary flex items-center">
-                                <span class="material-icons py-2 text-base font-bold  " :class="[selectedAddress === address ? '' : 'hidden']"> check </span>
+                                <span class="material-icons py-2 text-base font-bold  " :class="[selectedAddress.id === address.id? '' : 'hidden']"> check </span>
                             </div>
                             <div class="md:w-4/6">
                                 <p>
@@ -149,11 +149,12 @@ export default {
         return {
             changeAddress: false,
             addresses: [
-                { firstname: "Apisit", lastanme: "Kaewnongsaeng", phone: "087XX", province: "สมุทรปราการ", district: "บางบ่อ", sub_district: "บางบ่อ", postal_code: "10560", address: "66/61 วโรชา หมู่ 2" },
-                { firstname: "Jakkapong", lastanme: "Praditthanachot", phone: "087XXXXXX", province: "บางนา", district: "บางบ่อ", sub_district: "บางนา", postal_code: "10560", address: "66/61 วโรชา หมู่ 2" },
-                { firstname: "Traitawat", lastanme: "Look", phone: "087XXXXXX", province: "บางนา", district: "บางบ่อ", sub_district: "บางนา", postal_code: "10560", address: "66/61 วโรชา หมู่ 2" },
+                {id:1, firstname: "Apisit", lastanme: "Kaewnongsaeng", phone: "087XX", province: "สมุทรปราการ", district: "บางบ่อ", sub_district: "บางบ่อ", postal_code: "10560", address: "66/61 วโรชา หมู่ 2" },
+                {id:2, firstname: "Jakkapong", lastanme: "Praditthanachot", phone: "087XXXXXX", province: "บางนา", district: "บางบ่อ", sub_district: "บางนา", postal_code: "10560", address: "66/61 วโรชา หมู่ 2" },
+                {id:3, firstname: "Traitawat", lastanme: "Look", phone: "087XXXXXX", province: "บางนา", district: "บางบ่อ", sub_district: "บางนา", postal_code: "10560", address: "66/61 วโรชา หมู่ 2" },
             ],
             selectedAddress: {
+                id:1,
                 firstname: "Apisit",
                 lastanme: "Kaewnongsaeng",
                 phone: "087XX",
