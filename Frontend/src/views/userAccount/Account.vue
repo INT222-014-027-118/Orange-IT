@@ -5,7 +5,7 @@
             class="mx-1 w-full overflow-hidden md:w-3/12 top-20 px-3 py-3 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full"
         >
             <div class="">
-                <div class="flex items-center ">
+                <div class="flex items-center">
                     <div class="self-start py-1">
                         <!-- <img
                         class="object-cover w-20 h-20 p-1 border-2 rounded-full border-primary md:w-24 md:h-24"
@@ -16,10 +16,9 @@
                     </div>
                     <div class="w-full ml-2 overflow-hidden overflow-ellipsis">
                         <div class="md:flex md:flex-wrap md:items-center">
-                            <h2 class="inline-block mb-2 font-light lg:text-xl sm:mr-5 sm:mb-0 truncate">
+                            <h2 class="inline-block mb-2 lg:text-xl sm:mr-5 sm:mb-0 truncate">
                                 {{ $store.getters.userInfo === null ? "" : $store.getters.userInfo.username }}
                             </h2>
-                            <!-- <a href="#" class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary rounded md:inline-block">Edit</a> -->
                             <router-link
                                 :to="{
                                     name: 'manageProfile',

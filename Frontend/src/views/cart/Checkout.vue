@@ -38,13 +38,13 @@
                             </button>
                         </div>
                     </div>
-                    <div v-show="changeAddress" class="space-y-2 py-2 md:p-2">
+                    <div v-show="changeAddress" class="space-y-2 py-2 md:p-2 border rounded-md ">
                         <div
-                            class="md:flex items-center border-2 p-2 relative cursor-pointer pl-5"
+                            class="md:flex items-center ring-2 p-2 relative cursor-pointer pl-5 rounded-sm"
                             v-for="address in addresses"
                             :key="address"
                             @click="selectedAddress = address"
-                            :class="[selectedAddress.id == address.id ? 'border-primary' : '']"
+                            :class="[selectedAddress.id == address.id ? 'ring-primary' : 'ring-transparent']"
                         >
                             <div class="md:w-2/6 font-bold">{{ address.firstname }} {{ address.lastanme }} ( {{ address.phone }})</div>
                             <div class="absolute left-0 top-0 h-full text-white bg-primary flex items-center">
@@ -120,11 +120,11 @@
                         <input id="3" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="ทางบัตรเครดิต/บัตรเดบิต" />
                         <label for="3"> ทางบัตรเครดิต/บัตรเดบิต</label> -->
                         <div
-                            class="border-2 px-6 py-2 flex items-center mb-3 mx-2 relative rounded-md cursor-pointer"
+                            class="ring-2 px-6 py-2 flex items-center mb-3 mx-2 relative rounded-sm cursor-pointer"
                             v-for="pay in paymentMethod"
                             :key="pay"
                             @click="selectPaymentMethod === pay ? (selectPaymentMethod = pay) : (selectPaymentMethod = selectPaymentMethod)"
-                            :class="[selectPaymentMethod === pay ? 'border-primary' : 'cursor-not-allowed text-gray-500']"
+                            :class="[selectPaymentMethod === pay ? 'ring-primary' : 'cursor-not-allowed text-gray-500 ring-gray-200 dark:ring-gray-500']"
                         >
                             <span class="material-icons absolute left-0 h-full py-2 text-base font-bold text-white bg-primary " :class="[selectPaymentMethod === pay ? '' : 'hidden']"> check </span>
                             <span class="">{{ pay }}</span>
