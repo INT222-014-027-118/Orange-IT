@@ -118,7 +118,7 @@
                                 </div>
                                 <div v-if="$store.getters.userInfo">
                                     <hr class="dark:border-gray-500 mb-3" />
-                                    <button @click="logout" class="hover:text-red-500 flex capitalize font-bold">
+                                    <button @click="logout(); menuUser = false;" class="hover:text-red-500 flex capitalize font-bold">
                                         <span class="material-icons-outlined text-center w-14 md:w-16 ">logout</span>
                                         <span class="ml-1">Logout</span>
                                     </button>

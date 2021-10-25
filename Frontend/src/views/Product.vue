@@ -7,43 +7,49 @@
                 </div>
 
                 <div class="px-1 py-5 sm:px-16 md:px-20 lg:p-5 col-span-3 lg:col-span-1 bg-white dark:bg-dark_tertiary rounded-md shadow-md">
-                    <p class="px-2 text-primary">
-                        {{ product.brandName }}
-                    </p>
-                    <p class="px-2 py-2 border-b border-black text-xl font-semibold dark:border-gray-100 mb-2">{{ productName }}</p>
-                    <div class="px-2 sm:px-3 space-y-3 flex flex-col">
-                        <p class="text-2xl text-red-500 font-bold">฿ {{ product.price }}</p>
-                        <p class="text-sm font-light">Product ID: {{ product.id }}</p>
-                        <div class="inline-flex">
-                            <div class="bg-primary text-white px-4 py-1 text-xs rounded-sm">Discount 99%</div>
-                        </div>
-                        <div class="w-full">
-                            <p class="text-sm">color :</p>
-                            <div class="w-full flex flex-wrap py-1">
-                                <label :for="color.id" v-for="color in product.colors" :key="color" class="flex flex-col items-center">
-                                    <input
-                                        :id="color.id"
-                                        type="radio"
-                                        name="color"
-                                        class="w-8 h-8 my-2 mx-2 border rounded-full form-input ring-transparent ring-2 ring-offset-1 ring-offset-transparent focus:border-gray-500 focus:ring-2 focus:ring-offset-1 active:ring-secondary checked:ring-primary"
-                                        :style="{
-                                            backgroundColor: `#${color.hexCode}`,
-                                        }"
-                                        :value="color"
-                                        v-model="colorPick"
-                                    />
-                                    <span class="text-xs"> {{ color.label }}</span>
-                                </label>
+                    <div class="px-2 sm:px-3 space-y-3 flex flex-wrap content-between h-full">
+                        <div class="space-y-3 flex flex-col w-full">
+                            <div>
+                                <p class="px-2 text-primary">
+                                    {{ product.brandName }}
+                                </p>
+                                <p class="px-2 py-2 border-b border-black text-xl font-semibold dark:border-gray-100">{{ productName }}</p>
+                            </div>
+                            <p class="text-2xl text-red-500 font-bold">฿ {{ product.price }}</p>
+                            <p class="text-sm font-light">Product ID: {{ product.id }}</p>
+                            <div class="inline-flex" v-if="false">
+                                <div class="bg-primary text-white px-4 py-1 text-xs rounded-sm">Discount 99%</div>
                             </div>
                         </div>
+                        <div class="space-y-3 flex flex-col  w-full">
+                            <div class="w-full">
+                                <p class="text-sm">color :</p>
+                                <div class="w-full flex flex-wrap py-1">
+                                    <label :for="color.id" v-for="color in product.colors" :key="color" class="flex flex-col items-center">
+                                        <input
+                                            :id="color.id"
+                                            type="radio"
+                                            name="color"
+                                            class="w-8 h-8 my-2 mx-2 border rounded-full form-input ring-transparent ring-2 ring-offset-1 ring-offset-transparent focus:border-gray-500 focus:ring-2 focus:ring-offset-1 active:ring-secondary checked:ring-primary"
+                                            :style="{
+                                                backgroundColor: `#${color.hexCode}`,
+                                            }"
+                                            :value="color"
+                                            v-model="colorPick"
+                                        />
+                                        <span class="text-xs"> {{ color.label }}</span>
+                                    </label>
+                                </div>
+                            </div>
 
-                        <div class="text-xl font-bold flex items-center" :class="[stockCheck.class]">
-                            <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
-                        </div>
-                        <div
-                            class="fixed bottom-0 z-10 left-0 w-full px-5 pt-5 pb-20 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary md:pb-0 md:pt-2 md:px-0 md:static border-t md:border-0 dark:border-gray-600"
-                        >
-                            <button class="w-full p-3 text-center text-white rounded-md bg-primary hover:bg-secondary z-40" @click="addCartItem">Add to Cart</button>
+                            <div class="text-xl font-bold flex items-center" :class="[stockCheck.class]">
+                                <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
+                            </div>
+                            <div
+                                class="fixed bottom-0 z-10 left-0 w-full px-5 pt-5 pb-20 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary md:pb-0 md:pt-2 md:px-0 md:static border-t md:border-0 dark:border-gray-600"
+                            >
+                                <button class="w-full p-3 text-center text-white rounded-md bg-primary hover:bg-secondary z-40" @click="addCartItem">Add to Cart</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -182,7 +188,7 @@ export default {
                                 };
                                 this.$store.dispatch("addCartItem", cartItem);
                                 localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
-                                }
+                            }
                         }, 500);
                     },
                 });
