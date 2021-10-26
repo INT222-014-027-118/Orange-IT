@@ -1,9 +1,10 @@
 <template>
     <div class="pt-1">
         <div class="mx-auto max-w-7xl">
-            <div class="relative p-1 md:mt-0 md:p-2 lg:mx-auto">
-                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary rounded-md p-1 md:p-3 mb-3 relative">
-                    <div class="mb-4 text-xl font-semibold flex items-center" :class="[changeAddress ? 'mb-10 md:mb-4' : '']"><span class="material-icons mr-3 "> place </span>delivery address</div>
+            <div class="relative p-1 md:mt-0 md:p-2 lg:mx-auto space-y-4">
+                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary shadow-sm rounded-md p-1 md:p-3 relative">
+                    <div class="mb-4 text-xl font-semibold flex items-center" :class="[changeAddress ? 'mb-12 md:mb-4' : '']"><span class="material-icons mr-3 "> place </span>delivery address</div>
+                    <hr class="my-3 dark:border-gray-500" />
                     <button
                         type="button"
                         @click="
@@ -65,8 +66,8 @@
                     </div>
                 </div>
 
-                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary rounded-md p-1 md:p-3 mb-3">
-                    <div class="flex justify-between mb-4 ">
+                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary shadow-sm rounded-md p-1 md:p-3">
+                    <div class="flex justify-between mb-2 md:mb-4">
                         <div class="text-xl font-semibold flex items-center">ordered</div>
                         <div class="w-2/4 hidden md:inline-flex justify-between pr-2">
                             <span class="w-1/2 text-center text-gray-400">color</span>
@@ -75,7 +76,8 @@
                             <span class="w-1/2 text-center text-gray-400">price</span>
                         </div>
                     </div>
-                    <div class="p-2 space-y-2">
+                    <hr class="my-3 dark:border-gray-500" />
+                    <div class="px-0 sm:px-2 space-y-2">
                         <div class="md:flex overflow-hidden">
                             <div class="md:w-2/4 font-bold flex flex-shrink-0 items-center">
                                 <div class="border border-gray-200 rounded-md w-14 h-14 sm:w-14 sm:h-14 flex flex-shrink-0 overflow-hidden">
@@ -93,9 +95,10 @@
                     </div>
                 </div>
 
-                <div class="capitalize bg-white dark:bg-dark_secondary rounded-md p-1 md:p-3 mb-3">
-                    <div class="mb-4 text-xl font-semibold flex items-center"><span class="material-icons mr-3"> local_shipping </span>Shipping</div>
-                    <div class="flex flex-wrap justify-between md:flex-none p-2">
+                <div class="capitalize bg-white dark:bg-dark_secondary shadow-sm rounded-md p-1 md:p-3">
+                    <div class="mb-2 md:mb-4 text-xl font-semibold flex items-center"><span class="material-icons mr-3"> local_shipping </span>Shipping</div>
+                    <hr class="my-3 dark:border-gray-500" />
+                    <div class="flex flex-wrap justify-between md:flex-none px-0 py-1 sm:px-2 sm:py-2">
                         <div class="md:flex justify-between w-3/4">
                             <div class="w-full md:w-1/4">
                                 Standard Delivery
@@ -110,7 +113,7 @@
                     </div>
                 </div>
 
-                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary rounded-md p-1 md:p-3">
+                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary shadow-sm rounded-md p-1 md:p-3">
                     <h1 class="mb-4 text-xl font-semibold flex items-center"><span class="material-icons mr-3"> payments </span>payment method</h1>
                     <div class="flex flex-wrap">
                         <!-- <input id="1" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="เก็บเงินปลาย" />
@@ -120,7 +123,7 @@
                         <input id="3" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="ทางบัตรเครดิต/บัตรเดบิต" />
                         <label for="3"> ทางบัตรเครดิต/บัตรเดบิต</label> -->
                         <div
-                            class="ring-2 px-6 py-2 flex items-center mb-3 mx-2 relative rounded-sm cursor-pointer"
+                            class="ring-2 px-6 py-2 flex items-center mx-2 relative rounded-sm cursor-pointer"
                             v-for="pay in paymentMethod"
                             :key="pay"
                             @click="selectPaymentMethod === pay ? (selectPaymentMethod = pay) : (selectPaymentMethod = selectPaymentMethod)"
@@ -131,17 +134,17 @@
                         </div>
                     </div>
 
-                    <hr class="my-3" />
+                    <hr class="my-3 dark:border-gray-500" />
                     <div class="">
                         <h1 class="text-xl font-semibold mb-4">Checkout</h1>
                         <div class="flex justify-end">
-                            <div class="flex justify-between items-end md:w-1/3 text-base w-full">
+                            <div class="flex justify-between items-end md:w-1/3 text-base w-full p-1">
                                 <p>all payments:</p>
                                 <p class="text-3xl font-semibold">฿ 9999999</p>
                             </div>
                         </div>
                         <div class="flex justify-end">
-                            <button class="bg-primary px-5 py-3 w-full md:w-1/3 text-white rounded-md mt-4">checkout</button>
+                            <button class="bg-primary px-5 py-3 w-full md:w-1/3 text-white rounded-md mt-4 font-semibold text-xl">submit order</button>
                         </div>
                     </div>
                 </div>

@@ -2,12 +2,12 @@
     <div class="bg-white">
         <h1 class="text-3xl font-semibold p-3 capitalize">purchase</h1>
         <hr />
-        <div class="flex flex-row justify-around">
+        <div class="flex justify-between sm:justify-around overflow-x-auto">
             <button
                 v-for="tab in tabs"
                 :key="tab"
                 @click="selectTab = tab"
-                class="text-gray-600 text-xs md:text-base px-2 md:py-4 md:px-6 block hover:text-primary focus:outline-none "
+                class="text-gray-600 text-xs md:text-base px-4 py-2 md:py-4 md:px-6 inline-block hover:text-primary focus:outline-none "
                 :class="[selectTab.id == tab.id ? 'text-primary border-b-2 font-medium border-primary' : '']"
             >
                 {{ tab.title }}

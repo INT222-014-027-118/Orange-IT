@@ -1,5 +1,5 @@
 .<template>
-    <div class="flex w-full p-1 md:px-2 md:py-2 mb-2 md:mb-3 overflow-auto bg-white dark:bg-dark_tertiary rounded-md shadow-sm">
+    <div class="flex w-full p-1 md:px-2 md:py-2 mb-2 md:mb-3 overflow-auto bg-white dark:bg-dark_tertiary rounded-md shadow-md">
         <div
             class="flex-shrink-0 w-14 h-14 overflow-hidden border border-gray-200 rounded-md sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-44 lg:h-44 cursor-pointer"
             @click="
