@@ -3,12 +3,10 @@ package INT222.Controllers;
 import INT222.Exceptions.NotFoundCartItemException;
 import INT222.Models.CartItemForAdd;
 import INT222.Models.CartItems;
-import INT222.Models.Categories;
 import INT222.Repositories.CartItemForAddRepository;
 import INT222.Repositories.CartItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
