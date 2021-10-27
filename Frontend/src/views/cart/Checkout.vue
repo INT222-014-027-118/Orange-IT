@@ -1,8 +1,8 @@
 <template>
     <div class="pt-1">
         <div class="mx-auto max-w-7xl">
-            <div class="relative p-1 md:mt-0 md:p-2 lg:mx-auto space-y-4">
-                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary shadow-sm rounded-md p-1 md:p-3 relative">
+            <div class="relative p-1 md:mt-0 md:p-2 lg:mx-auto space-y-5">
+                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary shadow-md rounded-md p-1 md:p-3 relative">
                     <div class="mb-4 text-xl font-semibold flex items-center" :class="[changeAddress ? 'mb-12 md:mb-4' : '']"><span class="material-icons mr-3 "> place </span>delivery address</div>
                     <hr class="my-3 dark:border-gray-500" />
                     <button
@@ -66,7 +66,7 @@
                     </div>
                 </div>
 
-                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary shadow-sm rounded-md p-1 md:p-3">
+                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary shadow-md rounded-md p-1 md:p-3">
                     <div class="flex justify-between mb-2 md:mb-4">
                         <div class="text-xl font-semibold flex items-center">ordered</div>
                         <div class="w-2/4 hidden md:inline-flex justify-between pr-2">
@@ -95,7 +95,7 @@
                     </div>
                 </div>
 
-                <div class="capitalize bg-white dark:bg-dark_secondary shadow-sm rounded-md p-1 md:p-3">
+                <div class="capitalize bg-white dark:bg-dark_secondary shadow-md rounded-md p-1 md:p-3">
                     <div class="mb-2 md:mb-4 text-xl font-semibold flex items-center"><span class="material-icons mr-3"> local_shipping </span>Shipping</div>
                     <hr class="my-3 dark:border-gray-500" />
                     <div class="flex flex-wrap justify-between md:flex-none px-0 py-1 sm:px-2 sm:py-2">
@@ -113,7 +113,7 @@
                     </div>
                 </div>
 
-                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary shadow-sm rounded-md p-1 md:p-3">
+                <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary shadow-md rounded-md p-1 md:p-3">
                     <h1 class="mb-4 text-xl font-semibold flex items-center"><span class="material-icons mr-3"> payments </span>payment method</h1>
                     <div class="flex flex-wrap">
                         <!-- <input id="1" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="เก็บเงินปลาย" />
