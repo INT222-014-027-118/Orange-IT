@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <NavBar />
-        <router-view class="mt-14 sm:mt-16 md:mt-20 lg:mt-20 mb-20" />
+        <router-view class="mt-14 sm:mt-16 md:mt-20 lg:mt-20 mb-16" />
         <!-- <Footer class="h-20 bg-gray-300 text-center w-full" v-if="this.$route.name !== 'Login' && this.$route.name !== 'Register'">footer</Footer> -->
     </div>
 </template>

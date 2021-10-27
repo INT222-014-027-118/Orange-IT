@@ -27,7 +27,7 @@
                     <button class="items-center p-1 rounded-full hidden sm:inline-flex" @click="$router.push('/compare')" :class="[this.$route.name === 'Compare' ? 'text-primary' : '']">
                         <div class="relative">
                             <span class="px-1 pt-1 material-icons"> compare_arrows </span>
-                            <div class="absolute px-2 text-xs text-white bg-primary rounded-full -top-1 -right-3 md:-top-2 sm:-right-3">VS</div>
+                            <div class="absolute px-1.5 text-xs text-white bg-primary rounded-full -top-1 -right-3">VS</div>
                         </div>
                         <span class="tracking-tight font-semibold">compare</span>
                     </button>
@@ -40,7 +40,7 @@
                     >
                         <div class="relative">
                             <span class="px-1 pt-1" :class="[this.$route.name === 'Cart' ? 'material-icons' : 'material-icons-outlined']"> shopping_cart </span>
-                            <div class="absolute px-2 text-xs text-white bg-primary rounded-full -top-1 -right-3 md:-top-2 sm:-right-3">
+                            <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-1 -right-1 ring-2 ring-white dark:ring-dark_secondary">
                                 {{ $store.getters.totalInCart == 0 ? "" : $store.getters.totalInCart }}
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                                 </div>
                                 <div v-if="$store.getters.userInfo">
                                     <hr class="dark:border-gray-500 mb-3" />
-                                    <button @click="logout" class="hover:text-red-500 flex capitalize font-bold">
+                                    <button @click="logout(); menuUser = false;" class="hover:text-red-500 flex capitalize font-bold">
                                         <span class="material-icons-outlined text-center w-14 md:w-16 ">logout</span>
                                         <span class="ml-1">Logout</span>
                                     </button>
@@ -183,7 +183,7 @@
                 <button class="flex flex-col items-center w-16 p-1 font-semibold relative" @click="$router.push('/cart')" :class="[this.$route.name === 'Cart' ? 'text-primary' : '']">
                     <div :class="[this.$route.name === 'Cart' ? 'material-icons' : 'material-icons-outlined']">shopping_cart</div>
                     <span class="">cart</span>
-                    <div class="absolute px-2 text-xs text-white bg-primary rounded-full -top-1 right-2 md:-top-2 sm:-right-3">
+                    <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-1 right-3 ring-2 ring-white dark:ring-dark_secondary">
                         {{ $store.getters.totalInCart == 0 ? "" : $store.getters.totalInCart }}
                     </div>
                 </button>

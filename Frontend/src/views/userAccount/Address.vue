@@ -2,7 +2,6 @@
     <div>
         <h1 class="text-3xl font-semibold p-3 capitalize">address</h1>
         <hr />
-        {{addresses}}
         <div class="px-3 py-4">
             <div class="flex" :class="[showForm ? 'flex-row-reverse' : 'flex-row']">
                 <button
