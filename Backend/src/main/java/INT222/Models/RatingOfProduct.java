@@ -17,9 +17,10 @@ public class RatingOfProduct {
     @Id
     private long Reviews_id ;
 
-    @ManyToOne
-    @JoinColumn(name = "ratings_id")
-    private Ratings ratings;
+//    @ManyToOne
+//    @JoinColumn(name = "ratings_id")
+//    private Ratings ratings;
+
     @Column
     private String score;
 //    @ManyToOne

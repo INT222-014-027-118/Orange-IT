@@ -23,8 +23,8 @@ public class Ratings {
     @Column(name = "description",nullable = true)
     private String description;
 
-//    @OneToMany
-//    @JoinColumn(name = "ratings_id")
-//    private List<RatingOfProduct> ratingOfProducts;
+    @OneToMany
+    @JoinColumn(name = "ratings_id")
+    private List<RatingOfProduct> ratingOfProducts;
 
 }
