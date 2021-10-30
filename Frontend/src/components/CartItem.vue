@@ -15,7 +15,7 @@
             <div class="flex flex-col w-8/12 sm:flex sm:justify-between sm:flex-row">
                 <div class="flex flex-col justify-between w-11/12">
                     <div>
-                        <p class="text-xs sm:text-base" >{{ product.productCart.productName }}</p>
+                        <p class="text-xs sm:text-base">{{ product.productCart.productName }}</p>
                         <p class="text-xs sm:text-base text-gray-600 dark:text-gray-300">color: {{ product.colors.label }}</p>
                     </div>
                     <div>
@@ -41,8 +41,8 @@
             </div>
             <div class="flex flex-col justify-between w-4/12 text-right">
                 <div class="flex flex-col">
-                    <span class="text-base md:text-2xl text-primary font-semibold">฿ {{ product.productCart.price * quantity }}</span>
-                    <span class="text-xs md:text-base text-gray-600 dark:text-gray-300 tracking-tighter" v-if="quantity >= 2">unit : ฿ {{ product.productCart.price }}</span>
+                    <span class="text-base md:text-2xl text-primary font-semibold">{{ productPrice (product.productCart.price * quantity )}}</span>
+                    <span class="text-xs md:text-base text-gray-600 dark:text-gray-300 tracking-tighter" v-if="quantity >= 2">unit : {{ productPrice (product.productCart.price) }}</span>
                 </div>
                 <div class="inline-flex justify-end">
                     <button class="p-1 font-semibold sm:px-2 text-xs sm:text-base rounded-md hover:bg-gray-200 dark:hover:bg-dark_secondary" @click="remove">remove</button>
@@ -73,6 +73,16 @@ export default {
             let payload = { index: this.index, quantity: Number(this.quantity) };
             this.$store.dispatch("editQuantity", payload);
         },
+        productPrice(price) {
+            return new Intl.NumberFormat("th-TH", {
+                style: "currency",
+                currency: "THB",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+            }).format(price);
+        },
+    },
+    computed: {
     },
     async created() {
         this.image = `${process.env.VUE_APP_API}/image/get/${this.product.productCart.images[0].source}`;

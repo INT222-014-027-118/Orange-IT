@@ -9,7 +9,7 @@
             </p>
             <div class="bg-primary text-white px-3 font-light text-xs rounded-sm absolute sm:bottom-10" v-if="false">Discount 99%</div>
             <div class="text-xl mt-6 flex flex-col sm:flex-row justify-between sm:items-center">
-                <span class="text-red-500 font-bold">฿ {{ product.price }}</span>
+                <span class="text-red-500 font-bold">{{ productPrice }}</span>
                 <span class="text-xs md:text-sm opacity-70 capitalize">{{ stockCheck }}</span>
             </div>
         </div>
@@ -46,6 +46,14 @@ export default {
             } else {
                 return "in stock";
             }
+        },
+        productPrice() {
+            return new Intl.NumberFormat("th-TH", {
+                style: "currency",
+                currency: "THB",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+            }).format(this.product.price);
         },
     },
     async created() {

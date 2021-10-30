@@ -33,7 +33,8 @@
                                     height="24px"
                                     viewBox="0 0 24 24"
                                     width="24px"
-                                    :class="[this.$route.name === 'Compare' ? 'fill-current text-primary' : '']"
+                                    class="fill-current"
+                                    :class="[this.$route.name === 'Compare' ? 'fill-current text-primary' : 'dark:text-white']"
                                 >
                                     <g><rect fill="none" height="24" width="24" x="0" /></g>
                                     <g>
@@ -43,7 +44,7 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="absolute px-1.5 text-xs text-white bg-primary rounded-full -top-2 -right-3">VS</div>
+                            <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-2 -right-3 ring-2 ring-white dark:ring-dark_secondary">VS</div>
                         </div>
                         <span class="tracking-tight font-semibold ml-1">compare</span>
                     </button>
@@ -61,7 +62,7 @@
                                     d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"
                                 />
                             </svg>
-                            <svg v-else xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" class="">
+                            <svg v-else xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" class="fill-current dark:text-white">
                                 <path d="M0 0h24v24H0V0z" fill="none" />
                                 <path
                                     d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"
@@ -93,7 +94,7 @@
                                 <path d="M0 0h24v24H0z" fill="none" />
                                 <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                             </svg>
-                            <svg v-else xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px">
+                            <svg v-else xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" class="fill-current dark:text-white">
                                 <path d="M0 0h24v24H0V0z" fill="none" />
                                 <path
                                     d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
