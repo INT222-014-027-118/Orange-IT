@@ -33,7 +33,7 @@
                     >
                         <div class="flex justify-between py-4">
                             <div class="text-xl font-semibold">Order total</div>
-                            <div class="text-xl font-semibold md:text-2xl text-primary">฿ {{ this.$store.getters.orderTotalPrice }}</div>
+                            <div class="text-xl font-semibold md:text-2xl text-primary">{{ orderTotalPrice }}</div>
                         </div>
                         <button
                             class="w-full p-3 text-center font-semibold text-xl text-white rounded-md bg-primary "
@@ -63,6 +63,16 @@ export default {
     methods: {
         scrollToTop() {
             window.scrollTo(0, 0);
+        },
+    },
+    computed: {
+        orderTotalPrice() {
+            return new Intl.NumberFormat("th-TH", {
+                style: "currency",
+                currency: "THB",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+            }).format(this.$store.getters.orderTotalPrice);
         },
     },
     mounted() {
