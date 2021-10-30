@@ -166,8 +166,8 @@ export default {
                             if (this.$store.getters.isLogin) {
                                 let cartItem = {
                                     id: 1,
-                                    quantity: "1",
-                                    productId: this.productId,
+                                    quantity: 1,
+                                    productId: Number(this.productId),
                                     userId: localStorage.getItem("userId"),
                                     colorId: this.colorPick.id,
                                 };
