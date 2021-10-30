@@ -171,7 +171,7 @@ export default {
                                     userId: localStorage.getItem("userId"),
                                     colorId: this.colorPick.id,
                                 };
-                                this.$store.dispatch("addCartItem", cartItem);
+                                this.$store.commit("addCartItem", cartItem);
                             } else {
                                 let cartItem = {
                                     quantity: 1,
@@ -186,7 +186,7 @@ export default {
                                     colors: this.colorPick,
                                     userId: null,
                                 };
-                                this.$store.dispatch("addCartItem", cartItem);
+                                this.$store.commit("addCartItem", cartItem);
                                 localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
                             }
                         }, 500);

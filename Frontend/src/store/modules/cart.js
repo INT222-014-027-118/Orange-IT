@@ -19,13 +19,25 @@ const getters = {
         .map(cartItem => cartItem.productCart.price * cartItem.quantity)
         .reduce((previousPrice, currentPrice) => {
             return previousPrice + currentPrice
-        }) : 0
+        }) : 0,
+    isSameCartItem: (state) => {
+        (item) => {
+            let sameProduct = state.cart.map(element => element.productCart.id).includes(item.productCart.id)
+            let sameColor = state.cart.map(element => element.colors.id).includes(item.colors.id)
+            return sameProduct && sameColor
+        }
+    }
 }
 const actions = {
     loadCartData({
         commit
     }) {
         if (this.getters.isLogin) {
+            axios
+                .get(`${process.env.VUE_APP_API}/cartItem/findByUserId/${localStorage.getItem('userId')}`)
+                .then(response => {
+                    commit('setCart', response.data)
+                })
             if (localStorage.getItem('cart')) {
                 for (let i = 0; i < state.cart.length; i++) {
                     let cartItem = {
@@ -40,32 +52,26 @@ const actions = {
                 }
                 localStorage.removeItem('cart')
             }
-            axios
-                .get(`${process.env.VUE_APP_API}/cartItem/findByUserId/${localStorage.getItem('userId')}`)
-                .then(response => {
-                    commit('setCart', response.data)
-                })
         } else {
             if (localStorage.getItem('cart')) {
                 commit('setCart', JSON.parse(localStorage.getItem('cart')))
             }
         }
-
     },
-    addCartItem({
-        commit
-    }, cartItem) {
-        if (this.getters.isLogin) {
-            axios
-                .post(`${process.env.VUE_APP_API}/cartItem/add_item/${localStorage.getItem('userId')}/${cartItem.productId}`, cartItem)
-                .then(response => {
-                    commit('increaseCartItem', response.data)
-                })
-        } else {
-            commit('increaseCartItem', cartItem)
-        }
+    // addCartItem({
+    //     commit
+    // }, cartItem) {
+    //     if (this.getters.isLogin) {
+    //         axios
+    //             .post(`${process.env.VUE_APP_API}/cartItem/add_item/${localStorage.getItem('userId')}/${cartItem.productId}`, cartItem)
+    //             .then(response => {
+    //                 commit('increaseCartItem', response.data)
+    //             })
+    //     } else {
+    //         commit('increaseCartItem', cartItem)
+    //     }
 
-    },
+    // },
     removeCartItem({
         commit
     }, index) {
@@ -101,7 +107,6 @@ const actions = {
                     }
                     console.log(response)
                 })
-            console.log(state.cart);
         } else {
             commit('setCartItemQuantity', payload)
             localStorage.setItem('cart', JSON.stringify(state.cart))
@@ -113,19 +118,64 @@ const actions = {
     }) {
         commit('setCart', [])
         localStorage.removeItem('cart')
+    },
+    checkCartItem({
+        state
+    }, item) {
+        // console.log(item);
+        // let itemForCheck = item
+        // let checkProduct = state.cart.map(element => element.productCart.id).includes(itemForCheck.productCart)
+        // console.log(checkProduct)
+        // console.log(itemForCheck)
+        if (this.getters.isLogin) {
+            let checkProduct = state.cart.map(element => element.productCart.id).includes(item.productId)
+            let checkColor = state.cart.map(element => element.colors.id).includes(item.colorId)
+            return checkProduct && checkColor
+        } else {
+            let checkProduct = state.cart.map(element => element.productCart.id).includes(item.productCart.id)
+            let checkColor = state.cart.map(element => element.colors.id).includes(item.colors.id)
+            return checkProduct && checkColor
+        }
+
     }
 }
 
 const mutations = {
-    increaseCartItem(state, item) {
-        let checkProduct = state.cart.map(element => element.productCart.id).includes(item.productCart.id)
-        let checkColor = state.cart.map(element => element.colors.id).includes(item.colors.id)
-        if (checkProduct && checkColor) {
-            let index = state.cart.findIndex(element => element.productCart.id === item.productCart.id)
-            state.cart[index].quantity = state.cart[index].quantity + item.quantity > 10 ? 10 : state.cart[index].quantity + item.quantity
-        } else {
-            state.cart.push(item);
-        }
+    // increaseCartItem(state, item) {
+    addCartItem(cartItem) {
+        // if(state.cart.length > 0){
+        //     if (this.getters.isLogin) {
+        //         let checkProduct = state.cart.map(element => element.productCart.id).includes(cartItem.productId)
+        //         let checkColor = state.cart.map(element => element.colors.id).includes(cartItem.colorId)
+        //         return checkProduct && checkColor
+        //     } else {
+        //         let checkProduct = state.cart.map(element => element.productCart.id).includes(cartItem.productCart.id)
+        //         let checkColor = state.cart.map(element => element.colors.id).includes(cartItem.colors.id)
+        //         return checkProduct && checkColor
+        //     }
+
+        // }
+        // if (this.getters.isLogin) {
+        //     axios
+        //         .post(`${process.env.VUE_APP_API}/cartItem/add_item/${localStorage.getItem('userId')}/${cartItem.productId}`, cartItem)
+        //         .then(response => {
+        //             commit('increaseCartItem', response.data)
+        //         })
+        // } else {
+        //     commit('increaseCartItem', cartItem)
+        // }
+        console.log(cartItem);
+        // let checkProduct = state.cart.map(element => element.productCart.id).includes(item.productCart.id)
+        // let checkColor = state.cart.map(element => element.colors.id).includes(item.colors.id)
+        // if (checkProduct && checkColor) {
+        //     let index = state.cart.findIndex(element => element.productCart.id === item.productCart.id)
+        //     state.cart[index].quantity = state.cart[index].quantity + item.quantity > 10 ? 10 : state.cart[index].quantity + item.quantity
+        //     return false
+        // } else {
+        //     state.cart.push(item);
+        //     return true
+        // }
+        // console.log(this.dispatch('checkCartItem', item))
     },
     setCart(state, cart) {
         state.cart = cart;
