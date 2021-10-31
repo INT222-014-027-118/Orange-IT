@@ -67,11 +67,11 @@ export default {
     },
     methods: {
         remove() {
-            this.$store.dispatch("removeCartItem", this.index);
+            this.$store.commit("removeCartItem", this.index);
         },
         editQuantity() {
             let payload = { index: this.index, quantity: Number(this.quantity) };
-            this.$store.dispatch("editQuantity", payload);
+            this.$store.commit("editQuantity", payload);
         },
         productPrice(price) {
             return new Intl.NumberFormat("th-TH", {

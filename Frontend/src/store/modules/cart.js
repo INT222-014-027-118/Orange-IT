@@ -43,65 +43,28 @@ const actions = {
                 .then(response => {
                     commit('setCart', response.data)
                 })
-            if (localStorage.getItem('cart')) {
-                for (let i = 0; i < state.cart.length; i++) {
-                    let cartItem = {
-                        colorId: state.cart[i].colors.id,
-                        id: 1,
-                        productId: state.cart[i].productCart.id,
-                        quantity: state.cart[i].quantity,
-                        userId: Number(localStorage.getItem('userId'))
+                .then(() => {
+                    if (localStorage.getItem('cart')) {
+                        let cart  = JSON.parse(localStorage.getItem('cart'))
+                        for (let i = 0; i < cart.length; i++) {
+                            let cartItem = {
+                                colorId: cart[i].colors.id,
+                                id: 1,
+                                productId: cart[i].productCart.id,
+                                quantity: cart[i].quantity,
+                                userId: Number(localStorage.getItem('userId'))
+                            }
+                            commit('addCartItem', cartItem)
+                        }
+                        localStorage.removeItem('cart')
                     }
-                    commit('addCartItem', cartItem)
 
-                }
-                localStorage.removeItem('cart')
-            }
+                })
         } else {
             if (localStorage.getItem('cart')) {
                 commit('setCart', JSON.parse(localStorage.getItem('cart')))
             }
         }
-    },
-    removeCartItem({
-        commit
-    }, index) {
-        if (this.getters.isLogin) {
-            axios
-                .delete(`${process.env.VUE_APP_API}/cartItem/delete/${state.cart[index].id}`)
-                .then((response) => {
-                    console.log(response);
-                    commit('reduceCartItem', index)
-                })
-        } else {
-            commit('reduceCartItem', index)
-            localStorage.setItem('cart', JSON.stringify(state.cart))
-        }
-
-    },
-    editQuantity({
-        commit
-    }, payload) {
-        if (this.getters.isLogin) {
-            let cartItem = {
-                id: state.cart[payload.index].id,
-                quantity: Number(payload.quantity),
-                productId: state.cart[payload.index].productCart.id,
-                userId: state.cart[payload.index].userId,
-                colorId: state.cart[payload.index].colors.id
-            }
-            axios
-                .put(`${process.env.VUE_APP_API}/cartItem/update`, cartItem)
-                .then(response => {
-                    if (response.status === 200) {
-                        commit('setCartItemQuantity', payload)
-                    }
-                })
-        } else {
-            commit('setCartItemQuantity', payload)
-            localStorage.setItem('cart', JSON.stringify(state.cart))
-        }
-
     },
     clearCart({
         commit
@@ -115,28 +78,22 @@ const actions = {
 const mutations = {
     addCartItem(state, cartItem) {
         state.cartItem = cartItem;
-        // if (state.cart.length > 0 && this.getters.isSameCartItem) {
         if (this.getters.isSameCartItem) {
-            console.log('in');
             let index = 0
             if (this.getters.isLogin) {
                 index = state.cart.findIndex(element => element.productCart.id === cartItem.productId)
-                console.log('Login');
             } else {
                 index = state.cart.findIndex(element => element.productCart.id === cartItem.productCart.id)
-                console.log('NotLogin');
             }
-            console.log('Index:' + index);
             let quantity = state.cart[index].quantity + cartItem.quantity > 10 ? 10 : state.cart[index].quantity + cartItem.quantity
             state.cart[index].quantity = quantity
             let payload = {
                 index: index,
                 quantity: quantity
             };
-            this.dispatch('editQuantity', payload)
+            this.commit('editQuantity', payload)
 
         } else {
-            console.log('out');
             if (this.getters.isLogin) {
                 axios
                     .post(`${process.env.VUE_APP_API}/cartItem/add_item/${localStorage.getItem('userId')}/${cartItem.productId}`, cartItem)
@@ -153,12 +110,40 @@ const mutations = {
     setCart(state, cart) {
         state.cart = cart;
     },
-    reduceCartItem(state, index) {
-        state.cart.splice(index, 1)
+    removeCartItem(state, index) {
+        if (this.getters.isLogin) {
+            axios
+                .delete(`${process.env.VUE_APP_API}/cartItem/delete/${state.cart[index].id}`)
+                .then(() => {
+                    state.cart.splice(index, 1)
+                })
+        } else {
+            state.cart.splice(index, 1)
+            localStorage.setItem('cart', JSON.stringify(state.cart))
+        }
     },
-    setCartItemQuantity(state, payload) {
-        state.cart[payload.index].quantity = payload.quantity
-    }
+    editQuantity(state, payload) {
+        if (this.getters.isLogin) {
+            let cartItem = {
+                id: state.cart[payload.index].id,
+                quantity: Number(payload.quantity),
+                productId: state.cart[payload.index].productCart.id,
+                userId: state.cart[payload.index].userId,
+                colorId: state.cart[payload.index].colors.id
+            }
+            axios
+                .put(`${process.env.VUE_APP_API}/cartItem/update`, cartItem)
+                .then(response => {
+                    if (response.status === 200) {
+                        state.cart[payload.index].quantity = payload.quantity
+                    }
+                })
+        } else {
+            state.cart[payload.index].quantity = payload.quantity
+            localStorage.setItem('cart', JSON.stringify(state.cart))
+        }
+
+    },
 }
 
 export default {
