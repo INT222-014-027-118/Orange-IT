@@ -60,6 +60,11 @@ public class Products {
     @JoinColumn(name = "product_id",insertable = true, updatable = true)
     private List<ProductsHasAttributes> productsHasAttributes;
 
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "Rating_of_product", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "ratings_id"))
+    private List<Ratings> ratings = new ArrayList<>();
+
+
 
 //    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 //    @JoinTable(name = "rating_of_product", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "Ratings_id"))

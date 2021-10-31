@@ -13,9 +13,9 @@
                                 <p class="px-2 text-primary">
                                     {{ product.brandName }}
                                 </p>
-                                <p class="px-2 py-2 border-b border-black text-xl font-semibold dark:border-gray-100">{{ productName }}</p>
+                                <p class="px-2 py-2 border-b border-black text-xl font-semibold dark:border-gray-100">{{ product.productName }}</p>
                             </div>
-                            <p class="text-2xl text-red-500 font-bold">฿ {{ product.price }}</p>
+                            <p class="text-2xl text-red-500 font-bold">{{ productPrice }}</p>
                             <p class="text-sm font-light">Product ID: {{ product.id }}</p>
                             <div class="inline-flex" v-if="false">
                                 <div class="bg-primary text-white px-4 py-1 text-xs rounded-sm">Discount 99%</div>
@@ -30,7 +30,7 @@
                                             :id="color.id"
                                             type="radio"
                                             name="color"
-                                            class="w-8 h-8 my-2 mx-2 border rounded-full form-input ring-transparent ring-2 ring-offset-1 ring-offset-transparent focus:border-gray-500 focus:ring-2 focus:ring-offset-1 active:ring-secondary checked:ring-primary"
+                                            class="w-8 h-8 my-2 mx-2 border rounded-full form-input ring-transparent ring-2 ring-offset-1 ring-offset-white dark:ring-offset-dark_tertiary focus:border-gray-500 focus:ring-2 focus:ring-offset-1 active:ring-secondary checked:ring-primary"
                                             :style="{
                                                 backgroundColor: `#${color.hexCode}`,
                                             }"
@@ -135,9 +135,9 @@ export default {
         };
     },
     methods: {
-        selectColor(index) {
-            console.log(index);
-        },
+        // selectColor(index) {
+        //     console.log(index);
+        // },
         scrollToTop() {
             window.scrollTo(0, 0);
         },
@@ -166,12 +166,12 @@ export default {
                             if (this.$store.getters.isLogin) {
                                 let cartItem = {
                                     id: 1,
-                                    quantity: "1",
-                                    productId: this.productId,
+                                    quantity: 1,
+                                    productId: Number(this.productId),
                                     userId: localStorage.getItem("userId"),
                                     colorId: this.colorPick.id,
                                 };
-                                this.$store.dispatch("addCartItem", cartItem);
+                                this.$store.commit("addCartItem", cartItem);
                             } else {
                                 let cartItem = {
                                     quantity: 1,
@@ -186,7 +186,7 @@ export default {
                                     colors: this.colorPick,
                                     userId: null,
                                 };
-                                this.$store.dispatch("addCartItem", cartItem);
+                                this.$store.commit("addCartItem", cartItem);
                                 localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
                             }
                         }, 500);
@@ -209,6 +209,14 @@ export default {
                 return stock;
             }
         },
+        productPrice() {
+            return new Intl.NumberFormat("th-TH", {
+                style: "currency",
+                currency: "THB",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+            }).format(this.product.price);
+        },
     },
     mounted() {
         this.scrollToTop();
@@ -230,6 +238,7 @@ export default {
         this.images = await this.product.images.map((img) => {
             return `${process.env.VUE_APP_API}/image/get/${img.source}`;
         });
+        this.colorPick = this.product.colors[0];
     },
 };
 </script>

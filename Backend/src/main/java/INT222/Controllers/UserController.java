@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,11 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+//    @PostConstruct
+//    public void initRoleAndUser() {
+//
+//        userService.initRoleAndUser();
+//    }
 
     @PostMapping({"/registerNewUser"})
     public Users registerNewUser(@RequestBody Users user) {
@@ -28,6 +34,15 @@ public class UserController {
         }else
         user.setId(userRepository.findTopByOrderByIdDesc().getId()+1);
         return userService.registerNewUser(user);
+    }
+
+    @PostMapping({"/registerNewAdmin"})
+    public Users registerNewAdmin(@RequestBody Users user) {
+        if(userRepository.findTopByOrderByIdDesc() ==  null){
+            user.setId(1);
+        }else
+            user.setId(userRepository.findTopByOrderByIdDesc().getId()+1);
+        return userService.registerNewAdmin(user);
     }
 
     @GetMapping({"/forAdmin"})
