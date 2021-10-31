@@ -1,14 +1,14 @@
 import Vuex from 'vuex';
 import products from './modules/products';
 import form from './modules/form';
-import authentication from './modules/authentication.js';
+import user from './modules/user.js';
 import cart from './modules/cart.js'
 
 export default new Vuex.Store({
   modules: {
     products,
     form,
-    authentication,
+    user,
     cart
   },
   state: {

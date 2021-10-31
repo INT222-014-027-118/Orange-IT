@@ -13,14 +13,14 @@
                     {{ showForm ? "cancel" : "+ add" }}
                 </button>
             </div>
-            <div v-show="!showForm" v-for="(address, index) in addresses" :key="address" class="border p-3 mt-4 relative">
+            <div v-show="!showForm" v-for="(address, index) in  this.$store.getters.addresses" :key="address" class="border p-3 mt-4 relative">
                 <div class="absolute top-0 right-5 cursor-pointer text-red-500 p-2 font-semibold" @click="removeAddress(index)">remove</div>
-                <p class="capitalize">name : {{ address.firstname }} {{ address.lastanme }}</p>
+                <p class="capitalize">name : {{ address.firstname }} {{ address.lastname }}</p>
                 <p class="capitalize">phone : {{ address.phone }}</p>
                 <p class="capitalize">
-                    address : {{ address.address == "" ? "" : ` ${address.address}, ` }}{{ address.sub_district == "" ? "" : `${address.sub_district}, ` }}
+                    address : {{ address.address == "" ? "" : ` ${address.address}, ` }}{{ address.subDistrict == "" ? "" : `${address.subDistrict}, ` }}
                     {{ address.district == "" ? "" : `${address.district}, ` }}{{ address.province == "" ? "" : `${address.province}, ` }}
-                    {{ address.postal_code == "" ? "" : `${address.postal_code}` }}
+                    {{ address.postCode == "" ? "" : `${address.postCode}` }}
                 </p>
             </div>
         </div>
@@ -41,7 +41,7 @@
                     <div class="sm:flex items-center mb-2">
                         <label for="lname" class="font-semibold block sm:w-2/6 sm:text-right pr-2">last name :</label>
                         <input
-                            v-model="formAddress.lastanme"
+                            v-model="formAddress.lastname"
                             type="text"
                             id="lname"
                             maxlength="50"
@@ -87,7 +87,7 @@
                     <div class="sm:flex items-center mb-2">
                         <label for="suburb" class="font-semibold block sm:w-2/6 sm:text-right pr-2">Sub-district :</label>
                         <input
-                            v-model="formAddress.sub_district"
+                            v-model="formAddress.subDistrict"
                             type="text"
                             id="suburb"
                             maxlength="50"
@@ -98,7 +98,7 @@
                     <div class="sm:flex items-center mb-2">
                         <label for="postal" class="font-semibold block sm:w-2/6 sm:text-right pr-2">postal :</label>
                         <input
-                            v-model="formAddress.postal_code"
+                            v-model="formAddress.postCode"
                             type="text"
                             id="postal"
                             minlength="5"
@@ -136,39 +136,43 @@ export default {
         return {
             showForm: false,
             formAddress: {
+                id:1,
                 firstname: "",
-                lastanme: "",
+                lastname: "",
                 phone: "",
                 province: "",
                 district: "",
-                sub_district: "",
-                postal_code: "",
+                subDistrict: "",
+                postCode: "",
                 address: "",
+                userId: localStorage.getItem('userId')
             },
-            addresses: [],
         };
     },
     methods: {
         addAddress() {
             let newAddress = {};
             Object.assign(newAddress, this.formAddress);
-            this.addresses.push(newAddress);
+            this.$store.commit("addAddress",newAddress);
             this.showForm = false;
             this.resetForm();
         },
         removeAddress(index) {
-            this.addresses.splice(index, 1);
+            this.$store.commit("removeAddress",index);
         },
         resetForm() {
             this.formAddress.firstname = "";
-            this.formAddress.lastanme = "";
+            this.formAddress.lastname = "";
             this.formAddress.phone = "";
             this.formAddress.province = "";
             this.formAddress.district = "";
-            this.formAddress.sub_district = "";
-            this.formAddress.postal_code = "";
+            this.formAddress.subDistrict = "";
+            this.formAddress.postCode = "";
             this.formAddress.address = "";
         },
+    },
+    created() {
+        this.$store.dispatch("loadUserAddresses");
     },
 };
 </script>
