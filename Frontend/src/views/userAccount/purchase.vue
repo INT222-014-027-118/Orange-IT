@@ -13,7 +13,9 @@
                 {{ tab.title }}
             </button>
         </div>
-        <div></div>
+        <div>
+            {{selectTab}}
+        </div>
     </div>
 </template>
 
