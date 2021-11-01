@@ -33,6 +33,7 @@ export default {
     created() {
         if (this.$store.getters.isLogin) {
             this.$store.dispatch("loadUserData");
+            this.$store.dispatch('loadUserAddresses')
         }
         this.$store.dispatch("loadCartData");
         // if (localStorage.getItem("cart")) {

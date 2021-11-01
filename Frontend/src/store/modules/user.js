@@ -9,7 +9,8 @@ const state = {
 
 const getters = {
     userInfo: state => state.userInfo,
-    addresses: state => state.addresses
+    addresses: state => state.addresses,
+    defaultAddress: state => state.addresses[0]
 }
 
 const actions = {
@@ -32,7 +33,6 @@ const actions = {
             .then(response => {
                 commit('setAddresses', response.data)
             })
-
     },
 
     logout({
@@ -49,9 +49,6 @@ const actions = {
 
         return false
     },
-
-
-
 }
 
 
@@ -73,7 +70,13 @@ const mutations = {
             })
     },
     removeAddress(state, index) {
-            state.addresses.splice(index, 1)
+        axios
+            .delete(`${process.env.VUE_APP_API}/delivery/${state.addresses[index].id}`)
+            .then(response => {
+                if (response.status === 200) {
+                    state.addresses.splice(index, 1)
+                }
+            })
     },
 
 }

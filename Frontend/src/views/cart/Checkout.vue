@@ -18,13 +18,13 @@
                     </button>
                     <div class="md:flex p-2" v-show="!changeAddress">
                         <div class="md:w-2/6 font-bold">
-                            <p class="pt-1 md:pt-0">{{ selectedAddress.firstname }} {{ selectedAddress.lastanme }} ( {{ selectedAddress.phone }})</p>
+                            <p class="pt-1 md:pt-0">{{ selectedAddress.firstname }} {{ selectedAddress.lastname }} ( {{ selectedAddress.phone }})</p>
                         </div>
                         <div class="md:w-3/6">
                             <p class="pt-1 md:pt-0">
-                                {{ selectedAddress.address == "" ? "" : ` ${selectedAddress.address}, ` }}{{ selectedAddress.sub_district == "" ? "" : `${selectedAddress.sub_district}, ` }}
+                                {{ selectedAddress.address == "" ? "" : ` ${selectedAddress.address}, ` }}{{ selectedAddress.subDistrict == "" ? "" : `${selectedAddress.subDistrict}, ` }}
                                 {{ selectedAddress.district == "" ? "" : `${selectedAddress.district}, ` }}{{ selectedAddress.province == "" ? "" : `${selectedAddress.province}, ` }}
-                                {{ selectedAddress.postal_code == "" ? "" : `${selectedAddress.postal_code}` }}
+                                {{ selectedAddress.postCode == "" ? "" : `${selectedAddress.postCode}` }}
                             </p>
                         </div>
 
@@ -42,20 +42,20 @@
                     <div v-show="changeAddress" class="space-y-2 py-2 md:p-2 border rounded-md ">
                         <div
                             class="md:flex items-center ring-2 p-2 relative cursor-pointer pl-5 rounded-sm"
-                            v-for="address in addresses"
-                            :key="address"
+                            v-for="address in this.$store.getters.addresses"
+                            :key="address.id"
                             @click="selectedAddress = address"
                             :class="[selectedAddress.id == address.id ? 'ring-primary' : 'ring-transparent']"
                         >
-                            <div class="md:w-2/6 font-bold">{{ address.firstname }} {{ address.lastanme }} ( {{ address.phone }})</div>
+                            <div class="md:w-2/6 font-bold">{{ address.firstname }} {{ address.lastname }} ( {{ address.phone }})</div>
                             <div class="absolute left-0 top-0 h-full text-white bg-primary flex items-center">
                                 <span class="material-icons py-2 text-base font-bold  " :class="[selectedAddress.id === address.id ? '' : 'hidden']"> check </span>
                             </div>
                             <div class="md:w-4/6">
                                 <p>
-                                    {{ address.address == "" ? "" : ` ${address.address}, ` }}{{ address.sub_district == "" ? "" : `${address.sub_district}, ` }}
+                                    {{ address.address == "" ? "" : ` ${address.address}, ` }}{{ address.subDistrict == "" ? "" : `${address.subDistrict}, ` }}
                                     {{ address.district == "" ? "" : `${address.district}, ` }}{{ address.province == "" ? "" : `${address.province}, ` }}
-                                    {{ address.postal_code == "" ? "" : `${address.postal_code}` }}
+                                    {{ address.postCode == "" ? "" : `${address.postCode}` }}
                                 </p>
                             </div>
                         </div>
@@ -77,19 +77,19 @@
                         </div>
                     </div>
                     <hr class="my-3 dark:border-gray-500" />
-                    <div class="px-0 sm:px-2 space-y-2">
+                    <div class="px-0 sm:px-2 space-y-2" v-for="product in this.$store.getters.cart" :key="product.id">
                         <div class="md:flex overflow-hidden">
                             <div class="md:w-2/4 font-bold flex flex-shrink-0 items-center">
                                 <div class="border border-gray-200 rounded-md w-14 h-14 sm:w-14 sm:h-14 flex flex-shrink-0 overflow-hidden">
-                                    <img src="http://20.205.201.136/orange-it/image/get/BlackSharkV2Pro1.png" class="object-cover object-center w-full h-full" alt="Product image" />
+                                    <img :src="`${this.api}/image/get/${product.productCart.images[0].source}`" class="object-cover object-center w-full h-full" alt="Product image" />
                                 </div>
-                                <span class="ml-2">{addresssssssssssss ssssssssssssss ssssssssdsf sdf sdssssssss ssssssssssssssssssssss}</span>
+                                <span class="ml-2">{{ product.productCart.productName }}</span>
                             </div>
                             <div class="w-full md:w-2/4 overflow-hidden flex flex-wrap md:flex-nowrap justify-between md:justify-center items-center py-3">
-                                <p class="w-full md:w-full md:text-center"><span class="md:hidden">color :</span> {color}</p>
-                                <p class="md:w-full text-center">฿99</p>
-                                <p class="md:w-full text-right md:text-center">x 9</p>
-                                <p class="w-full md:w-full text-right md:text-center">฿9999</p>
+                                <p class="w-full md:w-full md:text-center"><span class="md:hidden">color :</span> {{ product.colors.label }}</p>
+                                <p class="md:w-full text-center">฿{{ product.productCart.price }}</p>
+                                <p class="md:w-full text-right md:text-center">x {{ product.quantity }}</p>
+                                <p class="w-full md:w-full text-right md:text-center">฿{{ product.productCart.price * product.quantity }}</p>
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                         <div class="flex justify-end">
                             <div class="flex justify-between items-end md:w-1/3 text-base w-full p-1">
                                 <p>all payments:</p>
-                                <p class="text-3xl font-semibold">฿ 9999999</p>
+                                <p class="text-3xl font-semibold">฿ {{ this.$store.getters.orderTotalPrice }}</p>
                             </div>
                         </div>
                         <div class="flex justify-end">
@@ -158,44 +158,10 @@ export default {
     data() {
         return {
             changeAddress: false,
-            addresses: [
-                {
-                    id: 1,
-                    firstname: "Apisit",
-                    lastanme: "Kaewnongsaeng",
-                    phone: "087XX",
-                    province: "สมุทรปราการ",
-                    district: "บางบ่อ",
-                    sub_district: "บางบ่อ",
-                    postal_code: "10560",
-                    address: "66/61 วโรชา หมู่ 2",
-                },
-                {
-                    id: 2,
-                    firstname: "Jakkapong",
-                    lastanme: "Praditthanachot",
-                    phone: "087XXXXXX",
-                    province: "บางนา",
-                    district: "บางบ่อ",
-                    sub_district: "บางนา",
-                    postal_code: "10560",
-                    address: "66/61 วโรชา หมู่ 2",
-                },
-                { id: 3, firstname: "Traitawat", lastanme: "Look", phone: "087XXXXXX", province: "บางนา", district: "บางบ่อ", sub_district: "บางนา", postal_code: "10560", address: "66/61 วโรชา หมู่ 2" },
-            ],
-            selectedAddress: {
-                id: 1,
-                firstname: "Apisit",
-                lastanme: "Kaewnongsaeng",
-                phone: "087XX",
-                province: "สมุทรปราการ",
-                district: "บางบ่อ",
-                sub_district: "บางบ่อ",
-                postal_code: "10560",
-                address: "66/61 วโรชา หมู่ 2",
-            },
+            selectedAddress: {},
             paymentMethod: ["เก็บเงินปลาย", "โอน/ชำระผ่านบัญชีธนาคาร", "ทางบัตรเครดิต/บัตรเดบิต"],
             selectPaymentMethod: "เก็บเงินปลาย",
+            api: process.env.VUE_APP_API,
         };
     },
     methods: {
@@ -205,6 +171,9 @@ export default {
     },
     mounted() {
         this.scrollToTop();
+    },
+    async created() {
+        this.selectedAddress = await this.$store.getters.defaultAddress;
     },
 };
 </script>
