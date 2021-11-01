@@ -45,7 +45,7 @@ const actions = {
                 })
                 .then(() => {
                     if (localStorage.getItem('cart')) {
-                        let cart  = JSON.parse(localStorage.getItem('cart'))
+                        let cart = JSON.parse(localStorage.getItem('cart'))
                         for (let i = 0; i < cart.length; i++) {
                             let cartItem = {
                                 colorId: cart[i].colors.id,
