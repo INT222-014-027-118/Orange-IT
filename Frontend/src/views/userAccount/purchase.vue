@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="flex justify-end border-b-2 pb-3 text-white dark:border-gray-500">
-                    <button class="bg-secondary px-3 py-2 mx-3 capitalize rounded-md">review</button>
+                    <button class="bg-secondary px-3 py-2 mx-3 capitalize rounded-md" @click="$router.push('/review')">review</button>
                     <button class="bg-primary px-3 py-2 mx-3 capitalize rounded-md">buy again</button>
                 </div>
             </div>
