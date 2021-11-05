@@ -87,9 +87,9 @@
                             </div>
                             <div class="w-full md:w-2/4 overflow-hidden flex flex-wrap md:flex-nowrap justify-between md:justify-center items-center py-3">
                                 <p class="w-full md:w-full md:text-center"><span class="md:hidden">color :</span> {{ product.colors.label }}</p>
-                                <p class="md:w-full text-center">฿{{ product.productCart.price }}</p>
+                                <p class="md:w-full text-center">{{ passingPrice(product.productCart.price) }}</p>
                                 <p class="md:w-full text-right md:text-center">x {{ product.quantity }}</p>
-                                <p class="w-full md:w-full text-right md:text-center">฿{{ product.productCart.price * product.quantity }}</p>
+                                <p class="w-full md:w-full text-right md:text-center">{{ passingPrice(product.productCart.price * product.quantity) }}</p>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                             </div>
                         </div>
                         <div class="md:w-1/4 flex justify-end">
-                            <p class="w-full text-center">฿ 0</p>
+                            <p class="w-full text-center">฿0</p>
                         </div>
                     </div>
                 </div>
@@ -140,7 +140,7 @@
                         <div class="flex justify-end">
                             <div class="flex justify-between items-end md:w-1/3 text-base w-full p-1">
                                 <p>all payments:</p>
-                                <p class="text-3xl font-semibold">฿ {{ this.$store.getters.orderTotalPrice }}</p>
+                                <p class="text-3xl font-semibold">{{ passingPrice(this.$store.getters.orderTotalPrice) }}</p>
                             </div>
                         </div>
                         <div class="flex justify-end">
@@ -167,6 +167,14 @@ export default {
     methods: {
         scrollToTop() {
             window.scrollTo(0, 0);
+        },
+        passingPrice(price) {
+            return new Intl.NumberFormat("th-TH", {
+                style: "currency",
+                currency: "THB",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+            }).format(price);
         },
     },
     mounted() {

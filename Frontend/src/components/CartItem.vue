@@ -42,7 +42,7 @@
             <div class="flex flex-col justify-between w-4/12 text-right">
                 <div class="flex flex-col">
                     <span class="text-base md:text-2xl text-primary font-semibold">{{ productPrice (product.productCart.price * quantity )}}</span>
-                    <span class="text-xs md:text-base text-gray-600 dark:text-gray-300 tracking-tighter" v-if="quantity >= 2">unit : {{ productPrice (product.productCart.price) }}</span>
+                    <span class="text-xs md:text-base text-gray-600 dark:text-gray-300 tracking-tighter line-through" v-if="quantity >= 2">{{ productPrice (product.productCart.price) }}</span>
                 </div>
                 <div class="inline-flex justify-end">
                     <button class="p-1 font-semibold sm:px-2 text-xs sm:text-base rounded-md hover:bg-gray-200 dark:hover:bg-dark_secondary" @click="remove">remove</button>
