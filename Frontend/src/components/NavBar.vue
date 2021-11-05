@@ -117,7 +117,7 @@
                                 <div
                                     @click="
                                         menuUser = false;
-                                        $store.getters.userInfo === null ? $router.push('/login') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
+                                        $store.getters.userInfo === null ? $router.push('/login') : $router.push({ name: 'manageProfile', params: { manage: 'account' } });
                                     "
                                     class="hover:text-primary flex font-semibold capitalize items-center"
                                 >
@@ -127,7 +127,7 @@
                                 <div
                                     @click="
                                         menuUser = false;
-                                        $store.getters.userInfo === null ? $router.push('/register') : $router.push({ name: 'manageProfile', params: { manage: 'account' } });
+                                        $store.getters.userInfo === null ? $router.push('/register') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase'} });
                                     "
                                     class="hover:text-primary flex font-semibold capitalize items-center"
                                 >

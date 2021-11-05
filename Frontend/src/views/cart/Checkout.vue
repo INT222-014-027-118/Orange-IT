@@ -78,7 +78,7 @@
                     </div>
                     <hr class="my-3 dark:border-gray-500" />
                     <div class="px-0 sm:px-2 space-y-2" v-for="product in this.$store.getters.cart" :key="product.id">
-                        <div class="md:flex overflow-hidden">
+                        <div class="md:flex overflow-hidden mb-3">
                             <div class="md:w-2/4 font-bold flex flex-shrink-0 items-center">
                                 <div class="border border-gray-200 rounded-md w-14 h-14 sm:w-14 sm:h-14 flex flex-shrink-0 overflow-hidden">
                                     <img :src="`${this.api}/image/get/${product.productCart.images[0].source}`" class="object-cover object-center w-full h-full" alt="Product image" />
