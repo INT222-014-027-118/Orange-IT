@@ -15,19 +15,18 @@ import javax.persistence.*;
 public class RatingOfProduct {
 
     @Id
-    private long Reviews_id ;
+    private long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "ratings_id")
-//    private Ratings ratings;
 
     @Column
     private String score;
-//    @ManyToOne
-//    @JoinColumn(insertable = false,updatable = false,name = "reviews_id")
-//    private Reviews reviews;
+
+    @JoinColumn(nullable = true)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    private Ratings ratings;
 
     @Column
-    private long  product_id ;
+    private long product_id;
+
 
 }
