@@ -71,7 +71,7 @@ const routes = [{
   {
     path: '/review',
     name: 'Review',
-    component: () => import( /* webpackChunkName: "Review" */ '../views/userAccount/Review.vue')
+    component: () => import( /* webpackChunkName: "Review" */ '../views/userAccount/WriteReview.vue')
   },
   {
     path: '/register',

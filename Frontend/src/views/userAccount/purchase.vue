@@ -36,8 +36,8 @@
                     </div>
                 </div>
                 <div class="flex justify-end border-b-2 pb-3 text-white dark:border-gray-500">
-                    <button class="bg-secondary px-3 py-2 mx-3 capitalize rounded-md whitespace-nowrap" @click="$router.push('/review')">review</button>
-                    <button class="bg-primary px-3 py-2 mx-3 capitalize rounded-md whitespace-nowrap">buy again</button>
+                    <button class="bg-secondary px-3 py-2 mx-2 capitalize rounded-md whitespace-nowrap" @click="$router.push('/review')">review</button>
+                    <button class="bg-primary px-6 py-2 ml-2 capitalize rounded-md whitespace-nowrap">buy again</button>
                 </div>
             </div>
         </div>

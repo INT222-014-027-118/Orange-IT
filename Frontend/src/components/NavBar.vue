@@ -127,7 +127,7 @@
                                 <div
                                     @click="
                                         menuUser = false;
-                                        $store.getters.userInfo === null ? $router.push('/register') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase'} });
+                                        $store.getters.userInfo === null ? $router.push('/register') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
                                     "
                                     class="hover:text-primary flex font-semibold capitalize items-center"
                                 >
@@ -155,7 +155,7 @@
                                             logout();
                                             menuUser = false;
                                         "
-                                        class="hover:text-red-500 flex capitalize font-bold"
+                                        class="hover:text-red-500 flex capitalize font-bold w-full"
                                     >
                                         <span class="material-icons-outlined text-center w-14 md:w-16 ">logout</span>
                                         <span class="ml-1">Logout</span>
@@ -284,7 +284,8 @@ export default {
             }
         },
         logout() {
-            if (this.$store.dispatch("logout")) {
+            if (window.confirm("Are you sure?")) {
+                this.$store.dispatch("logout");
                 this.$router.push("/");
             }
         },
