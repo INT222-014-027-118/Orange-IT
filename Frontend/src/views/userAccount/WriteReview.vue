@@ -17,7 +17,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-0 py-4 sm:px-2 flex">
+                    <div class="px-0 py-2 sm:px-2 flex select-none max-w-lg mx-auto">
+                        <div class="px-1 font-semibold tracking-wide">star:</div>
                         <div
                             class="cursor-pointer h-7 w-7 sm:h-9 sm:w-9"
                             v-for="star in [0, 1, 2, 3, 4]"
@@ -33,19 +34,51 @@
                             </span>
                         </div>
                     </div>
-                    <div class="px-0 sm:px-2">
+
+                    <div class="px-0 py-2 sm:px-2 max-w-lg mx-auto mt-3 mb-6">
+                        <div class="px-1 font-semibold tracking-wide">rating:</div>
+                        <div class="px-3 pb-5 pt-2 sm:px-4 select-none space-y-3">
+                            <div class="">
+                                <div class="flex flex-row justify-between ">
+                                    <label for="volume text-primary tracking-tighter px-1">Volume</label>
+                                    <div class="pl-3">
+                                        <span class="text-sm">{{ rating.sore }}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center mt-1">
+                                    <input v-model="rating.sore" class="focus:outline-none styled-slider slider-progress " type="range" id="volume" name="volume" min="0" max="10" />
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="flex flex-row justify-between ">
+                                    <label for="volume text-primary tracking-tighter px-1">Volume</label>
+                                    <div class="pl-3">
+                                        <span class="text-sm">{{ rating.sore1 }}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center mt-1">
+                                    <input v-model="rating.sore1" class="focus:outline-none styled-slider slider-progress " type="range" id="volume" name="volume" min="0" max="10" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-0 sm:px-2 relative max-w-lg mx-auto">
                         <textarea
-                            class="p-3 rounded-md ring-1 w-full ring-gray-300 min-h-0 focus:ring focus:ring-primary focus:outline-none dark:bg-dark_primary"
+                            class="px-3 py-5 rounded-md h-52 ring-1 w-full ring-gray-300 min-h-0 focus:ring focus:ring-primary focus:outline-none bg-neutral dark:bg-dark_primary"
                             name=""
                             id=""
                             cols="30"
                             rows="10"
+                            maxlength="100"
                             placeholder="write your review"
                             v-model="reviews.comment"
                         ></textarea>
+                        <div class="absolute top-0 right-7">
+                            <span class="text-xs"> {{ reviews.comment.length }}/100</span>
+                        </div>
                     </div>
                     <div class="flex justify-end text-white dark:border-gray-500 my-5">
-                        <button type="button" class="bg-secondary px-3 py-2 mx-2 capitalize rounded-md whitespace-nowrap" @click="$router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' }})">
+                        <button type="button" class="bg-secondary px-3 py-2 mx-2 capitalize rounded-md whitespace-nowrap" @click="$router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } })">
                             cancel
                         </button>
                         <button
@@ -77,6 +110,12 @@ export default {
                 review_date: "",
                 users_id: 0,
             },
+            rating: {
+                sore: 0,
+                sore1: 0,
+                sore2: 0,
+                sore3: 0,
+            },
             hoverStarCcore: 0,
         };
     },
@@ -102,13 +141,149 @@ export default {
             const time = new Date();
             this.reviews.review_date = time.toLocaleString("th-TH");
             console.log(this.reviews);
+            let a = [];
+            a.length;
         },
     },
-    mounted() {},
+    mounted() {
+        for (let e of document.querySelectorAll('input[type="range"].slider-progress')) {
+            e.style.setProperty("--value", e.value);
+            e.style.setProperty("--min", e.min == "" ? "0" : e.min);
+            e.style.setProperty("--max", e.max == "" ? "100" : e.max);
+            e.addEventListener("input", () => e.style.setProperty("--value", e.value));
+        }
+    },
     created() {
         this.reviews.users_id = this.$store.getters.userInfo.id;
     },
 };
 </script>
 
-<style></style>
+<style>
+/*generated with Input range slider CSS style generator (version 20210711)
+https://toughengineer.github.io/demo/slider-styler*/
+input[type="range"].styled-slider {
+    -webkit-appearance: none;
+    width: 100%;
+}
+
+/*progress support*/
+input[type="range"].styled-slider.slider-progress {
+    --range: calc(var(--max) - var(--min));
+    --ratio: calc((var(--value) - var(--min)) / var(--range));
+    --sx: calc(0.5 * 15px + var(--ratio) * (100% - 15px));
+}
+
+input[type="range"].styled-slider:focus {
+    outline: none;
+}
+
+/*webkit*/
+input[type="range"].styled-slider::-webkit-slider-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 1em;
+    background: #f35b04;
+    border: none;
+    box-shadow: 0 0 2px black;
+    margin-top: calc(8px * 0.5 - 15px * 0.5);
+    -webkit-appearance: none;
+}
+
+input[type="range"].styled-slider::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 0.6em;
+    background: #efefef;
+    border: none;
+    box-shadow: none;
+}
+input[type="range"].styled-slider::-webkit-slider-thumb:hover {
+    background: #f35b04;
+}
+
+input[type="range"].styled-slider::-webkit-slider-thumb:active {
+    background: #f35b04;
+}
+
+input[type="range"].styled-slider.slider-progress::-webkit-slider-runnable-track {
+    background: linear-gradient(#f88100, #f88100) 0 / var(--sx) 100% no-repeat, #efefef;
+}
+
+/*mozilla*/
+input[type="range"].styled-slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 1em;
+    background: #f35b04;
+    border: none;
+    box-shadow: 0 0 2px black;
+}
+
+input[type="range"].styled-slider::-moz-range-track {
+    height: 8px;
+    border-radius: 0.6em;
+    background: #efefef;
+    border: none;
+    box-shadow: none;
+}
+
+input[type="range"].styled-slider::-moz-range-thumb:hover {
+    background: #f35b04;
+}
+
+input[type="range"].styled-slider::-moz-range-thumb:active {
+    background: #f35b04;
+}
+
+input[type="range"].styled-slider.slider-progress::-moz-range-track {
+    background: linear-gradient(#f88100, #f88100) 0 / var(--sx) 100% no-repeat, #efefef;
+}
+
+/*ms*/
+input[type="range"].styled-slider::-ms-fill-upper {
+    background: transparent;
+    border-color: transparent;
+}
+
+input[type="range"].styled-slider::-ms-fill-lower {
+    background: transparent;
+    border-color: transparent;
+}
+
+input[type="range"].styled-slider::-ms-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 1em;
+    background: #f35b04;
+    border: none;
+    box-shadow: 0 0 2px black;
+    margin-top: 0;
+    box-sizing: border-box;
+}
+
+input[type="range"].styled-slider::-ms-track {
+    height: 8px;
+    border-radius: 0.6em;
+    background: #efefef;
+    border: none;
+    box-shadow: none;
+    box-sizing: border-box;
+}
+
+input[type="range"].styled-slider::-ms-thumb:hover {
+    background: #f35b04;
+}
+
+input[type="range"].styled-slider::-ms-thumb:active {
+    background: #f35b04;
+}
+
+input[type="range"].styled-slider.slider-progress::-ms-fill-lower {
+    height: 8px;
+    border-radius: 0.6em 0 0 0.6em;
+    margin: -undefined 0 -undefined -undefined;
+    background: #f88100;
+    border: none;
+    border-right-width: 0;
+}
+</style>

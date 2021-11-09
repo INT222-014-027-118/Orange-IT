@@ -15,17 +15,16 @@
             <div class="flex flex-col w-8/12 sm:flex sm:justify-between sm:flex-row">
                 <div class="flex flex-col justify-between w-11/12">
                     <div>
-                        <p class="text-xs sm:text-base">{{ product.productCart.productName }}</p>
+                        <p class="text-sm sm:text-base tracking-tight">{{ product.productCart.productName }}</p>
                         <p class="text-xs sm:text-base text-gray-600 dark:text-gray-300">color: {{ product.colors.label }}</p>
                     </div>
                     <div>
                         <div class="flex items-center py-3 sm:pt-3 sm:pb-0 text-sm font-medium text-green-600"><span class="material-icons"> check_circle_outline </span> In stork</div>
                     </div>
                 </div>
-
-                <div class="">
+                <div>
                     <form @submit.prevent class="w-1/2 sm:w-full">
-                        <div class="flex items-center justify-center bg-gray-200  dark:bg-gray-600 dark:bg-opacity-70 rounded-md">
+                        <div class="flex items-center justify-center rounded-md">
                             <select
                                 name="quantity"
                                 id="quantity"
@@ -41,11 +40,11 @@
             </div>
             <div class="flex flex-col justify-between w-4/12 text-right">
                 <div class="flex flex-col">
-                    <span class="text-base md:text-2xl text-primary font-semibold">{{ productPrice (product.productCart.price * quantity )}}</span>
-                    <span class="text-xs md:text-base text-gray-600 dark:text-gray-300 tracking-tighter line-through" v-if="quantity >= 2">{{ productPrice (product.productCart.price) }}</span>
+                    <span class="text-base md:text-2xl text-primary font-semibold">{{ productPrice(product.productCart.price * product.quantity) }}</span>
+                    <span class="text-xs md:text-base text-gray-600 dark:text-gray-300 tracking-tighter line-through" v-if="quantity >= 2">{{ productPrice(product.productCart.price) }}</span>
                 </div>
                 <div class="inline-flex justify-end">
-                    <button class="p-1 font-semibold sm:px-2 text-xs sm:text-base rounded-md hover:bg-gray-200 dark:hover:bg-dark_secondary" @click="remove">remove</button>
+                    <button class="p-1 font-semibold text-red-500 sm:px-2 text-xs sm:text-base rounded-md " @click="remove">remove</button>
                 </div>
             </div>
         </div>
@@ -82,8 +81,7 @@ export default {
             }).format(price);
         },
     },
-    computed: {
-    },
+    computed: {},
     async created() {
         this.image = `${process.env.VUE_APP_API}/image/get/${this.product.productCart.images[0].source}`;
         this.quantity = await this.product.quantity;
