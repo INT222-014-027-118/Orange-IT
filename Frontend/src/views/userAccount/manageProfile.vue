@@ -29,10 +29,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="sm:flex items-center mb-2">
-                    <p class="font-semibold sm:w-2/6 sm:text-right pr-2">phone :</p>
-                    <p class="lg:w-4/6 text-xl font-light">088888888888</p>
-                </div>
+                
                 <div class="sm:flex items-center mb-2">
                     <p class="font-semibold sm:w-2/6 sm:text-right pr-2">password :</p>
                     <div class="flex w-full sm:w-4/6 justify-between items-center">
