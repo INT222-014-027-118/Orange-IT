@@ -19,7 +19,9 @@
                         <p class="text-xs sm:text-base text-gray-600 dark:text-gray-300">color: {{ product.colors.label }}</p>
                     </div>
                     <div>
-                        <div class="flex items-center py-3 sm:pt-3 sm:pb-0 text-sm font-medium text-green-600"><span class="material-icons"> check_circle_outline </span> In stork</div>
+                        <div class="font-semibold flex items-center" :class="[stockCheck.class]">
+                            <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -81,7 +83,21 @@ export default {
             }).format(price);
         },
     },
-    computed: {},
+    computed: {
+        stockCheck() {
+            let stock = {};
+            if (this.product.quantityStock == 0) {
+                stock = { class: "text-red-500", icon: "cancel", text: "out of stock" };
+                return stock;
+            } else if (this.product.quantityStock < 10) {
+                stock = { class: "text-yellow-500", icon: "error_outline", text: `low stock (${this.product.quantityStock} piece)` };
+                return stock;
+            } else {
+                stock = { class: "text-green-600", icon: "check_circle", text: "in stock" };
+                return stock;
+            }
+        },
+    },
     async created() {
         this.image = `${process.env.VUE_APP_API}/image/get/${this.product.productCart.images[0].source}`;
         this.quantity = await this.product.quantity;
