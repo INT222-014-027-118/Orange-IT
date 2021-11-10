@@ -64,6 +64,10 @@ export default {
                         localStorage.setItem('token',userinfo.jwtToken) 
                         localStorage.setItem('userId',userinfo.user.id)
                         this.$store.commit('setUserInfo', userinfo.user);
+                        let isUserRole = response.data.user.role.name === 'User'?true:false
+                        console.log(response.data.user.role);
+                        console.log(isUserRole);
+                        this.$store.commit('setActiveNavBar', isUserRole);
                         this.$store.dispatch("loadCartData");
                         this.$router.push('/')
                     }

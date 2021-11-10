@@ -36,6 +36,7 @@ export default {
             this.$store.dispatch('loadUserAddresses')
         }
         this.$store.dispatch("loadCartData");
+        // console.log(this.$store.getters.activeNavBar);
         // if (localStorage.getItem("cart")) {
         //     let products = [];
         //     products = JSON.parse(localStorage.getItem("cart"));
