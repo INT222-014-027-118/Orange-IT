@@ -44,7 +44,7 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-2 -right-3 ring-2 ring-white dark:ring-dark_secondary">VS</div>
+                            <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-2 -right-3 ring-2 ring-white dark:ring-dark_secondary"> {{this.$store.getters.countCompareProducts == 2?'VS':''}}</div>
                         </div>
                         <span class="tracking-tight font-semibold ml-1">compare</span>
                     </button>
@@ -76,11 +76,13 @@
                         <div class="absolute top-10 left-0 z-20 pt-10 transform -translate-y-10 w-full" @mouseenter="showCart = true" @mouseleave="showCart = false">
                             <div
                                 v-show="showCart"
-                                class="w-64 py-2 absolute right-0 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
+                                class="w-72 py-2 absolute right-0 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
                                 :class="$store.getters.totalInCart == 0 ? 'hidden' : ''"
                             >
-                                <div v-for="cartItem in $store.getters.cart" :key="cartItem.id" class="hover:text-primary">
-                                    <span>{{ cartItem.productCart.productName }}</span>
+                                <div v-for="cartItem in this.$store.getters.cart" :key="cartItem.id" class="flex justify-between items-center">
+                                    <span class="w-3/6 text-left pl-2 py-1 whitespace-nowrap truncate text-sm">{{ cartItem.productCart.productName }}</span>
+                                    <span class="w-1/6 text-left px-2 py-1 whitespace-nowrap truncate text-xs">{{ cartItem.colors.label }}</span>
+                                    <span class="w-2/6 text-right pr-2 py-1 font-semibold overflow-hidden">{{ productPrice(cartItem.productCart.price * cartItem.quantity) }}</span>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +119,7 @@
                                 <div
                                     @click="
                                         menuUser = false;
-                                        $store.getters.userInfo === null ? $router.push('/login') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
+                                        $store.getters.userInfo === null ? $router.push('/login') : $router.push({ name: 'manageProfile', params: { manage: 'account' } });
                                     "
                                     class="hover:text-primary flex font-semibold capitalize items-center"
                                 >
@@ -127,7 +129,7 @@
                                 <div
                                     @click="
                                         menuUser = false;
-                                        $store.getters.userInfo === null ? $router.push('/register') : $router.push({ name: 'manageProfile', params: { manage: 'account' } });
+                                        $store.getters.userInfo === null ? $router.push('/register') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
                                     "
                                     class="hover:text-primary flex font-semibold capitalize items-center"
                                 >
@@ -155,7 +157,7 @@
                                             logout();
                                             menuUser = false;
                                         "
-                                        class="hover:text-red-500 flex capitalize font-bold"
+                                        class="hover:text-red-500 flex capitalize font-bold w-full"
                                     >
                                         <span class="material-icons-outlined text-center w-14 md:w-16 ">logout</span>
                                         <span class="ml-1">Logout</span>
@@ -205,7 +207,7 @@
             </div>
         </div>
 
-        <div class="fixed bottom-0 bg-white dark:bg-dark_secondary w-full h-16 sm:hidden text-xs tracking-tighter px-4 py-0.5 z-50 select-none border-t border-primary dark:border-gray-600">
+        <div class="fixed bottom-0 bg-white dark:bg-dark_secondary w-full h-16 sm:hidden text-xs tracking-tighter px-1 py-0.5 z-50 select-none border-t border-primary dark:border-gray-600">
             <div class="flex justify-around h-full items-center">
                 <button class="flex flex-col items-center w-16 p-1 font-semibold" @click="$router.push('/')" :class="[this.$route.name === 'Home' ? 'text-primary' : '']">
                     <img v-show="this.$route.name === 'Home'" src="../assets/orange.svg" alt="orange_icon" class="max-h-6" />
@@ -284,12 +286,24 @@ export default {
             }
         },
         logout() {
-            if (this.$store.dispatch("logout")) {
+            if (window.confirm("Are you sure?")) {
+                this.$store.dispatch("logout");
                 this.$router.push("/");
             }
         },
         checkHistory() {
             return history.length;
+        },
+        removeItemCart(index) {
+            this.$store.commit("removeCartItem", index);
+        },
+        productPrice(price) {
+            return new Intl.NumberFormat("th-TH", {
+                style: "currency",
+                currency: "THB",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+            }).format(price);
         },
     },
     created() {},

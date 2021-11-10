@@ -1,5 +1,5 @@
 <template>
-    <div class="flex p-1 py-3 mx-auto max-w-7xl ">
+    <div class="flex p-1 py-3 mx-auto max-w-7xl" v-if="$store.getters.userInfo !== null">
         <div
             :class="[this.$store.getters.showAccountPage ? 'w-full md:w-3/12' : 'hidden md:block']"
             class="mx-1 w-full overflow-hidden md:w-3/12 top-20 px-3 py-3 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full"
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="px-1 py-3 border-b">
+                <div class="px-1 py-3 border-b dark:border-gray-500">
                     <p class="text-base md:text-xl uppercase font-semibold">point : {{ $store.getters.userInfo === null ? "" : $store.getters.userInfo.points }}</p>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                         ><span class="material-icons-outlined text-center w-14 md:w-16 ">inventory</span>
                         <span class="ml-1">purchase</span>
                     </router-link>
-                    <hr />
+                    <hr class="dark:border-gray-500" />
                     <div class="flex items-center flex-wrap cursor-pointer select-none " @click="changeSetChangeMode()">
                         <div class="flex justify-center w-14 md:w-16">
                             <div class="rounded-full w-11 h-6 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
@@ -86,8 +86,8 @@
                         </div>
                         <span class="font-semibold capitalize ml-1">{{ this.$store.getters.changeMode == true ? "light mode" : "dark mode" }}</span>
                     </div>
-                    <hr />
-                    <button @click="logout" class="hover:text-red-500 flex capitalize font-bold">
+                    <hr class="dark:border-gray-500" />
+                    <button @click="logout" class="hover:text-red-500 flex capitalize font-bold w-full">
                         <span class="material-icons-outlined text-center w-14 md:w-16 ">logout</span>
                         <span class="ml-1">Logout</span>
                     </button>
@@ -123,7 +123,8 @@ export default {
             this.mode();
         },
         logout() {
-            if (this.$store.dispatch("logout")) {
+            if (window.confirm("Are you sure?")) {
+                this.$store.dispatch("logout");
                 this.$router.push("/");
             }
         },
@@ -136,8 +137,13 @@ export default {
                 document.documentElement.classList.remove("dark");
             }
         },
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
     },
-    mounted() {},
+    mounted() {
+        this.scrollToTop();
+    },
 };
 </script>
 

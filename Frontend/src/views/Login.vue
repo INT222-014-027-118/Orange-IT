@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-cente">
+    <div class="flex items-cente" v-if="$store.getters.userInfo === null">
         <div class="container mx-auto">
             <div class="max-w-md mx-auto my-10">
                 <div class="text-center">
@@ -64,6 +64,8 @@ export default {
                         localStorage.setItem('token',userinfo.jwtToken) 
                         localStorage.setItem('userId',userinfo.user.id)
                         this.$store.commit('setUserInfo', userinfo.user);
+                        let isUserRole = response.data.user.role[0].name === 'User'?true:false
+                        this.$store.commit('setActiveNavBar', isUserRole);
                         this.$store.dispatch("loadCartData");
                         this.$router.push('/')
                     }

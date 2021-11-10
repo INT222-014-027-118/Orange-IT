@@ -1,6 +1,10 @@
 <template>
     <div class="flex flex-col rounded-md shadow-md ring-2 ring-transparent hover:ring-primary cursor-pointer transition">
         <div class="overflow-hidden w-full relative pb-40 sm:pb-44 md:pb-48 lg:pb-56 select-none">
+            <div class="bg-black z-10 absolute w-full h-full rounded-t-md bg-opacity-0 dark:bg-opacity-10" />
+            <div :class="[this.compareProducts.includes(this.product.id) ? 'bg-primary bg-opacity-80' : '']" class="absolute z-20 right-1 top-1 text-white rounded-full w-6 h-6 flex justify-center items-center">
+                <span class="font-mono text-sm text-center"> VS </span>
+            </div>
             <img :src="image" class="absolute h-full w-full object-contain object-center select-none rounded-t-md bg-white" alt="Product image" @load="check" />
         </div>
         <div class="z-10 p-3 bg-white dark:bg-dark_tertiary rounded-b-md relative">
@@ -13,6 +17,10 @@
                 <span class="text-xs md:text-sm opacity-70 capitalize">{{ stockCheck }}</span>
             </div>
         </div>
+        <div class="">
+            <!-- v-show="showHiddenMenu" @click="showHiddenMenu = true" @mouseleave="showHiddenMenu = false" -->
+            <div></div>
+        </div>
     </div>
 </template>
 
@@ -23,7 +31,10 @@ export default {
             image: "",
             hoverEditer: false,
             btnEditer: false,
+            showHiddenMenu: false,
+            isComparing: false,
             count: 0,
+            compareProducts: [],
         };
     },
     props: {
@@ -58,6 +69,7 @@ export default {
     },
     async created() {
         this.image = await `${process.env.VUE_APP_API}/image/get/${this.product.images[0].source}`;
+        this.compareProducts = this.$store.getters.compareProductsWithId;
     },
 };
 </script>

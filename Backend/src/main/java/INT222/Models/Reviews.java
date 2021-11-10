@@ -23,11 +23,8 @@ public class Reviews {
     private String comment;
     @Column(name = "review_date")
     private String reviewDate;
-    @Column
-    private long customer_id;
-//    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-//    @JoinTable(name = "rating_of_product", joinColumns = @JoinColumn(name = "Reviews_id"), inverseJoinColumns = @JoinColumn(name = "Ratings_id"))
-//    private List<Ratings> ratings = new ArrayList<>();
+    @Column(name = "users_id")
+    private long userId;
 
     @OneToMany
     @JoinColumn(name = "reviews_id")

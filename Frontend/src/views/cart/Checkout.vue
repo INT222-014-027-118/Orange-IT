@@ -3,7 +3,7 @@
         <div class="mx-auto max-w-7xl">
             <div class="relative p-1 md:mt-0 md:p-2 lg:mx-auto space-y-5">
                 <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary shadow-md rounded-md p-1 md:p-3 relative">
-                    <div class="mb-4 text-xl font-semibold flex items-center" :class="[changeAddress ? 'mb-12 md:mb-4' : '']"><span class="material-icons mr-3 "> place </span>delivery address</div>
+                    <div class="mb-4 text-2xl md:text-3xl font-light flex items-center" :class="[changeAddress ? 'mb-12 md:mb-4' : '']"><span class="material-icons mr-3 text-2xl md:text-3xl text-black dark:text-gray-50 text-opacity-50 dark:text-opacity-50"> place </span>delivery address</div>
                     <hr class="my-3 dark:border-gray-500" />
                     <button
                         type="button"
@@ -68,7 +68,7 @@
 
                 <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary shadow-md rounded-md p-1 md:p-3">
                     <div class="flex justify-between mb-2 md:mb-4">
-                        <div class="text-xl font-semibold flex items-center">ordered</div>
+                        <div class="text-2xl md:text-3xl font-light flex items-center"><span class="material-icons mr-3 text-2xl md:text-3xl text-black dark:text-gray-50 text-opacity-50 dark:text-opacity-50"> receipt_long </span>ordered</div>
                         <div class="w-2/4 hidden md:inline-flex justify-between pr-2">
                             <span class="w-1/2 text-center text-gray-400">color</span>
                             <span class="w-1/2 text-center text-gray-400">unit price</span>
@@ -78,8 +78,8 @@
                     </div>
                     <hr class="my-3 dark:border-gray-500" />
                     <div class="px-0 sm:px-2 space-y-2" v-for="product in this.$store.getters.cart" :key="product.id">
-                        <div class="md:flex overflow-hidden">
-                            <div class="md:w-2/4 font-bold flex flex-shrink-0 items-center">
+                        <div class="md:flex overflow-hidden mb-3">
+                            <div class="md:w-2/4 font-semibold flex flex-shrink-0 items-center">
                                 <div class="border border-gray-200 rounded-md w-14 h-14 sm:w-14 sm:h-14 flex flex-shrink-0 overflow-hidden">
                                     <img :src="`${this.api}/image/get/${product.productCart.images[0].source}`" class="object-cover object-center w-full h-full" alt="Product image" />
                                 </div>
@@ -87,16 +87,16 @@
                             </div>
                             <div class="w-full md:w-2/4 overflow-hidden flex flex-wrap md:flex-nowrap justify-between md:justify-center items-center py-3">
                                 <p class="w-full md:w-full md:text-center"><span class="md:hidden">color :</span> {{ product.colors.label }}</p>
-                                <p class="md:w-full text-center">฿{{ product.productCart.price }}</p>
+                                <p class="md:w-full text-center">{{ passingPrice(product.productCart.price) }}</p>
                                 <p class="md:w-full text-right md:text-center">x {{ product.quantity }}</p>
-                                <p class="w-full md:w-full text-right md:text-center">฿{{ product.productCart.price * product.quantity }}</p>
+                                <p class="w-full md:w-full text-right md:text-center">{{ passingPrice(product.productCart.price * product.quantity) }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="capitalize bg-white dark:bg-dark_secondary shadow-md rounded-md p-1 md:p-3">
-                    <div class="mb-2 md:mb-4 text-xl font-semibold flex items-center"><span class="material-icons mr-3"> local_shipping </span>Shipping</div>
+                    <div class="mb-2 md:mb-4 text-2xl md:text-3xl font-light flex items-center"><span class="material-icons mr-3 text-2xl md:text-3xl text-black dark:text-gray-50 text-opacity-50 dark:text-opacity-50"> local_shipping </span>Shipping</div>
                     <hr class="my-3 dark:border-gray-500" />
                     <div class="flex flex-wrap justify-between md:flex-none px-0 py-1 sm:px-2 sm:py-2">
                         <div class="md:flex justify-between w-3/4">
@@ -108,13 +108,13 @@
                             </div>
                         </div>
                         <div class="md:w-1/4 flex justify-end">
-                            <p class="w-full text-center">฿ 0</p>
+                            <p class="w-full text-center">฿0</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="felx flex-col capitalize bg-white dark:bg-dark_secondary shadow-md rounded-md p-1 md:p-3">
-                    <h1 class="mb-4 text-xl font-semibold flex items-center"><span class="material-icons mr-3"> payments </span>payment method</h1>
+                    <h1 class="mb-4 text-2xl md:text-3xl font-light flex items-center"><span class="material-icons mr-3 text-2xl md:text-3xl text-black dark:text-gray-50 text-opacity-50 dark:text-opacity-50"> payments </span>payment method</h1>
                     <div class="flex flex-wrap">
                         <!-- <input id="1" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="เก็บเงินปลาย" />
                         <label for="1"> เก็บเงินปลาย</label>
@@ -123,7 +123,7 @@
                         <input id="3" type="radio" class="px-3 py-2 mx-3" v-model="paymentMethod" value="ทางบัตรเครดิต/บัตรเดบิต" />
                         <label for="3"> ทางบัตรเครดิต/บัตรเดบิต</label> -->
                         <div
-                            class="ring-2 px-6 py-2 flex items-center mx-2 relative rounded-sm cursor-pointer"
+                            class="ring-2 px-6 py-2 flex items-center mx-2 relative rounded-sm cursor-pointer my-2"
                             v-for="pay in paymentMethod"
                             :key="pay"
                             @click="selectPaymentMethod === pay ? (selectPaymentMethod = pay) : (selectPaymentMethod = selectPaymentMethod)"
@@ -140,7 +140,7 @@
                         <div class="flex justify-end">
                             <div class="flex justify-between items-end md:w-1/3 text-base w-full p-1">
                                 <p>all payments:</p>
-                                <p class="text-3xl font-semibold">฿ {{ this.$store.getters.orderTotalPrice }}</p>
+                                <p class="text-3xl font-semibold">{{ passingPrice(this.$store.getters.orderTotalPrice) }}</p>
                             </div>
                         </div>
                         <div class="flex justify-end">
@@ -167,6 +167,14 @@ export default {
     methods: {
         scrollToTop() {
             window.scrollTo(0, 0);
+        },
+        passingPrice(price) {
+            return new Intl.NumberFormat("th-TH", {
+                style: "currency",
+                currency: "THB",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+            }).format(price);
         },
     },
     mounted() {

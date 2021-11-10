@@ -7,7 +7,7 @@
                 </div>
 
                 <div class="px-1 py-5 sm:px-16 md:px-20 lg:p-5 col-span-3 lg:col-span-1 bg-white dark:bg-dark_tertiary rounded-md shadow-md">
-                    <div class="px-2 sm:px-3 space-y-3 flex flex-wrap content-between h-full">
+                    <div class="px-2 sm:px-3 md:px-0 space-y-3 flex flex-wrap content-between h-full">
                         <div class="space-y-3 flex flex-col w-full">
                             <div>
                                 <p class="px-2 text-primary">
@@ -17,13 +17,16 @@
                             </div>
                             <p class="text-2xl text-red-500 font-bold">{{ productPrice }}</p>
                             <p class="text-sm font-light">Product ID: {{ product.id }}</p>
+                            <!-- <div> -->
+
+                            <!-- </div> -->
                             <div class="inline-flex" v-if="false">
                                 <div class="bg-primary text-white px-4 py-1 text-xs rounded-sm">Discount 99%</div>
                             </div>
                         </div>
                         <div class="space-y-3 flex flex-col  w-full">
                             <div class="w-full">
-                                <p class="text-sm">color :</p>
+                                <p class="text-sm">color:</p>
                                 <div class="w-full flex flex-wrap py-1">
                                     <label :for="color.id" v-for="color in product.colors" :key="color" class="flex flex-col items-center">
                                         <input
@@ -46,9 +49,23 @@
                                 <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
                             </div>
                             <div
-                                class="fixed bottom-0 z-10 left-0 w-full px-5 pt-5 pb-20 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary md:pb-0 md:pt-2 md:px-0 md:static border-t md:border-0 dark:border-gray-600"
+                                class="fixed flex bottom-0 z-10 left-0 w-full px-3 pt-5 pb-20 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary sm:pb-7 md:pb-0 md:pt-2 md:px-0 md:static border-t md:border-0 dark:border-gray-600"
                             >
-                                <button class="w-full p-3 text-center text-white rounded-md bg-primary hover:bg-secondary z-40" @click="addCartItem">Add to Cart</button>
+                                <button
+                                    @click="addToCompare"
+                                    :disabled="this.$store.getters.countCompareProducts >= 2 || this.$store.getters.compareProductsWithId == product.id"
+                                    :class="[
+                                        this.$store.getters.countCompareProducts == 2 || this.$store.getters.compareProductsWithId == product.id
+                                            ? 'cursor-not-allowed bg-secondary bg-opacity-50'
+                                            : 'bg-secondary hover:bg-yellow-500',
+                                    ]"
+                                    class=" text-white px-1 sm:px-3 py-2 mr-3 rounded-md flex items-center justify-center whitespace-nowrap tracking-tighter"
+                                >
+                                    <span class="material-icons mr-1 hidden sm:inline-block"> compare_arrows </span>Compare ({{ this.$store.getters.countCompareProducts }})
+                                </button>
+                                <button class="w-full p-3 flex items-center justify-center text-white whitespace-nowrap rounded-md bg-primary hover:bg-primaryfocus z-40" @click="addCartItem">
+                                    <span class="material-icons mr-1 hidden sm:inline-block"> add_shopping_cart </span>Add to Cart
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -56,7 +73,7 @@
 
                 <div class="my-5 w-full col-span-3">
                     <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md capitalize">
-                        description: <span class="capitalize text-sm">{{ productName }}</span>
+                        description:
                     </p>
                     <p class="px-5 md:px-8 py-5 leading-relaxed" :class="[product.description == '' ? 'text-black text-opacity-50' : '']">
                         {{ product.description == "" ? "No description" : product.description }}
@@ -65,7 +82,7 @@
 
                 <div class="mb-5 w-full col-span-3">
                     <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md capitalize">
-                        attribute: <span class="capitalize text-sm">{{ productName }}</span>
+                        attribute:
                     </p>
                     <div class="overflow-hidden m-2 sm:mx-16 md:mx-20 lg:mx-48">
                         <table class="min-w-full bg-white">
@@ -85,7 +102,7 @@
 
                 <div class="mb-5 w-full col-span-3">
                     <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md capitalize">
-                        rating: <span class="capitalize text-sm">{{ productName }}</span>
+                        rating:
                     </p>
                     <Raring />
                 </div>
@@ -135,9 +152,6 @@ export default {
         };
     },
     methods: {
-        // selectColor(index) {
-        //     console.log(index);
-        // },
         scrollToTop() {
             window.scrollTo(0, 0);
         },
@@ -149,50 +163,46 @@ export default {
                 alert("Please choose color.");
                 return;
             }
-
-            this.loading = true;
-            setTimeout(() => {
-                this.loading = false;
-                this.$swal({
-                    title:
-                        "<div class='flex items-center justify-center text-primary'><span class='material-icons pt-1 px-1 text-3xl'> shopping_cart </span><span class='font-bold text-2xl'>Shopping Cart</span></div>",
-                    text: "The item has been added to your shopping cart",
-                    showCloseButton: true,
-                    confirmButtonColor: "#EC6907",
-                    backdrop: "rgba(31, 41, 55, 0.5)",
-                    willOpen: () => {
-                        // this.$swal.showLoading();
-                        setTimeout(() => {
-                            if (this.$store.getters.isLogin) {
-                                let cartItem = {
-                                    id: 1,
-                                    quantity: 1,
-                                    productId: Number(this.productId),
-                                    userId: localStorage.getItem("userId"),
-                                    colorId: this.colorPick.id,
-                                };
-                                this.$store.commit("addCartItem", cartItem);
-                            } else {
-                                let cartItem = {
-                                    quantity: 1,
-                                    productCart: {
-                                        id: this.product.id,
-                                        productName: this.product.productName,
-                                        price: this.product.price,
-                                        quantityStock: this.product.quantityStock,
-                                        discount: null,
-                                        images: [this.product.images[0]],
-                                    },
-                                    colors: this.colorPick,
-                                    userId: null,
-                                };
-                                this.$store.commit("addCartItem", cartItem);
-                                localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
-                            }
-                        }, 500);
-                    },
-                });
-            }, 500);
+            this.$swal({
+                title:
+                    "<div class='flex items-center justify-center text-primary'><span class='material-icons pt-1 px-1 text-3xl'> shopping_cart </span><span class='font-bold text-2xl'>Shopping Cart</span></div>",
+                text: "The item has been added to your shopping cart",
+                showCloseButton: true,
+                confirmButtonColor: "#EC6907",
+                backdrop: "rgba(31, 41, 55, 0.5)",
+                willOpen: () => {
+                    // this.$swal.showLoading();
+                    if (this.$store.getters.isLogin) {
+                        let cartItem = {
+                            id: 1,
+                            quantity: 1,
+                            productId: Number(this.productId),
+                            userId: localStorage.getItem("userId"),
+                            colorId: this.colorPick.id,
+                        };
+                        this.$store.commit("addCartItem", cartItem);
+                    } else {
+                        let cartItem = {
+                            quantity: 1,
+                            productCart: {
+                                id: this.product.id,
+                                productName: this.product.productName,
+                                price: this.product.price,
+                                quantityStock: this.product.quantityStock,
+                                discount: null,
+                                images: [this.product.images[0]],
+                            },
+                            colors: this.colorPick,
+                            userId: null,
+                        };
+                        this.$store.commit("addCartItem", cartItem);
+                        localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
+                    }
+                },
+            });
+        },
+        addToCompare() {
+            this.$store.commit("setCompareProducts", this.product);
         },
     },
     computed: {
