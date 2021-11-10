@@ -4,13 +4,15 @@ const state = {
     userInfo: null,
     userId: localStorage.getItem('userId'),
     addresses: [],
+    activeNavBar: false
 
 }
 
 const getters = {
     userInfo: state => state.userInfo,
     addresses: state => state.addresses,
-    defaultAddress: state => state.addresses[0]
+    defaultAddress: state => state.addresses[0],
+    activeNavBar: state => state.activeNavBar 
 }
 
 const actions = {
@@ -55,6 +57,9 @@ const mutations = {
         state.loginStatus = data
     },
     setAddresses(state, data) {
+        state.addresses = data
+    },
+    setActiveNavBar(state, data) {
         state.addresses = data
     },
     addAddress(state, address) {
