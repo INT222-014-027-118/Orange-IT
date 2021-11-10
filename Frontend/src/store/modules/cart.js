@@ -81,9 +81,9 @@ const mutations = {
         if (this.getters.isSameCartItem) {
             let index = 0
             if (this.getters.isLogin) {
-                index = state.cart.findIndex(element => element.productCart.id === cartItem.productId)
+                index = state.cart.findIndex(element => element.productCart.id === cartItem.productId && element.colors.id === cartItem.colorId)
             } else {
-                index = state.cart.findIndex(element => element.productCart.id === cartItem.productCart.id)
+                index = state.cart.findIndex(element => element.productCart.id === cartItem.productCart.id && element.colors.id === cartItem.colors.id)
             }
             let quantity = state.cart[index].quantity + cartItem.quantity > 10 ? 10 : state.cart[index].quantity + cartItem.quantity
             state.cart[index].quantity = quantity

@@ -23,7 +23,6 @@ const actions = {
             axios
                 .get(`${process.env.VUE_APP_API}/user/${state.userId}`)
                 .then(response => {
-                    console.log(response.data);
                     commit('setUserInfo', response.data)
                 })
         }
