@@ -207,7 +207,7 @@
             </div>
         </div>
 
-        <div class="fixed bottom-0 bg-white dark:bg-dark_secondary w-full h-16 sm:hidden text-xs tracking-tighter px-4 py-0.5 z-50 select-none border-t border-primary dark:border-gray-600">
+        <div class="fixed bottom-0 bg-white dark:bg-dark_secondary w-full h-16 sm:hidden text-xs tracking-tighter px-1 py-0.5 z-50 select-none border-t border-primary dark:border-gray-600">
             <div class="flex justify-around h-full items-center">
                 <button class="flex flex-col items-center w-16 p-1 font-semibold" @click="$router.push('/')" :class="[this.$route.name === 'Home' ? 'text-primary' : '']">
                     <img v-show="this.$route.name === 'Home'" src="../assets/orange.svg" alt="orange_icon" class="max-h-6" />

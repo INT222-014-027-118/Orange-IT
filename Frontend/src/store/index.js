@@ -19,7 +19,7 @@ export default new Vuex.Store({
     countHistory: 0,
     loginStatus: false,
     compareProducts: [],
-    compareProductsWithId: 0
+    compareProductsWithId: []
   },
 
   mutations: {
@@ -30,12 +30,13 @@ export default new Vuex.Store({
       state.changeMode = value
     },
     setCompareProducts(state, value) {
-      console.log(value.id);
       state.compareProducts.push(value)
-      state.compareProductsWithId = value.id
+      state.compareProductsWithId.push(value.id)
+      console.log(state.compareProductsWithId);
     },
     resetCompareProducts(state, value = []) {
       state.compareProducts = value
+      state.compareProductsWithId = value
     },
 
   },
