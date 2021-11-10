@@ -4,113 +4,86 @@
             <h1 class="py-3 text-2xl font-semibold">compare products</h1>
             <!-- <div class="overflow-auto max-w-7xl"> -->
             <!-- component -->
-            <div class="overflow-x-auto">
-                <table class="" style="width:99%;">
+            <div class="tscroll">
+                <table class="rounded-md" style="width:99.8%;">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th class="sm:whitespace-normal  sm:w-2/5">RAZER BLACKSHARK V2 PRO</th>
-                            <th class="sm:whitespace-normal  sm:w-2/5">RAZER HUNTSMAN ELITE (LINEAR OPTICAL SWITCH) (EN/TH)</th>
+                            <th></th>
+                            <th class="sm:whitespace-normal sm:w-2/5"></th>
+                            <th class="sm:whitespace-normal sm:w-2/5"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm lg:mb-0">
                             <td class="table_content">
-                                Product
+                                Product name
                             </td>
                             <td class="table_content">
-                                img
+                                <p class="w-60 md:w-auto font-semibold text-center">RAZER BLACKSHARK V2 PRO</p>
                             </td>
                             <td class="table_content">
-                                img
+                                <p class="w-60 md:w-auto font-semibold text-center">RAZER HUNTSMAN ELITE (LINEAR OPTICAL SWITCH) (EN/TH)</p>
                             </td>
                         </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm lg:hover:bg-gray-100 lg:mb-0">
+                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
                             <td class="table_content">
-                                spceType 1
+                                <p class="whitespace-nowrap">image</p>
                             </td>
                             <td class="table_content">
-                                <div class="min-w-max">
+                                <!-- <div class="min-w-max">
                                     <img src="http://20.205.201.136/orange-it/image/get/G913-1.png" class="object-cover object-center mx-auto w-60 select-none dark:bg-gray-400 " alt="Product image" />
+                                </div>
+                                <div>RAZER BLACKSHARK V2 PRO</div> -->
+                                <div class="min-w-max self-start">
+                                    <img
+                                        src="http://20.205.201.136/orange-it/image/get/G913-1.png"
+                                        class="w-36 h-36 md:w-60 md:h-60 mx-auto object-contain object-center rounded-md bg-white ring ring-white"
+                                        alt="Product image"
+                                    />
                                 </div>
                             </td>
                             <td class="table_content">
-                                <div class="min-w-max">
+                                <div class="min-w-max self-start">
                                     <img
                                         src="https://kanexkane.com/wp-content/uploads/2020/04/kkblog-cover-review-logitech-g-pro-x-keyboard.jpg"
-                                        class="object-cover object-center mx-auto w-60 select-none dark:bg-gray-400 "
+                                        class="w-36 h-36 md:w-60 md:h-60 mx-auto object-contain object-center rounded-md bg-white ring ring-white"
                                         alt="Product image"
                                     />
                                 </div>
                             </td>
                         </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm lg:hover:bg-gray-100 lg:mb-0">
+                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
                             <td class="table_content">
-                                spceType 3
+                                <p class="whitespace-nowrap">colors</p>
                             </td>
                             <td class="table_content">
-                                value2
+                                <div class="w-full flex flex-wrap">
+                                    <div v-for="color in colors" :key="color" class="flex flex-col items-center">
+                                        <div
+                                            class="w-6 h-6 md:w-8 md:h-8 my-1 md:my-2 mx-2 rounded-full"
+                                            :style="{
+                                                backgroundColor: `#${color.hexCode}`,
+                                            }"
+                                        ></div>
+                                        <span class="text-xs"> {{ color.label }}</span>
+                                    </div>
+                                </div>
                             </td>
                             <td class="table_content">
-                                value2
-                            </td>
-                        </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm lg:hover:bg-gray-100 lg:mb-0">
-                            <td class="table_content">
-                                spceType 3
-                            </td>
-                            <td class="table_content">
-                                value2
-                            </td>
-                            <td class="table_content">
-                                value2
-                            </td>
-                        </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm lg:hover:bg-gray-100 lg:mb-0">
-                            <td class="table_content">
-                                spceType 3
-                            </td>
-                            <td class="table_content">
-                                value2
-                            </td>
-                            <td class="table_content">
-                                value2
+                                <div class="w-full flex flex-wrap">
+                                    <div v-for="color in colors" :key="color" class="flex flex-col items-center">
+                                        <div
+                                            class="w-6 h-6 md:w-8 md:h-8 my-1 md:my-2 mx-2 rounded-full"
+                                            :style="{
+                                                backgroundColor: `#${color.hexCode}`,
+                                            }"
+                                        ></div>
+                                        <span class="text-xs"> {{ color.label }}</span>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm lg:hover:bg-gray-100 lg:mb-0">
-                            <td class="table_content">
-                                spceType 3
-                            </td>
-                            <td class="table_content">
-                                value2
-                            </td>
-                            <td class="table_content">
-                                value2
-                            </td>
-                        </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm lg:hover:bg-gray-100 lg:mb-0">
-                            <td class="table_content">
-                                spceType 3
-                            </td>
-                            <td class="table_content">
-                                value2
-                            </td>
-                            <td class="table_content">
-                                value2
-                            </td>
-                        </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm lg:hover:bg-gray-100 lg:mb-0">
-                            <td class="table_content">
-                                spceType 3
-                            </td>
-                            <td class="table_content">
-                                value2
-                            </td>
-                            <td class="table_content">
-                                value2
-                            </td>
-                        </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm lg:hover:bg-gray-100 lg:mb-0">
+                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
                             <td class="table_content">
                                 spceType 3
                             </td>
@@ -125,7 +98,7 @@
                 </table>
             </div>
             <!-- </div> -->
-            <div class="flex flex-col overflow-x-auto">
+            <!-- <div class="flex flex-col overflow-x-auto">
                 <div class="flex p-1">
                     <div class="w-1/5"></div>
                     <div class="text-sm w-full">
@@ -181,7 +154,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -216,6 +189,25 @@ export default {
 
 <style>
 .table_content {
-    @apply p-2 md:p-3 border border-b dark:border-gray-500;
+    @apply p-2 md:p-3 border border-b dark:border-gray-500 ring-0;
+}
+.tscroll {
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.tscroll table td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white;
+}
+
+.dark .tscroll table td:first-child {
+    background-color: #22303c;
+}
+
+.tscroll td,
+.tscroll th {
+    /* border-bottom: dashed #888 1px; */
 }
 </style>

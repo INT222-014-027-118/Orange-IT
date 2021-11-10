@@ -11,28 +11,37 @@ export default new Vuex.Store({
     user,
     cart
   },
+
   state: {
     itemTest: [],
     showAccountPage: true,
     changeMode: false,
     countHistory: 0,
-    loginStatus:false
+    loginStatus: false,
+    CompareProducts: []
   },
+
   mutations: {
     setShowAccountPage(state, value = !state.showAccountPage) {
       state.showAccountPage = value
     },
     setChangeMode(state, value = !state.changeMode) {
       state.changeMode = value
-    }
+    },
+    setCompareProducts(state, value = !state.changeMode) {
+      state.changeMode = value
+    },
+
   },
-  actions: {
-  },
+
+  actions: {},
+
   getters: {
     itemTest: state => state.itemTest,
     showAccountPage: state => state.showAccountPage,
     changeMode: state => state.changeMode,
-    isLogin: state => state.loginStatus = localStorage.getItem('userId')?true:false
-
+    isLogin: state => state.loginStatus = localStorage.getItem('userId') ? true : false,
+    CompareProducts: state => state.CompareProducts,
   }
+
 });
