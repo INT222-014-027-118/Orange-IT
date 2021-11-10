@@ -1,5 +1,5 @@
 <template>
-    <div class="flex p-1 py-3 mx-auto max-w-7xl ">
+    <div class="flex p-1 py-3 mx-auto max-w-7xl" v-if="$store.getters.userInfo !== null">
         <div
             :class="[this.$store.getters.showAccountPage ? 'w-full md:w-3/12' : 'hidden md:block']"
             class="mx-1 w-full overflow-hidden md:w-3/12 top-20 px-3 py-3 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full"

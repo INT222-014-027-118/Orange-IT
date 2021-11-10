@@ -205,9 +205,4 @@ export default {
 .dark .tscroll table td:first-child {
     background-color: #22303c;
 }
-
-.tscroll td,
-.tscroll th {
-    /* border-bottom: dashed #888 1px; */
-}
 </style>

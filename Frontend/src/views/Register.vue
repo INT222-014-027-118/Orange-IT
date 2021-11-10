@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center">
+    <div class="flex items-center" v-if="$store.getters.userInfo === null">
         <div class="container mx-auto">
             <div class="max-w-md mx-auto my-10">
                 <div class="text-center">

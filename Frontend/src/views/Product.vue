@@ -17,6 +17,20 @@
                             </div>
                             <p class="text-2xl text-red-500 font-bold">{{ productPrice }}</p>
                             <p class="text-sm font-light">Product ID: {{ product.id }}</p>
+                            <!-- <div> -->
+                            <button
+                                @click="addToCompare"
+                                :disabled="this.$store.getters.countCompareProducts >= 2 || this.$store.getters.compareProductsWithId == product.id"
+                                :class="[
+                                    this.$store.getters.countCompareProducts == 2 || this.$store.getters.compareProductsWithId == product.id
+                                        ? 'cursor-not-allowed bg-secondary bg-opacity-50'
+                                        : 'bg-secondary hover:bg-yellow-500',
+                                ]"
+                                class=" text-white px-3 py-2 rounded-md flex items-center justify-center"
+                            >
+                                <span class="material-icons mr-1"> compare_arrows </span>Add To Compare ({{ this.$store.getters.countCompareProducts }})
+                            </button>
+                            <!-- </div> -->
                             <div class="inline-flex" v-if="false">
                                 <div class="bg-primary text-white px-4 py-1 text-xs rounded-sm">Discount 99%</div>
                             </div>
@@ -48,7 +62,7 @@
                             <div
                                 class="fixed bottom-0 z-10 left-0 w-full px-5 pt-5 pb-20 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary md:pb-0 md:pt-2 md:px-0 md:static border-t md:border-0 dark:border-gray-600"
                             >
-                                <button class="w-full p-3 text-center text-white rounded-md bg-primary hover:bg-secondary z-40" @click="addCartItem">Add to Cart</button>
+                                <button class="w-full p-3 text-center text-white rounded-md bg-primary hover:bg-primaryfocus z-40" @click="addCartItem">Add to Cart</button>
                             </div>
                         </div>
                     </div>
@@ -135,9 +149,6 @@ export default {
         };
     },
     methods: {
-        // selectColor(index) {
-        //     console.log(index);
-        // },
         scrollToTop() {
             window.scrollTo(0, 0);
         },
@@ -186,6 +197,9 @@ export default {
                     }
                 },
             });
+        },
+        addToCompare() {
+            this.$store.commit("setCompareProducts", this.product);
         },
     },
     computed: {

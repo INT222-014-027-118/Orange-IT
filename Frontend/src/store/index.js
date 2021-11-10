@@ -18,7 +18,8 @@ export default new Vuex.Store({
     changeMode: false,
     countHistory: 0,
     loginStatus: false,
-    CompareProducts: []
+    compareProducts: [],
+    compareProductsWithId: 0
   },
 
   mutations: {
@@ -28,8 +29,13 @@ export default new Vuex.Store({
     setChangeMode(state, value = !state.changeMode) {
       state.changeMode = value
     },
-    setCompareProducts(state, value = !state.changeMode) {
-      state.changeMode = value
+    setCompareProducts(state, value) {
+      console.log(value.id);
+      state.compareProducts.push(value)
+      state.compareProductsWithId = value.id
+    },
+    resetCompareProducts(state, value = []) {
+      state.compareProducts = value
     },
 
   },
@@ -41,7 +47,9 @@ export default new Vuex.Store({
     showAccountPage: state => state.showAccountPage,
     changeMode: state => state.changeMode,
     isLogin: state => state.loginStatus = localStorage.getItem('userId') ? true : false,
-    CompareProducts: state => state.CompareProducts,
+    compareProducts: state => state.compareProducts,
+    countCompareProducts: state => state.compareProducts.length,
+    compareProductsWithId: state => state.compareProductsWithId,
   }
 
 });
