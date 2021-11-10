@@ -87,7 +87,7 @@
                         <span class="font-semibold capitalize ml-1">{{ this.$store.getters.changeMode == true ? "light mode" : "dark mode" }}</span>
                     </div>
                     <hr class="dark:border-gray-500" />
-                    <button @click="logout" class="hover:text-red-500 flex capitalize font-bold">
+                    <button @click="logout" class="hover:text-red-500 flex capitalize font-bold w-full">
                         <span class="material-icons-outlined text-center w-14 md:w-16 ">logout</span>
                         <span class="ml-1">Logout</span>
                     </button>
@@ -123,7 +123,8 @@ export default {
             this.mode();
         },
         logout() {
-            if (this.$store.dispatch("logout")) {
+            if (window.confirm("Are you sure?")) {
+                this.$store.dispatch("logout");
                 this.$router.push("/");
             }
         },

@@ -41,16 +41,11 @@ const actions = {
     logout({
         commit
     }) {
-        if (window.confirm("Are you sure?")) {
-            localStorage.removeItem("token")
-            localStorage.removeItem("userId")
-            this.dispatch('clearCart')
-            commit('setUserInfo', null)
-            commit('setLoginStatus', false)
-            return true
-        }
-
-        return false
+        localStorage.removeItem("token")
+        localStorage.removeItem("userId")
+        this.dispatch('clearCart')
+        commit('setUserInfo', null)
+        commit('setLoginStatus', false)
     },
 }
 

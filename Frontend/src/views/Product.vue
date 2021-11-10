@@ -149,50 +149,43 @@ export default {
                 alert("Please choose color.");
                 return;
             }
-
-            this.loading = true;
-            setTimeout(() => {
-                this.loading = false;
-                this.$swal({
-                    title:
-                        "<div class='flex items-center justify-center text-primary'><span class='material-icons pt-1 px-1 text-3xl'> shopping_cart </span><span class='font-bold text-2xl'>Shopping Cart</span></div>",
-                    text: "The item has been added to your shopping cart",
-                    showCloseButton: true,
-                    confirmButtonColor: "#EC6907",
-                    backdrop: "rgba(31, 41, 55, 0.5)",
-                    willOpen: () => {
-                        // this.$swal.showLoading();
-                        setTimeout(() => {
-                            if (this.$store.getters.isLogin) {
-                                let cartItem = {
-                                    id: 1,
-                                    quantity: 1,
-                                    productId: Number(this.productId),
-                                    userId: localStorage.getItem("userId"),
-                                    colorId: this.colorPick.id,
-                                };
-                                this.$store.commit("addCartItem", cartItem);
-                            } else {
-                                let cartItem = {
-                                    quantity: 1,
-                                    productCart: {
-                                        id: this.product.id,
-                                        productName: this.product.productName,
-                                        price: this.product.price,
-                                        quantityStock: this.product.quantityStock,
-                                        discount: null,
-                                        images: [this.product.images[0]],
-                                    },
-                                    colors: this.colorPick,
-                                    userId: null,
-                                };
-                                this.$store.commit("addCartItem", cartItem);
-                                localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
-                            }
-                        }, 500);
-                    },
-                });
-            }, 500);
+            this.$swal({
+                title:
+                    "<div class='flex items-center justify-center text-primary'><span class='material-icons pt-1 px-1 text-3xl'> shopping_cart </span><span class='font-bold text-2xl'>Shopping Cart</span></div>",
+                text: "The item has been added to your shopping cart",
+                showCloseButton: true,
+                confirmButtonColor: "#EC6907",
+                backdrop: "rgba(31, 41, 55, 0.5)",
+                willOpen: () => {
+                    // this.$swal.showLoading();
+                    if (this.$store.getters.isLogin) {
+                        let cartItem = {
+                            id: 1,
+                            quantity: 1,
+                            productId: Number(this.productId),
+                            userId: localStorage.getItem("userId"),
+                            colorId: this.colorPick.id,
+                        };
+                        this.$store.commit("addCartItem", cartItem);
+                    } else {
+                        let cartItem = {
+                            quantity: 1,
+                            productCart: {
+                                id: this.product.id,
+                                productName: this.product.productName,
+                                price: this.product.price,
+                                quantityStock: this.product.quantityStock,
+                                discount: null,
+                                images: [this.product.images[0]],
+                            },
+                            colors: this.colorPick,
+                            userId: null,
+                        };
+                        this.$store.commit("addCartItem", cartItem);
+                        localStorage.setItem("cart", JSON.stringify(this.$store.getters.cart));
+                    }
+                },
+            });
         },
     },
     computed: {

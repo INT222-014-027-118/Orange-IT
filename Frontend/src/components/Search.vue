@@ -3,7 +3,7 @@
         <input
             type="search"
             v-model="text_Search"
-            class="mx-0.5 py-1 pl-10 pr-5 md:px-10 rounded-2xl focus:outline-none  w-full  ring-2 ring-primary  focus:bg-gray-50 dark:focus:bg-dark_tertiary  bg-gray-100 dark:bg-dark_secondary"
+            class="mx-0.5 pt-1 pb-1 pl-10 pr-5 md:pl-10 rounded-2xl focus:outline-none w-full ring-2 ring-primary  focus:bg-gray-50 dark:focus:bg-dark_tertiary  bg-gray-100 dark:bg-dark_secondary"
             @keypress.enter="gogo"
         />
         <button class="rounded-3xl px-3 absolute">
@@ -42,4 +42,24 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    height: 1em;
+    width: 1em;
+    border-radius: 50em;
+    background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
+    background-size: contain;
+    opacity: 0;
+    pointer-events: none;
+}
+
+input[type="search"]:focus::-webkit-search-cancel-button {
+    opacity: 0.3;
+    pointer-events: all;
+}
+
+input[type="search"].dark::-webkit-search-cancel-button {
+    filter: invert(1);
+}
+</style>
