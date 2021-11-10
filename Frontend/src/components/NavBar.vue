@@ -44,7 +44,7 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-2 -right-3 ring-2 ring-white dark:ring-dark_secondary">VS</div>
+                            <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-2 -right-3 ring-2 ring-white dark:ring-dark_secondary"> {{this.$store.getters.countCompareProducts == 2?'VS':''}}</div>
                         </div>
                         <span class="tracking-tight font-semibold ml-1">compare</span>
                     </button>
@@ -76,12 +76,13 @@
                         <div class="absolute top-10 left-0 z-20 pt-10 transform -translate-y-10 w-full" @mouseenter="showCart = true" @mouseleave="showCart = false">
                             <div
                                 v-show="showCart"
-                                class="w-72 py-2 absolute right-0 border cursor-default border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
+                                class="w-72 py-2 absolute right-0 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
                                 :class="$store.getters.totalInCart == 0 ? 'hidden' : ''"
                             >
-                                <div v-for="cartItem in this.$store.getters.cart" :key="cartItem.id" class="flex justify-between">
-                                    <div class="w-4/6 text-left px-2 py-1 whitespace-nowrap truncate">{{ cartItem.productCart.productName }}</div>
-                                    <div class="w-2/6 text-right px-2 py-1 font-semibold overflow-hidden">{{ productPrice(cartItem.productCart.price * cartItem.quantity) }}</div>
+                                <div v-for="cartItem in this.$store.getters.cart" :key="cartItem.id" class="flex justify-between items-center">
+                                    <span class="w-3/6 text-left pl-2 py-1 whitespace-nowrap truncate text-sm">{{ cartItem.productCart.productName }}</span>
+                                    <span class="w-1/6 text-left px-2 py-1 whitespace-nowrap truncate text-xs">{{ cartItem.colors.label }}</span>
+                                    <span class="w-2/6 text-right pr-2 py-1 font-semibold overflow-hidden">{{ productPrice(cartItem.productCart.price * cartItem.quantity) }}</span>
                                 </div>
                             </div>
                         </div>

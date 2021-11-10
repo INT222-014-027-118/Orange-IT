@@ -1,6 +1,7 @@
 <template>
     <div class="flex flex-col rounded-md shadow-md ring-2 ring-transparent hover:ring-primary cursor-pointer transition">
         <div class="overflow-hidden w-full relative pb-40 sm:pb-44 md:pb-48 lg:pb-56 select-none">
+            <div class="bg-black z-20 absolute w-full h-full rounded-t-md bg-opacity-0 dark:bg-opacity-10"/>
             <img :src="image" class="absolute h-full w-full object-contain object-center select-none rounded-t-md bg-white" alt="Product image" @load="check" />
         </div>
         <div class="z-10 p-3 bg-white dark:bg-dark_tertiary rounded-b-md relative">
