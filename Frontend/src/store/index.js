@@ -32,7 +32,6 @@ export default new Vuex.Store({
     setCompareProducts(state, value) {
       state.compareProducts.push(value)
       state.compareProductsWithId.push(value.id)
-      console.log(state.compareProductsWithId);
     },
     resetCompareProducts(state, value = []) {
       state.compareProducts = value

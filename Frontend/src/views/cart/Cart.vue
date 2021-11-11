@@ -29,14 +29,14 @@
                         <div class="font-semibold">฿ 999999</div>
                     </div> -->
                     <div
-                        class="fixed bottom-0 left-0 w-full bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary px-5 pb-20 sm:pb-5 md:pb-0 sm:pt-0 md:px-0 md:static border-t md:border-0 dark:border-gray-600"
+                        class="fixed bottom-0 left-0 w-full bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary px-2 pt-1 pb-16 sm:pb-5 md:pb-0 sm:pt-0 md:px-0 md:static border-t md:border-0 dark:border-gray-600"
                     >
-                        <div class="flex justify-between py-4">
+                        <div class="flex justify-between pb-2 sm:py-4">
                             <div class="text-xl font-semibold">Order total</div>
                             <div class="text-xl font-semibold md:text-2xl text-primary">{{ orderTotalPrice }}</div>
                         </div>
                         <button
-                            class="w-full p-3 text-center font-semibold text-xl text-white rounded-md bg-primary "
+                            class="w-full px-2 py-2 sm:p-3 mb-1 sm:mb-0 text-center font-semibold text-xl text-white rounded-md bg-primary "
                             @click="$router.push('checkout')"
                             :disabled="$store.getters.userInfo === null"
                             :class="[$store.getters.userInfo === null ? 'cursor-not-allowed hover:bg-primary' : 'hover:bg-primaryfocus']"

@@ -54,6 +54,17 @@
                         </tr>
                         <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
                             <td class="table_content">
+                                price
+                            </td>
+                            <td class="table_content">
+                                00000
+                            </td>
+                            <td class="table_content">
+                                00000
+                            </td>
+                        </tr>
+                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
+                            <td class="table_content">
                                 <p class="whitespace-nowrap">colors</p>
                             </td>
                             <td class="table_content">
@@ -85,7 +96,18 @@
                         </tr>
                         <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
                             <td class="table_content">
-                                spceType 3
+                                spceType 1
+                            </td>
+                            <td class="table_content">
+                                value2
+                            </td>
+                            <td class="table_content">
+                                value2
+                            </td>
+                        </tr>
+                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
+                            <td class="table_content">
+                                spceType 2
                             </td>
                             <td class="table_content">
                                 value2
@@ -182,7 +204,208 @@ export default {
                     hexCode: "9AA0A8",
                 },
             ],
+            compareProducts: [
+                {
+                    id: 3,
+                    productName: "RAZER DEATHADDER V2",
+                    description: "- True 20,000 DPI Focus+ optical sensor\r\n- Up to 650 inches per second\n  (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy",
+                    price: 1990,
+                    brandName: "Razer",
+                    quantityStock: 20,
+                    discount: null,
+                    colors: [
+                        {
+                            id: 2,
+                            label: "Black",
+                            hexCode: "000000",
+                        },
+                    ],
+                    attributes: [
+                        {
+                            id: 1,
+                            attribute: "Wired/Wireless",
+                        },
+                    ],
+                    images: [
+                        {
+                            id: 9,
+                            source: "DeathAdder-V2-1.png",
+                            label: "DeathAdder-V2-1",
+                            productId: 3,
+                        },
+                        {
+                            id: 10,
+                            source: "DeathAdder-V2-2.png",
+                            label: "DeathAdder-V2-2",
+                            productId: 3,
+                        },
+                        {
+                            id: 11,
+                            source: "DeathAdder-V2-3.png",
+                            label: "DeathAdder-V2-3",
+                            productId: 3,
+                        },
+                        {
+                            id: 12,
+                            source: "DeathAdder-V2-4.png",
+                            label: "DeathAdder-V2-4",
+                            productId: 3,
+                        },
+                        {
+                            id: 13,
+                            source: "DeathAdder-V2-5.png",
+                            label: "DeathAdder-V2-5",
+                            productId: 3,
+                        },
+                    ],
+                    categories: [
+                        {
+                            id: 2,
+                            category: "Mouse",
+                            parentId: null,
+                        },
+                    ],
+                    productsHasAttributes: [
+                        {
+                            id: 11,
+                            attributeId: 1,
+                            productId: 3,
+                            attribute_value: "Wired",
+                        },
+                    ],
+                    ratings: [],
+                },
+                {
+                    id: 2,
+                    productName: "RAZER HUNTSMAN ELITE (LINEAR OPTICAL SWITCH) (EN/TH)",
+                    description: "- Razerâ„¢ Opto-Mechanical \n  Switch with 45 G actuation force\r\n- 100 million keystroke lifespan\r\n- Chroma backlighting\n  with 16.8 million customizable color options",
+                    price: 5990,
+                    brandName: "Razer",
+                    quantityStock: 40,
+                    discount: null,
+                    colors: [
+                        {
+                            id: 2,
+                            label: "Black",
+                            hexCode: "000000",
+                        },
+                        {
+                            id: 3,
+                            label: "White",
+                            hexCode: "FFFFFF",
+                        },
+                    ],
+                    attributes: [
+                        {
+                            id: 1,
+                            attribute: "Wired/Wireless",
+                        },
+                        {
+                            id: 2,
+                            attribute: "Keyboard type",
+                        },
+                        {
+                            id: 3,
+                            attribute: "Keyboard size",
+                        },
+                        {
+                            id: 4,
+                            attribute: "Switch",
+                        },
+                        {
+                            id: 5,
+                            attribute: "Sound",
+                        },
+                    ],
+                    images: [
+                        {
+                            id: 5,
+                            source: "hmel-1-1.png",
+                            label: "hmel-1-1",
+                            productId: 2,
+                        },
+                        {
+                            id: 6,
+                            source: "hmel-1-2.png",
+                            label: "hmel-1-2",
+                            productId: 2,
+                        },
+                        {
+                            id: 7,
+                            source: "hmel-1-3.png",
+                            label: "hmel-1-3",
+                            productId: 2,
+                        },
+                        {
+                            id: 8,
+                            source: "hmel-1-4.png",
+                            label: "hmel-1-4",
+                            productId: 2,
+                        },
+                    ],
+                    categories: [
+                        {
+                            id: 1,
+                            category: "Keyboard",
+                            parentId: null,
+                        },
+                    ],
+                    productsHasAttributes: [
+                        {
+                            id: 6,
+                            attributeId: 1,
+                            productId: 2,
+                            attribute_value: "Wired",
+                        },
+                        {
+                            id: 7,
+                            attributeId: 2,
+                            productId: 2,
+                            attribute_value: "Mecha-Optical",
+                        },
+                        {
+                            id: 8,
+                            attributeId: 3,
+                            productId: 2,
+                            attribute_value: "Full-Size",
+                        },
+                        {
+                            id: 9,
+                            attributeId: 4,
+                            productId: 2,
+                            attribute_value: "Razer",
+                        },
+                        {
+                            id: 10,
+                            attributeId: 5,
+                            productId: 2,
+                            attribute_value: "Clicky",
+                        },
+                    ],
+                    ratings: [],
+                },
+            ],
         };
+    },
+    created() {
+        // this.compareProducts = this.$store.getters.compareProducts;
+        // console.log(this.compareProducts);
+        // let cp = this.compareProducts;
+        // console.log(cp[0]);
+        // console.log(cp[1]);
+
+        // let products1 = cp[0];
+        // let products2 = cp[1];
+
+        console.log(
+            // cp.map((product) => {
+            //     return { productname: ["name", product[0].name, product[1].name] };
+            //     // product.id;
+            // })
+        );
+
+        // console.log(Object.assign(cp));
+        // console.log(Object.keys(products1.colors));
     },
 };
 </script>
