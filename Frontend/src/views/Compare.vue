@@ -1,7 +1,7 @@
 <template>
-    <div class="p-1 mx-auto max-w-7xl sm:mt-5">
-        <div class="p-1 md:mt-0 md:p-5 capitalize">
-            <h1 class="py-3 text-2xl font-semibold">compare products</h1>
+    <div class="mx-auto max-w-7xl sm:mt-5" v-if="this.$store.getters.countCompareProducts == 2">
+        <div class="p-1 md:mt-0 md:p-2 capitalize">
+            <h1 class="py-3 px-3 text-2xl font-semibold"><span class="material-icons mr-3 text-xl font-bold py-2 px-3 bg-primary text-white rounded-full"> compare_arrows </span>compare products</h1>
             <!-- <div class="overflow-auto max-w-7xl"> -->
             <!-- component -->
             <div class="tscroll">
@@ -14,20 +14,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm lg:mb-0">
+                        <tr v-for="brand in brandName" :key="brand" class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm lg:mb-0">
                             <td class="table_content">
-                                Product name
+                                {{ brand[0] }}
                             </td>
                             <td class="table_content">
-                                <p class="w-60 md:w-auto font-semibold text-center">RAZER BLACKSHARK V2 PRO</p>
+                                <p class="w-60 md:w-auto font-semibold text-center">{{ brand[1] }}</p>
                             </td>
                             <td class="table_content">
-                                <p class="w-60 md:w-auto font-semibold text-center">RAZER HUNTSMAN ELITE (LINEAR OPTICAL SWITCH) (EN/TH)</p>
+                                <p class="w-60 md:w-auto font-semibold text-center">{{ brand[2] }}</p>
                             </td>
                         </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
+                        <tr v-for="name in productName" :key="name" class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm lg:mb-0">
                             <td class="table_content">
-                                <p class="whitespace-nowrap">image</p>
+                                {{ name[0] }}
+                            </td>
+                            <td class="table_content">
+                                <p class="w-60 md:w-auto font-semibold text-center">{{ name[1] }}</p>
+                            </td>
+                            <td class="table_content">
+                                <p class="w-60 md:w-auto font-semibold text-center">{{ name[2] }}</p>
+                            </td>
+                        </tr>
+                        <tr v-for="image in images" :key="image" class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
+                            <td class="table_content">
+                                <p class="whitespace-nowrap">{{ image[0] }}</p>
                             </td>
                             <td class="table_content">
                                 <!-- <div class="min-w-max">
@@ -36,7 +47,7 @@
                                 <div>RAZER BLACKSHARK V2 PRO</div> -->
                                 <div class="min-w-max self-start">
                                     <img
-                                        src="http://20.205.201.136/orange-it/image/get/G913-1.png"
+                                        :src="`${this.api}/image/get/${image[1].source}`"
                                         class="w-36 h-36 md:w-60 md:h-60 mx-auto object-contain object-center rounded-md bg-white ring ring-white"
                                         alt="Product image"
                                     />
@@ -45,33 +56,33 @@
                             <td class="table_content">
                                 <div class="min-w-max self-start">
                                     <img
-                                        src="https://kanexkane.com/wp-content/uploads/2020/04/kkblog-cover-review-logitech-g-pro-x-keyboard.jpg"
+                                        :src="`${this.api}/image/get/${image[2].source}`"
                                         class="w-36 h-36 md:w-60 md:h-60 mx-auto object-contain object-center rounded-md bg-white ring ring-white"
                                         alt="Product image"
                                     />
                                 </div>
                             </td>
                         </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
+                        <tr v-for="price in price" :key="price" class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
                             <td class="table_content">
-                                price
+                                {{ price[0] }}
                             </td>
                             <td class="table_content">
-                                00000
+                                {{ passingPrice(price[1]) }}
                             </td>
                             <td class="table_content">
-                                00000
+                                {{ passingPrice(price[2]) }}
                             </td>
                         </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
+                        <tr v-for="color in colors" :key="color" class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
                             <td class="table_content">
-                                <p class="whitespace-nowrap">colors</p>
+                                <p class="whitespace-nowrap">{{ color[0] }}</p>
                             </td>
                             <td class="table_content">
                                 <div class="w-full flex flex-wrap">
-                                    <div v-for="color in colors" :key="color" class="flex flex-col items-center">
+                                    <div v-for="color in color[1]" :key="color" class="flex flex-col items-center">
                                         <div
-                                            class="w-6 h-6 md:w-8 md:h-8 my-1 md:my-2 mx-2 rounded-full"
+                                            class="w-6 h-6 md:w-8 md:h-8 my-1 md:my-2 mx-2 rounded-full border-2"
                                             :style="{
                                                 backgroundColor: `#${color.hexCode}`,
                                             }"
@@ -82,9 +93,9 @@
                             </td>
                             <td class="table_content">
                                 <div class="w-full flex flex-wrap">
-                                    <div v-for="color in colors" :key="color" class="flex flex-col items-center">
+                                    <div v-for="color in color[2]" :key="color" class="flex flex-col items-center">
                                         <div
-                                            class="w-6 h-6 md:w-8 md:h-8 my-1 md:my-2 mx-2 rounded-full"
+                                            class="w-6 h-6 md:w-8 md:h-8 my-1 md:my-2 mx-2 rounded-full border-2"
                                             :style="{
                                                 backgroundColor: `#${color.hexCode}`,
                                             }"
@@ -179,6 +190,17 @@
             </div> -->
         </div>
     </div>
+    <div v-else class="w-screen h-screen">
+        <div class="max-w-lg mx-auto flex flex-col items-center justify-center h-4/5">
+            <div class="material-icons text-5xl p-2 bg-primary text-white rounded-full mb-3">compare_arrows</div>
+            <h1 class="font-semibold text-3xl mb-3 text-center">
+                Please <span class="font-bold"> {{ 2 - this.$store.getters.countCompareProducts }}</span> add products to compare
+            </h1>
+            <p class="max-w-lg mx-auto text-lg text-center">
+                You can add from pages of products in your interested
+            </p>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -205,207 +227,216 @@ export default {
                 },
             ],
             compareProducts: [
-                {
-                    id: 3,
-                    productName: "RAZER DEATHADDER V2",
-                    description: "- True 20,000 DPI Focus+ optical sensor\r\n- Up to 650 inches per second\n  (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy",
-                    price: 1990,
-                    brandName: "Razer",
-                    quantityStock: 20,
-                    discount: null,
-                    colors: [
-                        {
-                            id: 2,
-                            label: "Black",
-                            hexCode: "000000",
-                        },
-                    ],
-                    attributes: [
-                        {
-                            id: 1,
-                            attribute: "Wired/Wireless",
-                        },
-                    ],
-                    images: [
-                        {
-                            id: 9,
-                            source: "DeathAdder-V2-1.png",
-                            label: "DeathAdder-V2-1",
-                            productId: 3,
-                        },
-                        {
-                            id: 10,
-                            source: "DeathAdder-V2-2.png",
-                            label: "DeathAdder-V2-2",
-                            productId: 3,
-                        },
-                        {
-                            id: 11,
-                            source: "DeathAdder-V2-3.png",
-                            label: "DeathAdder-V2-3",
-                            productId: 3,
-                        },
-                        {
-                            id: 12,
-                            source: "DeathAdder-V2-4.png",
-                            label: "DeathAdder-V2-4",
-                            productId: 3,
-                        },
-                        {
-                            id: 13,
-                            source: "DeathAdder-V2-5.png",
-                            label: "DeathAdder-V2-5",
-                            productId: 3,
-                        },
-                    ],
-                    categories: [
-                        {
-                            id: 2,
-                            category: "Mouse",
-                            parentId: null,
-                        },
-                    ],
-                    productsHasAttributes: [
-                        {
-                            id: 11,
-                            attributeId: 1,
-                            productId: 3,
-                            attribute_value: "Wired",
-                        },
-                    ],
-                    ratings: [],
-                },
-                {
-                    id: 2,
-                    productName: "RAZER HUNTSMAN ELITE (LINEAR OPTICAL SWITCH) (EN/TH)",
-                    description: "- Razerâ„¢ Opto-Mechanical \n  Switch with 45 G actuation force\r\n- 100 million keystroke lifespan\r\n- Chroma backlighting\n  with 16.8 million customizable color options",
-                    price: 5990,
-                    brandName: "Razer",
-                    quantityStock: 40,
-                    discount: null,
-                    colors: [
-                        {
-                            id: 2,
-                            label: "Black",
-                            hexCode: "000000",
-                        },
-                        {
-                            id: 3,
-                            label: "White",
-                            hexCode: "FFFFFF",
-                        },
-                    ],
-                    attributes: [
-                        {
-                            id: 1,
-                            attribute: "Wired/Wireless",
-                        },
-                        {
-                            id: 2,
-                            attribute: "Keyboard type",
-                        },
-                        {
-                            id: 3,
-                            attribute: "Keyboard size",
-                        },
-                        {
-                            id: 4,
-                            attribute: "Switch",
-                        },
-                        {
-                            id: 5,
-                            attribute: "Sound",
-                        },
-                    ],
-                    images: [
-                        {
-                            id: 5,
-                            source: "hmel-1-1.png",
-                            label: "hmel-1-1",
-                            productId: 2,
-                        },
-                        {
-                            id: 6,
-                            source: "hmel-1-2.png",
-                            label: "hmel-1-2",
-                            productId: 2,
-                        },
-                        {
-                            id: 7,
-                            source: "hmel-1-3.png",
-                            label: "hmel-1-3",
-                            productId: 2,
-                        },
-                        {
-                            id: 8,
-                            source: "hmel-1-4.png",
-                            label: "hmel-1-4",
-                            productId: 2,
-                        },
-                    ],
-                    categories: [
-                        {
-                            id: 1,
-                            category: "Keyboard",
-                            parentId: null,
-                        },
-                    ],
-                    productsHasAttributes: [
-                        {
-                            id: 6,
-                            attributeId: 1,
-                            productId: 2,
-                            attribute_value: "Wired",
-                        },
-                        {
-                            id: 7,
-                            attributeId: 2,
-                            productId: 2,
-                            attribute_value: "Mecha-Optical",
-                        },
-                        {
-                            id: 8,
-                            attributeId: 3,
-                            productId: 2,
-                            attribute_value: "Full-Size",
-                        },
-                        {
-                            id: 9,
-                            attributeId: 4,
-                            productId: 2,
-                            attribute_value: "Razer",
-                        },
-                        {
-                            id: 10,
-                            attributeId: 5,
-                            productId: 2,
-                            attribute_value: "Clicky",
-                        },
-                    ],
-                    ratings: [],
-                },
+                // {
+                //     id: 3,
+                //     productName: "RAZER DEATHADDER V2",
+                //     description: "- True 20,000 DPI Focus+ optical sensor\r\n- Up to 650 inches per second\n  (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy",
+                //     price: 1990,
+                //     brandName: "Razer",
+                //     quantityStock: 20,
+                //     discount: null,
+                //     colors: [
+                //         {
+                //             id: 2,
+                //             label: "Black",
+                //             hexCode: "000000",
+                //         },
+                //     ],
+                //     attributes: [
+                //         {
+                //             id: 1,
+                //             attribute: "Wired/Wireless",
+                //         },
+                //     ],
+                //     images: [
+                //         {
+                //             id: 9,
+                //             source: "DeathAdder-V2-1.png",
+                //             label: "DeathAdder-V2-1",
+                //             productId: 3,
+                //         },
+                //         {
+                //             id: 10,
+                //             source: "DeathAdder-V2-2.png",
+                //             label: "DeathAdder-V2-2",
+                //             productId: 3,
+                //         },
+                //         {
+                //             id: 11,
+                //             source: "DeathAdder-V2-3.png",
+                //             label: "DeathAdder-V2-3",
+                //             productId: 3,
+                //         },
+                //         {
+                //             id: 12,
+                //             source: "DeathAdder-V2-4.png",
+                //             label: "DeathAdder-V2-4",
+                //             productId: 3,
+                //         },
+                //         {
+                //             id: 13,
+                //             source: "DeathAdder-V2-5.png",
+                //             label: "DeathAdder-V2-5",
+                //             productId: 3,
+                //         },
+                //     ],
+                //     categories: [
+                //         {
+                //             id: 2,
+                //             category: "Mouse",
+                //             parentId: null,
+                //         },
+                //     ],
+                //     productsHasAttributes: [
+                //         {
+                //             id: 11,
+                //             attributeId: 1,
+                //             productId: 3,
+                //             attribute_value: "Wired",
+                //         },
+                //     ],
+                //     ratings: [],
+                // },
+                // {
+                //     id: 2,
+                //     productName: "RAZER HUNTSMAN ELITE (LINEAR OPTICAL SWITCH) (EN/TH)",
+                //     description: "- Razerâ„¢ Opto-Mechanical \n  Switch with 45 G actuation force\r\n- 100 million keystroke lifespan\r\n- Chroma backlighting\n  with 16.8 million customizable color options",
+                //     price: 5990,
+                //     brandName: "Razer",
+                //     quantityStock: 40,
+                //     discount: null,
+                //     colors: [
+                //         {
+                //             id: 2,
+                //             label: "Black",
+                //             hexCode: "000000",
+                //         },
+                //         {
+                //             id: 3,
+                //             label: "White",
+                //             hexCode: "FFFFFF",
+                //         },
+                //     ],
+                //     attributes: [
+                //         {
+                //             id: 1,
+                //             attribute: "Wired/Wireless",
+                //         },
+                //         {
+                //             id: 2,
+                //             attribute: "Keyboard type",
+                //         },
+                //         {
+                //             id: 3,
+                //             attribute: "Keyboard size",
+                //         },
+                //         {
+                //             id: 4,
+                //             attribute: "Switch",
+                //         },
+                //         {
+                //             id: 5,
+                //             attribute: "Sound",
+                //         },
+                //     ],
+                //     images: [
+                //         {
+                //             id: 5,
+                //             source: "hmel-1-1.png",
+                //             label: "hmel-1-1",
+                //             productId: 2,
+                //         },
+                //         {
+                //             id: 6,
+                //             source: "hmel-1-2.png",
+                //             label: "hmel-1-2",
+                //             productId: 2,
+                //         },
+                //         {
+                //             id: 7,
+                //             source: "hmel-1-3.png",
+                //             label: "hmel-1-3",
+                //             productId: 2,
+                //         },
+                //         {
+                //             id: 8,
+                //             source: "hmel-1-4.png",
+                //             label: "hmel-1-4",
+                //             productId: 2,
+                //         },
+                //     ],
+                //     categories: [
+                //         {
+                //             id: 1,
+                //             category: "Keyboard",
+                //             parentId: null,
+                //         },
+                //     ],
+                //     productsHasAttributes: [
+                //         {
+                //             id: 6,
+                //             attributeId: 1,
+                //             productId: 2,
+                //             attribute_value: "Wired",
+                //         },
+                //         {
+                //             id: 7,
+                //             attributeId: 2,
+                //             productId: 2,
+                //             attribute_value: "Mecha-Optical",
+                //         },
+                //         {
+                //             id: 8,
+                //             attributeId: 3,
+                //             productId: 2,
+                //             attribute_value: "Full-Size",
+                //         },
+                //         {
+                //             id: 9,
+                //             attributeId: 4,
+                //             productId: 2,
+                //             attribute_value: "Razer",
+                //         },
+                //         {
+                //             id: 10,
+                //             attributeId: 5,
+                //             productId: 2,
+                //             attribute_value: "Clicky",
+                //         },
+                //     ],
+                //     ratings: [],
+                // },
             ],
+            api: process.env.VUE_APP_API,
+            brandName: {},
+            productName: {},
+            images: {},
+            price: {},
         };
     },
+    methods: {
+        passingPrice(price) {
+            return new Intl.NumberFormat("th-TH", {
+                style: "currency",
+                currency: "THB",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+            }).format(price);
+        },
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
+    },
     created() {
-        // this.compareProducts = this.$store.getters.compareProducts;
-        // console.log(this.compareProducts);
-        // let cp = this.compareProducts;
-        // console.log(cp[0]);
-        // console.log(cp[1]);
-
-        // let products1 = cp[0];
-        // let products2 = cp[1];
-
-        console.log(
-            // cp.map((product) => {
-            //     return { productname: ["name", product[0].name, product[1].name] };
-            //     // product.id;
-            // })
-        );
-
-        // console.log(Object.assign(cp));
-        // console.log(Object.keys(products1.colors));
+        this.scrollToTop();
+        if (this.$store.getters.countCompareProducts == 2) {
+            this.compareProducts = this.$store.getters.compareProducts;
+            this.brandName = { brandName: ["brand", this.compareProducts[0].brandName, this.compareProducts[1].brandName] };
+            this.productName = { productName: ["name", this.compareProducts[0].productName, this.compareProducts[1].productName] };
+            this.images = { images: ["images", this.compareProducts[0].images[0], this.compareProducts[1].images[0]] };
+            this.price = { price: ["price", this.compareProducts[0].price, this.compareProducts[1].price] };
+            this.colors = { colors: ["colors", this.compareProducts[0].colors, this.compareProducts[1].colors] };
+        }
     },
 };
 </script>
