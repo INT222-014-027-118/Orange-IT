@@ -63,8 +63,8 @@ export default {
             }
         },
         loadProduct() {
-            this.$store.dispatch("loadProducts");
-            this.productslist = this.$store.getters.products;
+            this.$store.dispatch("loadProductForSearch");
+            this.productslist = this.$store.getters.productForSearch;
         },
     },
     computed: {

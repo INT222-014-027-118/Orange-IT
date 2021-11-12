@@ -22,15 +22,15 @@
                                         getAllProduct();
                                         $router.push({ name: 'resultProducts', params: { categoryName: 'allproduct' } });
                                     "
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="all" /> all</label
+                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="allproduct" /> all</label
                                 >
                                 <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200" @click="$router.push({ name: 'resultProducts', params: { categoryName: 'headset' } })"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="headphone" /> headphone</label
+                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="headset" /> headset</label
                                 >
                                 <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
                                     ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="speaker" /> speaker</label
                                 >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
+                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200" @click="$router.push({ name: 'resultProducts', params: { categoryName: 'keyboard' } })"
                                     ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="keyboard" /> keyboard</label
                                 >
                                 <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
@@ -116,6 +116,7 @@ export default {
             showPrice: false,
             categorysName: [],
             loading: false,
+            test: ["headset", "speaker", "mouse", "computers", "gaming gear", "smart gadget", "moblie accessories"],
         };
     },
     props: {
@@ -131,7 +132,6 @@ export default {
         },
         getAllProduct() {
             this.$store.getters.products;
-            console.log(this.$store.getters.products);
         },
     },
     mounted() {
