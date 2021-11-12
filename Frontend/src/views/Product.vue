@@ -80,9 +80,9 @@
                     <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md capitalize">
                         description:
                     </p>
-                    <p class="px-5 md:px-8 py-5 leading-relaxed" :class="[product.description == '' ? 'text-black text-opacity-50' : '']">
+                    <pre class="px-5 md:px-8 py-5 leading-relaxed" :class="[product.description == '' ? 'text-black text-opacity-50' : '']">
                         {{ product.description == "" ? "No description" : product.description }}
-                    </p>
+                    </pre>
                 </div>
 
                 <div class="mb-5 w-full col-span-3">

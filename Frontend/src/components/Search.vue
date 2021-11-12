@@ -1,11 +1,37 @@
 <template>
-    <div class="flex items-center rounded-3xl relative">
-        <input
-            type="search"
-            v-model="text_Search"
-            class="mx-0.5 pt-1 pb-1 pl-10 pr-5 md:pl-10 rounded-2xl focus:outline-none w-full ring-2 ring-primary  focus:bg-gray-50 dark:focus:bg-dark_secondary  bg-gray-100 dark:bg-dark_secondary"
-            @keypress.enter="gogo"
-        />
+    <div class="items-center rounded-3xl  inline-flex">
+        <button @blur="showBoxResult = false" @focus="loadProduct" class="w-full">
+            <input
+                type="search"
+                v-model="text_Search"
+                class="mx-0.5 pt-1 pb-1 pl-10 md:pl-10 rounded-2xl focus:outline-none w-full ring-2 ring-primary focus:bg-gray-50 dark:focus:bg-dark_secondary bg-gray-100 dark:bg-dark_secondary text-gray-500 focus:text-gray-100 "
+                @keypress.enter="goToProduct"
+                @focus="loadProduct"
+            />
+            <div
+                class="absolute top-10 -left-2 sm:left-0 w-screen sm:w-full bg-white dark:bg-dark_tertiary rounded-lg ring-1 ring-primary shadow-md"
+                v-show="resultSeach.length !== 0 && text_Search !== '' && showBoxResult == true"
+            >
+                <div class="px-1 pb-1">
+                    <button
+                        v-for="(product, index) in resultSeach"
+                        :key="product"
+                        class="hover:bg-gray-100 rounded-md px-3 py-1 mt-1 text-left truncate cursor-pointer inline-block w-full"
+                        :class="[index == 0 ? 'bg-primary text-white hover:bg-primaryfocus' : 'hover:bg-secondary hover:text-white text-black dark:text-gray-50']"
+                        @click="
+                            showBoxResult = false;
+                            $router.push({
+                                name: 'Product',
+                                params: { productName: product.productName == '' ? 'Product name is not defined' : product.productName, productId: product.id },
+                            });
+                        "
+                        @blur="showBoxResult = false"
+                    >
+                        {{ product.productName }}
+                    </button>
+                </div>
+            </div>
+        </button>
         <button class="rounded-3xl px-3 absolute">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" class="fill-current text-primary">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -14,15 +40,6 @@
                 />
             </svg>
         </button>
-        <div class="absolute top-10 w-full bg-red-100 rounded-lg" v-show="text_Search != ''">
-            <div class="p-2">
-                <p>text</p>
-                <p>text</p>
-                <p>text</p>
-                <p>text</p>
-                <p>text</p>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -30,12 +47,31 @@
 export default {
     data() {
         return {
+            showBoxResult: false,
             text_Search: "",
+            productslist: [],
         };
     },
     methods: {
-        gogo() {
+        goToProduct() {
             console.log(this.text_Search);
+            this.$router.push({
+                name: "Product",
+                params: { productName: this.resultSeach[0].productName == "" ? "Product name is not defined" : this.resultSeach[0].productName, productId: this.resultSeach[0].id },
+            });
+            this.showBoxResult = false;
+        },
+        loadProduct() {
+            this.$store.dispatch("loadProducts");
+            this.productslist = this.$store.getters.products;
+        },
+    },
+    computed: {
+        resultSeach() {
+            return this.productslist.filter((product) => {
+                this.showBoxResult = true;
+                return product.productName.toLowerCase().includes(this.text_Search.toLowerCase());
+            });
         },
     },
     created() {},
@@ -45,13 +81,14 @@ export default {
 <style>
 input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
-    height: 1em;
-    width: 1em;
+    height: 1.5em;
+    width: 1.5em;
     border-radius: 50em;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='rgb(236, 105, 7)'  viewBox='0 0 512 512'%3E%3Cpath d='M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z'/%3E%3C/svg%3E");
     background-size: contain;
     opacity: 0;
     pointer-events: none;
+    cursor: pointer;
 }
 
 input[type="search"]:focus::-webkit-search-cancel-button {

@@ -192,7 +192,7 @@
     </div>
     <div v-else class="w-screen h-screen">
         <div class="max-w-lg mx-auto flex flex-col items-center justify-center h-4/5">
-            <div class="material-icons text-5xl p-2 bg-primary text-white rounded-full mb-3">compare_arrows</div>
+            <div class="material-icons text-5xl p-2 bg-primary text-white rounded-full mb-3 select-none">compare_arrows</div>
             <h1 class="font-semibold text-3xl mb-3 text-center">
                 Please <span class="font-bold"> {{ 2 - this.$store.getters.countCompareProducts }}</span> add products to compare
             </h1>
