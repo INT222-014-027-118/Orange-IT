@@ -247,9 +247,6 @@
 <script>
 import Search from "../components/Search.vue";
 export default {
-    props: {
-        change: Boolean,
-    },
     components: {
         Search,
     },

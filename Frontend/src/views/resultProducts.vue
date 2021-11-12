@@ -24,30 +24,15 @@
                                     "
                                     ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="allproduct" /> all</label
                                 >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200" @click="$router.push({ name: 'resultProducts', params: { categoryName: 'headset' } })"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="headset" /> headset</label
+                                <div
+                                    id=""
+                                    class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
+                                    v-for="cat in categoriesList"
+                                    :key="cat"
+                                    @click="$router.push({ name: 'resultProducts', params: { categoryName: cat } })"
                                 >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="speaker" /> speaker</label
-                                >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200" @click="$router.push({ name: 'resultProducts', params: { categoryName: 'keyboard' } })"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="keyboard" /> keyboard</label
-                                >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="mouse" /> mouse</label
-                                >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="computers" /> computers</label
-                                >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="gaming gear" /> gaming gear</label
-                                >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="smart gadget" /> smart gadget</label
-                                >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="moblie accessories" /> moblie accessories</label
-                                >
+                                    <input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" :value="cat" /> {{ cat }}
+                                </div>
                             </div>
                         </div>
                         <div class="border-b-2">
@@ -84,30 +69,6 @@
                                 <button type="button" class="py-1 px-2 h-8 w-3/12 self-end bg-primary hover:bg-primaryfocus rounded-md text-white">OK</button>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex flex-col bg-white w-1/3 p-1 border-r-2">
-                                <div
-                                    class="px-2 py-1 cursor-pointer hover:bg-yellow-200 hover:text-black rounded-sm"
-                                    :class="[selectRootCat.category === category.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : '']"
-                                    v-for="category in $store.getters.rootCategories"
-                                    :key="category.id"
-                                    @click="chooseRootCategory(category)"
-                                >
-                                    {{ category.category }}
-                                </div>
-                            </div>
-                            <div class="flex flex-col bg-white w-1/3 p-1 border-r-2">
-                                <div
-                                    class="px-2 py-1 cursor-pointer hover:bg-yellow-200 hover:text-black rounded-sm"
-                                    :class="[selectChildCat.category === childcat.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : '']"
-                                    v-for="childcat in $store.getters.childCategories(`${this.selectRootCat.id}`)"
-                                    :key="childcat.id"
-                                    @click="chooseSubCategory(childcat)"
-                                >
-                                    {{ childcat.category }}
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -142,6 +103,7 @@ export default {
             loading: false,
             test: ["headset", "speaker", "mouse", "computers", "gaming gear", "smart gadget", "moblie accessories"],
 
+            categoriesList: {},
             selectRootCat: {},
             selectChildCat: {},
         };
@@ -160,17 +122,27 @@ export default {
         getAllProduct() {
             this.$store.getters.products;
         },
+        chooseRootCategory(category) {
+            this.selectRootCat = category;
+            this.selectChildCat = {};
+        },
+        chooseSubCategory(category) {
+            this.selectChildCat = category;
+        },
     },
     mounted() {
         this.$store.getters.products;
+        this.categoriesList = this.$store.getters.categories;
     },
-    created() {
+    async created() {
         this.categorysName.push(this.categoryName);
         if (this.categoryName !== "allproduct") {
             this.$store.dispatch("loadProductsByCategory", this.categoryName);
         } else {
             this.$store.dispatch("loadProducts");
         }
+        this.$store.dispatch("loadCategories");
+        this.categoriesList = await this.$store.getters.sortCategories;
     },
 };
 </script>

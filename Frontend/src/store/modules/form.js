@@ -43,6 +43,16 @@ const getters = {
             }
         })
     },
+    sortCategories: (state, getters) => {
+        let categoriesArray = []
+        for (let i = 0; i < getters.setCategories.length; i++) {
+            categoriesArray.push(getters.setCategories[i].category)
+            for (let j = 0; j < getters.setCategories[i].child.length; j++) {
+                categoriesArray.push(getters.setCategories[i].child[j][0].category)
+            }
+        }
+        return categoriesArray
+    },
     categories: state => state.categories,
     brands: state => state.brands,
     specs: state => state.specs
@@ -80,12 +90,25 @@ const actions = {
                 console.log(error)
             })
     },
+    loadCategories({
+        commit
+    }) {
+        axios
+            .get(get_categories)
+            .then(data => {
+                let categories = data.data
+                commit('SET_CATEGORIES', categories)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },
     uploadImages(context, images) {
-        for(let i=0 ; i < images.length ; i++ ){
+        for (let i = 0; i < images.length; i++) {
             let data = new FormData();
             data.append("orange", images[i]);
             axios
-                .post(post_image,data)
+                .post(post_image, data)
                 .then(response => {
                     console.log("response: ", response)
                 })
