@@ -1,18 +1,18 @@
 import axios from 'axios'
+import router from '../../router'
 
 const state = {
     userInfo: null,
     userId: localStorage.getItem('userId'),
     addresses: [],
-    activeNavBar: false
-
+    isAdmin: false,
 }
 
 const getters = {
     userInfo: state => state.userInfo,
     addresses: state => state.addresses,
     defaultAddress: state => state.addresses[0],
-    activeNavBar: state => state.activeNavBar 
+    isAdmin: state => state.isAdmin ,
 }
 
 const actions = {
@@ -24,6 +24,10 @@ const actions = {
                 .get(`${process.env.VUE_APP_API}/user/${state.userId}`)
                 .then(response => {
                     commit('setUserInfo', response.data)
+                    commit('setIsAdmin', response.data.role[0].name === 'Admin'?true:false)
+                    if(state.isAdmin){
+                        router.push('/admin')
+                    }
                 })
         }
     },
@@ -53,13 +57,13 @@ const mutations = {
     setUserInfo(state, data) {
         state.userInfo = data
     },
+    setIsAdmin(state, data) {
+        state.isAdmin = data
+    },
     setLoginStatus(state, data) {
         state.loginStatus = data
     },
     setAddresses(state, data) {
-        state.addresses = data
-    },
-    setActiveNavBar(state, data) {
         state.addresses = data
     },
     addAddress(state, address) {

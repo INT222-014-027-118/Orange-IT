@@ -36,8 +36,11 @@
                         <div class="mb-6">
                             <button type="submit" class="w-full px-3 py-4 text-white bg-primary rounded-md focus:bg-secondary focus:outline-none">Sign in</button>
                         </div>
-                        <p class="text-sm text-center text-gray-400 " >
-                            Don&#x27;t have an account yet? <a @click="$router.push('/register')" class="cursor-pointer text-indigo-400 focus:outline-none focus:underline focus:text-indigo-500 dark:focus:border-indigo-800">Sign up</a>.
+                        <p class="text-sm text-center text-gray-400 ">
+                            Don&#x27;t have an account yet?
+                            <a @click="$router.push('/register')" class="cursor-pointer text-indigo-400 focus:outline-none focus:underline focus:text-indigo-500 dark:focus:border-indigo-800"
+                                >Sign up</a
+                            >.
                         </p>
                     </form>
                 </div>
@@ -46,38 +49,42 @@
     </div>
 </template>
 <script>
-import axios from "axios"
+import axios from "axios";
 export default {
     data() {
         return {
-            username:'',
-            password:''
-        }
+            username: "",
+            password: "",
+        };
     },
     methods: {
-        login(){
+        login() {
             axios
-                .post(`${process.env.VUE_APP_API}/authenticate`,{userName:this.username,userPassword:this.password})
-                .then(response => {
-                    if(response.status === 200){
-                        let userinfo = response.data
-                        localStorage.setItem('token',userinfo.jwtToken) 
-                        localStorage.setItem('userId',userinfo.user.id)
-                        this.$store.commit('setUserInfo', userinfo.user);
-                        let isUserRole = response.data.user.role[0].name === 'User'?true:false
-                        this.$store.commit('setActiveNavBar', isUserRole);
+                .post(`${process.env.VUE_APP_API}/authenticate`, { userName: this.username, userPassword: this.password })
+                .then((response) => {
+                    if (response.status === 200) {
+                        let userinfo = response.data;
+                        localStorage.setItem("token", userinfo.jwtToken);
+                        localStorage.setItem("userId", userinfo.user.id);
+                        this.$store.commit("setUserInfo", userinfo.user);
+                        let isAdmin = userinfo.user.role[0].name === "Admin" ? true : false;
+                        this.$store.commit("setIsAdmin", isAdmin);
                         this.$store.dispatch("loadCartData");
-                        this.$router.push('/')
+                        this.$router.push("/");
+                        return isAdmin;
                     }
                 })
-                .catch(error => {
-                    alert('Fail!')
-                    console.log(error)
+                .then((isAdmin) => {
+                    if (isAdmin) {
+                        this.$router.push("/admin");
+                    }
                 })
-        }
+                .catch((error) => {
+                    alert("Fail!");
+                    console.log(error);
+                });
+        },
     },
-
-
 };
 </script>
 
