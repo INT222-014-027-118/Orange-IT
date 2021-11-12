@@ -15,7 +15,16 @@
                                 <span class="font-semibold">Category</span> <span class="text-base font-bold">+</span>
                             </div>
                             <div class="p-1 mb-3 space-y-2 rounded-md bg-gray-50" v-show="showCat">
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
+                                <label
+                                    id=""
+                                    class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
+                                    @click="
+                                        getAllProduct();
+                                        $router.push({ name: 'resultProducts', params: { categoryName: 'allproduct' } });
+                                    "
+                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="all" /> all</label
+                                >
+                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200" @click="$router.push({ name: 'resultProducts', params: { categoryName: 'headset' } })"
                                     ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="headphone" /> headphone</label
                                 >
                                 <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
@@ -46,9 +55,15 @@
                                 <span class="font-semibold">Type</span> <span class="text-base font-bold">+</span>
                             </div>
                             <div class="p-1 mb-3 space-y-2 rounded-md bg-gray-50" v-show="showType">
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" /> </label>
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" /> </label>
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" /> </label>
+                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
+                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" />
+                                </label>
+                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
+                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" />
+                                </label>
+                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
+                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" />
+                                </label>
                             </div>
                         </div>
                         <div class="border-b-2">
@@ -106,10 +121,7 @@ export default {
     props: {
         categoryName: String,
     },
-    created() {
-        this.categorysName.push(this.categoryName);
-        this.$store.dispatch("loadProductsByCategory", this.categoryName);
-    },
+
     methods: {
         scrollToTop() {
             window.scrollTo(0, 0);
@@ -117,9 +129,21 @@ export default {
         endload() {
             this.loading = true;
         },
+        getAllProduct() {
+            this.$store.getters.products;
+            console.log(this.$store.getters.products);
+        },
     },
     mounted() {
         this.$store.getters.products;
+    },
+    created() {
+        this.categorysName.push(this.categoryName);
+        if (this.categoryName !== "allproduct") {
+            this.$store.dispatch("loadProductsByCategory", this.categoryName);
+        } else {
+            this.$store.dispatch("loadProducts");
+        }
     },
 };
 </script>

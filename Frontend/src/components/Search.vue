@@ -4,7 +4,7 @@
             <input
                 type="search"
                 v-model="text_Search"
-                class="mx-0.5 pt-1 pb-1 pl-10 md:pl-10 rounded-2xl focus:outline-none w-full ring-2 ring-primary focus:bg-gray-50 dark:focus:bg-dark_secondary bg-gray-100 dark:bg-dark_secondary text-gray-500 focus:text-gray-100 "
+                class="mx-0.5 pt-1 pb-1 pl-10 md:pl-10 rounded-2xl focus:outline-none w-full ring-2 ring-primary focus:bg-gray-50 dark:focus:bg-dark_secondary bg-gray-100 dark:bg-dark_secondary"
                 @keypress.enter="goToProduct"
                 @focus="loadProduct"
             />
@@ -54,12 +54,13 @@ export default {
     },
     methods: {
         goToProduct() {
-            console.log(this.text_Search);
-            this.$router.push({
-                name: "Product",
-                params: { productName: this.resultSeach[0].productName == "" ? "Product name is not defined" : this.resultSeach[0].productName, productId: this.resultSeach[0].id },
-            });
-            this.showBoxResult = false;
+            if (this.resultSeach.length !== 0) {
+                this.$router.push({
+                    name: "Product",
+                    params: { productName: this.resultSeach[0].productName == "" ? "Product name is not defined" : this.resultSeach[0].productName, productId: this.resultSeach[0].id },
+                });
+                this.showBoxResult = false;
+            }
         },
         loadProduct() {
             this.$store.dispatch("loadProducts");

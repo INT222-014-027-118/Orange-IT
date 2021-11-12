@@ -3,6 +3,7 @@ import axios from 'axios'
 const api = process.env.VUE_APP_API
 const get_list = `${api}/product/list`
 const get_by_category = `${api}/product/getByCategory`
+// const get_by_name = `${api}/product/getByBrandName`
 const get_categories = `${api}/category/list`
 // const get_product_by_name = `${api}/getByName/`
 
