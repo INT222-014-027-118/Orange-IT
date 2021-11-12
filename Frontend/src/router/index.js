@@ -3,6 +3,7 @@ import {
   createWebHistory
 } from 'vue-router'
 import Home from '../views/Home.vue'
+import store from '../store'
 
 const routes = [{
     path: '/',
@@ -16,7 +17,14 @@ const routes = [{
   {
     path: '/admin',
     name: 'Admin',
-    component: () => import( /* webpackChunkName: "admin" */ '../views/admin/adminHome.vue')
+    component: () => import( /* webpackChunkName: "admin" */ '../views/admin/adminHome.vue'),
+    beforeEnter: (to, from, next) => {
+      if (store.getters['isAdmin']) {
+        next()
+      } else {
+        next('/')
+      }
+    }
   },
   {
     path: '/about',

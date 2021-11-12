@@ -1,5 +1,5 @@
 <template>
-    <div class="relative">
+    <div class="relative" v-if="activeNavbar">
         <div class="fixed top-0 z-50 w-full bg-white shadow-sm select-none dark:bg-dark_secondary dark:text-gray-100 border-b border-primary dark:border-gray-600">
             <div class="flex items-center justify-around px-2 mx-auto max-w-7xl h-14 sm:h-16 md:h-20 lg:h-20 sm:px-0">
                 <div class="hidden sm:inline-flex lg:w-3/12">
@@ -247,9 +247,6 @@
 <script>
 import Search from "../components/Search.vue";
 export default {
-    props: {
-        change: Boolean,
-    },
     components: {
         Search,
     },
@@ -305,6 +302,11 @@ export default {
                 maximumFractionDigits: 2,
             }).format(price);
         },
+    },
+    computed:{
+        activeNavbar(){
+            return false
+        }
     },
     created() {},
 };
