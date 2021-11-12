@@ -84,6 +84,30 @@
                                 <button type="button" class="py-1 px-2 h-8 w-3/12 self-end bg-primary hover:bg-primaryfocus rounded-md text-white">OK</button>
                             </div>
                         </div>
+                        <div>
+                            <div class="flex flex-col bg-white w-1/3 p-1 border-r-2">
+                                <div
+                                    class="px-2 py-1 cursor-pointer hover:bg-yellow-200 hover:text-black rounded-sm"
+                                    :class="[selectRootCat.category === category.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : '']"
+                                    v-for="category in $store.getters.rootCategories"
+                                    :key="category.id"
+                                    @click="chooseRootCategory(category)"
+                                >
+                                    {{ category.category }}
+                                </div>
+                            </div>
+                            <div class="flex flex-col bg-white w-1/3 p-1 border-r-2">
+                                <div
+                                    class="px-2 py-1 cursor-pointer hover:bg-yellow-200 hover:text-black rounded-sm"
+                                    :class="[selectChildCat.category === childcat.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : '']"
+                                    v-for="childcat in $store.getters.childCategories(`${this.selectRootCat.id}`)"
+                                    :key="childcat.id"
+                                    @click="chooseSubCategory(childcat)"
+                                >
+                                    {{ childcat.category }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,6 +141,9 @@ export default {
             categorysName: [],
             loading: false,
             test: ["headset", "speaker", "mouse", "computers", "gaming gear", "smart gadget", "moblie accessories"],
+
+            selectRootCat: {},
+            selectChildCat: {},
         };
     },
     props: {

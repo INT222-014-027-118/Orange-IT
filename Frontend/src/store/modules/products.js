@@ -11,7 +11,7 @@ const get_categories = `${api}/category/list`
 
 const state = {
     products: [],
-    productForSearch: [],
+    // productForSearch: [],
     categoriesForUser: [],
 }
 
@@ -21,7 +21,7 @@ const getters = {
     rootCategoriesForUser: state => {
         return state.categoriesForUser.filter((element) => element.parentId === null)
     },
-    productForSearch: state => state.productForSearch
+    // productForSearch: state => state.productForSearch
 }
 
 const actions = {
@@ -60,19 +60,19 @@ const actions = {
                 console.log(error)
             })
     },
-    async loadProductForSearch({
-        commit
-    }) {
-        axios
-            .get(`${get_list}`)
-            .then(res => {
-                let products = res.data
-                commit('SET_FOR_SEARCH_PRODUCTS', products)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    },
+    // async loadProductForSearch({
+    //     commit
+    // }) {
+    //     axios
+    //         .get(`${get_list}`)
+    //         .then(res => {
+    //             let products = res.data
+    //             commit('SET_FOR_SEARCH_PRODUCTS', products)
+    //         })
+    //         .catch(error => {
+    //             console.log(error)
+    //         })
+    // },
 }
 
 
@@ -80,9 +80,9 @@ const mutations = {
     SET_PRODUCTS(state, payload) {
         state.products = payload
     },
-    SET_FOR_SEARCH_PRODUCTS(state, payload) {
-        state.productForSearch = payload
-    },
+    // SET_FOR_SEARCH_PRODUCTS(state, payload) {
+    //     state.productForSearch = payload
+    // },
     SET_CATEGORIESFORUSER(state, payload) {
         state.categoriesForUser = payload
     },

@@ -10,13 +10,13 @@
             />
             <div
                 class="absolute top-10 -left-2 sm:left-0 w-screen sm:w-full bg-white dark:bg-dark_tertiary rounded-lg ring-1 ring-primary shadow-md"
-                v-show="resultSeach.length !== 0 && text_Search !== '' && showBoxResult == true"
+                v-show="showBoxResult == true && text_Search !== '' ? ((this.resultSeachName.length !== 0) | (this.resultSeachCategory !== 0) ? true : false) : false"
             >
                 <div class="px-1 pb-1">
                     <button
-                        v-for="(product, index) in resultSeach"
+                        v-for="(product, index) in resultSeachName"
                         :key="product"
-                        class="hover:bg-gray-100 rounded-md px-3 py-1 mt-1 text-left truncate cursor-pointer inline-block w-full"
+                        class="rounded-md px-3 py-1 mt-1 text-left truncate cursor-pointer inline-block w-full"
                         :class="[index == 0 ? 'bg-primary text-white hover:bg-primaryfocus' : 'hover:bg-secondary hover:text-white text-black dark:text-gray-50']"
                         @click="
                             showBoxResult = false;
@@ -29,6 +29,17 @@
                     >
                         {{ product.productName }}
                     </button>
+                    <button
+                        v-for="(cat, index) in resultSeachCategory"
+                        :key="cat"
+                        class="rounded-md px-3 py-1 mt-1 text-left truncate cursor-pointer inline-block w-full"
+                        :class="[resultSeachName.length == 0 && index == 0 ? 'bg-primary text-white hover:bg-primaryfocus' : 'hover:bg-secondary hover:text-white text-black dark:text-gray-50']"
+                    >
+                        {{ cat.category }}
+                    </button>
+                    <div v-show="this.resultSeachName.length == 0 && this.resultSeachCategory == 0" class="cursor-default">
+                        no result
+                    </div>
                 </div>
             </div>
         </button>
@@ -44,35 +55,64 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
     data() {
         return {
             showBoxResult: false,
             text_Search: "",
             productslist: [],
+            categorylist: [],
+            api: process.env.VUE_APP_API,
         };
     },
     methods: {
         goToProduct() {
-            if (this.resultSeach.length !== 0) {
+            if (this.resultSeachName.length !== 0) {
                 this.$router.push({
                     name: "Product",
-                    params: { productName: this.resultSeach[0].productName == "" ? "Product name is not defined" : this.resultSeach[0].productName, productId: this.resultSeach[0].id },
+                    params: { productName: this.resultSeachName[0].productName == "" ? "Product name is not defined" : this.resultSeachName[0].productName, productId: this.resultSeachName[0].id },
                 });
                 this.showBoxResult = false;
+            } else if (this.resultSeachCategory.length !== 0) {
+                this.$router.push({ name: "resultProducts", params: { categoryName: this.resultSeachCategory[0].category } });
             }
         },
         loadProduct() {
-            this.$store.dispatch("loadProductForSearch");
-            this.productslist = this.$store.getters.productForSearch;
+            axios
+                .get(`${this.api}/product/list`)
+                .then((res) => {
+                    this.productslist = res.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            axios
+                .get(`${this.api}/category/list`)
+                .then((res) => {
+                    this.categorylist = res.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
     },
     computed: {
-        resultSeach() {
-            return this.productslist.filter((product) => {
+        resultSeachName() {
+            let result = this.productslist.filter((product) => {
                 this.showBoxResult = true;
                 return product.productName.toLowerCase().includes(this.text_Search.toLowerCase());
             });
+            result.splice(5);
+            return result;
+        },
+        resultSeachCategory() {
+            let result = this.categorylist.filter((cat) => {
+                this.showBoxResult = true;
+                return cat.category.toLowerCase().includes(this.text_Search.toLowerCase());
+            });
+            result.splice(5);
+            return result;
         },
     },
     created() {},
