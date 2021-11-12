@@ -44,7 +44,9 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-2 -right-3 ring-2 ring-white dark:ring-dark_secondary"> {{this.$store.getters.countCompareProducts == 2?'VS':''}}</div>
+                            <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-2 -right-3 ring-2 ring-white dark:ring-dark_secondary">
+                                {{ this.$store.getters.countCompareProducts == 2 ? "VS" : "" }}
+                            </div>
                         </div>
                         <span class="tracking-tight font-semibold ml-1">compare</span>
                     </button>
@@ -303,10 +305,10 @@ export default {
             }).format(price);
         },
     },
-    computed:{
-        activeNavbar(){
-            return false
-        }
+    computed: {
+        activeNavbar() {
+            return this.$store.getters.userInfo === null ? false : true;
+        },
     },
     created() {},
 };

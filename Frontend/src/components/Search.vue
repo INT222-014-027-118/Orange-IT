@@ -1,6 +1,6 @@
 <template>
     <div class="items-center rounded-3xl  inline-flex">
-        <button @blur="showBoxResult = false" @focus="loadProduct" class="w-full">
+        <button @blur="showBoxResult = false" @focus="loadProduct" class="w-full focus:outline-none">
             <input
                 type="search"
                 v-model="text_Search"
@@ -34,6 +34,11 @@
                         :key="cat"
                         class="rounded-md px-3 py-1 mt-1 text-left truncate cursor-pointer inline-block w-full"
                         :class="[resultSeachName.length == 0 && index == 0 ? 'bg-primary text-white hover:bg-primaryfocus' : 'hover:bg-secondary hover:text-white text-black dark:text-gray-50']"
+                        @click="
+                            showBoxResult = false;
+                            $router.push({ name: 'resultProducts', params: { categoryName: cat.category } });
+                        "
+                        @blur="showBoxResult = false"
                     >
                         {{ cat.category }}
                     </button>
