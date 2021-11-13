@@ -3,7 +3,7 @@
         <Carousel class="container mx-auto lg:max-w-7xl" :images="promotionImages" />
 
         <div class="container lg:max-w-7xl grid grid-cols-4 gap-1 md:gap-3 mx-auto my-3 md:my-7 p-2 sm:px-5 md:px-3">
-            <router-link :to="{ name: 'resultProducts', params: { categoryName: category.category } }" v-for="category in categories" :key="category">
+            <router-link :to="{ name: 'resultProducts', params: { currentCategoryName: category.category } }" v-for="category in categories" :key="category">
                 <div
                     class="grid-cols-5 transition bg-gradient-to-r relative from-transparent via-white to-white dark:to-transparent md:dark:to-white rounded-md shadow-md cursor-pointer md:grid md:h-28 ring ring-transparent hover:ring-primary overflow-hidden"
                 >

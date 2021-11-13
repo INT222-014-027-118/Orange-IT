@@ -11,27 +11,24 @@
                     </div>
                     <div class="fixed left-2 lg:left-auto px-3 pb-3 bg-white rounded-md shadow-2xl lg:shadow-md select-none w-full lg:w-3/12 max-w-xs" :class="[{ hidden: showFilter }, 'lg:block']">
                         <div class="border-b-2 ">
-                            <div class="flex items-center justify-between py-3 text-gray-600 cursor-pointer hover:text-black" @click="showCat = !showCat">
+                            <div
+                                class="flex items-center justify-between py-3 text-gray-600 cursor-pointer hover:text-black"
+                                @click="
+                                    showCat = !showCat;
+                                    loadFilterCategory();
+                                "
+                            >
                                 <span class="font-semibold">Category</span> <span class="text-base font-bold">+</span>
                             </div>
                             <div class="p-1 mb-3 space-y-2 rounded-md bg-gray-50" v-show="showCat">
-                                <label
-                                    id=""
-                                    class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    @click="
-                                        getAllProduct();
-                                        $router.push({ name: 'resultProducts', params: { categoryName: 'allproduct' } });
-                                    "
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="allproduct" /> all</label
-                                >
                                 <div
                                     id=""
                                     class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    v-for="cat in categoriesList"
-                                    :key="cat"
-                                    @click="$router.push({ name: 'resultProducts', params: { categoryName: cat } })"
+                                    v-for="catName in categoriesList"
+                                    :key="catName"
+                                    @click="$router.push({ name: 'resultProducts', params: { currentCategoryName: catName } })"
                                 >
-                                    <input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" :value="cat" /> {{ cat }}
+                                    <input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="selectCategory" :value="catName" /> {{ catName }}
                                 </div>
                             </div>
                         </div>
@@ -41,13 +38,13 @@
                             </div>
                             <div class="p-1 mb-3 space-y-2 rounded-md bg-gray-50" v-show="showType">
                                 <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" />
+                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="selectCategory" value="" />
                                 </label>
                                 <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" />
+                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="selectCategory" value="" />
                                 </label>
                                 <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" />
+                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="selectCategory" value="" />
                                 </label>
                             </div>
                         </div>
@@ -73,19 +70,22 @@
                 </div>
             </div>
 
-            <div class="w-full lg:w-9/12 pr-2 pl-2 sm:pl-2 lg:pr-1 grid gap-1 md:gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 col-span-4">
-                <div v-show="!loading" class="animate-pulse text-2xl font-extrabold tracking-wide">loading...</div>
-                <router-link
-                    :to="{
-                        name: 'Product',
-                        params: { productName: product.productName == '' ? 'Product name is not defined' : product.productName, productId: product.id },
-                    }"
-                    v-show="loading"
-                    v-for="product in $store.getters.products"
-                    :key="product.id"
-                >
-                    <BaseProduct :product="product" @endload="endload()" />
-                </router-link>
+            <div class="w-full lg:w-9/12 pr-2 pl-2 sm:pl-2 lg:pr-1">
+                <!-- <div v-show="!loading" class="animate-pulse text-2xl font-extrabold tracking-wide">loading...</div> -->
+                <div v-if="$store.getters.products.length !== 0" class="grid gap-1 md:gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 col-span-4">
+                    <router-link
+                        :to="{
+                            name: 'Product',
+                            params: { productName: product.productName == '' ? 'Product name is not defined' : product.productName, productId: product.id },
+                        }"
+                        v-for="product in $store.getters.products"
+                        :key="product.id"
+                    >
+                        <BaseProduct :product="product" @endload="endload()" />
+                    </router-link>
+                </div>
+                <div v-else-if="!loading" class="animate-pulse text-2xl font-bold tracking-wide text-center">loading...</div>
+                <div v-else class="text-2xl font-bold tracking-wide text-center">No result</div>
             </div>
         </div>
     </div>
@@ -99,17 +99,14 @@ export default {
             showCat: false,
             showType: false,
             showPrice: false,
-            categorysName: [],
             loading: false,
-            test: ["headset", "speaker", "mouse", "computers", "gaming gear", "smart gadget", "moblie accessories"],
+            selectCategory: [],
 
             categoriesList: {},
-            selectRootCat: {},
-            selectChildCat: {},
         };
     },
     props: {
-        categoryName: String,
+        currentCategoryName: String,
     },
 
     methods: {
@@ -122,27 +119,28 @@ export default {
         getAllProduct() {
             this.$store.getters.products;
         },
-        chooseRootCategory(category) {
-            this.selectRootCat = category;
-            this.selectChildCat = {};
-        },
-        chooseSubCategory(category) {
-            this.selectChildCat = category;
+        loadFilterCategory() {
+            const allproduct = "all product";
+            this.$store.dispatch("loadCategories");
+            this.categoriesList = this.$store.getters.sortCategories;
+            this.categoriesList = [allproduct].concat(this.categoriesList);
+            if (this.currentCategoryName === "all product") {
+                this.selectCategory = this.categoriesList;
+            }
         },
     },
     mounted() {
         this.$store.getters.products;
-        this.categoriesList = this.$store.getters.categories;
     },
-    async created() {
-        this.categorysName.push(this.categoryName);
-        if (this.categoryName !== "allproduct") {
-            this.$store.dispatch("loadProductsByCategory", this.categoryName);
+    created() {
+        this.loadFilterCategory();
+        if (this.currentCategoryName !== "all product") {
+            this.$store.dispatch("loadProductsByCategory", this.currentCategoryName);
+            this.selectCategory.push(this.currentCategoryName);
         } else {
             this.$store.dispatch("loadProducts");
+            this.selectCategory = this.categoriesList;
         }
-        this.$store.dispatch("loadCategories");
-        this.categoriesList = await this.$store.getters.sortCategories;
     },
 };
 </script>

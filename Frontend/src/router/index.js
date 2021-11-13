@@ -98,7 +98,7 @@ const routes = [{
     component: () => import( /* webpackChunkName: "form" */ '../views/admin/Form.vue')
   },
   {
-    path: '/result=:categoryName',
+    path: '/result=:currentCategoryName',
     name: 'resultProducts',
     props: true,
     component: () => import( /* webpackChunkName: "resultProducts" */ '../views/resultProducts.vue')
