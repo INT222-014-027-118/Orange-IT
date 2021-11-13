@@ -1,7 +1,7 @@
 <template>
     <div class="cursor-default">
         <NavBar />
-        <router-view class="mt-14 sm:mt-16 md:mt-20 lg:mt-20 mb-16" :key="[$route.fullPath]" />
+        <router-view :class="[activeNavbar ? 'mt-14 sm:mt-16 md:mt-20 lg:mt-20 mb-16' : '']" :key="[$route.fullPath]" />
         <!-- <Footer class="h-20 bg-gray-300 text-center w-full" v-if="this.$route.name !== 'Login' && this.$route.name !== 'Register'">footer</Footer> -->
     </div>
 </template>
@@ -28,6 +28,11 @@ export default {
                 this.$store.commit("setChangeMode", true);
                 document.documentElement.classList.remove("dark");
             }
+        },
+    },
+    computed: {
+        activeNavbar() {
+            return this.$store.getters.isAdmin === null && this.$store.getters.isAdmin == false ? false : true;
         },
     },
     created() {

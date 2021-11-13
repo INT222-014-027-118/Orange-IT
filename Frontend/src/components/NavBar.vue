@@ -304,13 +304,11 @@ export default {
                 maximumFractionDigits: 2,
             }).format(price);
         },
-        activeNavbar() {
-            return this.$store.getters.isAdmin === null ? false : true;
-        },
     },
-    computed: {},
-    created() {
-        this.activeNavbar();
+    computed: {
+        activeNavbar() {
+            return this.$store.getters.isAdmin === null && this.$store.getters.isAdmin == false ? false : true;
+        },
     },
 };
 </script>

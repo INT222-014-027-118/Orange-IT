@@ -2,7 +2,7 @@
     <div class="flex flex-col rounded-md shadow-md ring-2 ring-transparent hover:ring-primary cursor-pointer transition">
         <div class="overflow-hidden w-full relative pb-40 sm:pb-44 md:pb-48 lg:pb-56 select-none">
             <div class="bg-black z-10 absolute w-full h-full rounded-t-md bg-opacity-0 dark:bg-opacity-10" />
-            <div :class="[this.compareProducts.includes(this.product.id) ? 'bg-primary' : '']" class="absolute z-20 right-1 top-1 text-white rounded-full w-6 h-6 flex justify-center items-center">
+            <div :class="[this.compareProducts.includes(this.product.id) ? 'bg-primary' : 'hidden']" class="absolute z-20 right-1 top-1 text-white rounded-full w-6 h-6 flex justify-center items-center">
                 <span class="font-mono text-sm text-center"> VS </span>
             </div>
             <img :src="image" class="absolute h-full w-full object-contain object-center select-none rounded-t-md bg-white" alt="Product image" @load="check" />
