@@ -4,6 +4,7 @@ package INT222.Controllers;
 import INT222.Exceptions.NotFoundException;
 
 import INT222.Exceptions.NotFoundNameException;
+import INT222.Exceptions.ProductActiveException;
 import INT222.Exceptions.SameProductNameException;
 import INT222.Models.*;
 import INT222.Repositories.*;
@@ -93,10 +94,11 @@ public class ProductController {
 //                productSpecValueRepository.save(productSpecValue);
 //
 //            }
-
-    this.deleteProductHasAttribute(id);
-    this.deleteProductImage(id);
-    this.productRepository.deleteById(id);
+     if(this.productRepository.findById(id).get().getActive() == 0) {
+         this.deleteProductHasAttribute(id);
+         this.deleteProductImage(id);
+         this.productRepository.deleteById(id);
+     }else throw new ProductActiveException(id);
         } else
             throw new NotFoundException(id);
     }
