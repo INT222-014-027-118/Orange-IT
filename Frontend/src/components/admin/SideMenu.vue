@@ -49,6 +49,7 @@ export default {
             if (window.confirm("Are you sure?")) {
                 this.$store.dispatch("logout");
                 this.$router.push("/");
+                window.location.reload()
             }
         },
     },
