@@ -143,10 +143,11 @@ CREATE TABLE IF NOT EXISTS `products` (
   `price` FLOAT NOT NULL,
   `brand_name` VARCHAR(60) NOT NULL,
   `quantity_stock` INT NOT NULL,
+  `active` TINYINT NOT NULL,
   `discount_id` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Products_Discounts1_idx` (`discount_id` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_Products_Discounts1_idx` (`discount_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   CONSTRAINT `fk_Products_Discounts1`
     FOREIGN KEY (`discount_id`)
     REFERENCES `discounts` (`id`))
@@ -336,14 +337,14 @@ INSERT INTO `categories` (`id`, `category`, `parent_id`) VALUES
   ('1', 'Keyboard', NULL),('2', 'Mouse', NULL), ('3', 'Headset', NULL), 
   ('4', 'Wireless keyboard', '1'),('5', 'Wireless mouse', '2'),('6', 'Wireless headset', '3');
 
-INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `brand_name`, `quantity_stock`, `discount_id`) VALUES
-  ('1', 'LOGITECH G G913 LIGHTSPEED WIRELESS RGB (GL CLICKY SWITCH) (RGB LED) (EN/TH)', '', '5990', 'Logitech', '55', NULL),
+INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `brand_name`, `quantity_stock`,`active`, `discount_id`) VALUES
+  ('1', 'LOGITECH G G913 LIGHTSPEED WIRELESS RGB (GL CLICKY SWITCH) (RGB LED) (EN/TH)', '', '5990', 'Logitech', '55',1, NULL),
   ('2', 'RAZER HUNTSMAN ELITE (LINEAR OPTICAL SWITCH) (EN/TH)', '- Razer™ Opto-Mechanical 
   Switch with 45 G actuation force\r\n- 100 million keystroke lifespan\r\n- Chroma backlighting
-  with 16.8 million customizable color options', '5990', 'Razer', '40', NULL),
+  with 16.8 million customizable color options', '5990', 'Razer', '40',1, NULL),
   ('3', 'RAZER DEATHADDER V2', '- True 20,000 DPI Focus+ optical sensor\r\n- Up to 650 inches per second
-  (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy', '1990', 'Razer', '20', NULL),
-  ('4', 'RAZER BLACKSHARK V2 PRO', 'Frequency Response : 12 Hz – 28 kHz\r\nImpedance : 32 Ω (1 kHz)', '6490', 'Razer', '50', NULL);
+  (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy', '1990', 'Razer', '20',1, NULL),
+  ('4', 'RAZER BLACKSHARK V2 PRO', 'Frequency Response : 12 Hz – 28 kHz\r\nImpedance : 32 Ω (1 kHz)', '6490', 'Razer', '50',1, NULL);
 
 INSERT INTO `products_has_colors` (`product_id`, `color_id`) VALUES ('1', '2'),('1', '3'), ('2', '2'),('2', '3'), ('3', '2'), ('4','2');
 

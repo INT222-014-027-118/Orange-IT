@@ -14,13 +14,7 @@
         <div class="mt-4">
             <side-menu-item v-for="(menu, index) in $store.getters.menuList" :key="menu" :label="menu.label" :link="menu.link" :active="menu.active" @chooseMenu="chooseMenu(index)" />
         </div>
-        <button
-            @click="
-                logout();
-                menuUser = false;
-            "
-            class="hover:text-red-500 flex capitalize font-bold w-full"
-        >
+        <button @click="logout()" class="hover:text-red-500 flex capitalize font-bold w-full">
             <span class="material-icons-outlined text-center w-14 md:w-16 ">logout</span>
             <span class="ml-1">Logout</span>
         </button>
@@ -49,7 +43,7 @@ export default {
             if (window.confirm("Are you sure?")) {
                 this.$store.dispatch("logout");
                 this.$router.push("/");
-                window.location.reload()
+                window.location.reload();
             }
         },
     },

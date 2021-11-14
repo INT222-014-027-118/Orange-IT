@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <p>Test</p>
+    <div class="m-10 max-w-7xl bg-gray-200">
+      <span>Products</span>
+        
     </div>
 </template>
 
