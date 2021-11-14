@@ -24,7 +24,12 @@ const routes = [{
       } else {
         next('/')
       }
-    }
+    },
+    children: [{
+      path: ':manageProducts',
+      name: 'ManageProducts',
+      component: () => import( /* webpackChunkName: "purchase" */ '../views/admin/manageProducts.vue')
+    }],
   },
   {
     path: '/about',

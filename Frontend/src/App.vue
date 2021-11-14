@@ -17,6 +17,7 @@ export default {
     data() {
         return {
             changeMode: Boolean,
+            activeNavbar:true
         };
     },
     methods: {
@@ -31,9 +32,6 @@ export default {
         },
     },
     computed: {
-        activeNavbar() {
-            return this.$store.getters.isAdmin === null && this.$store.getters.isAdmin == false ? false : true;
-        },
     },
     created() {
         if (this.$store.getters.isLogin) {
@@ -41,15 +39,14 @@ export default {
             this.$store.dispatch("loadUserAddresses");
         }
         this.$store.dispatch("loadCartData");
-        // console.log(this.$store.getters.activeNavBar);
-        // if (localStorage.getItem("cart")) {
-        //     let products = [];
-        //     products = JSON.parse(localStorage.getItem("cart"));
-        //     console.log(JSON.parse(localStorage.getItem("cart")));
-        //     console.log(this.$store.getters.cart);
-        //     this.$store.commit("fullCartItem", products);
-        // }
         this.mode();
+    },
+    mounted() {
+       if (this.$store.getters.isLogin) {
+           if(this.$store.getters.isAdmin){
+               this.activeNavbar = false
+           }
+        }
     },
 };
 </script>
