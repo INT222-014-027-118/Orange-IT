@@ -36,7 +36,7 @@
                         :class="[resultSeachName.length == 0 && index == 0 ? 'bg-primary text-white hover:bg-primaryfocus' : 'hover:bg-secondary hover:text-white text-black dark:text-gray-50']"
                         @click="
                             showBoxResult = false;
-                            $router.push({ name: 'resultProducts', params: { categoryName: cat.category } });
+                            $router.push({ name: 'resultProducts', params: { currentCategoryName: cat.category } });
                         "
                         @blur="showBoxResult = false"
                     >
