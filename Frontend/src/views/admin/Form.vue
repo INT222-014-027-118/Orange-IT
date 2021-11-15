@@ -132,7 +132,7 @@
                                     add
                                 </span>
                                 <span class="mt-2 text-base ">Select a file</span>
-                                <input type="file" class="hidden" id="file" accept="image/x-png,image/gif,image/jpeg" @change="previewMultiImage" />
+                                <input type="file" class="hidden" id="file" accept="image/x-png,image/gif,image/jpeg" @change="previewMultiImage" multiple />
                             </label>
                         </div>
                     </div>

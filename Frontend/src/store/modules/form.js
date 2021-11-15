@@ -6,7 +6,8 @@ const get_specs = `${api}/spec/list`
 
 const post_product = `${api}/product/add`
 // const put_product = `${api}/product/update`
-const post_image = `${api}/image/add`
+// const post_image = `${api}/image/add`
+const post_image_Multiple = `${api}/image/uploadMultipleFiles`
 // const put_image = `${api}/image/update/`
 
 const state = {
@@ -54,15 +55,17 @@ const actions = {
     },
 
     uploadImages(context, images) {
-        for (let i = 0; i < images.length; i++) {
-            let data = new FormData();
-            data.append("orange", images[i]);
-            axios
-                .post(post_image, data)
-                .then(response => {
-                    console.log("response: ", response)
-                })
-        }
+        images.multiple = true;
+        let data = new FormData();
+        images.forEach(img => {
+            data.append("orange", img)
+        })
+        console.log(data);
+        axios
+            .post(post_image_Multiple, data)
+            .then(response => {
+                console.log("response: ", response)
+            })
     },
 
     addProduct(context, product) {
