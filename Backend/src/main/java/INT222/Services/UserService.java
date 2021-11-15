@@ -27,18 +27,20 @@ public class UserService {
     public void initRoleAndUser() {
 
 
+       if(!userRepository.existsByUsername("admin123")){
+           Users adminUser = new Users();
+           if(userRepository.findTopByOrderByIdDesc()== null){
+               adminUser.setId(1);
+               adminUser.setUsername("admin123");
+               adminUser.setPassword(getEncodedPassword("admin@pass"));
+               userRepository.save(adminUser);
+           }else
+               adminUser.setId(userRepository.findTopByOrderByIdDesc().getId()+1);
+           adminUser.setUsername("admin123");
+           adminUser.setPassword(getEncodedPassword("admin@pass"));
+           this.registerNewAdmin(adminUser);
+       }
 
-        Users adminUser = new Users();
-        if(userRepository.findTopByOrderByIdDesc()== null){
-            adminUser.setId(1);
-            adminUser.setUsername("admin123");
-            adminUser.setPassword(getEncodedPassword("admin@pass"));
-            userRepository.save(adminUser);
-        }else
-        adminUser.setId(userRepository.findTopByOrderByIdDesc().getId()+1);
-        adminUser.setUsername("admin123");
-        adminUser.setPassword(getEncodedPassword("admin@pass"));
-        this.registerNewAdmin(adminUser);
 
 //        User user = new User();
 //        user.setUserName("raj123");

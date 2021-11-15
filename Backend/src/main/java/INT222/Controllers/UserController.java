@@ -27,6 +27,12 @@ public class UserController {
 //        userService.initRoleAndUser();
 //    }
 
+    @PostConstruct
+    public void initRoleAndUser() {
+
+        userService.initRoleAndUser();
+    }
+
     @PostMapping({"/registerNewUser"})
     public Users registerNewUser(@RequestBody Users user) {
         if(userRepository.findTopByOrderByIdDesc() ==  null){
