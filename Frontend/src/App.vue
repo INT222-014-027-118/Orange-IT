@@ -1,7 +1,8 @@
 <template>
     <div class="cursor-default ">
         <NavBar />
-        <router-view :class="[activeNavbar ? 'mt-14 sm:mt-16 md:mt-20 lg:mt-20 mb-16' : '']" :key="[$route.fullPath]" />
+        <router-view v-if="!this.$store.getters.isAdmin" class="mt-14 sm:mt-16 md:mt-20 lg:mt-20 mb-16" :key="[$route.fullPath]" />
+        <router-view v-else :key="[$route.fullPath]" />
         <!-- <Footer class="h-20 bg-gray-300 text-center w-full" v-if="this.$route.name !== 'Login' && this.$route.name !== 'Register'">footer</Footer> -->
     </div>
 </template>
@@ -17,7 +18,6 @@ export default {
     data() {
         return {
             changeMode: Boolean,
-            activeNavbar: true,
         };
     },
     methods: {
@@ -30,6 +30,10 @@ export default {
                 document.documentElement.classList.remove("dark");
             }
         },
+        updateStatus() {
+            this.activeNavbar = false;
+            console.log("gg");
+        },
     },
     computed: {},
     created() {
@@ -40,13 +44,7 @@ export default {
         this.$store.dispatch("loadCartData");
         this.mode();
     },
-    mounted() {
-        if (this.$store.getters.isLogin) {
-            if (this.$store.getters.isAdmin) {
-                this.activeNavbar = false;
-            }
-        }
-    },
+    mounted() {},
 };
 </script>
 <style>

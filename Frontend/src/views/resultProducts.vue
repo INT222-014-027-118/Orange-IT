@@ -39,7 +39,7 @@
                                     :key="catName"
                                     @click="$router.push({ name: 'resultProducts', params: { currentCategoryName: catName } })"
                                 >
-                                    <input type="checkbox" class="mr-4 rounded-md form-checkbox" disabled v-model="selectCategory" :value="catName" /> {{ catName }}
+                                    <input type="checkbox" class="mr-4 rounded-md form-checkbox checked:bg-primary" disabled v-model="selectCategory" :value="catName" /> {{ catName }}
                                 </div>
                             </div>
                         </div>
@@ -192,5 +192,13 @@ input[type="number"] {
 .scrollbar::-webkit-scrollbar-thumb:hover {
     background: #f88100;
     border-radius: 50px;
+}
+
+[type="checkbox"]:checked:hover,
+[type="checkbox"]:checked:focus,
+[type="radio"]:checked:hover,
+[type="radio"]:checked:focus {
+    border-color: transparent;
+    background-color: #F35B04;
 }
 </style>
