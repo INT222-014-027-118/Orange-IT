@@ -41,6 +41,9 @@ public class ProductController {
 
     @Autowired
     private ProductHasAttributeRepository productHasAttributeRepository;
+
+    @Autowired
+    private ProductListAdminRepository productListAdminRepository;
     //Get all Products
     @GetMapping("/list")
     public List<ProductsHome> getProduct() {
@@ -182,6 +185,12 @@ public class ProductController {
     @DeleteMapping("/deleteI/{id}")
     public void deleteProductImage(@PathVariable long id) {
         imageRepository.deleteByProductId(id);
+
+    }
+
+    @GetMapping("/listAdmin")
+    public List<ProductListAdmin> getProductListAdmin() {
+        return productListAdminRepository.findAll();
 
     }
 
