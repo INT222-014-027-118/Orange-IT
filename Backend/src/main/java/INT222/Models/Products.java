@@ -35,6 +35,9 @@ public class Products {
     private int quantityStock;
 
 
+    @Column
+    private int active;
+
     @JoinColumn(nullable = true)
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Discounts discount;

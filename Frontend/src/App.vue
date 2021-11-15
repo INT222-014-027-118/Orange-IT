@@ -1,8 +1,8 @@
 <template>
     <div class="cursor-default ">
         <NavBar />
-        <router-view :class="[!activeNavbar ? 'mt-14 sm:mt-16 md:mt-20 lg:mt-20 mb-16' : '']" :key="[$route.fullPath]" />
-        <!-- <Footer class="h-20 bg-gray-300 text-center w-full" v-if="this.$route.name !== 'Login' && this.$route.name !== 'Register'">footer</Footer> --> 
+        <router-view :class="[activeNavbar ? 'mt-14 sm:mt-16 md:mt-20 lg:mt-20 mb-16' : '']" :key="[$route.fullPath]" />
+        <!-- <Footer class="h-20 bg-gray-300 text-center w-full" v-if="this.$route.name !== 'Login' && this.$route.name !== 'Register'">footer</Footer> -->
     </div>
 </template>
 
@@ -17,6 +17,7 @@ export default {
     data() {
         return {
             changeMode: Boolean,
+            activeNavbar: true,
         };
     },
     methods: {
@@ -30,26 +31,21 @@ export default {
             }
         },
     },
-    computed: {
-        activeNavbar() {
-            return this.$store.getters.isAdmin;
-        },
-    },
+    computed: {},
     created() {
         if (this.$store.getters.isLogin) {
             this.$store.dispatch("loadUserData");
             this.$store.dispatch("loadUserAddresses");
         }
         this.$store.dispatch("loadCartData");
-        // console.log(this.$store.getters.activeNavBar);
-        // if (localStorage.getItem("cart")) {
-        //     let products = [];
-        //     products = JSON.parse(localStorage.getItem("cart"));
-        //     console.log(JSON.parse(localStorage.getItem("cart")));
-        //     console.log(this.$store.getters.cart);
-        //     this.$store.commit("fullCartItem", products);
-        // }
         this.mode();
+    },
+    mounted() {
+        if (this.$store.getters.isLogin) {
+            if (this.$store.getters.isAdmin) {
+                this.activeNavbar = false;
+            }
+        }
     },
 };
 </script>
