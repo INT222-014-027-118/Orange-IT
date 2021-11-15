@@ -80,7 +80,7 @@ export default {
                 });
                 this.showBoxResult = false;
             } else if (this.resultSeachCategory.length !== 0) {
-                this.$router.push({ name: "resultProducts", params: { categoryName: this.resultSeachCategory[0].category } });
+                this.$router.push({ name: "resultProducts", params: { currentCategoryName: this.resultSeachCategory[0].category } });
             }
         },
         loadProduct() {
