@@ -1,5 +1,10 @@
 <template>
-    <side-menu> </side-menu>
+    <div>
+        <side-menu />
+        <div class="ml-60">
+            <router-view />
+        </div>
+    </div>
 </template>
 
 <script>

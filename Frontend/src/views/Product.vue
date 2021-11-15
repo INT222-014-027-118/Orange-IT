@@ -49,7 +49,7 @@
                                 <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
                             </div>
                             <div
-                                class="fixed flex bottom-0 z-10 left-0 w-full px-3 pt-5 pb-20 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary sm:pb-7 md:pb-0 md:pt-2 md:px-0 md:static border-t md:border-0 dark:border-gray-600"
+                                class="fixed flex bottom-0 z-10 left-0 w-full px-2 pt-1 pb-16 bg-white dark:bg-dark_secondary sm:dark:bg-dark_tertiary sm:pb-7 md:pb-0 md:pt-2 md:px-0 sm:static border-t sm:border-0 dark:border-gray-600"
                             >
                                 <button
                                     @click="addToCompare"
@@ -59,12 +59,17 @@
                                             ? 'cursor-not-allowed bg-secondary bg-opacity-50'
                                             : 'bg-secondary hover:bg-yellow-500',
                                     ]"
-                                    class=" text-white px-1 sm:px-3 py-2 mr-3 rounded-md flex items-center justify-center whitespace-nowrap tracking-tighter"
+                                    class="text-white px-2 py-1 sm:px-2 sm:py-3 mr-2 mb-1 sm:mb-0 rounded-md flex flex-col sm:flex-row items-center justify-center whitespace-nowrap tracking-tighter"
                                 >
-                                    <span class="material-icons mr-1 hidden sm:inline-block"> compare_arrows </span>Compare ({{ this.$store.getters.countCompareProducts }})
+                                    <span class="material-icons mr-1"> compare_arrows </span>
+                                    <span class="text-xs sm:text-base"> Compare ({{ this.$store.getters.countCompareProducts }})</span>
                                 </button>
-                                <button class="w-full p-3 flex items-center justify-center text-white whitespace-nowrap rounded-md bg-primary hover:bg-primaryfocus z-40" @click="addCartItem">
-                                    <span class="material-icons mr-1 hidden sm:inline-block"> add_shopping_cart </span>Add to Cart
+                                <button
+                                    class="w-full px-1 py-1 mb-1 sm:mb-0 flex flex-col sm:flex-row items-center justify-center text-white whitespace-nowrap rounded-md bg-primary hover:bg-primaryfocus z-40"
+                                    @click="addCartItem"
+                                >
+                                    <span class="material-icons mr-1"> add_shopping_cart </span>
+                                    <span class="text-xs sm:text-base">Add to Cart</span>
                                 </button>
                             </div>
                         </div>
@@ -75,9 +80,9 @@
                     <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md capitalize">
                         description:
                     </p>
-                    <p class="px-5 md:px-8 py-5 leading-relaxed" :class="[product.description == '' ? 'text-black text-opacity-50' : '']">
-                        {{ product.description == "" ? "No description" : product.description }}
-                    </p>
+                    <pre class="px-5 md:px-8 py-5 leading-relaxed text-left" :class="[product.description == '' ? 'text-opacity-50' : '']"
+                        >{{ product.description == "" ? "No description" : product.description }}
+                    </pre>
                 </div>
 
                 <div class="mb-5 w-full col-span-3">

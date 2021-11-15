@@ -3,6 +3,7 @@ import {
   createWebHistory
 } from 'vue-router'
 import Home from '../views/Home.vue'
+import store from '../store'
 
 const routes = [{
     path: '/',
@@ -16,7 +17,19 @@ const routes = [{
   {
     path: '/admin',
     name: 'Admin',
-    component: () => import( /* webpackChunkName: "admin" */ '../views/admin/adminHome.vue')
+    component: () => import( /* webpackChunkName: "admin" */ '../views/admin/adminHome.vue'),
+    beforeEnter: (to, from, next) => {
+      if (store.getters['isAdmin']) {
+        next()
+      } else {
+        next('/')
+      }
+    },
+    children: [{
+      path: ':manageProducts',
+      name: 'ManageProducts',
+      component: () => import( /* webpackChunkName: "purchase" */ '../views/admin/manageProducts.vue')
+    }],
   },
   {
     path: '/about',
@@ -90,7 +103,7 @@ const routes = [{
     component: () => import( /* webpackChunkName: "form" */ '../views/admin/Form.vue')
   },
   {
-    path: '/:categoryName',
+    path: '/result=:currentCategoryName',
     name: 'resultProducts',
     props: true,
     component: () => import( /* webpackChunkName: "resultProducts" */ '../views/resultProducts.vue')

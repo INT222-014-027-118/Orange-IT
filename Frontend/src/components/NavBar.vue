@@ -1,5 +1,5 @@
 <template>
-    <div class="relative">
+    <div class="relative" v-if="!activeNavbar">
         <div class="fixed top-0 z-50 w-full bg-white shadow-sm select-none dark:bg-dark_secondary dark:text-gray-100 border-b border-primary dark:border-gray-600">
             <div class="flex items-center justify-around px-2 mx-auto max-w-7xl h-14 sm:h-16 md:h-20 lg:h-20 sm:px-0">
                 <div class="hidden sm:inline-flex lg:w-3/12">
@@ -44,7 +44,9 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-2 -right-3 ring-2 ring-white dark:ring-dark_secondary"> {{this.$store.getters.countCompareProducts == 2?'VS':''}}</div>
+                            <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-2 -right-3 ring-2 ring-white dark:ring-dark_secondary">
+                                {{ this.$store.getters.countCompareProducts == 2 ? "VS" : "" }}
+                            </div>
                         </div>
                         <span class="tracking-tight font-semibold ml-1">compare</span>
                     </button>
@@ -139,7 +141,10 @@
                                 <hr class="dark:border-gray-500" />
                                 <div class="flex items-center flex-wrap cursor-pointer select-none " @click="changeSetChangeMode()">
                                     <div class="flex justify-center w-14 md:w-16">
-                                        <div class="rounded-full w-9 h-5 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
+                                        <div
+                                            class="rounded-full w-9 h-5 p-0.5 ring-2 "
+                                            :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']"
+                                        >
                                             <div
                                                 class="rounded-full w-4 h-4 transform duration-300 ease-in-out flex items-center justify-center ring-1 text-white"
                                                 :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-primary ring-primary' : 'translate-x-4 bg-blue-500 ring-blue-500']"
@@ -247,9 +252,6 @@
 <script>
 import Search from "../components/Search.vue";
 export default {
-    props: {
-        change: Boolean,
-    },
     components: {
         Search,
     },
@@ -306,7 +308,11 @@ export default {
             }).format(price);
         },
     },
-    created() {},
+    computed: {
+        activeNavbar() {
+            return this.$store.getters.isAdmin == false ? false : true;
+        },
+    },
 };
 </script>
 

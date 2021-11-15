@@ -3,6 +3,7 @@ import axios from 'axios'
 const api = process.env.VUE_APP_API
 const get_list = `${api}/product/list`
 const get_by_category = `${api}/product/getByCategory`
+// const get_by_name = `${api}/product/getByBrandName`
 const get_categories = `${api}/category/list`
 // const get_product_by_name = `${api}/getByName/`
 
@@ -10,6 +11,7 @@ const get_categories = `${api}/category/list`
 
 const state = {
     products: [],
+    // productForSearch: [],
     categoriesForUser: [],
 }
 
@@ -19,10 +21,13 @@ const getters = {
     rootCategoriesForUser: state => {
         return state.categoriesForUser.filter((element) => element.parentId === null)
     },
+    // productForSearch: state => state.productForSearch
 }
 
 const actions = {
-    async loadProducts({commit}) {
+    async loadProducts({
+        commit
+    }) {
         axios
             .get(get_list)
             .then(res => {
@@ -42,7 +47,9 @@ const actions = {
                 console.log(error)
             })
     },
-    async loadProductsByCategory({commit},category){
+    async loadProductsByCategory({
+        commit
+    }, category) {
         axios
             .get(`${get_by_category}/${category}`)
             .then(res => {
@@ -52,7 +59,20 @@ const actions = {
             .catch(error => {
                 console.log(error)
             })
-    }
+    },
+    // async loadProductForSearch({
+    //     commit
+    // }) {
+    //     axios
+    //         .get(`${get_list}`)
+    //         .then(res => {
+    //             let products = res.data
+    //             commit('SET_FOR_SEARCH_PRODUCTS', products)
+    //         })
+    //         .catch(error => {
+    //             console.log(error)
+    //         })
+    // },
 }
 
 
@@ -60,6 +80,9 @@ const mutations = {
     SET_PRODUCTS(state, payload) {
         state.products = payload
     },
+    // SET_FOR_SEARCH_PRODUCTS(state, payload) {
+    //     state.productForSearch = payload
+    // },
     SET_CATEGORIESFORUSER(state, payload) {
         state.categoriesForUser = payload
     },

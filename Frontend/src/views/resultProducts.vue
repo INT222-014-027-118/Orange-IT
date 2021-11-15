@@ -2,60 +2,66 @@
     <div>
         <div class="container flex py-14 lg:px-0 lg:py-5 mx-auto lg:max-w-7xl">
             <div class="lg:w-3/12 relative">
-                <div class="absolute left-0 z-30 w-3/12 lg:bg-transparent">
-                    <div class="fixed left-2 top-16 sm:top-20 lg:hidden">
-                        <button class="p-2 bg-white rounded-md shadow-md select-none cursor-pointer flex items-center" @click="showFilter = !showFilter">
-                            <span class="text-black material-icons">filter_list</span>
-                            <span class="text-black px-2 capitalize">fliter</span>
+                <div class="absolute left-0 z-30 w-screen lg:bg-transparent">
+                    <div class="fixed left-2 top-16 sm:top-16 md:top-24 sm:mt-2 md:-mt-2 lg:hidden lg:mt-auto">
+                        <button
+                            class="p-2 bg-white dark:bg-dark_tertiary rounded-md shadow-md select-none cursor-pointer flex items-center border border-secondary"
+                            @click="
+                                showFilter = !showFilter;
+                                showCat = true;
+                            "
+                        >
+                            <span class="material-icons" :class="[showFilter ? '' : 'font-bold']">{{ showFilter ? "filter_list" : "close" }}</span>
+                            <span class="px-2 capitalize" :class="[showFilter ? '' : 'font-bold']">{{ showFilter ? "filter" : "close" }}</span>
                         </button>
                     </div>
-                    <div class="fixed left-2 lg:left-auto px-3 pb-3 bg-white rounded-md shadow-2xl lg:shadow-md select-none w-full lg:w-3/12 max-w-xs" :class="[{ hidden: showFilter }, 'lg:block']">
-                        <div class="border-b-2 ">
-                            <div class="flex items-center justify-between py-3 text-gray-600 cursor-pointer hover:text-black" @click="showCat = !showCat">
+                    <div
+                        class="fixed left-0 sm:left-2 sm:mt-1 md:mt-0 lg:left-auto px-3 pb-3 bg-white dark:bg-dark_tertiary rounded-md shadow-2xl lg:shadow-md select-none lg:w-3/12 w-screen sm:max-w-xs h-96 overflow-y-visible overflow-hidden border border-secondary scrollbar"
+                        :class="[{ hidden: showFilter }, 'lg:block']"
+                    >
+                        <div class="border-b-2 dark:border-gray-500">
+                            <div
+                                class="flex items-center justify-between py-3 cursor-pointer"
+                                @click="
+                                    showCat = !showCat;
+                                    loadFilterCategory();
+                                "
+                            >
                                 <span class="font-semibold">Category</span> <span class="text-base font-bold">+</span>
                             </div>
-                            <div class="p-1 mb-3 space-y-2 rounded-md bg-gray-50" v-show="showCat">
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="headphone" /> headphone</label
+                            <div class="p-1 mb-3 space-y-2 rounded-md bg-gray-50 dark:bg-dark_secondary" v-show="showCat">
+                                <div
+                                    id=""
+                                    class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-dark_tertiary"
+                                    v-for="catName in categoriesList"
+                                    :key="catName"
+                                    @click="$router.push({ name: 'resultProducts', params: { currentCategoryName: catName } })"
                                 >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="speaker" /> speaker</label
-                                >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="keyboard" /> keyboard</label
-                                >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="mouse" /> mouse</label
-                                >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="computers" /> computers</label
-                                >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="gaming gear" /> gaming gear</label
-                                >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="smart gadget" /> smart gadget</label
-                                >
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
-                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="moblie accessories" /> moblie accessories</label
-                                >
+                                    <input type="checkbox" class="mr-4 rounded-md form-checkbox" disabled v-model="selectCategory" :value="catName" /> {{ catName }}
+                                </div>
                             </div>
                         </div>
-                        <div class="border-b-2">
-                            <div class="flex items-center justify-between py-3 text-gray-600 cursor-pointer hover:text-black" @click="showType = !showType">
+                        <!-- <div class="border-b-2 dark:border-gray-500">
+                            <div class="flex items-center justify-between py-3 cursor-pointer" @click="showType = !showType">
                                 <span class="font-semibold">Type</span> <span class="text-base font-bold">+</span>
                             </div>
-                            <div class="p-1 mb-3 space-y-2 rounded-md bg-gray-50" v-show="showType">
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" /> </label>
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" /> </label>
-                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="categorysName" value="" /> </label>
+                            <div class="p-1 mb-3 space-y-2 rounded-md bg-gray-50 dark:bg-dark_secondary" v-show="showType">
+                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-dark_tertiary"
+                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="selectCategory" value="" />
+                                </label>
+                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
+                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="selectCategory" value="" />
+                                </label>
+                                <label id="" class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200"
+                                    ><input type="checkbox" class="mr-4 rounded-md form-checkbox" v-model="selectCategory" value="" />
+                                </label>
                             </div>
-                        </div>
-                        <div class="border-b-2">
-                            <div class="flex items-center justify-between py-3 text-gray-600 cursor-pointer hover:text-black" @click="showPrice = !showPrice">
+                        </div> -->
+                        <div class="border-b-2 dark:border-gray-500">
+                            <div class="flex items-center justify-between py-3 cursor-pointer" @click="showPrice = !showPrice">
                                 <span class="font-semibold">Price</span> <span class="text-base font-bold">+</span>
                             </div>
-                            <div class="p-1 mb-3 rounded-md bg-gray-50 flex w-full" v-show="showPrice">
+                            <div class="p-1 mb-3 rounded-md bg-gray-50 dark:bg-dark_secondary flex w-full" v-show="showPrice">
                                 <label for="" class="flex flex-col items-center w-1/2 mx-1 font-thin">
                                     min
                                     <input type="number" class="px-1 pb-0.5 w-full h-8 ring-1 ring-inset ring-primary focus:outline-none rounded-md" />
@@ -73,19 +79,21 @@
                 </div>
             </div>
 
-            <div class="w-full lg:w-9/12 pr-2 pl-2 sm:pl-2 lg:pr-1 grid gap-1 md:gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 col-span-4">
-                <div v-show="!loading" class="animate-pulse text-2xl font-extrabold tracking-wide">loading...</div>
-                <router-link
-                    :to="{
-                        name: 'Product',
-                        params: { productName: product.productName == '' ? 'Product name is not defined' : product.productName, productId: product.id },
-                    }"
-                    v-show="loading"
-                    v-for="product in $store.getters.products"
-                    :key="product.id"
-                >
-                    <BaseProduct :product="product" @endload="endload()" />
-                </router-link>
+            <div class="w-full lg:w-9/12 pr-2 pl-2 sm:pl-2 lg:pr-1">
+                <div v-if="$store.getters.products.length !== 0" class="grid gap-1 md:gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 col-span-4">
+                    <router-link
+                        :to="{
+                            name: 'Product',
+                            params: { productName: product.productName == '' ? 'Product name is not defined' : product.productName, productId: product.id },
+                        }"
+                        v-for="product in $store.getters.products"
+                        :key="product.id"
+                    >
+                        <BaseProduct :product="product" @endload="endload()" />
+                    </router-link>
+                </div>
+                <div v-else-if="!loading" class="animate-pulse text-2xl font-bold tracking-wide text-center">loading...</div>
+                <div v-else class="text-2xl font-bold tracking-wide text-center">No result</div>
             </div>
         </div>
     </div>
@@ -99,17 +107,16 @@ export default {
             showCat: false,
             showType: false,
             showPrice: false,
-            categorysName: [],
             loading: false,
+            selectCategory: [],
+
+            categoriesList: {},
         };
     },
     props: {
-        categoryName: String,
+        currentCategoryName: String,
     },
-    created() {
-        this.categorysName.push(this.categoryName);
-        this.$store.dispatch("loadProductsByCategory", this.categoryName);
-    },
+
     methods: {
         scrollToTop() {
             window.scrollTo(0, 0);
@@ -117,14 +124,36 @@ export default {
         endload() {
             this.loading = true;
         },
+        getAllProduct() {
+            this.$store.getters.products;
+        },
+        loadFilterCategory() {
+            const allproduct = "all product";
+            this.$store.dispatch("loadCategories");
+            this.categoriesList = this.$store.getters.sortCategories;
+            this.categoriesList = [allproduct].concat(this.categoriesList);
+            if (this.currentCategoryName === "all product") {
+                this.selectCategory = this.categoriesList;
+            }
+        },
     },
     mounted() {
         this.$store.getters.products;
     },
+    created() {
+        this.loadFilterCategory();
+        if (this.currentCategoryName !== "all product") {
+            this.$store.dispatch("loadProductsByCategory", this.currentCategoryName);
+            this.selectCategory.push(this.currentCategoryName);
+        } else {
+            this.$store.dispatch("loadProducts");
+            this.selectCategory = this.categoriesList;
+        }
+    },
 };
 </script>
 
-<style>
+<style scoped>
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -134,5 +163,28 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
     -moz-appearance: textfield;
+}
+
+/* width */
+.scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 8px;
+}
+
+/* Handle */
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #ffb703;
+    border-radius: 50px;
+}
+
+/* Handle on hover */
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #f88100;
+    border-radius: 50px;
 }
 </style>

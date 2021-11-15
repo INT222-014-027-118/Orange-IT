@@ -101,4 +101,11 @@ public class ExceptionAdvice {
         return ex.getMessage();
     }
 
+    @ResponseBody
+    @ExceptionHandler(ProductActiveException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    String sameCategory(ProductActiveException ex){
+        return ex.getMessage();
+    }
+
 }

@@ -15,17 +15,17 @@
             <div class="flex flex-col w-8/12 sm:flex sm:justify-between sm:flex-row">
                 <div class="flex flex-col justify-between w-11/12">
                     <div>
-                        <p class="text-sm sm:text-base tracking-tight">{{ product.productCart.productName }}</p>
+                        <p class="text-base tracking-tight">{{ product.productCart.productName }}</p>
                         <p class="text-xs sm:text-base text-gray-600 dark:text-gray-300">color: {{ product.colors.label }}</p>
                     </div>
-                    <div>
-                        <div class="font-semibold flex items-center" :class="[stockCheck.class]">
+                    <!-- <div> -->
+                        <div class="font-semibold flex items-center mt-3" :class="[stockCheck.class]">
                             <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
                         </div>
-                    </div>
+                    <!-- </div> -->
                 </div>
                 <div>
-                    <form @submit.prevent class="w-1/2 sm:w-full">
+                    <form @submit.prevent class="w-1/2 sm:w-full my-2 sm:my-0">
                         <div class="flex items-center justify-center rounded-md">
                             <select
                                 name="quantity"
@@ -42,11 +42,11 @@
             </div>
             <div class="flex flex-col justify-between w-4/12 text-right">
                 <div class="flex flex-col">
-                    <span class="text-base md:text-2xl text-primary font-semibold">{{ productPrice(product.productCart.price * product.quantity) }}</span>
-                    <span class="text-xs md:text-base text-gray-600 dark:text-gray-300 tracking-tighter line-through" v-if="quantity >= 2">{{ productPrice(product.productCart.price) }}</span>
+                    <span class="text-xl md:text-2xl text-primary font-semibold">{{ productPrice(product.productCart.price * product.quantity) }}</span>
+                    <span class="text-gray-600 dark:text-gray-300 tracking-tighter line-through" v-if="quantity >= 2">{{ productPrice(product.productCart.price) }}</span>
                 </div>
                 <div class="inline-flex justify-end">
-                    <button class="p-1 font-semibold text-red-500 sm:px-2 text-xs sm:text-base rounded-md " @click="remove">remove</button>
+                    <button class="px-1 py-2 font-semibold text-red-500 sm:px-2 sm:py-0 rounded-md " @click="remove">remove</button>
                 </div>
             </div>
         </div>

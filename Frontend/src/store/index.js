@@ -3,13 +3,15 @@ import products from './modules/products';
 import form from './modules/form';
 import user from './modules/user.js';
 import cart from './modules/cart.js'
+import adminFeatures from "./modules/adminFeatures"
 
 export default new Vuex.Store({
   modules: {
     products,
     form,
     user,
-    cart
+    cart,
+    adminFeatures
   },
 
   state: {
@@ -32,7 +34,6 @@ export default new Vuex.Store({
     setCompareProducts(state, value) {
       state.compareProducts.push(value)
       state.compareProductsWithId.push(value.id)
-      console.log(state.compareProductsWithId);
     },
     resetCompareProducts(state, value = []) {
       state.compareProducts = value
