@@ -365,6 +365,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch("loadDataForm");
+        this.$store.dispatch("loadcategories");
     },
     created() {
         // await this.getDataToEdit();

@@ -1,8 +1,8 @@
 <template>
-    <div class="cursor-default">
+    <div class="cursor-default ">
         <NavBar />
-        <router-view :class="[activeNavbar ? 'mt-14 sm:mt-16 md:mt-20 lg:mt-20 mb-16' : '']" :key="[$route.fullPath]" />
-        <!-- <Footer class="h-20 bg-gray-300 text-center w-full" v-if="this.$route.name !== 'Login' && this.$route.name !== 'Register'">footer</Footer> -->
+        <router-view :class="[!activeNavbar ? 'mt-14 sm:mt-16 md:mt-20 lg:mt-20 mb-16' : '']" :key="[$route.fullPath]" />
+        <!-- <Footer class="h-20 bg-gray-300 text-center w-full" v-if="this.$route.name !== 'Login' && this.$route.name !== 'Register'">footer</Footer> --> 
     </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
     },
     computed: {
         activeNavbar() {
-            return this.$store.getters.isAdmin === null && this.$store.getters.isAdmin == false ? false : true;
+            return this.$store.getters.isAdmin;
         },
     },
     created() {

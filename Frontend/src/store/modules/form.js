@@ -2,7 +2,6 @@ import axios from 'axios'
 
 const api = process.env.VUE_APP_API
 const get_colors = `${api}/color/list`
-const get_categories = `${api}/category/list`
 const get_specs = `${api}/spec/list`
 
 const post_product = `${api}/product/add`
@@ -18,42 +17,13 @@ const state = {
         'Razer',
         'Logitech'
     ],
-    setCategories: [],
+
 }
 
 
 const getters = {
     colors: state => state.colors,
-    rootCategories: state => {
-        return state.categories.filter((element) => element.parentId === null)
-    },
-    childCategories: state => (id) => {
-        return state.categories.filter((element) => element.parentId === id)
-    },
-    setCategories: (state, getters) => {
-        return getters.rootCategories.map((category) => {
-            let upperId = category.id
-            return {
-                id: category.id,
-                category: category.category,
-                child: [state.categories.filter((category) => {
-                    return category.parentId == upperId
-                })],
-                active: false
-            }
-        })
-    },
-    sortCategories: (state, getters) => {
-        let categoriesArray = []
-        for (let i = 0; i < getters.setCategories.length; i++) {
-            categoriesArray.push(getters.setCategories[i].category)
-            for (let j = 0; j < getters.setCategories[i].child.length; j++) {
-                categoriesArray.push(getters.setCategories[i].child[j][0].category)
-            }
-        }
-        return categoriesArray
-    },
-    categories: state => state.categories,
+
     brands: state => state.brands,
     specs: state => state.specs
 }
@@ -71,15 +41,7 @@ const actions = {
             .catch(error => {
                 console.log(error)
             })
-        axios
-            .get(get_categories)
-            .then(data => {
-                let categories = data.data
-                commit('SET_CATEGORIES', categories)
-            })
-            .catch(error => {
-                console.log(error)
-            })
+
         axios
             .get(get_specs)
             .then(data => {
@@ -90,19 +52,7 @@ const actions = {
                 console.log(error)
             })
     },
-    loadCategories({
-        commit
-    }) {
-        axios
-            .get(get_categories)
-            .then(data => {
-                let categories = data.data
-                commit('SET_CATEGORIES', categories)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    },
+
     uploadImages(context, images) {
         for (let i = 0; i < images.length; i++) {
             let data = new FormData();
@@ -142,9 +92,7 @@ const mutations = {
     SET_SPECS(state, payload) {
         state.specs = payload
     },
-    SET_SETCATEGORIES(state, payload) {
-        state.setCategories = payload
-    },
+
 }
 
 export default {
