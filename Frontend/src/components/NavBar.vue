@@ -24,7 +24,12 @@
                 <Search class="relative w-full sm:w-6/12 lg:w-5/12 sm:mx-2"></Search>
 
                 <div class="justify-end flex text-xs md:text-sm lg:text-base lg:w-3/12 ">
-                    <button class="items-center p-1 rounded-full hidden sm:inline-flex" @click="$router.push('/compare')" :class="[this.$route.name === 'Compare' ? 'text-primary' : '']">
+                    <button
+                        class="relative items-center p-1 rounded-full hidden sm:inline-flex"
+                        @mouseenter="showCompare = true"
+                        @click="$router.push('/compare')"
+                        :class="[this.$route.name === 'Compare' ? 'text-primary' : '']"
+                    >
                         <div class="relative">
                             <div>
                                 <svg
@@ -49,6 +54,22 @@
                             </div>
                         </div>
                         <span class="tracking-tight font-semibold ml-1">compare</span>
+                        <div class="absolute top-10 left-0 z-20 pt-10 transform -translate-y-10 w-full" @mouseenter="showCompare = true" @mouseleave="showCompare = false">
+                            <div
+                                v-show="showCompare"
+                                class="w-72 py-2 absolute right-0 border border-gray-300 dark:border-gray-500 bg-gray-100 rounded-md shadow-xl text-gray-800 dark:text-gray-200 dark:bg-gray-800 opacity-100 hover:text-black"
+                                :class="$store.getters.countCompareProducts == 0 ? 'hidden' : ''"
+                            >
+                                <div class="flex justify-around items-center">
+                                    <div class="w-3/4">
+                                        <p class="text-left pl-2 py-1 whitespace-nowrap truncate text-sm" v-for="compareP in this.$store.getters.compareProducts" :key="compareP">{{ compareP.productName }}</p>
+                                    </div>
+                                    <div class="p-3 h-9 w-9 bg-primary text-white rounded-full flex items-center justify-center">
+                                        <p>VS</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </button>
 
                     <button
@@ -84,7 +105,7 @@
                                 <div v-for="cartItem in this.$store.getters.cart" :key="cartItem.id" class="flex justify-between items-center">
                                     <span class="w-3/6 text-left pl-2 py-1 whitespace-nowrap truncate text-sm">{{ cartItem.productCart.productName }}</span>
                                     <span class="w-1/6 text-left px-2 py-1 whitespace-nowrap truncate text-xs">{{ cartItem.colors.label }}</span>
-                                    <span class="w-2/6 text-right pr-2 py-1 font-semibold overflow-hidden">{{ productPrice(cartItem.productCart.price * cartItem.quantity) }}</span>
+                                    <span class="w-2/6 text-right pr-2 py-1 font-semibold overflow-hidden text-primary">{{ productPrice(cartItem.productCart.price * cartItem.quantity) }}</span>
                                 </div>
                             </div>
                         </div>
@@ -141,10 +162,7 @@
                                 <hr class="dark:border-gray-500" />
                                 <div class="flex items-center flex-wrap cursor-pointer select-none " @click="changeSetChangeMode()">
                                     <div class="flex justify-center w-14 md:w-16">
-                                        <div
-                                            class="rounded-full w-9 h-5 p-0.5 ring-2 "
-                                            :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']"
-                                        >
+                                        <div class="rounded-full w-9 h-5 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
                                             <div
                                                 class="rounded-full w-4 h-4 transform duration-300 ease-in-out flex items-center justify-center ring-1 text-white"
                                                 :class="[this.$store.getters.changeMode == true ? '-translate-x-0 bg-primary ring-primary' : 'translate-x-4 bg-blue-500 ring-blue-500']"
@@ -258,6 +276,7 @@ export default {
     data() {
         return {
             showCart: false,
+            showCompare: false,
             menuUser: false,
             moreVert: false,
             routerBTN: ["Login", "purchase", "manageProfile", "Address"],
@@ -295,6 +314,9 @@ export default {
         },
         checkHistory() {
             return history.length;
+        },
+        clearCompareProduct() {
+            this.$store.commit("resetCompareProducts");
         },
         removeItemCart(index) {
             this.$store.commit("removeCartItem", index);
