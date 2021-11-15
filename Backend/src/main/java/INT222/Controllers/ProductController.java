@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -41,6 +42,9 @@ public class ProductController {
 
     @Autowired
     private ProductHasAttributeRepository productHasAttributeRepository;
+
+    @Autowired
+    private ProductListAdminRepository productListAdminRepository;
     //Get all Products
     @GetMapping("/list")
     public List<ProductsHome> getProduct() {
@@ -104,6 +108,7 @@ public class ProductController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('Admin')")
     public Optional<Products> addProduct(@RequestBody Products products) {
             if (productRepository.existsByProductName(products.getProductName())) {
                 throw new SameProductNameException(products.getProductName());
@@ -182,6 +187,12 @@ public class ProductController {
     @DeleteMapping("/deleteI/{id}")
     public void deleteProductImage(@PathVariable long id) {
         imageRepository.deleteByProductId(id);
+
+    }
+
+    @GetMapping("/listAdmin")
+    public List<ProductListAdmin> getProductListAdmin() {
+        return productListAdminRepository.findAll();
 
     }
 

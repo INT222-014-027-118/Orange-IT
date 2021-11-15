@@ -1,7 +1,10 @@
 <template>
     <div class="mx-auto max-w-7xl sm:mt-5" v-if="this.$store.getters.countCompareProducts == 2">
         <div class="p-1 md:mt-0 md:p-2 capitalize">
-            <h1 class="py-3 px-3 text-2xl font-semibold"><span class="material-icons mr-3 text-xl font-bold py-2 px-3 bg-primary text-white rounded-full"> compare_arrows </span>compare products</h1>
+            <div class="flex flex-wrap justify-between items-center">
+                <h1 class="py-3 px-3 text-2xl font-semibold"><span class="material-icons mr-3 text-xl font-bold py-2 px-3 bg-primary text-white rounded-full"> compare_arrows </span>compare products</h1>
+                <button class="px-2 py-2 bg-primary text-white rounded-md hover:bg-primaryfocus" @click="clearProduct">clear product</button>
+            </div>
             <!-- <div class="overflow-auto max-w-7xl"> -->
             <!-- component -->
             <div class="tscroll">
@@ -190,8 +193,8 @@
             </div> -->
         </div>
     </div>
-    <div v-else class="h-screen">
-        <div class="max-w-lg mx-auto flex flex-col items-center justify-center h-4/5">
+    <div v-else class="h-96">
+        <div class="max-w-lg mx-auto flex flex-col items-center justify-center h-full">
             <div class="material-icons text-5xl p-2 bg-primary text-white rounded-full mb-3 select-none">compare_arrows</div>
             <h1 class="font-semibold text-3xl mb-3 text-center">
                 Please <span class="font-bold"> {{ 2 - this.$store.getters.countCompareProducts }}</span> add products to compare
@@ -245,6 +248,9 @@ export default {
         },
         scrollToTop() {
             window.scrollTo(0, 0);
+        },
+        clearProduct() {
+            this.$store.commit("resetCompareProducts");
         },
     },
     created() {

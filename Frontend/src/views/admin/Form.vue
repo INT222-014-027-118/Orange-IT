@@ -195,7 +195,7 @@
                     </div>
                 </div>
             </div>
-            <button @click="validating" type="submit" class="self-end rounded shadow-md cursor-pointer btn">
+            <button @click="validating" type="submit" class="self-end rounded shadow-md cursor-pointer btn py-2 px-4">
                 Add Product
             </button>
         </form>
@@ -365,6 +365,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch("loadDataForm");
+        this.$store.dispatch("loadcategories");
     },
     created() {
         // await this.getDataToEdit();

@@ -27,6 +27,12 @@ public class UserController {
 //        userService.initRoleAndUser();
 //    }
 
+    @PostConstruct
+    public void initRoleAndUser() {
+
+        userService.initRoleAndUser();
+    }
+
     @PostMapping({"/registerNewUser"})
     public Users registerNewUser(@RequestBody Users user) {
         if(userRepository.findTopByOrderByIdDesc() ==  null){
@@ -37,6 +43,7 @@ public class UserController {
     }
 
     @PostMapping({"/registerNewAdmin"})
+    @PreAuthorize("hasRole('Admin')")
     public Users registerNewAdmin(@RequestBody Users user) {
         if(userRepository.findTopByOrderByIdDesc() ==  null){
             user.setId(1);
@@ -58,11 +65,13 @@ public class UserController {
     }
 
     @GetMapping({"/user/list"})
+    @PreAuthorize("hasRole('Admin')")
     public List<Users> userList(){
         return userRepository.findAll();
     }
 
     @GetMapping({"/user/{id}"})
+    @PreAuthorize("hasRole('User')")
     public Optional<Users> getUserById(@PathVariable(value = "id") long id){
         return userRepository.findById(id);
     }

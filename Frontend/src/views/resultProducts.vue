@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="bg-black bg-opacity-30 absolute z-30 top-0 h-screen w-screen" :class="[showFilter ? 'hidden' : 'inline-block lg:hidden']"></div>
         <div class="container flex py-14 lg:px-0 lg:py-5 mx-auto lg:max-w-7xl">
             <div class="lg:w-3/12 relative">
                 <div class="absolute left-0 z-30 w-screen lg:bg-transparent">
@@ -15,8 +16,9 @@
                             <span class="px-2 capitalize" :class="[showFilter ? '' : 'font-bold']">{{ showFilter ? "filter" : "close" }}</span>
                         </button>
                     </div>
+
                     <div
-                        class="fixed left-0 sm:left-2 sm:mt-1 md:mt-0 lg:left-auto px-3 pb-3 bg-white dark:bg-dark_tertiary rounded-md shadow-2xl lg:shadow-md select-none lg:w-3/12 w-screen sm:max-w-xs h-96 overflow-y-visible overflow-hidden border border-secondary scrollbar"
+                        class="fixed z-50 left-0 sm:left-2 sm:mt-1 md:mt-0 lg:left-auto px-3 pb-3 bg-white dark:bg-dark_tertiary rounded-md shadow-2xl lg:shadow-md select-none lg:w-3/12 w-screen sm:max-w-xs h-3/5 lg:h-auto overflow-y-visible overflow-hidden border lg:border-0 border-secondary scrollbar"
                         :class="[{ hidden: showFilter }, 'lg:block']"
                     >
                         <div class="border-b-2 dark:border-gray-500">
@@ -37,7 +39,7 @@
                                     :key="catName"
                                     @click="$router.push({ name: 'resultProducts', params: { currentCategoryName: catName } })"
                                 >
-                                    <input type="checkbox" class="mr-4 rounded-md form-checkbox" disabled v-model="selectCategory" :value="catName" /> {{ catName }}
+                                    <input type="checkbox" class="mr-4 rounded-md form-checkbox checked:bg-primary" disabled v-model="selectCategory" :value="catName" /> {{ catName }}
                                 </div>
                             </div>
                         </div>
@@ -104,7 +106,7 @@ export default {
     data() {
         return {
             showFilter: true,
-            showCat: false,
+            showCat: true,
             showType: false,
             showPrice: false,
             loading: false,
@@ -122,26 +124,30 @@ export default {
             window.scrollTo(0, 0);
         },
         endload() {
+            this.loadFilterCategory();
             this.loading = true;
         },
-        getAllProduct() {
-            this.$store.getters.products;
-        },
+        // getAllProduct() {
+        //     this.$store.getters.products;
+        // },
         loadFilterCategory() {
-            const allproduct = "all product";
-            this.$store.dispatch("loadCategories");
+            // const allproduct = "all product";
+            this.$store.dispatch("loadcategories");
             this.categoriesList = this.$store.getters.sortCategories;
-            this.categoriesList = [allproduct].concat(this.categoriesList);
+            // this.categoriesList = [allproduct].concat(this.categoriesList);
             if (this.currentCategoryName === "all product") {
                 this.selectCategory = this.categoriesList;
             }
         },
     },
     mounted() {
-        this.$store.getters.products;
+        // setTimeout(() => {
+        //     this.categoriesList = this.$store.getters.sortCategories;
+        // }, 100);
     },
     created() {
         this.loadFilterCategory();
+        this.categoriesList = this.$store.getters.sortCategories;
         if (this.currentCategoryName !== "all product") {
             this.$store.dispatch("loadProductsByCategory", this.currentCategoryName);
             this.selectCategory.push(this.currentCategoryName);
@@ -186,5 +192,13 @@ input[type="number"] {
 .scrollbar::-webkit-scrollbar-thumb:hover {
     background: #f88100;
     border-radius: 50px;
+}
+
+[type="checkbox"]:checked:hover,
+[type="checkbox"]:checked:focus,
+[type="radio"]:checked:hover,
+[type="radio"]:checked:focus {
+    border-color: transparent;
+    background-color: #F35B04;
 }
 </style>

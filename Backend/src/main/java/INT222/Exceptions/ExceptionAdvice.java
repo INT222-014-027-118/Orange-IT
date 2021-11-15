@@ -104,7 +104,28 @@ public class ExceptionAdvice {
     @ResponseBody
     @ExceptionHandler(ProductActiveException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    String sameCategory(ProductActiveException ex){
+    String productActive(ProductActiveException ex){
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(DiscountActiveException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    String DiscountActive(DiscountActiveException ex){
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(NotFoundDiscountException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String NotFoundDiscount(NotFoundDiscountException ex){
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(NotFoundRatingException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String NotFoundRating(NotFoundRatingException ex){
         return ex.getMessage();
     }
 
