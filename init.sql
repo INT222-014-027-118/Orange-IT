@@ -338,8 +338,8 @@ INSERT INTO `categories` (`id`, `category`, `parent_id`) VALUES
   ('4', 'Wireless keyboard', '1'),('5', 'Wireless mouse', '2'),('6', 'Wireless headset', '3');
 
 INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `brand_name`, `quantity_stock`,`active`, `discount_id`) VALUES
-  ('1', 'LOGITECH G G913 LIGHTSPEED WIRELESS RGB (GL CLICKY SWITCH) (RGB LED) (EN/TH)', '', '5990', 'Logitech', '55',1, NULL),
-  ('2', 'RAZER HUNTSMAN ELITE (LINEAR OPTICAL SWITCH) (EN/TH)', '- Razer™ Opto-Mechanical 
+  ('1', 'LOGITECH G G913 LIGHTSPEED WIRELESS RGB', '', '5990', 'Logitech', '55',1, NULL),
+  ('2', 'RAZER HUNTSMAN ELITE', '- Razer™ Opto-Mechanical 
   Switch with 45 G actuation force\r\n- 100 million keystroke lifespan\r\n- Chroma backlighting
   with 16.8 million customizable color options', '5990', 'Razer', '40',1, NULL),
   ('3', 'RAZER DEATHADDER V2', '- True 20,000 DPI Focus+ optical sensor\r\n- Up to 650 inches per second
