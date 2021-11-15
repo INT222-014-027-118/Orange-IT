@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DiscountRepository extends JpaRepository<Discounts,Long> {
+
+    Discounts findTopByOrderByIdDesc();
 }

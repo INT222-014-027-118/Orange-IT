@@ -1,5 +1,7 @@
 package INT222.Controllers;
 
+import INT222.Exceptions.DiscountActiveException;
+import INT222.Exceptions.NotFoundDiscountException;
 import INT222.Models.Colors;
 import INT222.Models.Discounts;
 import INT222.Models.Reviews;
@@ -24,16 +26,25 @@ public class DiscountController {
 
     @DeleteMapping("{id}")
     public void deleteById(@PathVariable(value = "id") long id) {
-        discountRepository.deleteById(id);
+        if(this.discountRepository.findById(id).get().getActive() == 0) {
+            discountRepository.deleteById(id);
+        }else throw new DiscountActiveException(id);
     }
 
     @PutMapping("/update")
-    public void editReview(@RequestBody Discounts discounts) {
-        discountRepository.save(discounts);
+    public void editDiscount(@RequestBody Discounts discounts) {
+        if(discountRepository.existsById(discounts.getId())) {
+            discountRepository.save(discounts);
+        }else throw new NotFoundDiscountException(discounts.getId());
     }
 
     @PostMapping("/add")
-    public void addReview(@RequestBody Discounts discounts) {
+    public void addDiscount(@RequestBody Discounts discounts) {
+        if (discountRepository.findTopByOrderByIdDesc() == null) {
+            discounts.setId(1);
+            discountRepository.save(discounts);
+        }else
+            discounts.setId(discountRepository.findTopByOrderByIdDesc().getId()+1);
         discountRepository.save(discounts);
     }
 }
