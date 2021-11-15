@@ -2,7 +2,9 @@ package INT222.Controllers;
 
 import INT222.Exceptions.NotFoundException;
 import INT222.Models.Products;
+import INT222.Models.ReviewForAdd;
 import INT222.Models.Reviews;
+import INT222.Repositories.ReviewForAddRepository;
 import INT222.Repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +20,8 @@ public class ReviewController {
     @Autowired
     private ReviewRepository reviewRepository;
 
-
+    @Autowired
+    private ReviewForAddRepository reviewForAddRepository;
 
     @GetMapping("/getByProductId/{id}")
     public List<Reviews> getReviewByProductId(@PathVariable(value = "id") long id) {
@@ -37,8 +40,8 @@ public class ReviewController {
     }
 
     @GetMapping("/list")
-    public List<Reviews> getReview() {
-       return reviewRepository.findAll();
+    public List<ReviewForAdd> getReview() {
+       return reviewForAddRepository.findAll();
     }
 
     @DeleteMapping("{id}")
@@ -52,8 +55,8 @@ public class ReviewController {
     }
 
     @PostMapping("/add")
-    public void addReview(@RequestBody Reviews reviews) {
-        reviewRepository.save(reviews);
+    public void addReview(@RequestBody ReviewForAdd reviews) {
+        reviewForAddRepository.save(reviews);
     }
 
 }

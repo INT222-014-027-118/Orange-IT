@@ -13,7 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Reviews")
-public class Reviews {
+public class ReviewForAdd {
+
 
     @Id
     private long id;
@@ -26,8 +27,7 @@ public class Reviews {
     @Column(name = "users_id")
     private long userId;
 
-    @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     @JoinColumn(name = "reviews_id")
-    private List<RatingOfProduct> ratingOfProducts = new ArrayList<>();
-
+    private List<RatingOfProductForAdd> ratingOfProductForAdds = new ArrayList<>();
 }
