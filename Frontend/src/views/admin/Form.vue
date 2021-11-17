@@ -1,16 +1,16 @@
 <template>
     <div class="py-5" v-show="isLoad">
-        <form @submit.prevent="submitForm" class="px-2 py-8 mx-auto bg-white rounded shadow-md dark:bg-gray-700 max-w-7xl sm:px-6">
+        <form @submit.prevent="submitForm" class="px-2 py-8 mx-auto rounded max-w-7xl sm:px-6">
             <div class="mx-auto sm:max-w-5xl">
                 <div class="px-3 mb-6 md:mb-0">
                     <label class="label-css" for="grid-state">Category *</label>
-                    <div class="input-css">
+                    <div class="input-form input-theme">
                         <div class="w-full flex text-xs p-2">
                             <p class="w-1/3">category</p>
                             <p class="w-1/3">sub category</p>
                         </div>
-                        <div class="bg-white w-full shadow-md flex mb-5 rounded-md h-40 overflow-y-auto">
-                            <div class="flex flex-col bg-white w-1/3 p-1 border-r-2">
+                        <div class="bg-white dark:bg-gray-700 border w-full shadow-md flex mb-5 rounded-md h-40 overflow-y-auto">
+                            <div class="flex flex-col bg-white dark:bg-gray-700 w-1/3 p-1 border-r">
                                 <div
                                     class="px-2 py-1 cursor-pointer hover:bg-yellow-200 hover:text-black rounded-sm"
                                     :class="[selectRootCat.category === category.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : '']"
@@ -21,7 +21,7 @@
                                     {{ category.category }}
                                 </div>
                             </div>
-                            <div class="flex flex-col bg-white w-1/3 p-1 border-r-2">
+                            <div class="flex flex-col bg-white dark:bg-gray-700 w-1/3 p-1 border-r">
                                 <div
                                     class="px-2 py-1 cursor-pointer hover:bg-yellow-200 hover:text-black rounded-sm"
                                     :class="[selectChildCat.category === childcat.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : '']"
@@ -38,7 +38,7 @@
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="brand">Brand *</label>
-                    <select class="input-css" id="brandName" v-model="product.brandName" :class="{ 'ring ring-red-400': invalid.brand }">
+                    <select class="input-form input-theme" id="brandName" v-model="product.brandName" :class="{ 'ring ring-red-400': invalid.brand }">
                         <option value="" disabled selected>[ Select Brand ]</option>
 
                         <option v-for="brand in $store.getters.brands" :key="brand" :value="brand" class="text-lg">{{ brand }}</option>
@@ -51,14 +51,32 @@
                         <label class="label-css" for="" ref="name">Product Name *</label>
                         <p class="label-css">{{ countText }}/40</p>
                     </div>
-                    <input v-model="product.productName" class="input-css" id="" type="text" placeholder="Please input name 40 characters" maxlength="40" :class="{ 'ring ring-red-400': invalid.name }" />
+                    <input
+                        v-model="product.productName"
+                        class="input-form input-theme"
+                        id=""
+                        type="text"
+                        placeholder="Please input name 40 characters"
+                        maxlength="40"
+                        :class="{ 'ring ring-red-400': invalid.name }"
+                    />
                     <span v-if="invalid.name" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2">Please input product name</span>
                 </div>
 
                 <div class="flex flex-col md:flex-row lg:w-full">
                     <div class="relative px-3 mb-6 md:w-1/2 md:mb-0">
                         <label class="label-css" for="price">Price *</label>
-                        <input v-model.number="product.price" step="0.01" class="input-css" id="price" type="number" placeholder="" min="1" max="99999" :class="{ 'ring ring-red-400': invalid.price }" />
+                        <input
+                            v-model.number="product.price"
+                            step="0.01"
+                            class="input-form input-theme"
+                            id="price"
+                            type="number"
+                            placeholder=""
+                            min="1"
+                            max="99999"
+                            :class="{ 'ring ring-red-400': invalid.price }"
+                        />
                         <span v-if="invalid.price" class="absolute font-mono text-sm text-red-500 select-none -bottom-3 left-8 sm:bottom-2">Please input Price</span>
                     </div>
 
@@ -67,7 +85,7 @@
                         <input
                             v-model.number="product.quantityStock"
                             step="1"
-                            class="input-css"
+                            class="input-form input-theme"
                             id="stock"
                             type="number"
                             placeholder=""
@@ -81,12 +99,12 @@
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css" for="description">Description</label>
-                    <textarea class="h-40 input-css" id="description" v-model="product.description" type="text" placeholder="Please enter text up to 1000 characters." maxlength="500" />
+                    <textarea class="h-40 input-form input-theme" id="description" v-model="product.description" type="text" placeholder="Please enter text up to 1000 characters." maxlength="500" />
                 </div>
 
                 <div class="relative px-3 mb-6 lg:w-full md:mb-0">
                     <label class="label-css">color *</label>
-                    <div class="input-css flex flex-wrap" :class="{ 'ring ring-red-400': invalid.Color }">
+                    <div class="input-form input-theme flex flex-wrap" :class="{ 'ring ring-red-400': invalid.Color }">
                         <label :for="color.id" v-for="color in $store.getters.colors" :key="color.id" class="flex flex-col items-center cursor-pointer">
                             <input
                                 :id="color.id"
@@ -108,8 +126,8 @@
                 </div>
 
                 <div class="px-3 mb-6 lg:w-full md:mb-0">
-                    <label class="label-css">Upload Image</label>
-                    <div class="relative input-css flex flex-wrap select-none overflow-hidden">
+                    <label class="label-css">Upload Image *</label>
+                    <div class="relative input-form input-theme flex flex-wrap select-none overflow-hidden">
                         <div v-for="(item, index) in preview_list" :key="index" class="m-2 md:m-5 relative">
                             <div class="bg-white h-40 w-40 md:h-64 md:w-64 mb-2 rounded-md">
                                 <img :src="item" class="object-contain object-center w-full h-full rounded-md" />
@@ -125,7 +143,7 @@
                         </div>
                         <div class="self-start m-2 md:m-5" v-show="preview_list.length < 6">
                             <label
-                                class="h-40 w-40 md:h-64 md:w-64 flex flex-col items-center px-4 justify-center bg-white text-blue rounded-md shadow-md tracking-wide uppercase border border-blue cursor-pointer transition hover:bg-primary hover:text-white"
+                                class="h-40 w-40 md:h-64 md:w-64 flex flex-col items-center px-4 justify-center bg-white dark:bg-gray-700 rounded-md shadow-md tracking-wide uppercase border dark:border-gray-500 cursor-pointer transition hover:bg-primary dark:hover:bg-primary hover:text-white"
                                 form="file"
                             >
                                 <span class="material-icons p-0.5 rounded-full border-2 border-current">
@@ -139,7 +157,8 @@
                 </div>
 
                 <div class="px-3 mb-6 lg:w-full md:mb-0 rounded-md">
-                    <div class="input-css ">
+                    <label class="label-css">attribute *</label>
+                    <div class="input-form input-theme ">
                         <table class="w-full">
                             <thead>
                                 <tr>
@@ -152,12 +171,7 @@
                                 <tr>
                                     <td class="pb-5"><RichSelect @selected="selected" /></td>
                                     <td class="pb-5">
-                                        <input
-                                            type="text"
-                                            placeholder="value"
-                                            v-model="attributeText"
-                                            class="block w-full px-3 py-2 transition duration-100 ease-in-out border rounded shadow-sm focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed text-black placeholder-gray-400 bg-white border-gray-300 "
-                                        />
+                                        <input type="text" placeholder="value" v-model="attributeText" class="input-theme" />
                                     </td>
                                     <td class="pb-5">
                                         <button
