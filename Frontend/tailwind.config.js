@@ -13,17 +13,17 @@ module.exports = {
                 secondary: '#FFB703',
                 tertiary: '#FAE445',
                 neutral: '#f8f8f8',
-                
-                dark_primary:'#15202B',
-                dark_secondary:'#192734',
-                dark_tertiary:'#22303C',
+
+                dark_primary: '#15202B',
+                dark_secondary: '#192734',
+                dark_tertiary: '#22303C',
             }
         },
     },
     variants: {
         extend: {
             backgroundColor: ['checked'],
-            borderColor: ['checked'],
+            borderColor: ['checked', 'responsive', 'dark', 'group-hover', 'focus-within', 'hover', 'focus'],
             ringColor: ['responsive', 'dark', 'focus-within', 'focus', 'checked', 'active', 'hover'],
             ringOffsetColor: ['responsive', 'dark', 'focus-within', 'focus', 'checked', 'active', 'hover'],
             ringOffsetWidth: ['responsive', 'focus-within', 'focus', 'checked', 'active', 'hover'],
