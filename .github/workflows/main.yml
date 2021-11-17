@@ -13,12 +13,10 @@ jobs:
     - name: Login to VM, build and deploy
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: 22
+        host: 20.212.7.255
+        username: orange
+        password: orange_014027118
         script: |
-          whoami
           cd Orange-IT
           git pull origin master
           docker-compose up -d --build 
