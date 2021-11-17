@@ -13,9 +13,9 @@ jobs:
     - name: Login to VM, build and deploy
       uses: appleboy/ssh-action@master
       with:
-        host: 20.212.7.255
-        username: orange
-        password: orange_014027118
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
         script: |
           cd Orange-IT
           git pull origin master
