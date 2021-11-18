@@ -11,6 +11,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,6 +53,7 @@ public class ImageController {
 
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<Object> fileUpload(@RequestParam("orange") MultipartFile file)throws IOException {
         Path file1 = path.resolve(file.getOriginalFilename());
         Resource resource = new UrlResource(file1.toUri());
@@ -78,6 +80,7 @@ public class ImageController {
 
 
     @PutMapping("/update/{id:.+}")
+    @PreAuthorize("hasRole('Admin')")
     public void changeImage(@RequestParam("orange")MultipartFile file,@PathVariable("id")String id)throws IOException {
         boolean b = false;
         Path file1 = path.resolve(id);
@@ -107,6 +110,7 @@ public class ImageController {
     }
 
     @DeleteMapping("/delete/{id:.+}")
+    @PreAuthorize("hasRole('Admin')")
     public void deleteImage(@PathVariable("id")String id) throws MalformedURLException {
         Path file = path.resolve(id);
         File myFile = new File(file.toUri());
@@ -118,6 +122,7 @@ public class ImageController {
     }
 
     @PostMapping("/uploadMultipleFiles")
+    @PreAuthorize("hasRole('Admin')")
     public List<Images> uploadMultipleFiles(@RequestParam("orange") MultipartFile[] files) {
         return Arrays.asList(files)
                 .stream()
@@ -127,6 +132,7 @@ public class ImageController {
     }
 
     @PostMapping("/uploadFile")
+    @PreAuthorize("hasRole('Admin')")
     public Images uploadFile(@RequestParam("orange") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
         return imageRepository.findTopByOrderByIdDesc();

@@ -5,6 +5,7 @@ import INT222.Exceptions.*;
 import INT222.Models.Colors;
 import INT222.Repositories.ColorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class ColorController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('Admin')")
     public Colors addColor(@RequestBody Colors colors) {
 
 
@@ -44,6 +46,7 @@ public class ColorController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('Admin')")
     public void deleteProduct(@PathVariable long id) {
         if (this.colorRepository.existsById(id)) {
             this.colorRepository.deleteById(id);

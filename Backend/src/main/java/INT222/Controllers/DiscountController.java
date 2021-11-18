@@ -8,6 +8,7 @@ import INT222.Models.Reviews;
 import INT222.Repositories.ColorRepository;
 import INT222.Repositories.DiscountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class DiscountController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('Admin')")
     public void deleteById(@PathVariable(value = "id") long id) {
         if(this.discountRepository.findById(id).get().getActive() == 0) {
             discountRepository.deleteById(id);
@@ -32,6 +34,7 @@ public class DiscountController {
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('Admin')")
     public void editDiscount(@RequestBody Discounts discounts) {
         if(discountRepository.existsById(discounts.getId())) {
             discountRepository.save(discounts);
@@ -39,6 +42,7 @@ public class DiscountController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('Admin')")
     public void addDiscount(@RequestBody Discounts discounts) {
         if (discountRepository.findTopByOrderByIdDesc() == null) {
             discounts.setId(1);

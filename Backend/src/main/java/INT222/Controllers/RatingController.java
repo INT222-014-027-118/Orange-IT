@@ -5,6 +5,7 @@ import INT222.Models.Ratings;
 import INT222.Models.Reviews;
 import INT222.Repositories.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -22,12 +23,14 @@ public class RatingController {
         return ratingRepository.findAll();
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('Admin')")
     public void deleteById(@PathVariable(value = "id") long id) {
         ratingRepository.deleteById(id);
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('Admin')")
     public void editRating(@RequestBody Ratings ratings) {
         if(ratingRepository.existsById(ratings.getId())){
             ratingRepository.save(ratings);
@@ -36,6 +39,7 @@ public class RatingController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('Admin')")
     public void addRating(@RequestBody Ratings ratings) {
         if (ratingRepository.findTopByOrderByIdDesc() == null) {
             ratings.setId(1);

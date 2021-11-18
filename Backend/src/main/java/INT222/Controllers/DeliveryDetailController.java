@@ -5,6 +5,7 @@ import INT222.Models.CartItems;
 import INT222.Models.DeliveryDetails;
 import INT222.Repositories.DeliveryDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,12 +18,13 @@ public class DeliveryDetailController {
     private DeliveryDetailRepository deliveryDetailRepository;
 
 
-    @GetMapping("/list")
-    public List<DeliveryDetails> getDeliveryDetails() {
-        return deliveryDetailRepository.findAll();
-    }
+//    @GetMapping("/list")
+//    public List<DeliveryDetails> getDeliveryDetails() {
+//        return deliveryDetailRepository.findAll();
+//    }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('User')")
     public void deleteById(@PathVariable(value = "id") long id) {
         if (deliveryDetailRepository.existsById(id)) {
             deliveryDetailRepository.deleteById(id);
@@ -30,6 +32,7 @@ public class DeliveryDetailController {
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('User')")
     public DeliveryDetails editDeliveryDetails(@RequestBody DeliveryDetails deliveryDetails) {
         if(deliveryDetailRepository.existsById(deliveryDetails.getId())) {
             deliveryDetailRepository.save(deliveryDetails);
@@ -38,6 +41,7 @@ public class DeliveryDetailController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('User')")
     public DeliveryDetails addDeliveryDetails(@RequestBody DeliveryDetails deliveryDetails) {
         if(deliveryDetailRepository.findTopByOrderByIdDesc() == null ) {
             deliveryDetails.setId(1);
@@ -50,6 +54,7 @@ public class DeliveryDetailController {
     }
 
     @GetMapping("/findByUserId/{id}")
+    @PreAuthorize("hasRole('User')")
     public List<DeliveryDetails> getDeliveryDetailListByUserId(@PathVariable(value = "id") long userId){
         return deliveryDetailRepository.findAllByUserId(userId);
     }

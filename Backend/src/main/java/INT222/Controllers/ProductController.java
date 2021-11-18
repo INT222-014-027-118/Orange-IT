@@ -79,6 +79,7 @@ public class ProductController {
 
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('Admin')")
     public void deleteProduct(@PathVariable long id) {
 
         if (this.productRepository.existsById(id)) {
@@ -138,6 +139,7 @@ public class ProductController {
 
 //        Edit Product
     @PutMapping("/update")
+    @PreAuthorize("hasRole('Admin')")
     public void editProduct(@RequestBody Products products) {
         if (productRepository.existsByProductName( products.getProductName()) && productRepository.existsById(products.getId())) {
             productRepository.save(products);
@@ -167,6 +169,7 @@ public class ProductController {
     }
 
     @PutMapping("/editAttribute")
+    @PreAuthorize("hasRole('Admin')")
     public void editProduct(@RequestBody ProductsHasAttributes productsHasAttributes) {
         productHasAttributeRepository.save(productsHasAttributes);
     }
@@ -179,18 +182,21 @@ public class ProductController {
 
 
     @DeleteMapping("/deleteP/{id}")
+    @PreAuthorize("hasRole('Admin')")
     public void deleteProductHasAttribute(@PathVariable long id) {
         productHasAttributeRepository.deleteByProductId(id);
 
     }
 
     @DeleteMapping("/deleteI/{id}")
+    @PreAuthorize("hasRole('Admin')")
     public void deleteProductImage(@PathVariable long id) {
         imageRepository.deleteByProductId(id);
 
     }
 
     @GetMapping("/listAdmin")
+    @PreAuthorize("hasRole('Admin')")
     public List<ProductListAdmin> getProductListAdmin() {
         return productListAdminRepository.findAll();
 

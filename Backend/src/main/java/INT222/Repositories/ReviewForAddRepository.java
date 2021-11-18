@@ -6,4 +6,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReviewForAddRepository extends JpaRepository<ReviewForAdd,Long> {
+
+    ReviewForAdd findTopByOrderByIdDesc();
+
+    Boolean existsByUserId(long id);
+
+    Boolean existsById(long id);
+
+
 }

@@ -7,6 +7,7 @@ import INT222.Models.Reviews;
 import INT222.Repositories.ReviewForAddRepository;
 import INT222.Repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -44,19 +45,40 @@ public class ReviewController {
        return reviewForAddRepository.findAll();
     }
 
-    @DeleteMapping("{id}")
-    public void deleteById(@PathVariable(value = "id") long id) {
-        reviewRepository.deleteById(id);
+    @DeleteMapping("/{id}/{userId}")
+    @PreAuthorize("hasRole('User')" +
+            " || hasRole('Admin')" )
+    public void deleteById(@PathVariable(value = "id") long id,@PathVariable(value = "userId") long userId) {
+        if(reviewForAddRepository.existsByUserId(userId)){
+            if(reviewForAddRepository.existsById(id)){
+                reviewRepository.deleteById(id);
+            }
+        }
     }
 
     @PutMapping("/update")
-    public void editReview(@RequestBody Reviews reviews) {
-            reviewRepository.save(reviews);
+    @PreAuthorize("hasRole('User')")
+    public void editReview(@RequestBody ReviewForAdd reviews) {
+        if(reviewForAddRepository.existsByUserId(reviews.getUserId())){
+            if(reviewForAddRepository.existsById(reviews.getId())){
+                reviewForAddRepository.save(reviews);
+            }
+        }
+
+
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('User')")
     public void addReview(@RequestBody ReviewForAdd reviews) {
+        if (reviewForAddRepository.findTopByOrderByIdDesc() == null) {
+            reviews.setId(1);
+            reviewForAddRepository.save(reviews);
+        }else
+            reviews.setId(reviewForAddRepository.findTopByOrderByIdDesc().getId()+1);
         reviewForAddRepository.save(reviews);
     }
+
+
 
 }
