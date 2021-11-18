@@ -15,25 +15,22 @@
                                 </p>
                                 <p class="px-2 py-2 border-b border-black text-xl font-semibold dark:border-gray-100">{{ product.productName }}</p>
                             </div>
-                            <p class="text-2xl text-red-500 font-bold">{{ productPrice }}</p>
-                            <p class="text-sm font-light">Product ID: {{ product.id }}</p>
-                            <!-- <div> -->
-
-                            <!-- </div> -->
+                            <p class="px-2 text-2xl text-red-500 font-bold">{{ productPrice }}</p>
+                            <p class="px-2 text-sm font-light">Product ID: {{ product.id }}</p>
                             <div class="inline-flex" v-if="false">
                                 <div class="bg-primary text-white px-4 py-1 text-xs rounded-sm">Discount 99%</div>
                             </div>
                         </div>
-                        <div class="space-y-3 flex flex-col  w-full">
-                            <div class="w-full">
+                        <div class="space-y-3 flex flex-col w-full">
+                            <div class="w-full px-2">
                                 <p class="text-sm">color:</p>
                                 <div class="w-full flex flex-wrap py-1">
-                                    <label :for="color.id" v-for="color in product.colors" :key="color" class="flex flex-col items-center">
+                                    <label :for="color.id" v-for="color in product.colors" :key="color" class="flex flex-col items-center cursor-pointer">
                                         <input
                                             :id="color.id"
                                             type="radio"
                                             name="color"
-                                            class="w-8 h-8 my-2 mx-2 border rounded-full form-input ring-transparent ring-2 ring-offset-1 ring-offset-white dark:ring-offset-dark_tertiary focus:border-gray-500 focus:ring-2 focus:ring-offset-1 active:ring-secondary checked:ring-primary"
+                                            class="w-8 h-8 my-2 mx-2 border rounded-full cursor-pointer form-input ring-transparent ring-2 ring-offset-1 ring-offset-white dark:ring-offset-dark_tertiary focus:border-gray-500 focus:ring-2 focus:ring-offset-1 active:ring-secondary checked:ring-primary"
                                             :style="{
                                                 backgroundColor: `#${color.hexCode}`,
                                             }"
@@ -44,7 +41,6 @@
                                     </label>
                                 </div>
                             </div>
-
                             <div class="text-xl font-bold flex items-center" :class="[stockCheck.class]">
                                 <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
                             </div>
@@ -59,15 +55,12 @@
                                             ? 'cursor-not-allowed bg-secondary bg-opacity-50'
                                             : 'bg-secondary hover:bg-yellow-500',
                                     ]"
-                                    class="text-white px-2 py-1 sm:px-2 sm:py-3 mr-2 mb-1 sm:mb-0 rounded-md flex flex-col sm:flex-row items-center justify-center whitespace-nowrap tracking-tighter"
+                                    class="text-white px-2 py-1 sm:px-2 sm:py-3 mr-2 mb-1 sm:mb-0 rounded-md flex flex-col sm:flex-row items-center justify-center whitespace-nowrap tracking-tighter transition-colors"
                                 >
                                     <span class="material-icons mr-1"> compare_arrows </span>
                                     <span class="text-xs sm:text-base"> Compare ({{ this.$store.getters.countCompareProducts }})</span>
                                 </button>
-                                <button
-                                    class="w-full px-1 py-1 mb-1 sm:mb-0 flex flex-col sm:flex-row items-center justify-center text-white whitespace-nowrap rounded-md bg-primary hover:bg-primaryfocus z-40"
-                                    @click="addCartItem"
-                                >
+                                <button class="w-full px-1 py-1 mb-1 sm:mb-0 flex flex-col sm:flex-row items-center justify-center whitespace-nowrap z-40 btn" @click="addCartItem">
                                     <span class="material-icons mr-1"> add_shopping_cart </span>
                                     <span class="text-xs sm:text-base">Add to Cart</span>
                                 </button>
