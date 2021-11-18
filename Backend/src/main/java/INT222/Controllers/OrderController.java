@@ -5,6 +5,7 @@ import INT222.Repositories.DiscountRepository;
 import INT222.Repositories.OrderForAddRepository;
 import INT222.Repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class OrderController {
     }
 
     @GetMapping("/getByUserId/{id}")
+    @PreAuthorize("hasRole('User')")
     public List<Orders> getOrderByUserId(@PathVariable(value = "id") long id){
         List<Orders> ordersByUserId = new ArrayList<Orders>();
         List<Orders> orders = orderRepository.findAll();
@@ -42,6 +44,7 @@ public class OrderController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('User')")
     public Orders addOrder(@RequestBody OrderForAdd orderForAdd){
         if(orderForAddRepository.findTopByOrderByIdDesc() == null){
             orderForAdd.setId(1);
@@ -55,6 +58,7 @@ public class OrderController {
 
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('User')")
     public void deleteById(@PathVariable(value = "id") long id) {
         orderRepository.deleteById(id);
     }

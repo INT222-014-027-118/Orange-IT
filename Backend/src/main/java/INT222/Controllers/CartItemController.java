@@ -6,6 +6,7 @@ import INT222.Models.CartItems;
 import INT222.Repositories.CartItemForAddRepository;
 import INT222.Repositories.CartItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -21,11 +22,13 @@ public class CartItemController {
     private CartItemForAddRepository cartItemForAddRepository;
 
     @DeleteMapping("delete/{id}")
+    @PreAuthorize("hasRole('User')")
     public void deleteById(@PathVariable(value = "id") long id) {
         cartItemRepository.deleteById(id);
     }
 
     @PostMapping("/add_item/{userId}/{productId}")
+    @PreAuthorize("hasRole('User')")
     public CartItems addCartItem(@RequestBody CartItemForAdd cartItemForAdd,@PathVariable(value = "userId") long userId,
                             @PathVariable(value = "productId") long productId) {
         cartItemForAdd.setProductId(productId);
@@ -42,12 +45,13 @@ public class CartItemController {
 
     }
 
-    @GetMapping("/list")
-    public List<CartItemForAdd> getCartItemForAddList(){
-        return cartItemForAddRepository.findAll();
-    }
+//    @GetMapping("/list")
+//    public List<CartItemForAdd> getCartItemForAddList(){
+//        return cartItemForAddRepository.findAll();
+//    }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('User')")
     public void editCartItem(@RequestBody CartItemForAdd cartItemForAdd) {
         if(cartItemForAddRepository.existsById(cartItemForAdd.getId())){
         cartItemForAddRepository.save(cartItemForAdd);
@@ -55,6 +59,7 @@ public class CartItemController {
     }
 
     @GetMapping("/findByUserId/{id}")
+    @PreAuthorize("hasRole('User')")
     public List<CartItems> getCartItemListByUserId(@PathVariable(value = "id") long userId){
         return cartItemRepository.findAllByUserId(userId);
     }

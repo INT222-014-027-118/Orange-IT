@@ -7,6 +7,7 @@ import INT222.Models.Colors;
 import INT222.Models.DeliveryDetails;
 import INT222.Repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,17 +26,20 @@ public class CategoryController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('Admin')")
     public void deleteById(@PathVariable(value = "id") long id) {
         categoryRepository.deleteById(id);
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('Admin')")
     public Categories editCategory(@RequestBody Categories categories) {
         categoryRepository.save(categories);
         return categories;
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('Admin')")
     public Categories addCategory(@RequestBody Categories categories) {
         if (categoryRepository.existsAllByCategory(categories.getCategory())) {
         throw new SameCategoryException(categories.getCategory());

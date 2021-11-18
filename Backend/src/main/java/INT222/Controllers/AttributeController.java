@@ -6,6 +6,7 @@ import INT222.Models.CartItemForAdd;
 import INT222.Models.Categories;
 import INT222.Repositories.AttributeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class AttributeController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('Admin')")
     public Attributes addAttribute(@RequestBody Attributes attributes) {
 
         if (attributeRepository.findTopByOrderByIdDesc() == null){
@@ -36,6 +38,7 @@ public class AttributeController {
         return attributes;
 
     }  @PutMapping("/update")
+    @PreAuthorize("hasRole('Admin')")
     public void editAttribute(@RequestBody Attributes attributes) {
         if (attributeRepository.existsById(attributes.getId())) {
             attributeRepository.save(attributes);
@@ -43,6 +46,7 @@ public class AttributeController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('Admin')")
     public void deleteById(@PathVariable(value = "id") long id) {
         attributeRepository.deleteById(id);
     }

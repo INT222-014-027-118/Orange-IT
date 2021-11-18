@@ -7,6 +7,7 @@ import INT222.Models.Reviews;
 import INT222.Repositories.ReviewForAddRepository;
 import INT222.Repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -45,16 +46,20 @@ public class ReviewController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('User')" +
+            " || hasRole('Admin')" )
     public void deleteById(@PathVariable(value = "id") long id) {
         reviewRepository.deleteById(id);
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('User')")
     public void editReview(@RequestBody Reviews reviews) {
             reviewRepository.save(reviews);
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('User')")
     public void addReview(@RequestBody ReviewForAdd reviews) {
         reviewForAddRepository.save(reviews);
     }
