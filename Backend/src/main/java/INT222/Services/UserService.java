@@ -32,12 +32,12 @@ public class UserService {
            if(userRepository.findTopByOrderByIdDesc()== null){
                adminUser.setId(1);
                adminUser.setUsername("admin123");
-               adminUser.setPassword(getEncodedPassword("admin@pass"));
+               adminUser.setPassword(getEncodedPassword("orangePassword"));
                this.registerNewAdmin(adminUser);
            }else
                adminUser.setId(userRepository.findTopByOrderByIdDesc().getId()+1);
            adminUser.setUsername("admin123");
-           adminUser.setPassword(getEncodedPassword("admin@pass"));
+           adminUser.setPassword(getEncodedPassword("orangePassword"));
            this.registerNewAdmin(adminUser);
        }
 
