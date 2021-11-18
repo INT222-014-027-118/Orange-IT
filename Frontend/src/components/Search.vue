@@ -9,7 +9,7 @@
                 @focus="loadProduct"
             />
             <div
-                class="absolute top-10 -left-2 sm:left-0 w-screen sm:w-full bg-white dark:bg-dark_tertiary rounded-lg ring-1 ring-primary shadow-md"
+                class="absolute top-12 -left-2 sm:top-10 sm:left-0 w-screen sm:w-full bg-white dark:bg-dark_tertiary rounded-lg ring-1 ring-primary shadow-md"
                 v-show="showBoxResult == true && text_Search !== '' ? ((this.resultSeachName.length !== 0) | (this.resultSeachCategory !== 0) ? true : false) : false"
             >
                 <div class="px-1 pb-1">

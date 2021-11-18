@@ -2,9 +2,7 @@
     <div>
         <div class="flex justify-between flex-wrap overflow-hidden">
             <h1 class="text-3xl font-semibold p-3">My Profile</h1>
-            <div class="self-center py-2">
-                <button type="button" @click="editBTN = true" v-if="!editBTN" class="px-5 py-2 btn">Edit</button>
-            </div>
+            <button type="button" @click="editBTN = true" v-if="!editBTN" class="px-5 py-2 btn self-center my-2 ml-auto"><span class="material-icons text-base mr-1"> edit </span>Edit</button>
         </div>
         <hr />
         <form @submit.prevent="update" class="px-3 pt-4 pb-6 ">
@@ -15,7 +13,7 @@
                 </div> -->
 
                 <div class="sm:flex items-end mb-2">
-                    <p class="font-semibold sm:w-2/6 sm:text-right pr-2 mb-2 sm:mb-0">{{ editBTN ? "first name :" : "User name :" }}</p>
+                    <p class="font-semibold sm:w-2/6 sm:text-right pr-2 mb-2 sm:mb-0">{{ editBTN ? "first name :" : "user name :" }}</p>
                     <!-- <p class="lg:w-4/6 text-xl font-light">{{ $store.getters.userInfo.username }}</p> -->
                     <div class="w-full sm:w-4/6 ">
                         <p class="text-xl font-light break-words" v-show="!editBTN">{{ $store.getters.userInfo.username }}</p>

@@ -3,7 +3,7 @@
         <div class="p-1 md:mt-0 md:p-2 capitalize">
             <div class="flex flex-wrap justify-between items-center">
                 <h1 class="py-3 px-3 text-2xl font-semibold"><span class="material-icons mr-3 text-xl font-bold py-2 px-3 bg-primary text-white rounded-full"> compare_arrows </span>compare products</h1>
-                <button class="px-2 py-2 bg-primary text-white rounded-md hover:bg-primaryfocus" @click="clearProduct">clear product</button>
+                <button class="px-3 py-2 my-2 ml-auto btn capitalize" @click="clearProduct">clear product</button>
             </div>
             <!-- <div class="overflow-auto max-w-7xl"> -->
             <!-- component -->

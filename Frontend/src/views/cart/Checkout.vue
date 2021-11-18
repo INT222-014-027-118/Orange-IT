@@ -15,7 +15,7 @@
                             this.$store.commit('setShowAccountPage');
                         "
                         v-show="changeAddress || $store.getters.addresses.length == 0"
-                        class="bg-primary rounded-md text-white px-3 py-2 leading-none tracking-tighter inline-block absolute top-14 md:top-5 right-1 md:right-5"
+                        class="btn px-3 py-2 leading-none absolute top-14 md:top-5 right-1 md:right-5"
                     >
                         address manage
                     </button>
@@ -34,7 +34,7 @@
                         <div class="md:w-1/6 py-3 md:py-0 flex md:justify-center">
                             <button
                                 type="button"
-                                class="md:text-center cursor-pointer px-4 py-2 md:px-3 md:py-0 bg-primary rounded-md text-white"
+                                class="md:text-center cursor-pointer px-4 py-2 md:px-3 md:py-0 btn"
                                 @click="changeAddress = !changeAddress"
                                 v-show="!changeAddress"
                             >
@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="py-3 md:py-3 md:px-2" v-show="changeAddress">
-                        <button type="button" class="bg-primary rounded-md text-white px-3 py-2 mr-3 w-20" @click="changeAddress = false">OK</button>
+                        <button type="button" class="btn px-3 py-2 mr-3 w-20" @click="changeAddress = false">OK</button>
                     </div>
                 </div>
 
@@ -158,7 +158,7 @@
                             </div>
                         </div>
                         <div class="flex justify-end">
-                            <button class="bg-primary px-5 py-3 w-full md:w-1/3 text-white rounded-md mt-4 font-semibold text-xl">submit order</button>
+                            <button class="btn px-5 py-3 w-full md:w-1/3 mt-4 text-xl">submit order</button>
                         </div>
                     </div>
                 </div>

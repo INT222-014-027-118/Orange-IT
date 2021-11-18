@@ -2,9 +2,7 @@
     <div>
         <div class="flex justify-between flex-wrap">
             <h1 class="text-3xl font-semibold p-3 capitalize">address</h1>
-            <div class="self-center py-2">
-                <button type="button" class="px-4 py-2 btn" @click="showForm = true" v-if="!showForm">+ add</button>
-            </div>
+            <button type="button" class="px-5 py-2 btn self-center my-2 ml-auto" @click="showForm = true" v-if="!showForm"><span class="material-icons text-base mr-1"> add </span>Add</button>
         </div>
         <hr />
         <div class="px-0 md:px-3 py-4">
@@ -57,7 +55,16 @@
                 </div>
 
                 <div class="mt-7 flex justify-end">
-                    <button type="reset" class="px-4 py-2 cancel-btn" @click="showForm = false; resetForm();">cancel</button>
+                    <button
+                        type="reset"
+                        class="px-4 py-2 cancel-btn"
+                        @click="
+                            showForm = false;
+                            resetForm();
+                        "
+                    >
+                        cancel
+                    </button>
                     <button type="submit" class="px-6 py-2 btn ml-3">Save</button>
                 </div>
             </form>
