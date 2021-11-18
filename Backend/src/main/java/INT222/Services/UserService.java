@@ -33,7 +33,7 @@ public class UserService {
                adminUser.setId(1);
                adminUser.setUsername("admin123");
                adminUser.setPassword(getEncodedPassword("admin@pass"));
-               userRepository.save(adminUser);
+               this.registerNewAdmin(adminUser);
            }else
                adminUser.setId(userRepository.findTopByOrderByIdDesc().getId()+1);
            adminUser.setUsername("admin123");
