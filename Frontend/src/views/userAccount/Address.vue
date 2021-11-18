@@ -13,8 +13,8 @@
                     {{ showForm ? "cancel" : "+ add" }}
                 </button>
             </div>
-            <div v-show="!showForm" v-for="(address, index) in  this.$store.getters.addresses" :key="address" class="border p-3 mt-4 relative">
-                <div class="absolute top-0 right-5 cursor-pointer text-red-500 p-2 font-semibold" @click="removeAddress(index)">remove</div>
+            <div v-show="!showForm" v-for="(address, index) in  this.$store.getters.addresses" :key="address" class="border px-3 pt-3 pb-10 md:pb-3 mt-4 relative">
+                <div class="absolute bottom-0 md:top-0 right-5 cursor-pointer text-red-500 p-2 font-semibold" @click="removeAddress(index)">remove</div>
                 <p class="capitalize">name : {{ address.firstname }} {{ address.lastname }}</p>
                 <p class="capitalize">phone : {{ address.phone }}</p>
                 <p class="capitalize">

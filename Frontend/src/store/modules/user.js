@@ -6,13 +6,14 @@ const state = {
     userId: localStorage.getItem('userId'),
     addresses: [],
     isAdmin: false,
+    token: `Bearer ${localStorage.getItem('token')}`
 }
 
 const getters = {
     userInfo: state => state.userInfo,
     addresses: state => state.addresses,
     defaultAddress: state => state.addresses[0],
-    isAdmin: state => state.isAdmin ,
+    isAdmin: state => state.isAdmin,
 }
 
 const actions = {
@@ -21,11 +22,15 @@ const actions = {
     }) {
         if (state.userId) {
             axios
-                .get(`${process.env.VUE_APP_API}/user/${state.userId}`)
+                .get(`${process.env.VUE_APP_API}/user/${state.userId}`, {
+                    headers: {
+                        'Authorization': state.token
+                    }
+                })
                 .then(response => {
                     commit('setUserInfo', response.data)
-                    commit('setIsAdmin', response.data.role[0].name === 'Admin'?true:false)
-                    if(state.isAdmin){
+                    commit('setIsAdmin', response.data.role[0].name === 'Admin' ? true : false)
+                    if (state.isAdmin) {
                         router.push('/admin')
                     }
                 })
@@ -35,7 +40,11 @@ const actions = {
         commit
     }) {
         axios
-            .get(`${process.env.VUE_APP_API}/delivery/findByUserId/${state.userId}`)
+            .get(`${process.env.VUE_APP_API}/delivery/findByUserId/${state.userId}`, {
+                headers: {
+                    'Authorization': state.token
+                }
+            })
             .then(response => {
                 commit('setAddresses', response.data)
             })
