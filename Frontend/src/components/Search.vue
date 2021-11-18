@@ -1,5 +1,5 @@
 <template>
-    <div class="items-center rounded-3xl  inline-flex">
+    <div class="items-center rounded-3xl inline-flex">
         <button @blur="showBoxResult = false" @focus="loadProduct" class="w-full focus:outline-none">
             <input
                 type="search"

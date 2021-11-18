@@ -77,14 +77,22 @@ const mutations = {
     },
     addAddress(state, address) {
         axios
-            .post(`${process.env.VUE_APP_API}/delivery/add`, address)
+            .post(`${process.env.VUE_APP_API}/delivery/add`, address, {
+                headers: {
+                    'Authorization': state.token
+                }
+            })
             .then(response => {
                 state.addresses.push(response.data);
             })
     },
     removeAddress(state, index) {
         axios
-            .delete(`${process.env.VUE_APP_API}/delivery/${state.addresses[index].id}`)
+            .delete(`${process.env.VUE_APP_API}/delivery/${state.addresses[index].id}`, {
+                headers: {
+                    'Authorization': state.token
+                }
+            })
             .then(response => {
                 if (response.status === 200) {
                     state.addresses.splice(index, 1)

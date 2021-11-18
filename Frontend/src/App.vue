@@ -48,6 +48,10 @@ export default {
 };
 </script>
 <style>
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 .dark:root {
     color-scheme: dark;
 }
