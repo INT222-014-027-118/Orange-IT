@@ -8,7 +8,7 @@
             </router-link>
         </div>
         <div class="mt-4">
-            <side-menu-item v-for="(menu, index) in $store.getters.menuList" :key="menu" :label="menu.label" :link="menu.link" :active="menu.active" @chooseMenu="chooseMenu(index)" />
+            <side-menu-item v-for="(menu, index) in $store.getters.menuList" :key="menu" :label="menu.label" :link="menu.link" :active="menu.active" :icon="menu.icon" @chooseMenu="chooseMenu(index)" />
         </div>
         <button @click="logout()" class="hover:text-red-500 flex capitalize font-bold w-full">
             <span class="material-icons-outlined text-center w-14 md:w-16 ">logout</span>

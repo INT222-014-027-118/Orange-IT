@@ -26,10 +26,16 @@ const routes = [{
       }
     },
     children: [{
-      path: ':manageProducts',
-      name: 'ManageProducts',
-      component: () => import( /* webpackChunkName: "purchase" */ '../views/admin/manageProducts.vue')
-    }],
+        path: ':manageProducts',
+        name: 'ManageProducts',
+        component: () => import( /* webpackChunkName: "purchase" */ '../views/admin/manageProducts.vue')
+      },
+      {
+        path: ':form',
+        name: 'form',
+        component: () => import( /* webpackChunkName: "form" */ '../views/admin/Form.vue'),
+      },
+    ],
   },
   {
     path: '/about',
@@ -96,11 +102,6 @@ const routes = [{
     name: 'Product',
     props: true,
     component: () => import( /* webpackChunkName: "Product" */ '../views/Product.vue')
-  },
-  {
-    path: '/form',
-    name: 'form',
-    component: () => import( /* webpackChunkName: "form" */ '../views/admin/Form.vue')
   },
   {
     path: '/result=:currentCategoryName',

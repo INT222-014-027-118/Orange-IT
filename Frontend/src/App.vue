@@ -39,12 +39,13 @@ export default {
     created() {
         if (this.$store.getters.isLogin) {
             this.$store.dispatch("loadUserData");
-            this.$store.dispatch("loadUserAddresses");
         }
-        this.$store.dispatch("loadCartData");
         this.mode();
     },
-    mounted() {},
+    mounted() {
+        this.$store.dispatch("loadProducts");
+        this.$store.dispatch("loadCartData");
+    },
 };
 </script>
 <style>
