@@ -10,6 +10,7 @@ const post_product = `${api}/product/add`
 const post_image_Multiple = `${api}/image/uploadMultipleFiles`
 // const put_image = `${api}/image/update/`
 
+
 const state = {
     colors: [],
     categories: [],
@@ -18,6 +19,7 @@ const state = {
         'Razer',
         'Logitech'
     ],
+    token: `Bearer ${localStorage.getItem('token')}`
 
 }
 
