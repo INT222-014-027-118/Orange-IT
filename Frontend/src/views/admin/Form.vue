@@ -413,6 +413,7 @@ export default {
         this.$store.dispatch("loadcategories");
     },
     created() {
+        console.log('test');
         // await this.getDataToEdit();
     },
 };
