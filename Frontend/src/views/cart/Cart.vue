@@ -36,7 +36,7 @@
                             <div class="text-xl font-semibold md:text-2xl text-primary">{{ orderTotalPrice }}</div>
                         </div>
                         <button
-                            class="w-full px-2 py-2 sm:p-3 mb-1 sm:mb-0 text-center font-semibold text-xl text-white rounded-md"
+                            class="w-full px-2 py-2 sm:p-3 mb-1 sm:mb-0 text-center font-semibold text-xl text-white rounded-md transition-colors"
                             @click="$router.push('checkout')"
                             :disabled="$store.getters.userInfo === null || $store.getters.cart.length == 0"
                             :class="[$store.getters.userInfo === null || $store.getters.cart.length == 0 ? 'cursor-not-allowed bg-primary bg-opacity-50' : 'bg-primary hover:bg-primaryfocus']"

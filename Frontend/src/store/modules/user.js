@@ -86,7 +86,11 @@ const mutations = {
         axios
             .post(`${process.env.VUE_APP_API}/delivery/add`, address, {
                 headers: {
+<<<<<<< HEAD
                     'Authorization': this.getters.token
+=======
+                    'Authorization': state.token
+>>>>>>> a67ad5a0dedad12d87d1897663729cda092a7e55
                 }
             })
             .then(response => {
@@ -97,7 +101,11 @@ const mutations = {
         axios
             .delete(`${process.env.VUE_APP_API}/delivery/${state.addresses[index].id}`, {
                 headers: {
+<<<<<<< HEAD
                     'Authorization': this.getters.token
+=======
+                    'Authorization': state.token
+>>>>>>> a67ad5a0dedad12d87d1897663729cda092a7e55
                 }
             })
             .then(response => {

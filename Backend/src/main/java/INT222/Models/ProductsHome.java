@@ -30,7 +30,8 @@ public class ProductsHome {
     @Column(name = "quantity_stock")
     private int quantityStock;
 
-
+    @Column
+    private int active;
 
 
     @JoinColumn(nullable = true)

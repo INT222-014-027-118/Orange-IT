@@ -1,8 +1,8 @@
 <template>
     <div class="flex p-1 py-3 mx-auto max-w-7xl" v-if="$store.getters.userInfo !== null">
         <div
-            :class="[this.$store.getters.showAccountPage ? 'w-full md:w-3/12' : 'hidden md:block']"
-            class="sm:mx-1 w-full overflow-hidden md:w-3/12 top-20 px-3 py-3 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full"
+            :class="[this.$store.getters.showAccountPage ? 'w-full sm:w-4/12 lg:w-3/12' : 'hidden sm:block']"
+            class="sm:mx-1 w-full overflow-hidden sm:w-4/12 lg:w-3/12 top-20 px-3 py-3 md:px-4 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full"
         >
             <div class="">
                 <div class="flex items-center">
@@ -25,7 +25,7 @@
                                     params: { manage: 'account' },
                                 }"
                                 @click="changetShowAccountPage"
-                                class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary rounded md:inline-block"
+                                class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary hover:bg-primaryfocus transition-colors rounded md:inline-block"
                                 >Edit</router-link
                             >
                         </div>
@@ -37,14 +37,14 @@
             </div>
 
             <div class="">
-                <div class="pt-5 pb-4 px-1 space-y-5">
+                <div class="pt-5 pb-4 space-y-5">
                     <router-link
                         :to="{
                             name: 'manageProfile',
                             params: { manage: 'account' },
                         }"
                         @click="changetShowAccountPage"
-                        class="hover:text-primary flex font-semibold capitalize"
+                        class="hover:text-primary flex font-semibold capitalize truncate"
                         :class="[this.$route.name === 'manageProfile' ? 'md:text-primary hover:text-primaryfocus' : '']"
                         ><span class="material-icons-outlined text-center w-14 md:w-16 ">manage_accounts</span>
                         <span class="ml-1">my account</span>
@@ -97,7 +97,7 @@
 
         <router-view
             class="sm:mx-1 top-20 px-3 py-3 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full"
-            :class="[!this.$store.getters.showAccountPage ? 'block  w-full md:w-9/12' : 'hidden md:block md:w-9/12']"
+            :class="[!this.$store.getters.showAccountPage ? 'block w-full sm:w-8/12 lg:w-9/12' : 'hidden sm:block sm:w-9/12 lg:w-9/12']"
         />
     </div>
 </template>

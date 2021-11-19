@@ -3,7 +3,8 @@ import axios from 'axios'
 
 const state = {
     cart: [],
-    cartItem: null
+    cartItem: null,
+    token: `Bearer ${localStorage.getItem('token')}`
 }
 
 

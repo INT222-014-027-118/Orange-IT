@@ -2,7 +2,7 @@
     <div class="pt-1">
         <div class="mx-auto max-w-7xl">
             <div class="p-1 md:mt-0 md:p-2 lg:mx-auto">
-                <h1 class="py-3 px-3 text-2xl md:text-3xl font-semibold flex items-center"><span class="material-icons mr-2 text-2xl md:text-3xl"> rate_review </span>review</h1>
+                <h1 class="py-3 px-3 text-2xl md:text-3xl font-semibold flex items-center"><span class="material-icons mr-2 text-xl py-2 px-3 bg-primary text-white rounded-full"> rate_review </span>review</h1>
                 <div class="capitalize bg-white dark:bg-dark_secondary shadow-md rounded-md p-1 md:p-3">
                     <div class="px-0 sm:px-2">
                         <div class="overflow-hidden">
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="flex justify-end text-white dark:border-gray-500 my-5">
-                        <button type="button" class="bg-secondary px-3 py-2 mx-2 capitalize rounded-md whitespace-nowrap" @click="$router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } })">
+                        <button type="reset" class="px-3 py-2 mx-2 capitalize cancel-btn" @click="$router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } })">
                             cancel
                         </button>
                         <button
@@ -86,7 +86,7 @@
                             @click="submitReview"
                             type="button"
                             class="px-6 py-2 mx-2 capitalize rounded-md whitespace-nowrap"
-                            :class="[reviews.star == 0 ? 'cursor-not-allowed bg-primary bg-opacity-50' : 'bg-primary']"
+                            :class="[reviews.star == 0 ? 'cursor-not-allowed bg-primary bg-opacity-50' : 'btn']"
                         >
                             submit
                         </button>
@@ -188,6 +188,7 @@ input[type="range"].styled-slider::-webkit-slider-thumb {
     box-shadow: 0 0 2px black;
     margin-top: calc(8px * 0.5 - 15px * 0.5);
     -webkit-appearance: none;
+    cursor: grab;
 }
 
 input[type="range"].styled-slider::-webkit-slider-runnable-track {
