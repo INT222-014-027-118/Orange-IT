@@ -1,7 +1,7 @@
 <template>
     <div>
         <side-menu />
-        <div class="ml-60">
+        <div class="ml-14 sm:ml-32 md:ml-52 lg:ml-60">
             <router-view />
         </div>
     </div>
@@ -13,6 +13,9 @@ export default {
     components: { SideMenu },
     comments: {
         SideMenu,
+    },
+    created() {
+        // this.$store.dispatch("loadProducts");
     },
 };
 </script>

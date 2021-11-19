@@ -142,11 +142,7 @@ export default {
             }
         },
     },
-    mounted() {
-        // setTimeout(() => {
-        //     this.categoriesList = this.$store.getters.sortCategories;
-        // }, 100);
-    },
+    mounted() {},
     created() {
         this.loadFilterCategory();
         this.categoriesList = this.$store.getters.sortCategories;

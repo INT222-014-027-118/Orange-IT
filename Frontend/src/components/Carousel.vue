@@ -94,7 +94,9 @@ export default {
             });
         },
         syncIamage() {
-            // this.$refs.primary.sync(this.$refs.secondary.splide);
+            if (!this.$store.getters.isAdmin) {
+                this.$refs.primary.sync(this.$refs.secondary.splide);
+            }
         },
         check() {
             this.count++;
