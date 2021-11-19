@@ -94,7 +94,7 @@ export default {
             });
         },
         syncIamage() {
-            this.$refs.primary.sync(this.$refs.secondary.splide);
+            // this.$refs.primary.sync(this.$refs.secondary.splide);
         },
         check() {
             this.count++;

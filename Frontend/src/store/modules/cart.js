@@ -42,7 +42,7 @@ const actions = {
             axios
                 .get(`${process.env.VUE_APP_API}/cartItem/findByUserId/${localStorage.getItem('userId')}`, {
                     headers: {
-                        'Authorization': state.token
+                        'Authorization': this.getters.token
                     }
                 })
                 .then(response => {
@@ -103,7 +103,7 @@ const mutations = {
                 axios
                     .post(`${process.env.VUE_APP_API}/cartItem/add_item/${localStorage.getItem('userId')}/${cartItem.productId}`, cartItem, {
                         headers: {
-                            'Authorization': state.token
+                            'Authorization': this.getters.token
                         }
                     })
                     .then(response => {
@@ -122,9 +122,9 @@ const mutations = {
     removeCartItem(state, index) {
         if (this.getters.isLogin) {
             axios
-                .delete(`${process.env.VUE_APP_API}/cartItem/delete/${state.cart[index].id}`, {
+                .delete(`${process.env.VUE_APP_API}/cartItem/delete/${state.cart[index].id}`,{
                     headers: {
-                        'Authorization': state.token
+                        'Authorization': this.getters.token
                     }
                 })
                 .then(() => {
@@ -145,9 +145,9 @@ const mutations = {
                 colorId: state.cart[payload.index].colors.id
             }
             axios
-                .put(`${process.env.VUE_APP_API}/cartItem/update`, cartItem, {
+                .put(`${process.env.VUE_APP_API}/cartItem/update`, cartItem,{
                     headers: {
-                        'Authorization': state.token
+                        'Authorization': this.getters.token
                     }
                 })
                 .then(response => {

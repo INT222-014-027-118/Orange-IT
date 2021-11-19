@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const api = process.env.VUE_APP_API
-const get_list = `${api}/product/list`
+const get_products_list = `${api}/product/list`
+const get_products_list_admin = `${api}/product/listAdmin`
 const get_by_category = `${api}/product/getByCategory`
 // const get_by_name = `${api}/product/getByBrandName`
 const get_categories = `${api}/category/list`
@@ -54,9 +55,9 @@ const getters = {
 const actions = {
     async loadProducts({
         commit
-    }) {
+    }, isAdmin) {
         axios
-            .get(get_list)
+            .get(get_products_list)
             .then(res => {
                 let products = res.data
                 commit('SET_PRODUCTS', products)
@@ -64,6 +65,23 @@ const actions = {
             .catch(error => {
                 console.log(error)
             })
+        if (isAdmin) {
+            axios
+                .get(get_products_list_admin, {
+                    headers: {
+                        'Authorization': this.getters.token
+                    }
+                })
+                .then(res => {
+                    let products = res.data
+                    commit('SET_PRODUCTS', products)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+
+
     },
     async loadcategories({
         commit
@@ -95,7 +113,7 @@ const actions = {
     //     commit
     // }) {
     //     axios
-    //         .get(`${get_list}`)
+    //         .get(`${get_products_list}`)
     //         .then(res => {
     //             let products = res.data
     //             commit('SET_FOR_SEARCH_PRODUCTS', products)
