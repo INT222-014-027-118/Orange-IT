@@ -10,8 +10,6 @@
         <div class="mt-4">
             <side-menu-item v-for="(menu, index) in $store.getters.menuList" :key="menu" :label="menu.label" :link="menu.link" :active="menu.active" :icon="menu.icon" @chooseMenu="chooseMenu(index)" />
         </div>
-        <button type="button" @click="$router.push({ name: 'productForm', params: { form: 'form' } })">form</button>
-        
         <button @click="logout()" class="hover:text-red-500 flex justify-center sm:justify-start font-bold w-full py-2">
             <span class="material-icons-outlined sm:ml-3 md:ml-6">logout</span>
             <span class="ml-3 text-sm md:text-base lg:text-lg hidden sm:inline-block font-semibold leading-5">Logout</span>
