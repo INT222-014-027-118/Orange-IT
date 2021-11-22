@@ -1,8 +1,8 @@
 <template>
-    <div class="py-5" v-show="isLoad">
+    <div v-show="isLoad">
         <form @submit.prevent="submitForm" class="px-1 py-5 mx-auto sm:max-w-5xl sm:px-6">
             <div class="mx-auto sm:max-w-5xl">
-                <div class="px-3">
+                <div class="px-1 md:px-3">
                     <label class="label-css" for="grid-state">Category *</label>
                     <div class="input-form input-theme" ref="categories" :class="[invalid.categories ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <div class="w-full flex text-xs p-2">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="px-3 lg:w-full">
+                <div class="px-1 md:px-3 lg:w-full">
                     <label class="label-css" for="brand">Brand *</label>
                     <select class="input-form input-theme" id="brandName" v-model="product.brandName" :class="[invalid.brandName ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <option value="" disabled selected>[ Select Brand ]</option>
@@ -47,7 +47,7 @@
                     </select>
                 </div>
 
-                <div class="px-3 lg:w-full">
+                <div class="px-1 md:px-3 lg:w-full">
                     <div class="flex justify-between">
                         <label class="label-css" for="" ref="name">Product Name *</label>
                         <p class="label-css">{{ countText }}/40</p>
@@ -65,7 +65,7 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row lg:w-full">
-                    <div class="relative px-3 md:w-1/2">
+                    <div class="relative px-1 md:px-3 md:w-1/2">
                         <div class="flex justify-between">
                             <label class="label-css" for="price">Price *</label>
                             <span v-if="!invalid.price" class="text-sm text-red-500 select-none">Please input price</span>
@@ -83,7 +83,7 @@
                         />
                     </div>
 
-                    <div class="relative px-3 md:w-1/2">
+                    <div class="relative px-1 md:px-3 md:w-1/2">
                         <div class="flex justify-between">
                             <label class="label-css" for="stock">quantity stock *</label>
                             <span v-if="!invalid.quantityStock" class="text-sm text-red-500 select-none ">Please input stock quantity</span>
@@ -102,7 +102,7 @@
                     </div>
                 </div>
 
-                <div class="relative px-3 lg:w-full">
+                <div class="relative px-1 md:px-3 lg:w-full">
                     <label class="label-css">color *</label>
                     <div class="input-form input-theme flex flex-wrap" :class="[invalid.colors ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <label :for="color.id" v-for="color in $store.getters.colors" :key="color.id" class="flex flex-col items-center cursor-pointer">
@@ -125,7 +125,7 @@
                     > -->
                 </div>
 
-                <div class="px-3 lg:w-full">
+                <div class="px-1 md:px-3 lg:w-full">
                     <label class="label-css">Upload Image *</label>
                     <div class="relative input-form input-theme flex flex-wrap select-none overflow-hidden" :class="[invalid.images ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <div v-for="(item, index) in preview_list" :key="index" class="m-2 md:m-5 relative">
@@ -156,10 +156,10 @@
                     </div>
                 </div>
 
-                <div class="px-3 lg:w-full rounded-md">
+                <div class="px-1 md:px-3 lg:w-full rounded-md">
                     <label class="label-css">attribute *</label>
                     <div class="input-form input-theme ">
-                        <div class="grid grid-cols-2 grid-rows-2 overflow-hidden">
+                        <div class="grid grid-cols-2 grid-rows-2">
                             <div class="col-span-2 sm:col-span-1 p-1">
                                 <h2 class="text-center font-semibold">Attribute</h2>
                                 <RichSelect class="" @selectAttribute="selectAttribute" />
@@ -229,7 +229,7 @@
                     </div>
                 </div>
 
-                <div class="relative px-3 lg:w-full">
+                <div class="relative px-1 md:px-3 lg:w-full">
                     <label class="label-css" for="description">Description</label>
                     <textarea class="h-40 input-form input-theme" id="description" v-model="product.description" type="text" placeholder="Please enter text up to 1000 characters." maxlength="1000" />
                 </div>
