@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://20.212.33.246/")
 @RequestMapping("/category")
-@CrossOrigin(origins = "*")
 public class CategoryController {
 
     @Autowired
@@ -34,6 +34,9 @@ public class CategoryController {
     @PutMapping("/update")
     @PreAuthorize("hasRole('Admin')")
     public Categories editCategory(@RequestBody Categories categories) {
+        if (categoryRepository.existsAllByCategory(categories.getCategory())) {
+            throw new SameCategoryException(categories.getCategory());
+        }
         categoryRepository.save(categories);
         return categories;
     }

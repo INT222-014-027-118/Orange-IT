@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://20.212.33.246/")
 @RequestMapping("/rating")
-@CrossOrigin(origins = "*")
 public class RatingController {
     @Autowired
     private RatingRepository ratingRepository;
