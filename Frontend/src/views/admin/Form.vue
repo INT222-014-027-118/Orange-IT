@@ -2,7 +2,6 @@
     <div class="p-1 sm:p-5">
         <div class="mx-auto sm:max-w-5xl px-3 sm:px-6 bg-white dark:bg-dark_tertiary rounded-md">
             <h1 class="text-2xl sm:text-3xl whitespace-nowrap px-2 py-6 font-semibold font-sans capitalize">form products</h1>
-            {{this.$store.getters.attributes}}
             <hr />
             <form @submit.prevent="submitForm" class="py-5">
                 <div class="px-1 md:px-3">
@@ -164,12 +163,13 @@
                     <div class="input-form input-theme ">
                         <div class="grid grid-cols-2 grid-rows-2">
                             <div class="col-span-2 sm:col-span-1 p-1">
-                                <h2 class="text-center font-semibold">Attribute</h2>
+                                <h2 class="text-center font-semibold relative">Attribute <span class="material-icons absolute ml-3 -top-1 cursor-pointer" @click="loadAttribute"> refresh </span></h2>
                                 <RichSelect class="" @selectAttribute="selectAttribute" />
+                                {{ selectAttributes }}
                             </div>
                             <div class="col-span-2 sm:col-span-1 p-1">
                                 <h2 class="text-center font-semibold">Value</h2>
-                                <input class="input-theme " type="text" maxlength="40" placeholder="Please input value" v-model="attributeText" />
+                                <input class="input-theme " type="text" maxlength="40" placeholder="Please input value" v-model="attributeValue" />
                             </div>
                             <div class="col-span-2 p-1 mt-3">
                                 <button
@@ -245,9 +245,6 @@ export default {
             activeClose: true,
             productIds: [],
 
-            attributeText: "",
-            attributeSelect: "",
-
             selectRootCat: {},
             selectChildCat: {},
 
@@ -267,18 +264,17 @@ export default {
                 productsHasAttributes: [
                     {
                         id: 1,
-                        attributeId: 1,
+                        attributeId: 4,
                         productId: 1,
-                        attribute_value: "",
+                        attribute_value: "Logitech GL",
                     },
                 ],
             },
-            attributes: [
-                {
-                    id: 1,
-                    attribute: "",
-                },
-            ],
+            attributes: [],
+            selectAttributes: {},
+
+            attributeValue: "",
+            // attributeSelect: "",
 
             invalid: {
                 productName: true,
@@ -312,7 +308,7 @@ export default {
             this.invalid.specs = this.product.specs.length === 0 ? false : true;
             this.invalid.images = this.imageInfo.length === 0 ? false : true;
             this.invalid.productName = this.product.productName === "" ? false : true;
-            this.invalid.productSpecValues = this.product.productSpecValues.length === 0 ? false : true;
+            // this.invalid.productSpecValues = this.product.productSpecValues.length === 0 ? false : true;
             this.invalid.price = this.product.price === 0 ? false : true;
             this.invalid.brandName = this.product.brandName === "" ? false : true;
             this.invalid.categories = Object.keys(this.selectChildCat).length === 0 ? false : true;
@@ -335,19 +331,23 @@ export default {
             this.selectChildCat = category;
         },
         selectAttribute(choosed) {
-            this.attributeSelect = choosed;
+            this.selectAttributes = {
+                id: choosed.id,
+                attribute: choosed.attribute,
+            };
         },
         Addattribute() {
-            if (!this.attributeText === "" && !this.attributeSelect === "") {
-                let attribute = { key: this.attributeSelect, textValue: this.attributeText };
+            if (!this.selectAttributes === "" && !this.attributeSelect === "") {
+                let attribute = { key: this.attributeSelect, textValue: this.attributeValue };
                 this.product.attributes.push(attribute);
-                this.attributeText = "";
+                this.attributeValue = "";
                 this.attributeSelect = "";
             }
+            console.log(Object.keys(this.selectAttributes).length === 0);
         },
-        removeAddattribute(index) {
-            this.product.attributes.splice(index, 1);
-        },
+        // removeAddattribute(index) {
+        //     this.product.attributes.splice(index, 1);
+        // },
 
         previewMultiImage(event) {
             let imgName = event.target.files[0].name;
@@ -385,18 +385,20 @@ export default {
                 this.activeClose = true;
             }
         },
+        loadAttribute() {
+            this.$store.dispatch("loadAttirbute");
+        },
     },
     computed: {
         countText() {
             return this.product.productName.length;
         },
     },
-    mounted() {
+    mounted() {},
+    created() {
         this.$store.dispatch("loadDataForm");
         this.$store.dispatch("loadcategories");
-    },
-    created() {
-        console.log("test");
+        this.loadAttribute();
     },
 };
 </script>

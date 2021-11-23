@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const api = process.env.VUE_APP_API
 const get_colors = `${api}/color/list`
-const get_specs = `${api}/spec/list`
+// const get_specs = `${api}/spec/list`
 const get_attributes = `${api}/attribute/list`
 
 const post_product = `${api}/product/add`
@@ -54,17 +54,11 @@ const actions = {
             .catch(error => {
                 console.log(error)
             })
+    },
 
-        axios
-            .get(get_specs)
-            .then(data => {
-                let specs = data.data
-                commit('SET_SPECS', specs)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-
+    loadAttirbute({
+        commit
+    }) {
         axios
             .get(get_attributes)
             .then(data => {
@@ -84,7 +78,11 @@ const actions = {
         })
         console.log(data);
         axios
-            .post(post_image_Multiple, data)
+            .post(post_image_Multiple, data, {
+                headers: {
+                    'Authorization': this.getters.token
+                }
+            })
             .then(response => {
                 console.log("response: ", response)
             })
@@ -92,7 +90,11 @@ const actions = {
 
     addProduct(context, product) {
         axios
-            .post(post_product, product)
+            .post(post_product, product, {
+                headers: {
+                    'Authorization': this.getters.token
+                }
+            })
             .then(response => {
                 // if(response.status === 200){
 
@@ -104,11 +106,18 @@ const actions = {
             })
     },
 
-    addAttribute(context, attribute) {
+    addAttribute({
+        dispatch
+    }, attribute) {
         axios
-            .post(post_attribute, attribute)
+            .post(post_attribute, attribute, {
+                headers: {
+                    'Authorization': this.getters.token
+                }
+            })
             .then(response => {
                 console.log("response: ", response)
+                dispatch("loadAttirbute")
             })
             .catch(error => {
                 console.log(error)
@@ -125,9 +134,7 @@ const mutations = {
     SET_CATEGORIES(state, payload) {
         state.categories = payload
     },
-    SET_SPECS(state, payload) {
-        state.specs = payload
-    },
+
     SET_ATTRIBUTES(state, payload) {
         state.attributes = payload
     },

@@ -17,18 +17,12 @@
             :class="[showOption ? 'visible' : 'invisible']"
         >
             <div class="w-full p-2 placeholder-gray-400 flex items-center">
-                <input
-                    placeholder="Search..."
-                    maxlength="40"
-                    class="inline w-full px-3 py-2 h-9 input-theme"
-                    v-model="text"
-                    ref="inputText"
-                />
+                <input placeholder="Search..." type="search" maxlength="40" class="inline w-full px-3 py-2 h-9 input-theme" v-model="text" ref="inputText" @keydown.enter="gogo" />
                 <div class="" v-show="showAdd">
                     <button type="button" class="bg-green-600 px-2 py-2 ml-2 h-9 rounded-md text-white text-sm" @click="AddOption">Add</button>
                 </div>
             </div>
-            <ul class="overflow-auto rounded-sm" style="max-height: 250px;">
+            <ul class="overflow-auto rounded-sm" style="max-height: 200px;">
                 <li
                     data-type="option"
                     class="cursor-pointer "
@@ -55,11 +49,7 @@ export default {
         return {
             showOption: false,
             showAdd: false,
-            attributes: [
-                // { attribute: "attribute1", active: false, show: true },
-                // { attribute: "attribute2", active: false, show: true },
-                // { attribute: "attribute3", active: false, show: true },
-            ],
+            attributes: [],
             choosed: "",
             text: "",
         };
@@ -70,7 +60,7 @@ export default {
                 if (i == index) {
                     this.search[i].active = true;
                     this.choosed = this.search[i].attribute;
-                    this.$emit("selectAttribute", this.choosed);
+                    this.$emit("selectAttribute", this.search[i]);
                 } else {
                     this.search[i].active = false;
                 }
@@ -78,20 +68,26 @@ export default {
             this.showOption = false;
         },
         showOP() {
+            this.$store.dispatch("loadAttirbute");
             this.showOption = !this.showOption;
+            if (this.attributes.length == 0) {
+                this.attributes = this.$store.getters.attributes;
+            } else if (this.attributes.length !== this.$store.getters.attributes.length) {
+                this.attributes = this.$store.getters.attributes;
+            }
             setTimeout(() => {
                 this.$refs.inputText.focus();
             }, 500);
         },
         AddOption() {
             if (!this.text == "" && !this.text == this.attributes.filter((t) => t.attribute.toLowerCase().includes(this.text.toLowerCase()))) {
-                let newOp = { attribute: this.text, active: false, show: true };
-                this.attributes.push(newOp);
+                let newattribute = { id: 1, attribute: this.text };
+                this.$store.dispatch("addAttribute", newattribute);
+                setTimeout(() => {
+                    this.attributes = this.$store.getters.attributes;
+                }, 500);
             }
         },
-        getAttributes(){
-            this.attributes = this.$store.getters.attributes
-        }
     },
     computed: {
         search() {
