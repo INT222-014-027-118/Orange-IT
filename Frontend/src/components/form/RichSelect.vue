@@ -2,7 +2,7 @@
     <div class="relative">
         <div class="inline-block relative w-full">
             <button type="button" class="w-full flex text-left justify-between items-center input-theme" value="Option A" @click="showOP">
-                <span class="block truncate" :class="[choosed === '' ? 'text-gray-400' : ' text-black']">{{ choosed == "" ? "Please select or input" : choosed }}</span
+                <span class="block truncate" :class="[choosed === '' ? 'text-gray-300 dark:text-gray-500' : ' text-black dark:text-gray-100']">{{ choosed == "" ? "Please select or input" : choosed }}</span
                 ><svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current flex-shrink-0 ml-1 h-4 w-4 text-gray-600 dark:text-gray-300">
                     <path
                         clip-rule="evenodd"
@@ -12,9 +12,18 @@
                 </svg>
             </button>
         </div>
-        <div class="absolute top-12 w-full z-40 -mt-1 border rounded-md border-primary shadow-lg transition ease-in duration-75 opacity-100 bg-white" :class="[showOption ? 'visible' : 'invisible']">
+        <div
+            class="absolute top-12 w-full z-40 -mt-1 border rounded-md border-primary shadow-lg transition ease-in duration-75 opacity-100 bg-white dark:bg-gray-700"
+            :class="[showOption ? 'visible' : 'invisible']"
+        >
             <div class="w-full p-2 placeholder-gray-400 flex items-center">
-                <input placeholder="Search..." maxlength="40" class="inline w-full px-3 py-2 h-9 bg-gray-50 text-sm rounded-md border focus:outline-none focus:shadow-outline border-gray-300" v-model="text" ref="inputText" />
+                <input
+                    placeholder="Search..."
+                    maxlength="40"
+                    class="inline w-full px-3 py-2 h-9 input-theme"
+                    v-model="text"
+                    ref="inputText"
+                />
                 <div class="" v-show="showAdd">
                     <button type="button" class="bg-green-600 px-2 py-2 ml-2 h-9 rounded-md text-white text-sm" @click="AddOption">Add</button>
                 </div>
@@ -22,10 +31,10 @@
             <ul class="overflow-auto rounded-sm" style="max-height: 250px;">
                 <li
                     data-type="option"
-                    class="cursor-pointer hover:bg-yellow-200"
+                    class="cursor-pointer "
                     v-for="(spec, index) in search"
                     :key="spec"
-                    :class="[spec.active ? 'font-semibold bg-primary text-white hover:bg-primaryfocus' : '']"
+                    :class="[spec.active ? 'font-semibold bg-primary text-white hover:bg-primaryfocus ' : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary']"
                 >
                     <div class="flex justify-between items-center px-3 py-2" @click="selectToNa(index)" v-if="spec.show">
                         <span class="truncate block ">{{ spec.spec }}</span>

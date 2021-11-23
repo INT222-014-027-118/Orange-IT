@@ -1,7 +1,9 @@
 <template>
-    <div v-show="isLoad">
-        <form @submit.prevent="submitForm" class="px-1 py-5 mx-auto sm:max-w-5xl sm:px-6">
-            <div class="mx-auto sm:max-w-5xl">
+    <div class="p-1 sm:p-5">
+        <div class="mx-auto sm:max-w-5xl px-3 sm:px-6 bg-white dark:bg-dark_tertiary rounded-md">
+            <h1 class="text-2xl sm:text-3xl whitespace-nowrap px-2 py-6 font-semibold font-sans capitalize">form products</h1>
+            <hr />
+            <form @submit.prevent="submitForm" class="py-5">
                 <div class="px-1 md:px-3">
                     <label class="label-css" for="grid-state">Category *</label>
                     <div class="input-form input-theme" ref="categories" :class="[invalid.categories ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
@@ -188,21 +190,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr>
-                                    <td class="pb-5"><RichSelect @selected="selected" /></td>
-                                    <td class="pb-5">
-                                        <input type="text" placeholder="value" v-model="attributeText" class="input-theme" />
-                                    </td>
-                                    <td class="pb-5">
-                                        <button
-                                            type="button"
-                                            class="bg-green-600 text-white select-none block px-3 py-2 text-center w-full rounded hover:shadow-md hover:bg-green-700 cursor-pointer"
-                                            @click="Addattribute"
-                                        >
-                                            Add
-                                        </button>
-                                    </td>
-                                </tr> -->
                                 <tr v-show="1 !== 0">
                                     <td colspan="3" class="font-semibold p-2">Attributes list</td>
                                 </tr>
@@ -233,13 +220,11 @@
                     <label class="label-css" for="description">Description</label>
                     <textarea class="h-40 input-form input-theme" id="description" v-model="product.description" type="text" placeholder="Please enter text up to 1000 characters." maxlength="1000" />
                 </div>
-            </div>
-            <button type="submit" class="self-end rounded shadow-md cursor-pointer btn py-2 px-4">
-                Add Product
-            </button>
-        </form>
-
-        <!-- <router-link to="/tester" class="p-10 bg-red-500">tester</router-link> -->
+                <button type="submit" class="self-end rounded shadow-md cursor-pointer btn text-lg py-3 px-6 mx-1 sm:mx-3 mb-3 w-full max-w-xs">
+                    Submit
+                </button>
+            </form>
+        </div>
     </div>
     <!-- <div v-show="isLoad" class="flex items-center justify-center w-full h-screen">
         <i class="text-4xl material-icons animate-spin" v-show="isLoad"> autorenew </i>
@@ -401,9 +386,6 @@ export default {
         },
     },
     computed: {
-        // isValid() {
-        //     return this.brandName !== "" && this.name !== "" && this.price !== 0 && this.typeAdd !== "" && this.colorsAdd.length !== 0 && this.launchDate !== "";
-        // },
         countText() {
             return this.product.productName.length;
         },
@@ -413,8 +395,7 @@ export default {
         this.$store.dispatch("loadcategories");
     },
     created() {
-        console.log('test');
-        // await this.getDataToEdit();
+        console.log("test");
     },
 };
 </script>

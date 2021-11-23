@@ -1,8 +1,8 @@
 <template>
     <div class="p-1 sm:p-5">
         <div class="mx-auto bg-white dark:bg-dark_tertiary rounded-md shadow-sm max-w-7xl pb-1">
-            <div class="py-4 border-b mb-5 mx-1 sm:mx-5 font-semibold font-sans flex flex-wrap justify-between">
-                <h1 class="text-2xl sm:text-3xl dark:text-gray-100 whitespace-nowrap p-2">Manage products</h1>
+            <div class="py-4 border-b mb-5 mx-1 sm:mx-5 flex flex-wrap justify-between">
+                <h1 class="text-2xl sm:text-3xl whitespace-nowrap p-2 font-semibold font-sans">Manage products</h1>
 
                 <div class="items-center rounded-3xl inline-flex w-full sm:w-2/5 p-2">
                     <button class="w-full focus:outline-none">
