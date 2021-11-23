@@ -3,8 +3,10 @@ import axios from 'axios'
 const api = process.env.VUE_APP_API
 const get_colors = `${api}/color/list`
 const get_specs = `${api}/spec/list`
+const get_attributes = `${api}/attribute/list`
 
 const post_product = `${api}/product/add`
+const post_attribute = `${api}/attribute/add`
 // const put_product = `${api}/product/update`
 // const post_image = `${api}/image/add`
 const post_image_Multiple = `${api}/image/uploadMultipleFiles`
@@ -19,14 +21,22 @@ const state = {
         'Razer',
         'Logitech'
     ],
-    token: `Bearer ${localStorage.getItem('token')}`
+    attributes: [],
+    token: `Bearer ${localStorage.getItem('token')}`,
 
 }
 
 
 const getters = {
     colors: state => state.colors,
-
+    attributes: state => state.attributes.map((attribute) => {
+        return {
+            id: attribute.id,
+            attribute: attribute.attribute,
+            active: false,
+            show: true
+        }
+    }),
     brands: state => state.brands,
     specs: state => state.specs
 }
@@ -50,6 +60,16 @@ const actions = {
             .then(data => {
                 let specs = data.data
                 commit('SET_SPECS', specs)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+        axios
+            .get(get_attributes)
+            .then(data => {
+                let attributes = data.data
+                commit('SET_ATTRIBUTES', attributes)
             })
             .catch(error => {
                 console.log(error)
@@ -82,6 +102,17 @@ const actions = {
             .catch(error => {
                 console.log(error)
             })
+    },
+
+    addAttribute(context, attribute) {
+        axios
+            .post(post_attribute, attribute)
+            .then(response => {
+                console.log("response: ", response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
 }
@@ -96,6 +127,9 @@ const mutations = {
     },
     SET_SPECS(state, payload) {
         state.specs = payload
+    },
+    SET_ATTRIBUTES(state, payload) {
+        state.attributes = payload
     },
 
 }

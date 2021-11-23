@@ -32,13 +32,13 @@
                 <li
                     data-type="option"
                     class="cursor-pointer "
-                    v-for="(spec, index) in search"
-                    :key="spec"
-                    :class="[spec.active ? 'font-semibold bg-primary text-white hover:bg-primaryfocus ' : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary']"
+                    v-for="(attribute, index) in search"
+                    :key="attribute"
+                    :class="[attribute.active ? 'font-semibold bg-primary text-white hover:bg-primaryfocus ' : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary']"
                 >
-                    <div class="flex justify-between items-center px-3 py-2" @click="selectToNa(index)" v-if="spec.show">
-                        <span class="truncate block ">{{ spec.spec }}</span>
-                        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current h-4 w-4" :class="{ hidden: !spec.active }">
+                    <div class="flex justify-between items-center px-3 py-2" @click="selectToNa(index)" v-if="attribute.show">
+                        <span class="truncate block ">{{ attribute.attribute }}</span>
+                        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current h-4 w-4" :class="{ hidden: !attribute.active }">
                             <polygon points="0 11 2 9 7 14 18 3 20 5 7 18"></polygon>
                         </svg>
                     </div>
@@ -55,10 +55,10 @@ export default {
         return {
             showOption: false,
             showAdd: false,
-            specs: [
-                { spec: "spec1", active: false, show: true },
-                { spec: "spec2", active: false, show: true },
-                { spec: "spec3", active: false, show: true },
+            attributes: [
+                // { attribute: "attribute1", active: false, show: true },
+                // { attribute: "attribute2", active: false, show: true },
+                // { attribute: "attribute3", active: false, show: true },
             ],
             choosed: "",
             text: "",
@@ -69,7 +69,7 @@ export default {
             for (let i = 0; i < this.search.length; i++) {
                 if (i == index) {
                     this.search[i].active = true;
-                    this.choosed = this.search[i].spec;
+                    this.choosed = this.search[i].attribute;
                     this.$emit("selectAttribute", this.choosed);
                 } else {
                     this.search[i].active = false;
@@ -84,16 +84,19 @@ export default {
             }, 500);
         },
         AddOption() {
-            if (!this.text == "" && !this.text == this.specs.filter((t) => t.spec.toLowerCase().includes(this.text.toLowerCase()))) {
-                let newOp = { spec: this.text, active: false, show: true };
-                this.specs.push(newOp);
+            if (!this.text == "" && !this.text == this.attributes.filter((t) => t.attribute.toLowerCase().includes(this.text.toLowerCase()))) {
+                let newOp = { attribute: this.text, active: false, show: true };
+                this.attributes.push(newOp);
             }
         },
+        getAttributes(){
+            this.attributes = this.$store.getters.attributes
+        }
     },
     computed: {
         search() {
-            this.specs.map((t) => {
-                if (!t.spec.toLowerCase().includes(this.text.toLowerCase())) {
+            this.attributes.map((t) => {
+                if (!t.attribute.toLowerCase().includes(this.text.toLowerCase())) {
                     t.show = false;
                     this.showAdd = true;
                 } else {
@@ -101,7 +104,7 @@ export default {
                     this.showAdd = false;
                 }
             });
-            return this.specs;
+            return this.attributes;
         },
     },
 };

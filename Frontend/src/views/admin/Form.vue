@@ -2,6 +2,7 @@
     <div class="p-1 sm:p-5">
         <div class="mx-auto sm:max-w-5xl px-3 sm:px-6 bg-white dark:bg-dark_tertiary rounded-md">
             <h1 class="text-2xl sm:text-3xl whitespace-nowrap px-2 py-6 font-semibold font-sans capitalize">form products</h1>
+            {{this.$store.getters.attributes}}
             <hr />
             <form @submit.prevent="submitForm" class="py-5">
                 <div class="px-1 md:px-3">
