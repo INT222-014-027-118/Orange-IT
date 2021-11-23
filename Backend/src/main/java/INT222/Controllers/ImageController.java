@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins = "http://20.212.33.246/")
 @RequestMapping("/image")
-@CrossOrigin(origins = "*")
 public class ImageController {
 
     @Autowired

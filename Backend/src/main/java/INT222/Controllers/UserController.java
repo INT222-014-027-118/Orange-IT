@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://20.212.33.246/")
 public class UserController {
 
     @Autowired
