@@ -19,7 +19,7 @@
                     <button type="button" class="bg-green-600 px-2 py-2 ml-2 h-9 rounded-md text-white text-sm" @click="AddOption">Add</button>
                 </div>
             </div>
-            <ul class="overflow-auto rounded-sm" style="max-height: 300px;">
+            <ul class="overflow-auto rounded-sm" style="max-height: 250px;">
                 <li
                     data-type="option"
                     class="cursor-pointer hover:bg-yellow-200"

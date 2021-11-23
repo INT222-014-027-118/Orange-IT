@@ -1,8 +1,8 @@
 <template>
     <div class="p-1 sm:p-5">
-        <div class="mx-auto bg-white rounded-md shadow-sm max-w-7xl pb-1">
+        <div class="mx-auto bg-white dark:bg-dark_tertiary rounded-md shadow-sm max-w-7xl pb-1">
             <div class="py-4 border-b mb-5 mx-1 sm:mx-5 font-semibold font-sans flex flex-wrap justify-between">
-                <h1 class="text-2xl sm:text-3xl text-gray-700 whitespace-nowrap p-2">Manage products</h1>
+                <h1 class="text-2xl sm:text-3xl dark:text-gray-100 whitespace-nowrap p-2">Manage products</h1>
 
                 <div class="items-center rounded-3xl inline-flex w-full sm:w-2/5 p-2">
                     <button class="w-full focus:outline-none">
@@ -35,7 +35,7 @@
             </div>
 
             <div class="overflow-auto mx-1 shadow-inner border">
-                <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
+                <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white dark:bg-dark_tertiary table-striped relative">
                     <thead>
                         <tr class="text-left">
                             <th
@@ -50,29 +50,29 @@
                     <tbody>
                         <tr v-for="product in products" :key="product.id">
                             <td class="border-dashed border-t border-gray-200">
-                                <span class="text-gray-700 px-6 py-3 flex items-center">{{ product.id }}</span>
+                                <span class="px-6 py-3 flex items-center">{{ product.id }}</span>
                             </td>
                             <td class="border-dashed border-t border-gray-200">
                                 <img :src="`${this.api}/image/get/${product.images[0].source}`" class="object-cover object-center w-14 h-14 sm:w-14 sm:h-14 md:w-20 md:h-20" alt="Product image" />
                             </td>
                             <td class="border-dashed border-t border-gray-200 text-xs w-1/5">
-                                <span class="text-gray-700 px-6 py-3 flex items-center">{{ product.productName }}</span>
+                                <span class="px-6 py-3 flex items-center">{{ product.productName }}</span>
                             </td>
                             <td class="border-dashed border-t border-gray-200">
-                                <span class="text-gray-700 px-6 py-3 flex items-center">{{ product.brandName }}</span>
+                                <span class="px-6 py-3 flex items-center">{{ product.brandName }}</span>
                             </td>
                             <td class="border-dashed border-t border-gray-200 text-xs py-3">
-                                <span class="text-gray-700 px-6 flex items-center">{{ product.catergories[0].category }}</span>
-                                <span v-if="product.catergories.length > 1" class="text-gray-700 px-6 flex items-center">{{ product.catergories[1].category }}</span>
+                                <span class="px-6 flex items-center">{{ product.catergories[0].category }}</span>
+                                <span v-if="product.catergories.length > 1" class="px-6 flex items-center">{{ product.catergories[1].category }}</span>
                             </td>
                             <td class="border-dashed border-t border-gray-200">
-                                <span class="text-gray-700 px-6 py-3 flex items-center">{{ product.price }}</span>
+                                <span class="px-6 py-3 flex items-center">{{ product.price }}</span>
                             </td>
-                            <td class="border-dashed border-t border-gray-200 flex items-center">
-                                <span class="text-gray-600 px-2 py-6 text-lg font-bold">{{ product.quantityStock }}</span>
-                                <button class="material-icons text-md">
-                                    add_circle_outline
-                                </button>
+                            <td class="border-dashed border-t border-gray-200">
+                                <div class="flex items-center justify-center">
+                                    <span class="px-2 text-lg font-bold">{{ product.quantityStock }}</span>
+                                    <button class="material-icons text-md p-1">add_circle_outline</button>
+                                </div>
                             </td>
                             <td class="border-dashed border-t border-gray-200 text-center">
                                 <label class="switch shadow-sm">

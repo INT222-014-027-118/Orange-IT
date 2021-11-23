@@ -57,7 +57,7 @@
                         class="input-form input-theme"
                         id=""
                         type="text"
-                        placeholder="Please input name 40 characters"
+                        placeholder="Please input product name"
                         maxlength="40"
                         :class="[invalid.productName ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']"
                     />
