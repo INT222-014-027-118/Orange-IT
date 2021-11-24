@@ -163,7 +163,7 @@ export default {
             // this.$router.push('/admin/form')
         },
         deleteProduct(id, productName) {
-            if (window.confirm("Do you want to delete? \n:   " + productName)) {
+            if (window.confirm("Do you want to delete? \nproduct:   " + productName)) {
                 this.$store.dispatch("deleteProduct", id);
             }
         },

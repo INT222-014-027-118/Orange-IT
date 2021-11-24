@@ -77,7 +77,6 @@ const actions = {
         images.forEach(img => {
             data.append("orange", img)
         })
-        console.log(data);
         axios
             .post(post_image_Multiple, data, {
                 headers: {

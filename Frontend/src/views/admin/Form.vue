@@ -350,7 +350,7 @@ export default {
             var input = event.target;
             var count = input.files.length;
             var index = 0;
-            if (imgName.length > 20) {
+            if (imgName.length > 30) {
                 alert("The file name cannot exceed 20 characters.!!!");
             } else if (input.files) {
                 while (count--) {
