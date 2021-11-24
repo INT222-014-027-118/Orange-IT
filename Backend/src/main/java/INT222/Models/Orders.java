@@ -23,7 +23,7 @@ public class Orders {
     @Column(name = "order_date")
     private String orderDate;
 
-    @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id",insertable = true, updatable = true)
     private List<OrderItems> orderItems;
 

@@ -150,5 +150,19 @@ public class ExceptionAdvice {
         return ex.getMessage();
     }
 
+    @ResponseBody
+    @ExceptionHandler(NotFoundOrderException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String NotFoundOrder(NotFoundOrderException ex){
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(NotFoundOrderItemException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String NotFoundOrder(NotFoundOrderItemException ex){
+        return ex.getMessage();
+    }
+
 
 }
