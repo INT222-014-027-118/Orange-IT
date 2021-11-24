@@ -38,9 +38,6 @@ public class ProductController {
     private ImageRepository imageRepository;
 
     @Autowired
-    private ProductSpecValueRepository productSpecValueRepository;
-
-    @Autowired
     private ProductHasAttributeRepository productHasAttributeRepository;
 
     @Autowired
@@ -111,24 +108,26 @@ public class ProductController {
     @PostMapping("/add")
     @PreAuthorize("hasRole('Admin')")
     public Optional<Products> addProduct(@RequestBody Products products) {
+        long id = productRepository.findTopByOrderByIdDesc().getId()+1;
             if (productRepository.existsByProductName(products.getProductName())) {
                 throw new SameProductNameException(products.getProductName());
             }
 
             else
-            products.setId(productRepository.findTopByOrderByIdDesc().getId()+1);
+            products.setId(id);
              List<Images> images =  products.getImages();
              List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
         for (int i = 0; i < images.size(); i++) {
-            images.get(i).setId(imageRepository.findTopByOrderByIdDesc().getId()+1+i);
+            images.get(i).setId(imageRepository.findAll().size()+1+i);
+            images.get(i).setProductId(id);
         }
         for (int i = 0; i < productsHasAttributes.size(); i++) {
-            productsHasAttributes.get(i).setId(productHasAttributeRepository.findTopByOrderByIdDesc().getId()+1+i);
-            productsHasAttributes.get(i).setProductId(products.getId());
+            productsHasAttributes.get(i).setId(productHasAttributeRepository.findAll().size()+1+i);
+            productsHasAttributes.get(i).setProductId(id);
         }
             productRepository.save(products);
 
-          return getProductById(products.getId());
+          return getProductById(id);
 
     }
 
