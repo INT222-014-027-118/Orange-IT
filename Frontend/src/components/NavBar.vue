@@ -246,11 +246,15 @@
                     <div v-show="this.$route.name !== 'Home'" :class="[this.$route.name === 'Home' ? 'material-icons text-primary' : 'material-icons-outlined']">home</div>
                     <span class="">home</span>
                 </button>
-                <button class="flex flex-col items-center w-16 p-1 font-semibold">
+                <button class="flex flex-col items-center w-16 p-1 font-semibold relative" @click="$router.push('/compare')" :class="[this.$route.name === 'Compare' ? 'text-primary' : '']">
                     <div class="material-icons">
-                        grid_view
+                        compare_arrows
+                        <!-- grid_view -->
                     </div>
                     <span class="">categories</span>
+                    <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-1 right-3 ring-2 ring-white dark:ring-dark_secondary">
+                                {{ this.$store.getters.countCompareProducts == 2 ? "VS" : "" }}
+                    </div>
                 </button>
                 <button
                     class="flex flex-col items-center w-16 p-1 font-semibold relative"

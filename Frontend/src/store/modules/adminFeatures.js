@@ -12,7 +12,7 @@ const state = {
             icon: "manage_accounts"
         },
         {
-            label: "form product",
+            label: "Form product",
             active: false,
             link: "form-product",
             icon: "insert_drive_file"
