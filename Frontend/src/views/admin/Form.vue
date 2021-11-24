@@ -163,7 +163,7 @@
                     <div class="input-form input-theme ">
                         <div class="grid grid-cols-2 grid-rows-2">
                             <div class="col-span-2 sm:col-span-1 p-1">
-                                <h2 class="text-center font-semibold relative">Attribute <span class="material-icons absolute ml-3 -top-1 cursor-pointer" @click="loadAttribute"> refresh </span></h2>
+                                <h2 class="text-center font-semibold relative">Attribute</h2>
                                 <RichSelect class="" @selectAttribute="selectAttribute" />
                                 {{ selectAttributes }}
                             </div>
@@ -385,9 +385,6 @@ export default {
                 this.activeClose = true;
             }
         },
-        loadAttribute() {
-            this.$store.dispatch("loadAttirbute");
-        },
     },
     computed: {
         countText() {
@@ -398,7 +395,7 @@ export default {
     created() {
         this.$store.dispatch("loadDataForm");
         this.$store.dispatch("loadcategories");
-        this.loadAttribute();
+        this.$store.dispatch("loadAttirbute");
     },
 };
 </script>

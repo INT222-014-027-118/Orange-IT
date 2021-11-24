@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center cursor-pointer select-none" :class="[this.$store.getters.isAdmin ? 'py-3 w-full shadow-sm' : 'flex-wrap']" @click="changeSetChangeMode()">
+    <div class="flex items-center cursor-pointer select-none" :class="[this.$store.getters.isAdmin ? 'mt-2 py-3 w-full shadow-sm' : 'flex-wrap']" @click="changeSetChangeMode()">
         <div class="flex justify-center" :class="[this.$store.getters.isAdmin ? 'sm:ml-3 md:ml-3 w-full sm:w-auto' : 'w-14 md:w-16']">
             <div class="rounded-full w-9 h-5 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
                 <div
