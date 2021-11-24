@@ -129,4 +129,26 @@ public class ExceptionAdvice {
         return ex.getMessage();
     }
 
+    @ResponseBody
+    @ExceptionHandler(NotFoundAttributeException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String NotFoundAttribute(NotFoundAttributeException ex){
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(SameAttributeException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    String SameAttribute(SameAttributeException ex){
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(NotFoundUserCartItemException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String NotFoundUserCartItem(NotFoundUserCartItemException ex){
+        return ex.getMessage();
+    }
+
+
 }

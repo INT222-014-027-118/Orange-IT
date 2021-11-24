@@ -3,7 +3,8 @@ import axios from 'axios'
 
 const state = {
     cart: [],
-    cartItem: null
+    cartItem: null,
+    token: `Bearer ${localStorage.getItem('token')}`
 }
 
 
@@ -39,7 +40,11 @@ const actions = {
     }) {
         if (this.getters.isLogin) {
             axios
-                .get(`${process.env.VUE_APP_API}/cartItem/findByUserId/${localStorage.getItem('userId')}`)
+                .get(`${process.env.VUE_APP_API}/cartItem/findByUserId/${localStorage.getItem('userId')}`, {
+                    headers: {
+                        'Authorization': this.getters.token
+                    }
+                })
                 .then(response => {
                     commit('setCart', response.data)
                 })
@@ -96,7 +101,11 @@ const mutations = {
         } else {
             if (this.getters.isLogin) {
                 axios
-                    .post(`${process.env.VUE_APP_API}/cartItem/add_item/${localStorage.getItem('userId')}/${cartItem.productId}`, cartItem)
+                    .post(`${process.env.VUE_APP_API}/cartItem/add_item/${localStorage.getItem('userId')}/${cartItem.productId}`, cartItem, {
+                        headers: {
+                            'Authorization': this.getters.token
+                        }
+                    })
                     .then(response => {
                         state.cart.push(response.data);
                     })
@@ -113,7 +122,11 @@ const mutations = {
     removeCartItem(state, index) {
         if (this.getters.isLogin) {
             axios
-                .delete(`${process.env.VUE_APP_API}/cartItem/delete/${state.cart[index].id}`)
+                .delete(`${process.env.VUE_APP_API}/cartItem/delete/${state.cart[index].id}`,{
+                    headers: {
+                        'Authorization': this.getters.token
+                    }
+                })
                 .then(() => {
                     state.cart.splice(index, 1)
                 })
@@ -132,7 +145,11 @@ const mutations = {
                 colorId: state.cart[payload.index].colors.id
             }
             axios
-                .put(`${process.env.VUE_APP_API}/cartItem/update`, cartItem)
+                .put(`${process.env.VUE_APP_API}/cartItem/update`, cartItem,{
+                    headers: {
+                        'Authorization': this.getters.token
+                    }
+                })
                 .then(response => {
                     if (response.status === 200) {
                         state.cart[payload.index].quantity = payload.quantity

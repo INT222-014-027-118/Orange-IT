@@ -18,7 +18,7 @@ const routes = [{
     path: '/admin',
     name: 'Admin',
     component: () => import( /* webpackChunkName: "admin" */ '../views/admin/adminHome.vue'),
-    beforeEnter: (to, from, next) => {
+    beforeRouteLeave: (to, from, next) => {
       if (store.getters['isAdmin']) {
         next()
       } else {
@@ -26,10 +26,16 @@ const routes = [{
       }
     },
     children: [{
-      path: ':manageProducts',
-      name: 'ManageProducts',
-      component: () => import( /* webpackChunkName: "purchase" */ '../views/admin/manageProducts.vue')
-    }],
+        path: ':manageProducts',
+        name: 'ManageProducts',
+        component: () => import( /* webpackChunkName: "purchase" */ '../views/admin/manageProducts.vue')
+      },
+      {
+        path: ':form-product',
+        name: 'Form',
+        component: () => import( /* webpackChunkName: "form" */ '../views/admin/Form.vue'),
+      },
+    ],
   },
   {
     path: '/about',
@@ -92,15 +98,10 @@ const routes = [{
     component: () => import( /* webpackChunkName: "register" */ '../views/Register.vue')
   },
   {
-    path: '/:productId%:productName',
+    path: '/:productId-:productName',
     name: 'Product',
     props: true,
     component: () => import( /* webpackChunkName: "Product" */ '../views/Product.vue')
-  },
-  {
-    path: '/form',
-    name: 'form',
-    component: () => import( /* webpackChunkName: "form" */ '../views/admin/Form.vue')
   },
   {
     path: '/result=:currentCategoryName',

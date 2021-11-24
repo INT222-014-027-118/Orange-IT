@@ -2,13 +2,22 @@ const state = {
     menuList: [{
             label: "Manage product",
             active: false,
-            link: "manageProducts"
+            link: "manageProducts",
+            icon: "warehouse"
         },
         {
             label: "Manage users",
             active: false,
-            link: "manageUsers"
+            link: "manageUsers",
+            icon: "manage_accounts"
         },
+        {
+            label: "form product",
+            active: false,
+            link: "form-product",
+            icon: "insert_drive_file"
+        },
+        
     ],
 
 }

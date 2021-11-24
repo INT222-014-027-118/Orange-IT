@@ -21,33 +21,27 @@ export default {
         };
     },
     methods: {
-        mode() {
-            if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-                this.$store.commit("setChangeMode", false);
-                document.documentElement.classList.add("dark");
-            } else {
-                this.$store.commit("setChangeMode", true);
-                document.documentElement.classList.remove("dark");
-            }
-        },
         updateStatus() {
             this.activeNavbar = false;
             console.log("gg");
         },
     },
-    computed: {},
     created() {
         if (this.$store.getters.isLogin) {
             this.$store.dispatch("loadUserData");
-            this.$store.dispatch("loadUserAddresses");
         }
-        this.$store.dispatch("loadCartData");
-        this.mode();
     },
-    mounted() {},
+    mounted() {
+        this.$store.dispatch("loadProducts");
+        this.$store.dispatch("loadCartData");
+    },
 };
 </script>
 <style>
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 .dark:root {
     color-scheme: dark;
 }

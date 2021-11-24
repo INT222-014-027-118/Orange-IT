@@ -89,7 +89,7 @@
                         <div class="mb-6">
                             <div class="flex justify-between mb-2">
                                 <label for="password" class="text-sm text-gray-600 dark:text-gray-400">Confirm Password</label>
-                                <span v-if="!invalid.checkPass" class="text-sm text-red-500"> Password is not same</span>
+                                <span v-if="!invalid.checkPass" class="text-sm text-red-500"> Password is not match</span>
                             </div>
                             <input
                                 ref="checkPass"

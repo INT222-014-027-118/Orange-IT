@@ -2,7 +2,7 @@
     <div class="relative">
         <div class="inline-block relative w-full">
             <button type="button" class="w-full flex text-left justify-between items-center input-theme" value="Option A" @click="showOP">
-                <span class="block truncate" :class="[choosed === '' ? 'text-gray-400' : ' text-black']">{{ choosed == "" ? "please select" : choosed }}</span
+                <span class="block truncate" :class="[choosed === '' ? 'text-gray-300 dark:text-gray-500' : ' text-black dark:text-gray-100']">{{ choosed == "" ? "Please select or input" : choosed }}</span
                 ><svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current flex-shrink-0 ml-1 h-4 w-4 text-gray-600 dark:text-gray-300">
                     <path
                         clip-rule="evenodd"
@@ -12,24 +12,27 @@
                 </svg>
             </button>
         </div>
-        <div class="absolute top-12 w-full z-40 -mt-1 border rounded-md border-primary shadow-lg transition ease-in duration-75 opacity-100 bg-white" :class="[showOption ? 'visible' : 'invisible']">
+        <div
+            class="absolute top-12 w-full z-40 -mt-1 border rounded-md border-primary shadow-lg transition ease-in duration-75 opacity-100 bg-white dark:bg-gray-700"
+            :class="[showOption ? 'visible' : 'invisible']"
+        >
             <div class="w-full p-2 placeholder-gray-400 flex items-center">
-                <input placeholder="Search..." class="inline w-full px-3 py-2 h-9 bg-gray-50 text-sm rounded-md border focus:outline-none focus:shadow-outline border-gray-300" v-model="text" ref="inputText" />
+                <input placeholder="Search..." type="search" maxlength="40" class="inline w-full px-3 py-2 h-9 input-theme" v-model="text" ref="inputText" @keydown.enter="gogo" />
                 <div class="" v-show="showAdd">
                     <button type="button" class="bg-green-600 px-2 py-2 ml-2 h-9 rounded-md text-white text-sm" @click="AddOption">Add</button>
                 </div>
             </div>
-            <ul class="overflow-auto rounded-sm" style="max-height: 300px;">
+            <ul class="overflow-auto rounded-sm" style="max-height: 200px;">
                 <li
                     data-type="option"
-                    class="cursor-pointer hover:bg-yellow-200"
-                    v-for="(spec, index) in search"
-                    :key="spec"
-                    :class="[spec.active ? 'font-semibold bg-primary text-white hover:bg-primaryfocus' : '']"
+                    class="cursor-pointer "
+                    v-for="(attribute, index) in search"
+                    :key="attribute"
+                    :class="[attribute.active ? 'font-semibold bg-primary text-white hover:bg-primaryfocus ' : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary']"
                 >
-                    <div class="flex justify-between items-center px-3 py-2" @click="selectToNa(index)" v-if="spec.show">
-                        <span class="truncate block ">{{ spec.spec }}</span>
-                        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current h-4 w-4" :class="{ hidden: !spec.active }">
+                    <div class="flex justify-between items-center px-3 py-2" @click="selectToNa(index)" v-if="attribute.show">
+                        <span class="truncate block ">{{ attribute.attribute }}</span>
+                        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current h-4 w-4" :class="{ hidden: !attribute.active }">
                             <polygon points="0 11 2 9 7 14 18 3 20 5 7 18"></polygon>
                         </svg>
                     </div>
@@ -46,11 +49,7 @@ export default {
         return {
             showOption: false,
             showAdd: false,
-            specs: [
-                { spec: "spec1", active: false, show: true },
-                { spec: "spec2", active: false, show: true },
-                { spec: "spec3", active: false, show: true },
-            ],
+            attributes: [],
             choosed: "",
             text: "",
         };
@@ -60,8 +59,8 @@ export default {
             for (let i = 0; i < this.search.length; i++) {
                 if (i == index) {
                     this.search[i].active = true;
-                    this.choosed = this.search[i].spec;
-                    this.$emit("selected", this.choosed);
+                    this.choosed = this.search[i].attribute;
+                    this.$emit("selectAttribute", this.search[i]);
                 } else {
                     this.search[i].active = false;
                 }
@@ -69,22 +68,31 @@ export default {
             this.showOption = false;
         },
         showOP() {
+            this.$store.dispatch("loadAttirbute");
             this.showOption = !this.showOption;
+            if (this.attributes.length == 0) {
+                this.attributes = this.$store.getters.attributes;
+            } else if (this.attributes.length !== this.$store.getters.attributes.length) {
+                this.attributes = this.$store.getters.attributes;
+            }
             setTimeout(() => {
                 this.$refs.inputText.focus();
             }, 500);
         },
         AddOption() {
-            if (!this.text == "" && !this.text == this.specs.filter((t) => t.spec.toLowerCase().includes(this.text.toLowerCase()))) {
-                let newOp = { spec: this.text, active: false, show: true };
-                this.specs.push(newOp);
+            if (!this.text == "" && !this.text == this.attributes.filter((t) => t.attribute.toLowerCase().includes(this.text.toLowerCase()))) {
+                let newattribute = { id: 1, attribute: this.text };
+                this.$store.dispatch("addAttribute", newattribute);
+                setTimeout(() => {
+                    this.attributes = this.$store.getters.attributes;
+                }, 500);
             }
         },
     },
     computed: {
         search() {
-            this.specs.map((t) => {
-                if (!t.spec.toLowerCase().includes(this.text.toLowerCase())) {
+            this.attributes.map((t) => {
+                if (!t.attribute.toLowerCase().includes(this.text.toLowerCase())) {
                     t.show = false;
                     this.showAdd = true;
                 } else {
@@ -92,7 +100,7 @@ export default {
                     this.showAdd = false;
                 }
             });
-            return this.specs;
+            return this.attributes;
         },
     },
 };

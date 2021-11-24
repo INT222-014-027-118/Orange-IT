@@ -32,15 +32,17 @@
                                 <span class="font-semibold">Category</span> <span class="text-base font-bold">+</span>
                             </div>
                             <div class="p-1 mb-3 space-y-2 rounded-md bg-gray-50 dark:bg-dark_secondary" v-show="showCat">
-                                <div
+                                <button
                                     id=""
-                                    class="flex items-center px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-dark_tertiary"
+                                    class="flex items-center w-full px-3 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-dark_tertiary"
+                                    :class="[catName == this.currentCategoryName ? 'bg-primary text-white hover:bg-primaryfocus' : '']"
                                     v-for="catName in categoriesList"
                                     :key="catName"
                                     @click="$router.push({ name: 'resultProducts', params: { currentCategoryName: catName } })"
                                 >
-                                    <input type="checkbox" class="mr-4 rounded-md form-checkbox checked:bg-primary" disabled v-model="selectCategory" :value="catName" /> {{ catName }}
-                                </div>
+                                    <!-- <input type="checkbox" class="mr-4 rounded-md form-checkbox checked:bg-primary" disabled v-model="selectCategory" :value="catName" /> {{ catName }} -->
+                                    <div class="mr-4 rounded-md checked:bg-primary">{{ catName }}</div>
+                                </button>
                             </div>
                         </div>
                         <!-- <div class="border-b-2 dark:border-gray-500">
@@ -140,11 +142,7 @@ export default {
             }
         },
     },
-    mounted() {
-        // setTimeout(() => {
-        //     this.categoriesList = this.$store.getters.sortCategories;
-        // }, 100);
-    },
+    mounted() {},
     created() {
         this.loadFilterCategory();
         this.categoriesList = this.$store.getters.sortCategories;
@@ -199,6 +197,7 @@ input[type="number"] {
 [type="radio"]:checked:hover,
 [type="radio"]:checked:focus {
     border-color: transparent;
-    background-color: #F35B04;
+    background-color: #f35b04;
+    cursor: pointer;
 }
 </style>

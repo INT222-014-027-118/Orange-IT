@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://20.212.33.246/")
 @RequestMapping("/discount")
-@CrossOrigin(origins = "*")
 public class DiscountController {
     @Autowired
     private DiscountRepository discountRepository;

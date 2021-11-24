@@ -5,13 +5,16 @@ import INT222.Repositories.DiscountRepository;
 import INT222.Repositories.OrderForAddRepository;
 import INT222.Repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://20.212.33.246/")
 @RequestMapping("/order")
 public class OrderController {
 
@@ -48,10 +51,15 @@ public class OrderController {
     public Orders addOrder(@RequestBody OrderForAdd orderForAdd){
         if(orderForAddRepository.findTopByOrderByIdDesc() == null){
             orderForAdd.setId(1);
+            LocalDateTime now = LocalDateTime.now();
+            orderForAdd.setOrderDate(now);
             orderForAddRepository.save(orderForAdd);
+
             return orderRepository.getById(orderForAdd.getId());
         }else
             orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId()+1);
+        LocalDateTime now = LocalDateTime.now();
+        orderForAdd.setOrderDate(now);
         orderForAddRepository.save(orderForAdd);
         return orderRepository.getById(orderForAdd.getId());
     }
