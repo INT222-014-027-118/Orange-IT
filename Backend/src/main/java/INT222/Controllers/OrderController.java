@@ -3,6 +3,7 @@ package INT222.Controllers;
 import INT222.Models.*;
 import INT222.Repositories.DiscountRepository;
 import INT222.Repositories.OrderForAddRepository;
+import INT222.Repositories.OrderItemRepository;
 import INT222.Repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,13 +25,18 @@ public class OrderController {
     @Autowired
     private OrderForAddRepository orderForAddRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
     @GetMapping("/list")
+    @PreAuthorize("hasRole('Admin')")
     public List<OrderForAdd> getOrder(){
         return orderForAddRepository.findAll();
     }
 
     @GetMapping("/getByUserId/{id}")
-    @PreAuthorize("hasRole('User')")
+    @PreAuthorize("hasRole('User')" +
+            " || hasRole('Admin')" )
     public List<Orders> getOrderByUserId(@PathVariable(value = "id") long id){
         List<Orders> ordersByUserId = new ArrayList<Orders>();
         List<Orders> orders = orderRepository.findAll();
@@ -47,7 +53,7 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('User')")
+    @PreAuthorize("hasRole('Admin')")
     public Orders addOrder(@RequestBody OrderForAdd orderForAdd){
         if(orderForAddRepository.findTopByOrderByIdDesc() == null){
             orderForAdd.setId(1);
@@ -66,11 +72,23 @@ public class OrderController {
 
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('User')")
+    @PreAuthorize("hasRole('Admin')")
     public void deleteById(@PathVariable(value = "id") long id) {
+this.deleteOrderItem(id);
         orderRepository.deleteById(id);
     }
 
+    @PutMapping("/update")
+    @PreAuthorize("hasRole('Admin')")
+    public void editPayment(@RequestBody Orders orders) {
+        orderRepository.save(orders);
+    }
 
+    @DeleteMapping("/deleteOrderItem/{id}")
+    @PreAuthorize("hasRole('Admin')")
+    public void deleteOrderItem(@PathVariable long id) {
+        orderItemRepository.deleteByOrderId(id);
+
+    }
 
 }

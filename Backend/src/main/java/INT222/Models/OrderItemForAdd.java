@@ -5,14 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Order_items")
-public class OrderItems {
+public class OrderItemForAdd {
 
     @Id
     private long id;
@@ -24,16 +23,10 @@ public class OrderItems {
     private float discountPrice;
 
 
-    @ManyToOne()
-    @JoinColumn(name = "product_id")
-    private ProductCart products;
+    @Column(name = "product_id")
+    private long productId;
 
 
     @Column(name = "order_id")
     private long orderId;
-
-
-
-
-
 }
