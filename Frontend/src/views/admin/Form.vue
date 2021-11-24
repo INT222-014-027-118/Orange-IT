@@ -74,7 +74,7 @@
                         </div>
                         <input
                             v-model.number="product.price"
-                            step="0.09"
+                            step="0.00"
                             class="input-form input-theme"
                             id="price"
                             type="number"
@@ -129,13 +129,13 @@
 
                 <div class="px-1 md:px-3 lg:w-full">
                     <label class="label-css">Upload Image *</label>
-                    <div class="relative input-form input-theme flex flex-wrap select-none overflow-hidden" :class="[invalid.images ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
+                    <div class="relative input-form input-theme flex flex-wrap overflow-hidden" :class="[invalid.images ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <div v-for="(item, index) in preview_list" :key="index" class="m-2 md:m-5 relative">
                             <div class="bg-white h-40 w-40 md:h-64 md:w-64 mb-2 rounded-md">
                                 <img :src="item" class="object-contain object-center w-full h-full rounded-md" />
                             </div>
-                            <p class="text-sm font-light truncate w-40 md:w-64">file name: {{ imageInfo[index].name }}</p>
-                            <p class="text-sm font-light truncate w-40 md:w-64">size: {{ imageInfo[index].size / 1024 }}KB</p>
+                            <p class="text-sm font-light truncate w-40 md:w-64 cursor-text">file name: {{ imageInfo[index].name }}</p>
+                            <p class="text-sm font-light truncate w-40 md:w-64 cursor-text">size: {{ imageInfo[index].size / 1024 }}KB</p>
                             <div
                                 @click="deleteImg(index)"
                                 class="bg-red-600 absolute text-center pt-0.5 cursor-pointer -top-3 right-3 md:-right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white"
