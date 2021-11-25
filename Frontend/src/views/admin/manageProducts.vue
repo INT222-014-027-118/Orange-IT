@@ -165,15 +165,10 @@ export default {
                 this.$store.dispatch("deleteProduct", id);
             }
         },
-<<<<<<< HEAD
         editProduct(id) {
             // this.$router.push({name:"" ,prarm:{}})
             this.$router.push({ name: "Form", params: { formPath: "edit", productId: id } });
         },
-    },
-    created() {
-        this.$store.dispatch("loadProducts");
-=======
         changeActiveProduct(id) {
             const change_active = `${process.env.VUE_APP_API}/product/changeActive/${id}`;
             let config = {
@@ -187,7 +182,9 @@ export default {
                 console.log(res);
             });
         },
->>>>>>> 14531ddeb794ff2ef6679af25b6c7e2c576f4d2b
+    },
+    created() {
+        this.$store.dispatch("loadProducts");
     },
 };
 </script>
