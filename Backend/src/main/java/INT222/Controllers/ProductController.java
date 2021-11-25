@@ -1,26 +1,28 @@
 package INT222.Controllers;
 
 
-import INT222.Exceptions.NotFoundException;
+import INT222.Exceptions.*;
 
-import INT222.Exceptions.NotFoundNameException;
-import INT222.Exceptions.ProductActiveException;
-import INT222.Exceptions.SameProductNameException;
 import INT222.Models.*;
 import INT222.Repositories.*;
 
 
+import INT222.Services.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -42,6 +44,11 @@ public class ProductController {
 
     @Autowired
     private ProductListAdminRepository productListAdminRepository;
+
+    @Autowired
+    private FileStorageService fileStorageService;
+
+
     //Get all Products
     @GetMapping("/list")
     public List<ProductsHome> getProduct() {
@@ -109,11 +116,21 @@ public class ProductController {
     @PreAuthorize("hasRole('Admin')")
     public Optional<Products> addProduct(@RequestBody Products products) {
         long id = productRepository.findTopByOrderByIdDesc().getId()+1;
+
+        for (int i = 0; i < products.getImages().size(); i++) {
+            if(imageRepository.existsImagesBySource(products.getImages().get(i).getSource())){
+                throw new SameImageException(products.getImages().get(i).getSource());
+            }
+        }
+
+
+
             if (productRepository.existsByProductName(products.getProductName())) {
                 throw new SameProductNameException(products.getProductName());
             }
 
-            else
+
+
             products.setId(id);
              List<Images> images =  products.getImages();
              List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
@@ -140,9 +157,15 @@ public class ProductController {
     @PutMapping("/update")
     @PreAuthorize("hasRole('Admin')")
     public void editProduct(@RequestBody Products products) {
+        for (int i = 0; i < products.getImages().size(); i++) {
+            if(imageRepository.existsImagesBySource(products.getImages().get(i).getSource())){
+                throw new SameImageException(products.getImages().get(i).getSource());
+            }
+        }
         if (productRepository.existsByProductName( products.getProductName()) && productRepository.existsById(products.getId())) {
             productRepository.save(products);
         }
+
         else throw new NotFoundException(products.getId());
     }
 
@@ -206,6 +229,8 @@ public class ProductController {
 // return productHasAttributeRepository.findAll();
 //
 //    }
+
+
 
 
 }
