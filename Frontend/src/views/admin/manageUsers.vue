@@ -120,7 +120,9 @@ export default {
             return this.$store.getters.users;
         },
     },
-    created() {},
+    created() {
+        this.$store.dispatch("loadUsers");
+    },
 };
 </script>
 

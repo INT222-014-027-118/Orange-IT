@@ -63,7 +63,9 @@ const actions = {
                         }
                         localStorage.removeItem('cart')
                     }
-
+                })
+                .catch((error)=>{
+                    console.log(error);
                 })
         } else {
             if (localStorage.getItem('cart')) {
@@ -122,7 +124,7 @@ const mutations = {
     removeCartItem(state, index) {
         if (this.getters.isLogin) {
             axios
-                .delete(`${process.env.VUE_APP_API}/cartItem/delete/${state.cart[index].id}`,{
+                .delete(`${process.env.VUE_APP_API}/cartItem/delete/${state.cart[index].id}`, {
                     headers: {
                         'Authorization': this.getters.token
                     }
@@ -145,7 +147,7 @@ const mutations = {
                 colorId: state.cart[payload.index].colors.id
             }
             axios
-                .put(`${process.env.VUE_APP_API}/cartItem/update`, cartItem,{
+                .put(`${process.env.VUE_APP_API}/cartItem/update`, cartItem, {
                     headers: {
                         'Authorization': this.getters.token
                     }
