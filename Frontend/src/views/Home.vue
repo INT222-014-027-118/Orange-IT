@@ -68,7 +68,6 @@ export default {
         this.scrollToTop();
     },
     created() {
-        // this.$store.dispatch("loadProducts");
     },
 };
 </script>

@@ -55,7 +55,7 @@ const getters = {
 const actions = {
     async loadProducts({
         commit
-    }, isAdmin) {
+    }) {
         axios
             .get(get_products_list)
             .then(res => {
@@ -65,7 +65,7 @@ const actions = {
             .catch(error => {
                 console.log(error)
             })
-        if (isAdmin) {
+        if (this.getters.isAdmin) {
             axios
                 .get(get_products_list_admin, {
                     headers: {
