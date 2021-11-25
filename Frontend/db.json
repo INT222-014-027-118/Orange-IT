@@ -112,3 +112,51 @@
         "productSpecValues": []
     }
 }
+
+{
+    "id": 1,
+    "productName": "234234",
+    "description": "",
+    "price": 234,
+    "brandName": "Logitech",
+    "quantityStock": 2,
+    "discount": null,
+    "colors": [
+        {
+            "id": 2,
+            "label": "Black",
+            "hexCode": "000000"
+        },
+        {
+            "id": 4,
+            "label": "Lavender",
+            "hexCode": "E6E6FA"
+        },
+        {
+            "id": 5,
+            "label": "Pink",
+            "hexCode": "E5A3CF"
+        }
+    ],
+    "attributes": [],
+    "categories": [
+        {
+            "id": 3,
+            "category": "Headset",
+            "parentId": null
+        },
+        {
+            "id": 6,
+            "category": "Wireless headset",
+            "parentId": "3"
+        }
+    ],
+    "productsHasAttributes": [
+        {
+            "id": 1,
+            "attributeId": 1,
+            "productId": 1,
+            "attribute_value": "234234"
+        }
+    ]
+}
