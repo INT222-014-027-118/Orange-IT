@@ -23,18 +23,25 @@ export default {
     methods: {
         updateStatus() {
             this.activeNavbar = false;
-            console.log("gg");
         },
     },
     created() {
         if (this.$store.getters.isLogin) {
-            this.$store.dispatch("loadUserData");
+            this.$store.dispatch("loadUserData").then(() => {
+                if (this.$store.getters.isAdmin) {
+                    this.$store.dispatch("loadProducts");
+                } else {
+                    this.$store.dispatch("loadProducts");
+                    this.$store.dispatch("loadCartData");
+                }
+            });
+        } else {
+            this.$store.dispatch("loadProducts");
+            this.$store.dispatch("loadCartData");
         }
     },
-    mounted() {
-        this.$store.dispatch("loadProducts");
-        this.$store.dispatch("loadCartData");
-    },
+    mounted() {},
+    updated() {},
 };
 </script>
 <style>

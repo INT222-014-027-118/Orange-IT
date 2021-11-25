@@ -2,10 +2,12 @@ package INT222.Controllers;
 
 import INT222.Exceptions.NotFoundCartItemException;
 import INT222.Exceptions.NotFoundUserCartItemException;
+import INT222.Exceptions.NotFoundUserException;
 import INT222.Models.CartItemForAdd;
 import INT222.Models.CartItems;
 import INT222.Repositories.CartItemForAddRepository;
 import INT222.Repositories.CartItemRepository;
+import INT222.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,9 @@ public class CartItemController {
     @Autowired
     private CartItemForAddRepository cartItemForAddRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @DeleteMapping("delete/{id}")
     @PreAuthorize("hasRole('User')")
     public void deleteById(@PathVariable(value = "id") long id) {
@@ -32,7 +37,9 @@ public class CartItemController {
     @PreAuthorize("hasRole('User')")
     public CartItems addCartItem(@RequestBody CartItemForAdd cartItemForAdd,@PathVariable(value = "userId") long userId,
                             @PathVariable(value = "productId") long productId) {
-        if (cartItemRepository.existsByUserId(userId)) {
+        if(!userRepository.existsById(userId)){
+            throw new NotFoundUserException(userId);
+        }
             cartItemForAdd.setProductId(productId);
             cartItemForAdd.setUserId(userId);
             if (cartItemForAddRepository.findTopByOrderByIdDesc() == null) {
@@ -44,7 +51,7 @@ public class CartItemController {
                 cartItemForAddRepository.save(cartItemForAdd);
             }
             return cartItemRepository.getById(cartItemForAdd.getId());
-        }else throw new NotFoundUserCartItemException(userId);
+
     }
 
 //    @GetMapping("/list")
