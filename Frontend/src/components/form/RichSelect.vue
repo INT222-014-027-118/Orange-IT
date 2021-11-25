@@ -93,6 +93,9 @@ export default {
                 }, 500);
             }
         },
+        clearText(text) {
+            this.choosed = text;
+        },
     },
     computed: {
         search() {

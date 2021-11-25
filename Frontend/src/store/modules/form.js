@@ -11,6 +11,7 @@ const post_attribute = `${api}/attribute/add`
 // const post_image = `${api}/image/add`
 const post_image_Multiple = `${api}/image/uploadMultipleFiles`
 // const put_image = `${api}/image/update/`
+const delete_product = `${api}/product/delete/`
 
 
 const state = {
@@ -76,7 +77,6 @@ const actions = {
         images.forEach(img => {
             data.append("orange", img)
         })
-        console.log(data);
         axios
             .post(post_image_Multiple, data, {
                 headers: {
@@ -118,6 +118,24 @@ const actions = {
             .then(response => {
                 console.log("response: ", response)
                 dispatch("loadAttirbute")
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },
+
+    deleteProduct({
+        dispatch
+    }, id) {
+        axios
+            .delete(`${delete_product}${id}`, {
+                headers: {
+                    'Authorization': this.getters.token
+                }
+            })
+            .then(response => {
+                console.log("response: ", response)
+                dispatch("loadProducts")
             })
             .catch(error => {
                 console.log(error)

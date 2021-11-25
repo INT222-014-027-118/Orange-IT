@@ -134,8 +134,10 @@ public class ImageController {
     @PostMapping("/uploadFile")
     @PreAuthorize("hasRole('Admin')")
     public Images uploadFile(@RequestParam("orange") MultipartFile file) {
+
         String fileName = fileStorageService.storeFile(file);
-        return imageRepository.findTopByOrderByIdDesc();
+        long id = imageRepository.findAll().size();
+        return imageRepository.getById(id);
     }
 
 }
