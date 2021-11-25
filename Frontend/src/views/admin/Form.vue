@@ -296,7 +296,7 @@ export default {
         submitForm() {
             this.invalid.quantityStock = this.product.quantityStock === 0 ? false : true;
             this.invalid.colors = this.product.colors.length === 0 ? false : true;
-            this.invalid.images = this.imageInfo.length === 0 || this.imageInfo.length >= 7 ? false : true;
+            // this.invalid.images = this.imageInfo.length === 0 || this.imageInfo.length >= 7 ? false : true;
             this.invalid.productName = this.product.productName === "" ? false : true;
             this.invalid.productsHasAttributes = this.product.productsHasAttributes.length === 0 ? false : true;
             this.invalid.price = this.product.price === 0 ? false : true;
@@ -311,10 +311,11 @@ export default {
                 if (this.formPath === "edit") {
                     // this.$store.dispatch("uploadImages", this.imageInfo).then((response) => {
                     //     if (response.status == 200) {
-                    this.product.id = this.productId;
-                    this.product.attributes = [];
-                    this.$store.dispatch("updateProduct", this.product);
-                    console.log(this.product);
+                            this.product.id = this.productId;
+                            this.product.attributes = [];
+                            this.$store.dispatch("updateProduct", this.product);
+                            console.log(this.product);
+                            this.resetForm();
                     //     }
                     // });
                 } else {
@@ -389,6 +390,20 @@ export default {
             this.imageInfo.splice(index, 1); //?????????????????????????????????????????
             this.preview_list.splice(index, 1);
         },
+
+        resetForm() {
+            this.selectRootCat = {};
+            this.selectChildCat = {};
+            this.product.id = "";
+            this.product.productName = "";
+            this.product.description = "";
+            this.product.price = 0;
+            this.product.brandName = "";
+            this.product.quantityStock = 0;
+            this.product.colors = [];
+            this.product.images = [];
+            this.product.productsHasAttributes = [];
+        },
     },
     computed: {
         countText() {
@@ -398,7 +413,7 @@ export default {
             return (
                 this.product.quantityStock !== 0 &&
                 this.product.colors.length !== 0 &&
-                // this.imageInfo.length !== 0 &&
+                // this.product.images !== 0 &&
                 this.product.productName !== "" &&
                 this.product.productsHasAttributes.length !== 0 &&
                 this.product.price !== 0 &&
@@ -428,7 +443,7 @@ export default {
             this.product.brandName = loadProduct.brandName;
             this.product.quantityStock = loadProduct.quantityStock;
             this.product.colors = loadProduct.colors;
-            this.product.images = loadProduct.images;
+            // this.product.images = loadProduct.images;
             this.product.productsHasAttributes = loadProduct.productsHasAttributes.map((att) => {
                 return {
                     id: att.id,
