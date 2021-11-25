@@ -72,7 +72,7 @@
                             </td>
                             <td class="border-dashed border-b border-gray-200 text-center">
                                 <label class="switch shadow-sm">
-                                    <input type="checkbox" :checked="product.active" />
+                                    <input type="checkbox" :checked="product.active" @click="changeActiveProduct(product.id)" />
                                     <span class="slider"></span>
                                 </label>
                             </td>
@@ -94,6 +94,7 @@
 
 <script>
 import FilterProducts from "../../components/admin/FilterProducts.vue";
+import axios from "axios";
 
 export default {
     components: {
@@ -157,13 +158,14 @@ export default {
         addNewProduct() {
             // this.$router.push({ name: 'form' })
             // this.$router.push('/admin/form')
-            this.$router.push(`/admin/add-product`)
+            this.$router.push(`/admin/add-product`);
         },
         deleteProduct(id, productName) {
             if (window.confirm("Do you want to delete? \nproduct:   " + productName)) {
                 this.$store.dispatch("deleteProduct", id);
             }
         },
+<<<<<<< HEAD
         editProduct(id) {
             // this.$router.push({name:"" ,prarm:{}})
             this.$router.push({ name: "Form", params: { formPath: "edit", productId: id } });
@@ -171,6 +173,21 @@ export default {
     },
     created() {
         this.$store.dispatch("loadProducts");
+=======
+        changeActiveProduct(id) {
+            const change_active = `${process.env.VUE_APP_API}/product/changeActive/${id}`;
+            let config = {
+                method: "put",
+                url: change_active,
+                headers: {
+                    Authorization: this.$store.getters.token,
+                },
+            };
+            axios(config).then((res) => {
+                console.log(res);
+            });
+        },
+>>>>>>> 14531ddeb794ff2ef6679af25b6c7e2c576f4d2b
     },
 };
 </script>

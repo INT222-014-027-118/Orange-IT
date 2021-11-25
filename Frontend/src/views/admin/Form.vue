@@ -403,13 +403,25 @@ export default {
             this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => {
                 return res.data;
             });
-            console.log(this.product.categories[0]);
+            // console.log(this.product.categories[0]);
             this.selectRootCat = this.product.categories[0] == null ? "" : this.product.categories[0];
             this.selectChildCat = this.product.categories[1] == null ? "" : this.product.categories[1];
             this.preview_list = await this.product.images.map((img) => {
                 return `${process.env.VUE_APP_API}/image/get/${img.source}`;
             });
-            console.log(this.preview_list);
+            // let attributes = this.$store.getters.attributes;
+            this.product.productsHasAttributes = this.product.productsHasAttributes.map((att) => {
+                return {
+                    id: att.id,
+                    attributeId: att.attributeId,
+                    attributeName: this.product.attributes.find((attribute) => {
+                        return attribute.id == att.attributeId;
+                    }).attribute,
+                    productId: att.productId,
+                    attribute_value: att.attribute_value,
+                };
+            });
+            console.log(this.product.productsHasAttributes);
         }
     },
 };

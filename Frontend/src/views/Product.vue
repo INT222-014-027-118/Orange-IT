@@ -238,9 +238,9 @@ export default {
             return {
                 id: att.id,
                 attribute: att.attribute,
-                value: this.product.productsHasAttributes.filter((value) => {
+                value: this.product.productsHasAttributes.find((value) => {
                     return value.attributeId == att.id;
-                })[0].attribute_value,
+                }).attribute_value,
             };
         });
         this.images = await this.product.images.map((img) => {

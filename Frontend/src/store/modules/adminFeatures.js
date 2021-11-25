@@ -1,3 +1,8 @@
+import axios from "axios"
+const api = process.env.VUE_APP_API
+const get_users_list = `${api}/user/list`
+// const change_active = `${api}/product/changeActive/`
+
 const state = {
     menuList: [{
             label: "Manage product",
@@ -17,9 +22,9 @@ const state = {
             link: "add-product",
             icon: "insert_drive_file"
         },
-        
     ],
-    
+    users: []
+
 
 }
 
@@ -32,7 +37,20 @@ const actions = {
         commit
     }, index) {
         commit('activeMenu', index)
-    }
+    },
+    loadUsers() {
+        axios.get(get_users_list, {
+            headers: {
+                'Authorization': this.getters.token
+            }
+        }).then((res) => {
+            console.log(res);
+        })
+    },
+
+
+
+
 
 }
 
@@ -49,7 +67,8 @@ const mutations = {
         for (let i = 0; i < state.menuList.length; i++) {
             state.menuList[i].active = false
         }
-    }
+    },
+
 
 }
 

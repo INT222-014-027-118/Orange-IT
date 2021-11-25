@@ -30,6 +30,7 @@ export default {
             this.$store.dispatch("loadUserData").then(() => {
                 if (this.$store.getters.isAdmin) {
                     this.$store.dispatch("loadProducts");
+                    this.$store.dispatch("loadUsers");
                 } else {
                     this.$store.dispatch("loadProducts");
                     this.$store.dispatch("loadCartData");
