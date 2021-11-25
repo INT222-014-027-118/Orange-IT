@@ -1,7 +1,7 @@
 <template>
     <div class="p-1 sm:p-5">
         <div class="mx-auto sm:max-w-5xl px-3 sm:px-6 bg-white dark:bg-dark_tertiary rounded-md shadow-sm">
-            <h1 class="text-2xl sm:text-3xl whitespace-nowrap px-2 py-6 font-semibold font-sans capitalize">form products</h1>
+            <h1 class="text-2xl sm:text-3xl whitespace-nowrap px-2 py-6 font-semibold font-sans capitalize">{{ formPath }} products {{ productId == undefined ? "" : "ID:" + productId }}</h1>
             <hr />
             <form @submit.prevent="submitForm" class="py-5">
                 <div class="px-1 md:px-3">
@@ -130,12 +130,12 @@
                 <div class="px-1 md:px-3 lg:w-full">
                     <label class="label-css">Upload Image *</label>
                     <div class="relative input-form input-theme flex flex-wrap overflow-hidden" :class="[invalid.images ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
-                        <div v-for="(item, index) in preview_list" :key="index" class="m-2 md:m-5 relative">
+                        <div v-for="(item, index) in preview_list" :key="index" class="m-2 md:m-5 relative ring-1 ring-primary">
                             <div class="bg-white h-40 w-40 md:h-64 md:w-64 mb-2 rounded-md">
                                 <img :src="item" class="object-contain object-center w-full h-full rounded-md" />
                             </div>
-                            <p class="text-sm font-light truncate w-40 md:w-64 cursor-text">file name: {{ imageInfo[index].name }}</p>
-                            <p class="text-sm font-light truncate w-40 md:w-64 cursor-text">size: {{ imageInfo[index].size / 1024 }}KB</p>
+                            <!-- <p class="text-sm font-light truncate w-40 md:w-64 cursor-text">file name: {{ imageInfo[index].name }}</p> -->
+                            <!-- <p class="text-sm font-light truncate w-40 md:w-64 cursor-text">size: {{ imageInfo[index].size / 1024 }}KB</p> -->
                             <div
                                 @click="deleteImg(index)"
                                 class="bg-red-600 absolute text-center pt-0.5 cursor-pointer -top-3 right-3 md:-right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white"
@@ -231,7 +231,7 @@
 
 <script>
 import RichSelect from "../../components/form/RichSelect.vue";
-// import axios from "axios";
+import axios from "axios";
 
 export default {
     components: {
@@ -239,6 +239,7 @@ export default {
     },
     data() {
         return {
+            api: `${process.env.VUE_APP_API}/product`,
             activeClose: true,
             productIds: [],
 
@@ -285,6 +286,8 @@ export default {
     },
     props: {
         itemId: String,
+        formPath: String,
+        productId: String,
     },
     methods: {
         submitForm() {
@@ -302,15 +305,20 @@ export default {
             this.product.productsHasAttributes = this.product.productsHasAttributes.map((att) => {
                 return { id: att.id, attributeId: att.attributeId, productId: att.productId, attribute_value: att.attribute_value };
             });
-            if (this.invalid.productName) {
-                let imagesArray = this.imageInfo.map((image) => {
-                    return { id: 1, source: image.name, label: image.name.split(".")[0], product_id: 1 };
-                });
-                this.product.images = imagesArray;
-                this.product.categories = [this.selectRootCat, this.selectChildCat];
-                this.$store.dispatch("addProduct", this.product);
-                this.$store.dispatch("uploadImages", this.imageInfo);
-            }
+            // if (this.invalid.productName) {
+            let imagesArray = this.imageInfo.map((image) => {
+                return { id: 1, source: image.name, label: image.name.split(".")[0], product_id: 1 };
+            });
+            this.product.images = imagesArray;
+            this.product.categories = [this.selectRootCat, this.selectChildCat];
+            this.$store.dispatch("uploadImages", this.imageInfo).then((response) => {
+                console.log(response);
+                if (response.status == 200) {
+                    this.$store.dispatch("addProduct", this.product);
+                }
+            });
+
+            // }
         },
         chooseRootCategory(category) {
             this.selectRootCat = category;
@@ -377,7 +385,6 @@ export default {
             } else {
                 let files = event.target.files || event.dataTransfer.files;
                 if (!files.length) return;
-                this.createImage(files[0]);
                 this.activeClose = true;
             }
         },
@@ -388,10 +395,22 @@ export default {
         },
     },
     mounted() {},
-    created() {
+    async created() {
         this.$store.dispatch("loadDataForm");
         this.$store.dispatch("loadcategories");
         this.$store.dispatch("loadAttirbute");
+        if (this.formPath === "edit") {
+            this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => {
+                return res.data;
+            });
+            console.log(this.product.categories[0]);
+            this.selectRootCat = this.product.categories[0] == null ? "" : this.product.categories[0];
+            this.selectChildCat = this.product.categories[1] == null ? "" : this.product.categories[1];
+            this.preview_list = await this.product.images.map((img) => {
+                return `${process.env.VUE_APP_API}/image/get/${img.source}`;
+            });
+            console.log(this.preview_list);
+        }
     },
 };
 </script>

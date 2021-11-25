@@ -77,7 +77,7 @@ const actions = {
         images.forEach(img => {
             data.append("orange", img)
         })
-        axios
+        return axios
             .post(post_image_Multiple, data, {
                 headers: {
                     'Authorization': this.getters.token
@@ -85,6 +85,9 @@ const actions = {
             })
             .then(response => {
                 console.log("response: ", response)
+                return response
+                // this.dispatch("addProduct", )
+
             })
     },
 
