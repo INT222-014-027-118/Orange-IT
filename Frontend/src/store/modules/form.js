@@ -12,6 +12,7 @@ const post_attribute = `${api}/attribute/add`
 const post_image_Multiple = `${api}/image/uploadMultipleFiles`
 // const put_image = `${api}/image/update/`
 const delete_product = `${api}/product/delete/`
+const delete_image = `${api}/image/delete/`
 
 
 const state = {
@@ -86,8 +87,19 @@ const actions = {
             .then(response => {
                 console.log("response: ", response)
                 return response
-                // this.dispatch("addProduct", )
+            })
+    },
 
+    deleteImage(contextm, name) {
+        return axios
+            .post(delete_image, name, {
+                headers: {
+                    'Authorization': this.getters.token
+                }
+            })
+            .then(response => {
+                console.log("response: ", response)
+                return response
             })
     },
 

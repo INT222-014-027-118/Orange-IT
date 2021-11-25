@@ -304,22 +304,24 @@ export default {
             this.invalid.categories = Object.keys(this.selectChildCat).length === 0 ? false : true;
 
             if (this.validate) {
-                var imagesArray = this.imageInfo.map((image) => {
-                    return { id: 1, source: image.name, label: image.name.split(".")[0], product_id: 1 };
-                });
-                this.product.images = imagesArray;
                 this.product.categories = [this.selectRootCat, this.selectChildCat];
                 this.product.productsHasAttributes = this.product.productsHasAttributes.map((att) => {
                     return { id: att.id, attributeId: att.attributeId, productId: att.productId, attribute_value: att.attribute_value };
                 });
                 if (this.formPath === "edit") {
-                    this.$store.dispatch("uploadImages", this.imageInfo).then((response) => {
-                        if (response.status == 200) {
-                            // this.$store.dispatch("updateProduct", this.product);
-                            console.log(this.product);
-                        }
-                    });
+                    // this.$store.dispatch("uploadImages", this.imageInfo).then((response) => {
+                    //     if (response.status == 200) {
+                    this.product.id = this.productId;
+                    this.product.attributes = [];
+                    this.$store.dispatch("updateProduct", this.product);
+                    console.log(this.product);
+                    //     }
+                    // });
                 } else {
+                    var imagesArray = this.imageInfo.map((image) => {
+                        return { id: 1, source: image.name, label: image.name.split(".")[0], product_id: 1 };
+                    });
+                    this.product.images = imagesArray;
                     this.$store.dispatch("uploadImages", this.imageInfo).then((response) => {
                         if (response.status == 200) {
                             this.$store.dispatch("addProduct", this.product);
@@ -396,7 +398,7 @@ export default {
             return (
                 this.product.quantityStock !== 0 &&
                 this.product.colors.length !== 0 &&
-                this.imageInfo.length !== 0 &&
+                // this.imageInfo.length !== 0 &&
                 this.product.productName !== "" &&
                 this.product.productsHasAttributes.length !== 0 &&
                 this.product.price !== 0 &&
@@ -411,24 +413,27 @@ export default {
         this.$store.dispatch("loadcategories");
         this.$store.dispatch("loadAttirbute");
         if (this.formPath === "edit") {
-            this.product = await axios.get(`${this.api}/${this.productId}`).then((res) => {
+            let loadProduct = await axios.get(`${this.api}/${this.productId}`).then((res) => {
                 return res.data;
             });
-            // console.log(this.product.categories[0]);
-            this.selectRootCat = this.product.categories[0] == null ? "" : this.product.categories[0];
-            this.selectChildCat = this.product.categories[1] == null ? "" : this.product.categories[1];
-            this.preview_list = await this.product.images.map((img) => {
+            this.selectRootCat = loadProduct.categories[0] == null ? "" : loadProduct.categories[0];
+            this.selectChildCat = loadProduct.categories[1] == null ? "" : loadProduct.categories[1];
+            this.preview_list = await loadProduct.images.map((img) => {
                 return `${process.env.VUE_APP_API}/image/get/${img.source}`;
             });
-            this.preview_list = await this.product.images.map((img) => {
-                return `${process.env.VUE_APP_API}/image/get/${img.source}`;
-            });
-            // let attributes = this.$store.getters.attributes;
-            this.product.productsHasAttributes = this.product.productsHasAttributes.map((att) => {
+            this.product.id = loadProduct.id;
+            this.product.productName = loadProduct.productName;
+            this.product.description = loadProduct.description;
+            this.product.price = loadProduct.price;
+            this.product.brandName = loadProduct.brandName;
+            this.product.quantityStock = loadProduct.quantityStock;
+            this.product.colors = loadProduct.colors;
+            this.product.images = loadProduct.images;
+            this.product.productsHasAttributes = loadProduct.productsHasAttributes.map((att) => {
                 return {
                     id: att.id,
                     attributeId: att.attributeId,
-                    attributeName: this.product.attributes.find((attribute) => {
+                    attributeName: loadProduct.attributes.find((attribute) => {
                         return attribute.id == att.attributeId;
                     }).attribute,
                     productId: att.productId,
