@@ -32,7 +32,7 @@ public class CartItemController {
     @PreAuthorize("hasRole('User')")
     public CartItems addCartItem(@RequestBody CartItemForAdd cartItemForAdd,@PathVariable(value = "userId") long userId,
                             @PathVariable(value = "productId") long productId) {
-        if (cartItemRepository.existsByUserId(userId)) {
+
             cartItemForAdd.setProductId(productId);
             cartItemForAdd.setUserId(userId);
             if (cartItemForAddRepository.findTopByOrderByIdDesc() == null) {
@@ -44,7 +44,7 @@ public class CartItemController {
                 cartItemForAddRepository.save(cartItemForAdd);
             }
             return cartItemRepository.getById(cartItemForAdd.getId());
-        }else throw new NotFoundUserCartItemException(userId);
+
     }
 
 //    @GetMapping("/list")
