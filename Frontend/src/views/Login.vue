@@ -58,15 +58,19 @@ export default {
                             localStorage.setItem("userId", userinfo.user.id);
                             this.$store.commit("setUserInfo", userinfo.user);
                             let isAdmin = userinfo.user.role[0].name === "Admin" ? true : false;
+                            console.log(isAdmin);
                             this.$store.commit("setIsAdmin", isAdmin);
-                            this.$store.dispatch("loadCartData");
-                            this.$router.push("/");
+                            if (!isAdmin) {
+                                this.$store.dispatch("loadCartData");
+                            }
                             return isAdmin;
                         }
                     })
                     .then((isAdmin) => {
                         if (isAdmin) {
                             this.$router.push("/admin");
+                        } else {
+                            this.$router.push("/");
                         }
                     })
                     .catch((error) => {

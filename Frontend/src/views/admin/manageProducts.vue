@@ -161,6 +161,7 @@ export default {
         addNewProduct() {
             // this.$router.push({ name: 'form' })
             // this.$router.push('/admin/form')
+            this.$router.push(`/admin/add-product`)
         },
     },
 };
