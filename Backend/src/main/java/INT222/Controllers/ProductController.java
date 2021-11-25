@@ -114,7 +114,7 @@ public class ProductController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('Admin')")
-    public Optional<Products> addProduct(@RequestBody Products products) {
+    public Optional<Products> addProduct(@RequestBody Products products,@RequestParam("orange") MultipartFile[] files) {
         long id = productRepository.findTopByOrderByIdDesc().getId()+1;
 
         for (int i = 0; i < products.getImages().size(); i++) {
@@ -123,15 +123,12 @@ public class ProductController {
             }
         }
 
-
-
             if (productRepository.existsByProductName(products.getProductName())) {
                 throw new SameProductNameException(products.getProductName());
             }
 
 
 
-            products.setId(id);
              List<Images> images =  products.getImages();
              List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
         for (int i = 0; i < images.size(); i++) {
@@ -230,6 +227,19 @@ public class ProductController {
 //
 //    }
 
+
+    @PutMapping("/changeActive/{id}")
+    @PreAuthorize("hasRole('Admin')")
+    public void changeActive(@PathVariable long id) {
+        ProductListAdmin productListAdmin = productListAdminRepository.getById(id);
+        if(productListAdmin.getActive() == 1) {
+            productListAdmin.setActive(0);
+            productListAdminRepository.save(productListAdmin);
+        }else productListAdmin.setActive(1);
+        productListAdminRepository.save(productListAdmin);
+
+
+    }
 
 
 
