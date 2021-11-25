@@ -164,5 +164,12 @@ public class ExceptionAdvice {
         return ex.getMessage();
     }
 
+    @ResponseBody
+    @ExceptionHandler(NotFoundUserException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String NotFoundUser(NotFoundUserException ex){
+        return ex.getMessage();
+    }
+
 
 }
