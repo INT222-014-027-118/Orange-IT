@@ -6,8 +6,8 @@ const get_colors = `${api}/color/list`
 const get_attributes = `${api}/attribute/list`
 
 const post_product = `${api}/product/add`
+const put_product = `${api}/product/update`
 const post_attribute = `${api}/attribute/add`
-// const put_product = `${api}/product/update`
 // const post_image = `${api}/image/add`
 const post_image_Multiple = `${api}/image/uploadMultipleFiles`
 // const put_image = `${api}/image/update/`
@@ -99,9 +99,20 @@ const actions = {
                 }
             })
             .then(response => {
-                // if(response.status === 200){
-
-                // }
+                console.log("response: ", response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },
+    updateProduct(context, product) {
+        axios
+            .put(put_product, product, {
+                headers: {
+                    'Authorization': this.getters.token
+                }
+            })
+            .then(response => {
                 console.log("response: ", response)
             })
             .catch(error => {
