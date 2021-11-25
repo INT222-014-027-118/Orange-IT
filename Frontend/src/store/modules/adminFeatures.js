@@ -7,13 +7,13 @@ const state = {
     menuList: [{
             label: "Manage product",
             active: false,
-            link: "manageProducts",
+            link: "manage-products",
             icon: "warehouse"
         },
         {
             label: "Manage users",
             active: false,
-            link: "manageUsers",
+            link: "manage-users",
             icon: "manage_accounts"
         },
         {
@@ -30,6 +30,7 @@ const state = {
 
 const getters = {
     menuList: state => state.menuList,
+    users: state => state.users,
 }
 
 const actions = {
@@ -38,13 +39,17 @@ const actions = {
     }, index) {
         commit('activeMenu', index)
     },
-    loadUsers() {
+    loadUsers({
+            commit
+        }
+
+    ) {
         axios.get(get_users_list, {
             headers: {
                 'Authorization': this.getters.token
             }
         }).then((res) => {
-            console.log(res);
+            commit('SET_USERS', res.data)
         })
     },
 
@@ -68,7 +73,9 @@ const mutations = {
             state.menuList[i].active = false
         }
     },
-
+    SET_USERS(state, payload) {
+        state.users = payload
+    },
 
 }
 
