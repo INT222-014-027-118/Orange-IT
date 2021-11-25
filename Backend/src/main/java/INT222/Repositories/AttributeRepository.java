@@ -9,6 +9,8 @@ public interface AttributeRepository extends JpaRepository<Attributes,Long> {
 
     Attributes findTopByOrderByIdDesc();
 
+    Boolean existsByAttribute(String name);
+
 
 
 }

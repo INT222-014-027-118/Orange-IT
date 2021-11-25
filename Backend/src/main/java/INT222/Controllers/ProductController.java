@@ -1,31 +1,33 @@
 package INT222.Controllers;
 
 
-import INT222.Exceptions.NotFoundException;
+import INT222.Exceptions.*;
 
-import INT222.Exceptions.NotFoundNameException;
-import INT222.Exceptions.ProductActiveException;
-import INT222.Exceptions.SameProductNameException;
 import INT222.Models.*;
 import INT222.Repositories.*;
 
 
+import INT222.Services.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
+@CrossOrigin(origins = "http://20.212.33.246/")
 @RequestMapping("/product")
-@CrossOrigin(origins = "*")
 public class ProductController {
 
     @Autowired
@@ -38,13 +40,15 @@ public class ProductController {
     private ImageRepository imageRepository;
 
     @Autowired
-    private ProductSpecValueRepository productSpecValueRepository;
-
-    @Autowired
     private ProductHasAttributeRepository productHasAttributeRepository;
 
     @Autowired
     private ProductListAdminRepository productListAdminRepository;
+
+    @Autowired
+    private FileStorageService fileStorageService;
+
+
     //Get all Products
     @GetMapping("/list")
     public List<ProductsHome> getProduct() {
@@ -111,24 +115,33 @@ public class ProductController {
     @PostMapping("/add")
     @PreAuthorize("hasRole('Admin')")
     public Optional<Products> addProduct(@RequestBody Products products) {
+        long id = productRepository.findTopByOrderByIdDesc().getId()+1;
+
+        for (int i = 0; i < products.getImages().size(); i++) {
+            if(imageRepository.existsImagesBySource(products.getImages().get(i).getSource())){
+                throw new SameImageException(products.getImages().get(i).getSource());
+            }
+        }
+
             if (productRepository.existsByProductName(products.getProductName())) {
                 throw new SameProductNameException(products.getProductName());
             }
 
-            else
-            products.setId(productRepository.findTopByOrderByIdDesc().getId()+1);
+
+             products.setId(id);
              List<Images> images =  products.getImages();
              List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
         for (int i = 0; i < images.size(); i++) {
-            images.get(i).setId(imageRepository.findTopByOrderByIdDesc().getId()+1+i);
+            images.get(i).setId(imageRepository.findAll().size()+1+i);
+            images.get(i).setProductId(id);
         }
         for (int i = 0; i < productsHasAttributes.size(); i++) {
-            productsHasAttributes.get(i).setId(productHasAttributeRepository.findTopByOrderByIdDesc().getId()+1+i);
-            productsHasAttributes.get(i).setProductId(products.getId());
+            productsHasAttributes.get(i).setId(productHasAttributeRepository.findAll().size()+1+i);
+            productsHasAttributes.get(i).setProductId(id);
         }
             productRepository.save(products);
 
-          return getProductById(products.getId());
+          return getProductById(id);
 
     }
 
@@ -141,9 +154,15 @@ public class ProductController {
     @PutMapping("/update")
     @PreAuthorize("hasRole('Admin')")
     public void editProduct(@RequestBody Products products) {
+        for (int i = 0; i < products.getImages().size(); i++) {
+            if(imageRepository.existsImagesBySource(products.getImages().get(i).getSource())){
+                throw new SameImageException(products.getImages().get(i).getSource());
+            }
+        }
         if (productRepository.existsByProductName( products.getProductName()) && productRepository.existsById(products.getId())) {
             productRepository.save(products);
         }
+
         else throw new NotFoundException(products.getId());
     }
 
@@ -207,6 +226,20 @@ public class ProductController {
 // return productHasAttributeRepository.findAll();
 //
 //    }
+
+
+    @PutMapping("/changeActive/{id}")
+    @PreAuthorize("hasRole('Admin')")
+    public void changeActive(@PathVariable long id) {
+        ProductListAdmin productListAdmin = productListAdminRepository.getById(id);
+        if(productListAdmin.getActive() == 1) {
+            productListAdmin.setActive(0);
+        }else productListAdmin.setActive(1);
+        productListAdminRepository.save(productListAdmin);
+
+
+    }
+
 
 
 }

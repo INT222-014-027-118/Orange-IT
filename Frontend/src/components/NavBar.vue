@@ -202,7 +202,7 @@
                         <button
                             @click="
                                 $router.push('/');
-                                moreVert = !moreVert;
+                                moreVert = false;
                             "
                             class="hover:text-primary w-full py-2 font-semibold capitalize "
                         >
@@ -210,7 +210,7 @@
                         </button>
                         <button
                             @click="
-                                moreVert = !moreVert;
+                                moreVert = false;
                                 $store.getters.userInfo == null ? $router.push('/login') : $router.push({ name: 'purchase', params: { purchaseDetail: 'purchase' } });
                             "
                             class="hover:text-primary w-full py-2 font-semibold capitalize"
@@ -218,15 +218,7 @@
                             <p class="text-left ml-3">{{ $store.getters.userInfo == null ? "login" : "my account" }}</p>
                         </button>
                         <hr class="dark:border-gray-500" />
-                        <button
-                            @click="
-                                moreVert = !moreVert;
-                                changeSetChangeMode();
-                            "
-                            class="hover:text-primary w-full py-2 font-semibold capitalize"
-                        >
-                            <p class="text-left ml-3">{{ this.$store.getters.changeMode == true ? "dark mode" : "light mode" }}</p>
-                        </button>
+                        <LDmode @click="moreVert = false" />
                     </div>
                 </div>
             </div>
@@ -246,11 +238,15 @@
                     <div v-show="this.$route.name !== 'Home'" :class="[this.$route.name === 'Home' ? 'material-icons text-primary' : 'material-icons-outlined']">home</div>
                     <span class="">home</span>
                 </button>
-                <button class="flex flex-col items-center w-16 p-1 font-semibold">
+                <button class="flex flex-col items-center w-16 p-1 font-semibold relative" @click="$router.push('/compare')" :class="[this.$route.name === 'Compare' ? 'text-primary' : '']">
                     <div class="material-icons">
-                        grid_view
+                        compare_arrows
+                        <!-- grid_view -->
                     </div>
                     <span class="">categories</span>
+                    <div class="absolute px-1 text-xs text-white bg-primary rounded-full -top-1 right-3 ring-2 ring-white dark:ring-dark_secondary">
+                        {{ this.$store.getters.countCompareProducts == 2 ? "VS" : "" }}
+                    </div>
                 </button>
                 <button
                     class="flex flex-col items-center w-16 p-1 font-semibold relative"

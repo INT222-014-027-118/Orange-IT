@@ -1,6 +1,7 @@
 package INT222.Controllers;
 
 import INT222.Exceptions.NotFoundCartItemException;
+import INT222.Exceptions.NotFoundUserCartItemException;
 import INT222.Models.CartItemForAdd;
 import INT222.Models.CartItems;
 import INT222.Repositories.CartItemForAddRepository;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://20.212.33.246/")
 @RequestMapping("/cartItem")
-@CrossOrigin(origins = "*")
 public class CartItemController {
 
     @Autowired
@@ -31,18 +32,19 @@ public class CartItemController {
     @PreAuthorize("hasRole('User')")
     public CartItems addCartItem(@RequestBody CartItemForAdd cartItemForAdd,@PathVariable(value = "userId") long userId,
                             @PathVariable(value = "productId") long productId) {
-        cartItemForAdd.setProductId(productId);
-        cartItemForAdd.setUserId(userId);
-        if(cartItemForAddRepository.findTopByOrderByIdDesc() == null){
-            cartItemForAdd.setId(1);
-            cartItemForAddRepository.save(cartItemForAdd);
-        }else {
-            long id = cartItemForAddRepository.findTopByOrderByIdDesc().getId() + 1;
-            cartItemForAdd.setId(id);
-            cartItemForAddRepository.save(cartItemForAdd);
-        }
-        return cartItemRepository.getById(cartItemForAdd.getId());
-
+        if (cartItemRepository.existsByUserId(userId)) {
+            cartItemForAdd.setProductId(productId);
+            cartItemForAdd.setUserId(userId);
+            if (cartItemForAddRepository.findTopByOrderByIdDesc() == null) {
+                cartItemForAdd.setId(1);
+                cartItemForAddRepository.save(cartItemForAdd);
+            } else {
+                long id = cartItemForAddRepository.findTopByOrderByIdDesc().getId() + 1;
+                cartItemForAdd.setId(id);
+                cartItemForAddRepository.save(cartItemForAdd);
+            }
+            return cartItemRepository.getById(cartItemForAdd.getId());
+        }else throw new NotFoundUserCartItemException(userId);
     }
 
 //    @GetMapping("/list")
@@ -60,8 +62,11 @@ public class CartItemController {
 
     @GetMapping("/findByUserId/{id}")
     @PreAuthorize("hasRole('User')")
-    public List<CartItems> getCartItemListByUserId(@PathVariable(value = "id") long userId){
-        return cartItemRepository.findAllByUserId(userId);
+    public List<CartItems> getCartItemListByUserId(@PathVariable(value = "id") long userId) {
+        if (cartItemRepository.existsByUserId(userId)) {
+            return cartItemRepository.findAllByUserId(userId);
+
+        }else throw new NotFoundUserCartItemException(userId);
     }
 
 

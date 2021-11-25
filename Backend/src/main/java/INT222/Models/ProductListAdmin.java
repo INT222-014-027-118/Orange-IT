@@ -34,7 +34,7 @@ public class ProductListAdmin {
     private int active;
 
     @JoinColumn(nullable = true)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne( fetch = FetchType.LAZY)
     private Discounts discount;
 
     @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)

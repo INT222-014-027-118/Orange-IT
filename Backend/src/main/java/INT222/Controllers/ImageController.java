@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins = "http://20.212.33.246/")
 @RequestMapping("/image")
-@CrossOrigin(origins = "*")
 public class ImageController {
 
     @Autowired
@@ -123,8 +123,8 @@ public class ImageController {
 
     @PostMapping("/uploadMultipleFiles")
     @PreAuthorize("hasRole('Admin')")
-    public List<Images> uploadMultipleFiles(@RequestParam("orange") MultipartFile[] files) {
-        return Arrays.asList(files)
+    public void uploadMultipleFiles(@RequestParam("orange") MultipartFile[] files) {
+         Arrays.asList(files)
                 .stream()
                 .map(file -> uploadFile(file))
                 .collect(Collectors.toList());
@@ -134,8 +134,10 @@ public class ImageController {
     @PostMapping("/uploadFile")
     @PreAuthorize("hasRole('Admin')")
     public Images uploadFile(@RequestParam("orange") MultipartFile file) {
+
         String fileName = fileStorageService.storeFile(file);
-        return imageRepository.findTopByOrderByIdDesc();
+        long id = imageRepository.findAll().size();
+        return imageRepository.getById(id);
     }
 
 }

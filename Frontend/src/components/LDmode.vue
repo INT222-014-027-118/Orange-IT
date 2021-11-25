@@ -1,6 +1,6 @@
 <template>
-    <div class="flex items-center cursor-pointer select-none" :class="[this.$store.getters.isAdmin ? 'py-3 w-full shadow-sm' : 'flex-wrap']" @click="changeSetChangeMode()">
-        <div class="flex justify-center" :class="[this.$store.getters.isAdmin ? 'sm:ml-3 md:ml-3 w-full sm:w-auto' : 'w-14 md:w-16']">
+    <div class="flex items-center cursor-pointer select-none" :class="[this.$store.getters.isAdmin ? 'mt-2 py-3 w-full shadow-sm' : 'flex-wrap']" @click="changeSetChangeMode()">
+        <div class="justify-center" :class="[this.$store.getters.isAdmin ? 'flex sm:ml-3 md:ml-3 w-full sm:w-auto' : 'w-14 md:w-16 hidden sm:inline-flex']">
             <div class="rounded-full w-9 h-5 p-0.5 ring-2 " :class="[this.$store.getters.changeMode == true ? 'bg-neutral ring-primary' : 'bg-dark_secondary ring-gray-200']">
                 <div
                     class="rounded-full w-4 h-4 transform duration-300 ease-in-out flex items-center justify-center ring-1 text-white"
@@ -10,7 +10,7 @@
                 </div>
             </div>
         </div>
-        <span class="font-semibold capitalize" :class="[this.$store.getters.isAdmin ? 'text-sm md:text-base text-left lg:text-lg hidden sm:inline-block ml-3' : 'ml-1']">{{
+        <span class="font-semibold capitalize" :class="[this.$store.getters.isAdmin ? 'text-sm md:text-base text-left lg:text-lg hidden sm:inline-block ml-3' : 'py-2 ml-3 sm:py-0 sm:ml-1']">{{
             this.$store.getters.changeMode == true ? "light mode" : "dark mode"
         }}</span>
     </div>

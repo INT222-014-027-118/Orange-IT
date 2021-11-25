@@ -1,8 +1,7 @@
 <template>
     <div class="p-1 sm:p-5">
-        <div class="mx-auto sm:max-w-5xl px-3 sm:px-6 bg-white dark:bg-dark_tertiary rounded-md">
+        <div class="mx-auto sm:max-w-5xl px-3 sm:px-6 bg-white dark:bg-dark_tertiary rounded-md shadow-sm">
             <h1 class="text-2xl sm:text-3xl whitespace-nowrap px-2 py-6 font-semibold font-sans capitalize">form products</h1>
-            {{this.$store.getters.attributes}}
             <hr />
             <form @submit.prevent="submitForm" class="py-5">
                 <div class="px-1 md:px-3">
@@ -75,7 +74,7 @@
                         </div>
                         <input
                             v-model.number="product.price"
-                            step="0.09"
+                            step="0.00"
                             class="input-form input-theme"
                             id="price"
                             type="number"
@@ -130,13 +129,13 @@
 
                 <div class="px-1 md:px-3 lg:w-full">
                     <label class="label-css">Upload Image *</label>
-                    <div class="relative input-form input-theme flex flex-wrap select-none overflow-hidden" :class="[invalid.images ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
+                    <div class="relative input-form input-theme flex flex-wrap overflow-hidden" :class="[invalid.images ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <div v-for="(item, index) in preview_list" :key="index" class="m-2 md:m-5 relative">
                             <div class="bg-white h-40 w-40 md:h-64 md:w-64 mb-2 rounded-md">
                                 <img :src="item" class="object-contain object-center w-full h-full rounded-md" />
                             </div>
-                            <p class="text-sm font-light">file name: {{ imageInfo[index].name }}</p>
-                            <p class="text-sm font-light">size: {{ imageInfo[index].size / 1024 }}KB</p>
+                            <p class="text-sm font-light truncate w-40 md:w-64 cursor-text">file name: {{ imageInfo[index].name }}</p>
+                            <p class="text-sm font-light truncate w-40 md:w-64 cursor-text">size: {{ imageInfo[index].size / 1024 }}KB</p>
                             <div
                                 @click="deleteImg(index)"
                                 class="bg-red-600 absolute text-center pt-0.5 cursor-pointer -top-3 right-3 md:-right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white"
@@ -152,7 +151,7 @@
                                 <span class="material-icons p-0.5 rounded-full border-2 border-current">
                                     add
                                 </span>
-                                <span class="mt-2 text-base ">Select a file</span>
+                                <span class="mt-2 text-base">Select a file</span>
                                 <input type="file" class="hidden" id="file" accept="image/x-png,image/gif,image/jpeg" @change="previewMultiImage" multiple />
                             </label>
                         </div>
@@ -164,24 +163,23 @@
                     <div class="input-form input-theme ">
                         <div class="grid grid-cols-2 grid-rows-2">
                             <div class="col-span-2 sm:col-span-1 p-1">
-                                <h2 class="text-center font-semibold">Attribute</h2>
-                                <RichSelect class="" @selectAttribute="selectAttribute" />
+                                <h2 class="text-center font-semibold relative">Attribute</h2>
+                                <RichSelect class="" @selectAttribute="selectAttribute" ref="childComponent" />
                             </div>
                             <div class="col-span-2 sm:col-span-1 p-1">
                                 <h2 class="text-center font-semibold">Value</h2>
-                                <input class="input-theme " type="text" maxlength="40" placeholder="Please input value" v-model="attributeText" />
+                                <input class="input-theme " type="text" maxlength="40" placeholder="Please input value" v-model="attributeValue" />
                             </div>
                             <div class="col-span-2 p-1 mt-3">
                                 <button
                                     type="button"
                                     class="bg-green-600 text-white select-none px-3 py-2 text-center w-full rounded hover:shadow-md hover:bg-green-700 cursor-pointer flex justify-center"
-                                    @click="Addattribute"
+                                    @click="Addattribute()"
                                 >
                                     <span class="material-icons text-base mr-1">add</span> <span>Add</span>
                                 </button>
                             </div>
                         </div>
-
                         <table class="w-full">
                             <thead>
                                 <tr>
@@ -194,21 +192,20 @@
                                 <tr v-show="1 !== 0">
                                     <td colspan="3" class="font-semibold p-2">Attributes list</td>
                                 </tr>
-                                <tr v-for="(spec, index) in product.attributes" :key="spec.key" :class="index % 2 == 0 ? 'bg-white' : 'bg-gray-50'" class="border">
+                                <tr v-for="(att, index) in product.productsHasAttributes" :key="att.key" :class="index % 2 == 0 ? 'bg-white' : 'bg-gray-50'" class="border">
                                     <td class="">
-                                        <p class="px-3 py-2">{{ spec.key }}</p>
+                                        <p class="px-3 py-2">{{ att.attributeName }}</p>
                                     </td>
                                     <td class="">
-                                        <p class="px-3 py-2">{{ spec.textValue }}</p>
+                                        <p class="px-3 py-2">{{ att.attribute_value }}</p>
                                     </td>
                                     <td class="p-1">
-                                        <button
-                                            type="button"
+                                        <div
                                             class="bg-red-500 text-white select-none block px-3 py-2 text-center w-full rounded hover:shadow-md hover:bg-red-600 cursor-pointer"
                                             @click="removeAddattribute(index)"
                                         >
                                             remove
-                                        </button>
+                                        </div>
                                     </td>
                                 </tr>
                                 <br />
@@ -245,9 +242,6 @@ export default {
             activeClose: true,
             productIds: [],
 
-            attributeText: "",
-            attributeSelect: "",
-
             selectRootCat: {},
             selectChildCat: {},
 
@@ -260,25 +254,14 @@ export default {
                 quantityStock: 0,
                 discount: null,
                 colors: [],
-                specs: [],
+                attributes: [],
                 images: [],
                 categories: [],
-
-                productsHasAttributes: [
-                    {
-                        id: 1,
-                        attributeId: 1,
-                        productId: 1,
-                        attribute_value: "",
-                    },
-                ],
+                productsHasAttributes: [],
             },
-            attributes: [
-                {
-                    id: 1,
-                    attribute: "",
-                },
-            ],
+
+            selectAttributes: {},
+            attributeValue: "",
 
             invalid: {
                 productName: true,
@@ -288,10 +271,9 @@ export default {
                 quantityStock: true,
                 discount: true,
                 colors: true,
-                specs: true,
                 images: true,
                 categories: true,
-                productSpecValues: true,
+                // productSpecValues: true,
             },
 
             isLoad: true,
@@ -309,14 +291,17 @@ export default {
             this.invalid.quantityStock = this.product.quantityStock === 0 ? false : true;
             this.invalid.discount = this.product.discount === "" ? false : true;
             this.invalid.colors = this.product.colors.length === 0 ? false : true;
-            this.invalid.specs = this.product.specs.length === 0 ? false : true;
-            this.invalid.images = this.imageInfo.length === 0 ? false : true;
+            // this.invalid.specs = this.product.specs.length === 0 ? false : true;
+            this.invalid.images = this.imageInfo.length === 0 || this.imageInfo.length >= 7 ? false : true;
             this.invalid.productName = this.product.productName === "" ? false : true;
-            this.invalid.productSpecValues = this.product.productSpecValues.length === 0 ? false : true;
+            // this.invalid.productSpecValues = this.product.productSpecValues.length === 0 ? false : true;
             this.invalid.price = this.product.price === 0 ? false : true;
             this.invalid.brandName = this.product.brandName === "" ? false : true;
             this.invalid.categories = Object.keys(this.selectChildCat).length === 0 ? false : true;
             // this.$refs.categories.focus();
+            this.product.productsHasAttributes = this.product.productsHasAttributes.map((att) => {
+                return { id: att.id, attributeId: att.attributeId, productId: att.productId, attribute_value: att.attribute_value };
+            });
             if (this.invalid.productName) {
                 let imagesArray = this.imageInfo.map((image) => {
                     return { id: 1, source: image.name, label: image.name.split(".")[0], product_id: 1 };
@@ -335,18 +320,29 @@ export default {
             this.selectChildCat = category;
         },
         selectAttribute(choosed) {
-            this.attributeSelect = choosed;
+            this.selectAttributes = {
+                id: choosed.id,
+                attribute: choosed.attribute,
+            };
         },
         Addattribute() {
-            if (!this.attributeText === "" && !this.attributeSelect === "") {
-                let attribute = { key: this.attributeSelect, textValue: this.attributeText };
-                this.product.attributes.push(attribute);
-                this.attributeText = "";
-                this.attributeSelect = "";
+            if (Object.keys(this.selectAttributes).length !== 0 && this.attributeValue !== "") {
+                let attributeValue = {
+                    id: 1,
+                    attributeId: this.selectAttributes.id,
+                    attributeName: this.selectAttributes.attribute,
+                    productId: 1,
+                    attribute_value: this.attributeValue,
+                };
+                this.product.productsHasAttributes.push(attributeValue);
+                this.attributeValue = "";
+                this.selectAttributes = {};
+                this.$refs.childComponent.clearText("");
             }
         },
+
         removeAddattribute(index) {
-            this.product.attributes.splice(index, 1);
+            this.product.productsHasAttributes.splice(index, 1);
         },
 
         previewMultiImage(event) {
@@ -354,7 +350,7 @@ export default {
             var input = event.target;
             var count = input.files.length;
             var index = 0;
-            if (imgName.length > 20) {
+            if (imgName.length > 30) {
                 alert("The file name cannot exceed 20 characters.!!!");
             } else if (input.files) {
                 while (count--) {
@@ -391,12 +387,11 @@ export default {
             return this.product.productName.length;
         },
     },
-    mounted() {
+    mounted() {},
+    created() {
         this.$store.dispatch("loadDataForm");
         this.$store.dispatch("loadcategories");
-    },
-    created() {
-        console.log("test");
+        this.$store.dispatch("loadAttirbute");
     },
 };
 </script>
