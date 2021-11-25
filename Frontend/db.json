@@ -82,8 +82,7 @@
         "brandName": "Razer",
         "quantityStock": 20,
         "discount": null,
-        "colors": [
-            {
+        "colors": [{
                 "id": 3,
                 "label": "White",
                 "hexCode": "FFFFFF"
@@ -95,20 +94,99 @@
             }
         ],
         "specs": [],
-        "images": [
-            {
-                "id": 3,
-                "source": "test1.png",
-                "label": "test1"
-            }
-        ],
-        "catergories": [
-            {
-                "id": 2,
-                "category": "Keyboard",
-                "parentId": null
-            }
-        ],
+        "images": [{
+            "id": 3,
+            "source": "test1.png",
+            "label": "test1"
+        }],
+        "catergories": [{
+            "id": 2,
+            "category": "Keyboard",
+            "parentId": null
+        }],
         "productSpecValues": []
     }
+}
+
+{
+    "id": "4",
+    "productName": "RAZER BLACKSHARK V2 PRO",
+    "description": "Frequency Response : 12 Hz â€“ 28 kHz\r\nImpedance : 32 â„¦ (1 kHz)",
+    "price": 6490,
+    "brandName": "Razer",
+    "quantityStock": 50,
+    "active": 1,
+    "discount": null,
+    "colors": [{
+        "id": 2,
+        "label": "Black",
+        "hexCode": "000000"
+    }],
+    "attributes": [],
+    "images": [],
+    "categories": [{
+            "id": 3,
+            "category": "Headset",
+            "parentId": null
+        },
+        {
+            "id": 6,
+            "category": "Wireless headset",
+            "parentId": "3"
+        }
+    ],
+    "productsHasAttributes": [{
+        "id": 12,
+        "attributeId": 1,
+        "productId": 4,
+        "attribute_value": "Wireless"
+    }],
+    "ratings": []
+}
+
+
+
+
+{
+    "id": "5",
+    "productName": "test2",
+    "description": "rwerwet",
+    "price": 34,
+    "brandName": "Logitech",
+    "quantityStock": 4,
+    "discount": null,
+    "colors": [
+        {
+            "id": 1,
+            "label": "Red",
+            "hexCode": "ff0000"
+        },
+        {
+            "id": 2,
+            "label": "Black",
+            "hexCode": "000000"
+        }
+    ],
+    "attributes": [],
+    "images": [],
+    "categories": [
+        {
+            "id": 2,
+            "category": "Mouse",
+            "parentId": null
+        },
+        {
+            "id": 5,
+            "category": "Wireless mouse",
+            "parentId": "2"
+        }
+    ],
+    "productsHasAttributes": [
+        {
+            "id": 13,
+            "attributeId": 1,
+            "productId": 5,
+            "attribute_value": "werwer"
+        }
+    ]
 }

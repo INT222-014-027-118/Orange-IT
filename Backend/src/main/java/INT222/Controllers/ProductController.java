@@ -154,12 +154,14 @@ public class ProductController {
     @PutMapping("/update")
     @PreAuthorize("hasRole('Admin')")
     public void editProduct(@RequestBody Products products) {
-        for (int i = 0; i < products.getImages().size(); i++) {
-            if(imageRepository.existsImagesBySource(products.getImages().get(i).getSource())){
-                throw new SameImageException(products.getImages().get(i).getSource());
-            }
-        }
-        if (productRepository.existsByProductName( products.getProductName()) && productRepository.existsById(products.getId())) {
+//        for (int i = 0; i < products.getImages().size(); i++) {
+//            if(imageRepository.existsImagesBySource(products.getImages().get(i).getSource())){
+//                throw new SameImageException(products.getImages().get(i).getSource());
+//            }
+//        }
+        if (productRepository.existsById(products.getId())) {
+            this.deleteProductImage(products.getId());
+            this.deleteProductHasAttribute(products.getId());
             productRepository.save(products);
         }
 

@@ -1,7 +1,7 @@
 <template>
-    <div class="p-1 sm:p-5">
-        <div class="mx-auto sm:max-w-5xl px-3 sm:px-6 bg-white dark:bg-dark_tertiary rounded-md shadow-sm">
-            <h1 class="text-2xl sm:text-3xl whitespace-nowrap px-2 py-6 font-semibold font-sans capitalize">form products</h1>
+    <div class="px-2 md:px-5 py-2 md:py-5">
+        <div class="mx-auto sm:max-w-5xl px-3 lg:px-6 bg-white dark:bg-dark_tertiary rounded-md shadow-sm">
+            <h1 class="text-2xl sm:text-3xl whitespace-nowrap px-2 py-6 font-semibold font-sans capitalize">{{ formPath }} products {{ productId == undefined ? "" : "ID:" + productId }}</h1>
             <hr />
             <form @submit.prevent="submitForm" class="py-5">
                 <div class="px-1 md:px-3">
@@ -66,8 +66,8 @@
                     <!-- <span v-if="invalid.name" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2">Please input product name</span> -->
                 </div>
 
-                <div class="flex flex-col md:flex-row lg:w-full">
-                    <div class="relative px-1 md:px-3 md:w-1/2">
+                <div class="flex flex-col lg:flex-row lg:w-full">
+                    <div class="relative px-1 md:px-3 w-full lg:w-1/2">
                         <div class="flex justify-between">
                             <label class="label-css" for="price">Price *</label>
                             <span v-if="!invalid.price" class="text-sm text-red-500 select-none">Please input price</span>
@@ -85,7 +85,7 @@
                         />
                     </div>
 
-                    <div class="relative px-1 md:px-3 md:w-1/2">
+                    <div class="relative px-1 md:px-3 w-full lg:w-1/2">
                         <div class="flex justify-between">
                             <label class="label-css" for="stock">quantity stock *</label>
                             <span v-if="!invalid.quantityStock" class="text-sm text-red-500 select-none ">Please input stock quantity</span>
@@ -130,15 +130,19 @@
                 <div class="px-1 md:px-3 lg:w-full">
                     <label class="label-css">Upload Image *</label>
                     <div class="relative input-form input-theme flex flex-wrap overflow-hidden" :class="[invalid.images ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
-                        <div v-for="(item, index) in preview_list" :key="index" class="m-2 md:m-5 relative">
-                            <div class="bg-white h-40 w-40 md:h-64 md:w-64 mb-2 rounded-md">
+                        <div v-for="(item, index) in preview_list" :key="index" class="m-2 md:m-5 relative ring-1 ring-primary">
+                            <div class="bg-white h-40 w-40 md:h-64 md:w-64 rounded-md">
                                 <img :src="item" class="object-contain object-center w-full h-full rounded-md" />
                             </div>
-                            <p class="text-sm font-light truncate w-40 md:w-64 cursor-text">file name: {{ imageInfo[index].name }}</p>
-                            <p class="text-sm font-light truncate w-40 md:w-64 cursor-text">size: {{ imageInfo[index].size / 1024 }}KB</p>
+                            <!-- <p class="text-sm font-light truncate w-40 md:w-64 cursor-text px-3 py-3" v-if="formPath !== 'edit'">file name: {{ imageInfo[index].name }}</p>
+                            <p class="text-sm font-light truncate w-40 md:w-64 cursor-text px-3 py-3" v-else>
+                                file name:
+                                {{ typeof item.split("http://20.212.33.246/orange-it/image/get/")[1] == "string" ? item.split("http://20.212.33.246/orange-it/image/get/")[1] : imageInfo[index].name }}
+                            </p> -->
+                            <!-- <p class="text-sm font-light truncate w-40 md:w-64 cursor-text">size: {{ imageInfo[index].size / 1024 }}KB</p> -->
                             <div
                                 @click="deleteImg(index)"
-                                class="bg-red-600 absolute text-center pt-0.5 cursor-pointer -top-3 right-3 md:-right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white"
+                                class="bg-red-600 absolute text-center pt-0.5 cursor-pointer -top-3 -right-3 sm:-right-2 md:-right-3 text-base md:text-xl rounded-full h-7 w-7 md:h-8 md:w-8 material-icons text-white"
                             >
                                 delete_forever
                             </div>
@@ -160,7 +164,7 @@
 
                 <div class="px-1 md:px-3 lg:w-full rounded-md">
                     <label class="label-css">attribute *</label>
-                    <div class="input-form input-theme ">
+                    <div class="input-form input-theme" :class="[invalid.productsHasAttributes ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <div class="grid grid-cols-2 grid-rows-2">
                             <div class="col-span-2 sm:col-span-1 p-1">
                                 <h2 class="text-center font-semibold relative">Attribute</h2>
@@ -231,7 +235,7 @@
 
 <script>
 import RichSelect from "../../components/form/RichSelect.vue";
-// import axios from "axios";
+import axios from "axios";
 
 export default {
     components: {
@@ -239,6 +243,7 @@ export default {
     },
     data() {
         return {
+            api: `${process.env.VUE_APP_API}/product`,
             activeClose: true,
             productIds: [],
 
@@ -265,7 +270,6 @@ export default {
 
             invalid: {
                 productName: true,
-                // description: true,
                 price: true,
                 brandName: true,
                 quantityStock: true,
@@ -273,7 +277,7 @@ export default {
                 colors: true,
                 images: true,
                 categories: true,
-                // productSpecValues: true,
+                productsHasAttributes: true,
             },
 
             isLoad: true,
@@ -285,31 +289,46 @@ export default {
     },
     props: {
         itemId: String,
+        formPath: String,
+        productId: String,
     },
     methods: {
         submitForm() {
             this.invalid.quantityStock = this.product.quantityStock === 0 ? false : true;
-            this.invalid.discount = this.product.discount === "" ? false : true;
             this.invalid.colors = this.product.colors.length === 0 ? false : true;
-            // this.invalid.specs = this.product.specs.length === 0 ? false : true;
             this.invalid.images = this.imageInfo.length === 0 || this.imageInfo.length >= 7 ? false : true;
             this.invalid.productName = this.product.productName === "" ? false : true;
-            // this.invalid.productSpecValues = this.product.productSpecValues.length === 0 ? false : true;
+            this.invalid.productsHasAttributes = this.product.productsHasAttributes.length === 0 ? false : true;
             this.invalid.price = this.product.price === 0 ? false : true;
             this.invalid.brandName = this.product.brandName === "" ? false : true;
             this.invalid.categories = Object.keys(this.selectChildCat).length === 0 ? false : true;
-            // this.$refs.categories.focus();
-            this.product.productsHasAttributes = this.product.productsHasAttributes.map((att) => {
-                return { id: att.id, attributeId: att.attributeId, productId: att.productId, attribute_value: att.attribute_value };
-            });
-            if (this.invalid.productName) {
-                let imagesArray = this.imageInfo.map((image) => {
-                    return { id: 1, source: image.name, label: image.name.split(".")[0], product_id: 1 };
-                });
-                this.product.images = imagesArray;
+
+            if (this.validate) {
                 this.product.categories = [this.selectRootCat, this.selectChildCat];
-                this.$store.dispatch("addProduct", this.product);
-                this.$store.dispatch("uploadImages", this.imageInfo);
+                this.product.productsHasAttributes = this.product.productsHasAttributes.map((att) => {
+                    return { id: att.id, attributeId: att.attributeId, productId: att.productId, attribute_value: att.attribute_value };
+                });
+                if (this.formPath === "edit") {
+                    // this.$store.dispatch("uploadImages", this.imageInfo).then((response) => {
+                    //     if (response.status == 200) {
+                    this.product.id = this.productId;
+                    this.product.attributes = [];
+                    this.$store.dispatch("updateProduct", this.product);
+                    console.log(this.product);
+                    //     }
+                    // });
+                } else {
+                    var imagesArray = this.imageInfo.map((image) => {
+                        return { id: 1, source: image.name, label: image.name.split(".")[0], product_id: 1 };
+                    });
+                    this.product.images = imagesArray;
+                    this.$store.dispatch("uploadImages", this.imageInfo).then((response) => {
+                        if (response.status == 200) {
+                            this.$store.dispatch("addProduct", this.product);
+                            // console.log(this.product);
+                        }
+                    });
+                }
             }
         },
         chooseRootCategory(category) {
@@ -325,6 +344,7 @@ export default {
                 attribute: choosed.attribute,
             };
         },
+
         Addattribute() {
             if (Object.keys(this.selectAttributes).length !== 0 && this.attributeValue !== "") {
                 let attributeValue = {
@@ -351,7 +371,7 @@ export default {
             var count = input.files.length;
             var index = 0;
             if (imgName.length > 30) {
-                alert("The file name cannot exceed 20 characters.!!!");
+                alert("The file name cannot exceed 30 characters.!!!");
             } else if (input.files) {
                 while (count--) {
                     var reader = new FileReader();
@@ -366,32 +386,61 @@ export default {
         },
 
         deleteImg(index) {
-            this.imageInfo.splice(index, 1);
+            this.imageInfo.splice(index, 1); //?????????????????????????????????????????
             this.preview_list.splice(index, 1);
-        },
-
-        onFileChange(event) {
-            this.imageFile = event.target.files[0];
-            if (this.imageFile.name.length > 20) {
-                alert("The file name cannot exceed 20 characters.!!!");
-            } else {
-                let files = event.target.files || event.dataTransfer.files;
-                if (!files.length) return;
-                this.createImage(files[0]);
-                this.activeClose = true;
-            }
         },
     },
     computed: {
         countText() {
             return this.product.productName.length;
         },
+        validate() {
+            return (
+                this.product.quantityStock !== 0 &&
+                this.product.colors.length !== 0 &&
+                // this.imageInfo.length !== 0 &&
+                this.product.productName !== "" &&
+                this.product.productsHasAttributes.length !== 0 &&
+                this.product.price !== 0 &&
+                this.product.brandName !== "" &&
+                Object.keys(this.selectChildCat).length !== 0
+            );
+        },
     },
     mounted() {},
-    created() {
+    async created() {
         this.$store.dispatch("loadDataForm");
         this.$store.dispatch("loadcategories");
         this.$store.dispatch("loadAttirbute");
+        if (this.formPath === "edit") {
+            let loadProduct = await axios.get(`${this.api}/${this.productId}`).then((res) => {
+                return res.data;
+            });
+            this.selectRootCat = loadProduct.categories[0] == null ? "" : loadProduct.categories[0];
+            this.selectChildCat = loadProduct.categories[1] == null ? "" : loadProduct.categories[1];
+            this.preview_list = await loadProduct.images.map((img) => {
+                return `${process.env.VUE_APP_API}/image/get/${img.source}`;
+            });
+            this.product.id = loadProduct.id;
+            this.product.productName = loadProduct.productName;
+            this.product.description = loadProduct.description;
+            this.product.price = loadProduct.price;
+            this.product.brandName = loadProduct.brandName;
+            this.product.quantityStock = loadProduct.quantityStock;
+            this.product.colors = loadProduct.colors;
+            this.product.images = loadProduct.images;
+            this.product.productsHasAttributes = loadProduct.productsHasAttributes.map((att) => {
+                return {
+                    id: att.id,
+                    attributeId: att.attributeId,
+                    attributeName: loadProduct.attributes.find((attribute) => {
+                        return attribute.id == att.attributeId;
+                    }).attribute,
+                    productId: att.productId,
+                    attribute_value: att.attribute_value,
+                };
+            });
+        }
     },
 };
 </script>
