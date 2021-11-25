@@ -157,6 +157,7 @@ export default {
         addNewProduct() {
             // this.$router.push({ name: 'form' })
             // this.$router.push('/admin/form')
+            this.$router.push(`/admin/add-product`)
         },
         deleteProduct(id, productName) {
             if (window.confirm("Do you want to delete? \nproduct:   " + productName)) {

@@ -22,23 +22,23 @@ const actions = {
         commit
     }) {
         if (state.userId) {
-            axios
+            return axios
                 .get(`${process.env.VUE_APP_API}/user/${state.userId}`, {
                     headers: {
                         'Authorization': state.token
                     }
                 })
                 .then(response => {
-                    console.log(response)
                     commit('setUserInfo', response.data)
                     commit('setIsAdmin', response.data.role[0].name === 'Admin' ? true : false)
                     if (state.isAdmin) {
                         router.push('/admin')
-                        this.dispatch("loadProducts",state.isAdmin);
-                    }else{
+                        this.dispatch("loadProducts", state.isAdmin);
+                    } else {
                         this.dispatch("loadUserAddresses");
                     }
                 })
+                
         }
     },
     loadUserAddresses({
@@ -64,7 +64,9 @@ const actions = {
         localStorage.removeItem("userId")
         this.dispatch('clearCart')
         commit('setUserInfo', null)
+        router.push('/')
         commit('setLoginStatus', false)
+
     },
 }
 

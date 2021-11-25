@@ -18,7 +18,7 @@ const routes = [{
     path: '/admin',
     name: 'Admin',
     component: () => import( /* webpackChunkName: "admin" */ '../views/admin/adminHome.vue'),
-    beforeRouteLeave: (to, from, next) => {
+    beforeEnter: (to, from, next) => {
       if (store.getters['isAdmin']) {
         next()
       } else {
@@ -31,7 +31,7 @@ const routes = [{
         component: () => import( /* webpackChunkName: "purchase" */ '../views/admin/manageProducts.vue')
       },
       {
-        path: ':formPath-product-:productId',
+        path: ':formPath-product',
         name: 'Form',
         props: true,
         component: () => import( /* webpackChunkName: "form" */ '../views/admin/Form.vue'),

@@ -123,8 +123,8 @@ public class ImageController {
 
     @PostMapping("/uploadMultipleFiles")
     @PreAuthorize("hasRole('Admin')")
-    public List<Images> uploadMultipleFiles(@RequestParam("orange") MultipartFile[] files) {
-        return Arrays.asList(files)
+    public void uploadMultipleFiles(@RequestParam("orange") MultipartFile[] files) {
+         Arrays.asList(files)
                 .stream()
                 .map(file -> uploadFile(file))
                 .collect(Collectors.toList());

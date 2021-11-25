@@ -14,11 +14,12 @@ const state = {
         {
             label: "Form product",
             active: false,
-            link: "form-product",
+            link: "add-product",
             icon: "insert_drive_file"
         },
         
     ],
+    
 
 }
 
