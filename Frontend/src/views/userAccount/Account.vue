@@ -85,7 +85,7 @@
 
         <router-view
             class="sm:mx-1 top-20 px-3 py-3 bg-white dark:bg-dark_tertiary rounded-md shadow-md h-full"
-            :class="[!this.$store.getters.showAccountPage ? 'block w-full sm:w-8/12 lg:w-9/12' : 'hidden sm:block sm:w-9/12 lg:w-9/12']"
+            :class="[!this.$store.getters.showAccountPage ? 'block w-full sm:w-8/12 lg:w-9/12' : 'hidden sm:block sm:w-8/12 lg:w-9/12']"
         />
     </div>
 </template>
