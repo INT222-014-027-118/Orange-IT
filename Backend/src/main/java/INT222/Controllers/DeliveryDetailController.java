@@ -32,7 +32,8 @@ public class DeliveryDetailController {
     }
 
     @PutMapping("/update")
-    @PreAuthorize("hasRole('User')")
+    @PreAuthorize("hasRole('User')"+
+            " || hasRole('Admin')" )
     public DeliveryDetails editDeliveryDetails(@RequestBody DeliveryDetails deliveryDetails) {
         if(deliveryDetailRepository.existsById(deliveryDetails.getId())) {
             deliveryDetailRepository.save(deliveryDetails);
@@ -54,7 +55,8 @@ public class DeliveryDetailController {
     }
 
     @GetMapping("/findByUserId/{id}")
-    @PreAuthorize("hasRole('User')")
+    @PreAuthorize("hasRole('User')"+
+            " || hasRole('Admin')" )
     public List<DeliveryDetails> getDeliveryDetailListByUserId(@PathVariable(value = "id") long userId){
         return deliveryDetailRepository.findAllByUserId(userId);
     }

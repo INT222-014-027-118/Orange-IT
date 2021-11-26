@@ -37,7 +37,7 @@ public class ShippingController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('Admin')")
+    @PreAuthorize("hasRole('User')")
     public Shippings addShipping(@RequestBody Shippings shippings) {
         if(shippingRepository.findTopByOrderByIdDesc() == null) {
             shippings.setId(1);
