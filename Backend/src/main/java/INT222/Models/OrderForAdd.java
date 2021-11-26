@@ -25,16 +25,14 @@ public class OrderForAdd {
     @Column
     private String status;
 
-
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
     @Column(name = "shipping_id")
     private long shippingId;
 
-    @Column(name = "payments_id")
-    private long paymentsId;
-
+    @Column(name = "users_id")
+    private long userId;
 
 
 }
