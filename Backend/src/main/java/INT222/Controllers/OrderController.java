@@ -43,7 +43,7 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('Admin')")
+    @PreAuthorize("hasRole('User')")
     public Orders addOrder(@RequestBody OrderForAdd orderForAdd){
         if(orderForAddRepository.findTopByOrderByIdDesc() == null){
             orderForAdd.setId(1);
