@@ -208,11 +208,15 @@ export default {
                         console.log(response);
                         if (response.status === 200) {
                             let order = { id: 1, status: "in progress", orderDate: "", shippingId: response.data.id, userId: this.$store.getters.userId };
-                            axios.post(`${process.env.VUE_APP_API}/order/add`, order, {
-                                headers: {
-                                    Authorization: this.$store.getters.token,
-                                },
-                            });
+                            axios
+                                .post(`${process.env.VUE_APP_API}/order/add`, order, {
+                                    headers: {
+                                        Authorization: this.$store.getters.token,
+                                    },
+                                })
+                                .then((response) => {
+                                    console.log(response);
+                                });
                         }
                     });
             }
