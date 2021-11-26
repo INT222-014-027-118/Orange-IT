@@ -383,5 +383,3 @@ INSERT INTO `ratings` (`id`,`name`) VALUES (`2`, `Material`);
 INSERT INTO `ratings` (`id`,`name`) VALUES (`3`, `Good value`);
 INSERT INTO `ratings` (`id`,`name`) VALUES (`4`, `Ease to use`);
 
-
-
