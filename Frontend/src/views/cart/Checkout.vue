@@ -187,30 +187,35 @@ export default {
             }).format(price);
         },
         checkOut() {
-            let shipping = {
-                id: 1,
-                status: "to be delivered",
-                companyShipping: "Standard Delivery",
-                trackingNumber: "",
-                deliveryDetailId: this.selectedAddress.id,
-            };
-            axios
-                .post(`${process.env.VUE_APP_API}/shipping/add`, shipping, {
-                    headers: {
-                        Authorization: this.$store.getters.token,
-                    },
-                })
-                .then((response) => {
-                    console.log(response);
-                    if (response.status === 200) {
-                        let order = { id: 1, status: "in progress", orderDate: "", shippingId: response.data.id, paymentsId: 1 };
-                        axios.post(`${process.env.VUE_APP_API}/order/add`, order, {
-                            headers: {
-                                Authorization: this.$store.getters.token,
-                            },
-                        });
-                    }
-                });
+            if (this.selectedAddress === undefined) {
+                alert("Please enter your address!!");
+            } else {
+                let shipping = {
+                    id: 1,
+                    status: "to be delivered",
+                    companyShipping: "Standard Delivery",
+                    trackingNumber: "",
+                    deliveryDetailId: this.selectedAddress.id,
+                };
+                console.log(shipping);
+                axios
+                    .post(`${process.env.VUE_APP_API}/shipping/add`, shipping, {
+                        headers: {
+                            Authorization: this.$store.getters.token,
+                        },
+                    })
+                    .then((response) => {
+                        console.log(response);
+                        if (response.status === 200) {
+                            let order = { id: 1, status: "in progress", orderDate: "", shippingId: response.data.id, userId: this.$store.getters.userId };
+                            axios.post(`${process.env.VUE_APP_API}/order/add`, order, {
+                                headers: {
+                                    Authorization: this.$store.getters.token,
+                                },
+                            });
+                        }
+                    });
+            }
         },
     },
     mounted() {

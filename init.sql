@@ -173,7 +173,8 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `order_items` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `quantity` INT NOT NULL,
-  `discount_price` FLOAT NOT NULL,
+  `price` FLOAT NOT NULL,
+  `color_id` INT NOT NULL,
   `order_id` INT NOT NULL,
   `product_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -278,13 +279,8 @@ CREATE TABLE IF NOT EXISTS `ratings` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) NOT NULL,
   `description` VARCHAR(100) NULL DEFAULT NULL,
-  `category_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Ratings_Categories1_idx` (`category_id` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_Ratings_Categories1`
-    FOREIGN KEY (`category_id`)
-    REFERENCES `categories` (`id`))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 

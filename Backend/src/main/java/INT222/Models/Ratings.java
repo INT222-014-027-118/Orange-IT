@@ -27,7 +27,5 @@ public class Ratings {
 //    @JoinColumn(name = "ratings_id")
 //    private List<RatingOfProduct> ratingOfProducts;
 
-    @Column(name = "category_id",nullable = true)
-    private long categoryId;
 
 }

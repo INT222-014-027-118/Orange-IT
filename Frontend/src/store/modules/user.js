@@ -15,6 +15,7 @@ const getters = {
     defaultAddress: state => state.addresses[0],
     isAdmin: state => state.isAdmin,
     token: state => state.token,
+    userId:state=>state.userId
 }
 
 const actions = {
@@ -67,8 +68,9 @@ const actions = {
         localStorage.removeItem("userId")
         this.dispatch('clearCart')
         commit('setUserInfo', null)
-        router.push('/')
         commit('setLoginStatus', false)
+        commit('setAddresses', [])
+        router.push('/')
 
     },
 }
@@ -89,6 +91,9 @@ const mutations = {
     },
     setToken(state, data) {
         state.token = data
+    },
+    setUserId(state, data) {
+        state.userId = data
     },
     addAddress(state, address) {
         axios
