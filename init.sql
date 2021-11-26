@@ -279,13 +279,8 @@ CREATE TABLE IF NOT EXISTS `ratings` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) NOT NULL,
   `description` VARCHAR(100) NULL DEFAULT NULL,
-  `category_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Ratings_Categories1_idx` (`category_id` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_Ratings_Categories1`
-    FOREIGN KEY (`category_id`)
-    REFERENCES `categories` (`id`))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
