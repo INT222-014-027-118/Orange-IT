@@ -30,27 +30,20 @@ public class OrderController {
 
     @GetMapping("/list")
     @PreAuthorize("hasRole('Admin')")
-    public List<OrderForAdd> getOrder(){
-        return orderForAddRepository.findAll();
+    public List<Orders> getOrder(){
+        return orderRepository.findAll();
     }
 
-    @GetMapping("/getByUserId/{id}")
-    @PreAuthorize("hasRole('User')" +
-            " || hasRole('Admin')" )
-    public List<Orders> getOrderByUserId(@PathVariable(value = "id") long id){
-        List<Orders> ordersByUserId = new ArrayList<Orders>();
-        List<Orders> orders = orderRepository.findAll();
-        for (int i = 0; i < orders.size(); i++) {
-            Payments payments = orders.get(i).getPayments();
-
-                if(payments.getUserId() == id){
-                    ordersByUserId.add(orders.get(i));
-                }
-            }
-
-        return ordersByUserId;
-
-    }
+//    @GetMapping("/getByUserId/{id}")
+//    @PreAuthorize("hasRole('User')" +
+//            " || hasRole('Admin')" )
+//    public List<Orders> getOrderByUserId(@PathVariable(value = "id") long id){
+//
+//        List<Orders> orders = orderRepository.findAll();
+//
+//        return ordersByUserId;
+//
+//    }
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('Admin')")
@@ -81,7 +74,9 @@ this.deleteOrderItem(id);
     @PutMapping("/update")
     @PreAuthorize("hasRole('Admin')")
     public void editPayment(@RequestBody Orders orders) {
-        orderRepository.save(orders);
+        if(orderRepository.existsById(orders.getId())) {
+            orderRepository.save(orders);
+        }
     }
 
     @DeleteMapping("/deleteOrderItem/{id}")
