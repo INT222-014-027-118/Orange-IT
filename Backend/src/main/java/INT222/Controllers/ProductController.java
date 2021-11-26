@@ -160,6 +160,15 @@ public class ProductController {
 //            }
 //        }
         if (productRepository.existsById(products.getId())) {
+            List<Images> images = products.getImages();
+            for (int i = 0; i < images.size(); i++) {
+                if(!imageRepository.existsImagesBySource(images.get(i).getSource())){
+                    images.get(i).setId(imageRepository.findTopByOrderByIdDesc().getId()+1);
+                    images.get(i).setProductId(products.getId());
+                    imageRepository.save(images.get(i));
+                }
+            }
+
             this.deleteProductImage(products.getId());
             this.deleteProductHasAttribute(products.getId());
             productRepository.save(products);
@@ -198,7 +207,6 @@ public class ProductController {
     @GetMapping("stock/{id}")
     public int getProductByBrandName(@PathVariable long id) {
         return productHomeRepository.getById(id).getQuantityStock();
-
     }
 
 
@@ -238,6 +246,7 @@ public class ProductController {
             productListAdmin.setActive(0);
         }else productListAdmin.setActive(1);
         productListAdminRepository.save(productListAdmin);
+
 
 
     }
