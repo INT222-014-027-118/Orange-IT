@@ -6,7 +6,7 @@ const state = {
     userId: localStorage.getItem('userId'),
     addresses: [],
     isAdmin: false,
-    token: `Bearer ${localStorage.getItem('token')}`
+    token: ''
 }
 
 const getters = {
@@ -83,6 +83,9 @@ const mutations = {
     },
     setAddresses(state, data) {
         state.addresses = data
+    },
+    setToken(state, data){
+        state.token = data
     },
     addAddress(state, address) {
         axios
