@@ -20,17 +20,23 @@ public class OrderItems {
     @Column
     private long quantity;
 
-    @Column(name = "discount_price")
-    private float discountPrice;
+    @Column(name = "price")
+    private float price;
 
 
     @ManyToOne()
     @JoinColumn(name = "product_id")
-    private ProductCart products;
+    private ProductInOrderItem product;
 
 
     @Column(name = "order_id")
     private long orderId;
+
+    @OneToOne()
+    @JoinColumn(name = "color_id")
+    private Colors color;
+
+
 
 
 

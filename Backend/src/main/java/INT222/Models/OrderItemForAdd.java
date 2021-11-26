@@ -19,8 +19,8 @@ public class OrderItemForAdd {
     @Column
     private long quantity;
 
-    @Column(name = "discount_price")
-    private float discountPrice;
+    @Column(name = "price")
+    private float price;
 
 
     @Column(name = "product_id")
@@ -29,4 +29,8 @@ public class OrderItemForAdd {
 
     @Column(name = "order_id")
     private long orderId;
+
+    @Column(name = "color_id")
+    private long colorId;
+
 }

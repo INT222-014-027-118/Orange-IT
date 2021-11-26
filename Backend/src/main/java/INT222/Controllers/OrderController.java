@@ -30,8 +30,8 @@ public class OrderController {
 
     @GetMapping("/list")
     @PreAuthorize("hasRole('Admin')")
-    public List<Orders> getOrder(){
-        return orderRepository.findAll();
+    public List<OrderForAdd> getOrder(){
+        return orderForAddRepository.findAll();
     }
 
     @GetMapping("/getByUserId/{id}")
@@ -49,6 +49,12 @@ public class OrderController {
             orderForAdd.setId(1);
             LocalDateTime now = LocalDateTime.now();
             orderForAdd.setOrderDate(now);
+            for (int i = 0; i < orderForAdd.getOrderItems().size(); i++) {
+                orderForAdd.getOrderItems().get(i).setOrderId(1);
+                if(orderItemRepository.findTopByOrderByIdDesc()== null) {
+                    orderForAdd.setId(1);
+                }else orderForAdd.setId(orderItemRepository.findTopByOrderByIdDesc().getId() + 1);
+            }
             orderForAddRepository.save(orderForAdd);
 
             return orderRepository.getById(orderForAdd.getId());
@@ -56,6 +62,13 @@ public class OrderController {
             orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId()+1);
         LocalDateTime now = LocalDateTime.now();
         orderForAdd.setOrderDate(now);
+        for (int i = 0; i < orderForAdd.getOrderItems().size(); i++) {
+            orderForAdd.getOrderItems().get(i).setOrderId(orderForAdd.getId());
+            if(orderItemRepository.findTopByOrderByIdDesc()== null) {
+                orderForAdd.setId(orderItemRepository.findTopByOrderByIdDesc().getId());
+            }else orderForAdd.setId(orderItemRepository.findTopByOrderByIdDesc().getId() + 1);
+
+        }
         orderForAddRepository.save(orderForAdd);
         return orderRepository.getById(orderForAdd.getId());
     }
