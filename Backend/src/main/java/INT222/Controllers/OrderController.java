@@ -34,16 +34,13 @@ public class OrderController {
         return orderRepository.findAll();
     }
 
-//    @GetMapping("/getByUserId/{id}")
-//    @PreAuthorize("hasRole('User')" +
-//            " || hasRole('Admin')" )
-//    public List<Orders> getOrderByUserId(@PathVariable(value = "id") long id){
-//
-//        List<Orders> orders = orderRepository.findAll();
-//
-//        return ordersByUserId;
-//
-//    }
+    @GetMapping("/getByUserId/{id}")
+    @PreAuthorize("hasRole('User')" +
+            " || hasRole('Admin')" )
+    public List<Orders> getOrderByUserId(@PathVariable(value = "id") long id){
+        return orderRepository.findAllByUserId(id);
+
+    }
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('Admin')")

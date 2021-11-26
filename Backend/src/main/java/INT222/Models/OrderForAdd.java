@@ -31,7 +31,8 @@ public class OrderForAdd {
     @Column(name = "shipping_id")
     private long shippingId;
 
-
+    @Column(name = "users_id")
+    private long userId;
 
 
 }
