@@ -27,12 +27,13 @@ export default {
     },
     created() {
         if (this.$store.getters.isLogin) {
-            this.$store.commit('setToken', `Bearer ${localStorage.getItem('token')}`)
+            this.$store.commit("setToken", `Bearer ${localStorage.getItem("token")}`);
+            this.$store.commit("setUserId", localStorage.getItem("userId"));
             this.$store.dispatch("loadUserData").then(() => {
                 if (!this.$store.getters.isAdmin) {
                     this.$store.dispatch("loadProducts");
                     this.$store.dispatch("loadCartData");
-                } 
+                }
             });
         } else {
             this.$store.dispatch("loadProducts");

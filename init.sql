@@ -173,7 +173,8 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `order_items` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `quantity` INT NOT NULL,
-  `discount_price` FLOAT NOT NULL,
+  `price` FLOAT NOT NULL,
+  `color_id` INT NOT NULL,
   `order_id` INT NOT NULL,
   `product_id` INT NOT NULL,
   PRIMARY KEY (`id`),
