@@ -1,6 +1,6 @@
-CREATE USER 'adminUser'@'%' IDENTIFIED BY 'password';
+CREATE USER `adminUser`@`%` IDENTIFIED BY `password`;
 
-GRANT ALL ON *.* TO 'adminUser'@'%';
+GRANT ALL ON *.* TO `adminUser`@`%`;
 
 SET FOREIGN_KEY_CHECKS=0;
 SET GLOBAL FOREIGN_KEY_CHECKS=0;
@@ -326,60 +326,60 @@ CREATE TABLE IF NOT EXISTS `cart_items` (
 ENGINE = InnoDB;
 
 INSERT INTO `colors` (`id`, `label`, `hex_code`) VALUES 
-  ('1', 'Red', 'ff0000'), ('2', 'Black', '000000'),
-  ('3', 'White', 'FFFFFF'),('4', 'Lavender', 'E6E6FA'),
-  ('5', 'Pink', 'E5A3CF'), ('6', 'Gray', '9AA0A8'),
-  ('7', 'Orange', 'FF7400'), ('8', 'Yellow', 'FFC100');
+  (`1`, `Red`, `ff0000`), (`2`, `Black`, `000000`),
+  (`3`, `White`, `FFFFFF`),(`4`, `Lavender`, `E6E6FA`),
+  (`5`, `Pink`, `E5A3CF`), (`6`, `Gray`, `9AA0A8`),
+  (`7`, `Orange`, `FF7400`), (`8`, `Yellow`, `FFC100`);
 
 INSERT INTO `categories` (`id`, `category`, `parent_id`) VALUES 
-  ('1', 'Keyboard', NULL),('2', 'Mouse', NULL), ('3', 'Headset', NULL), 
-  ('4', 'Wireless keyboard', '1'),('5', 'Wireless mouse', '2'),('6', 'Wireless headset', '3');
+  (`1`, `Keyboard`, NULL),(`2`, `Mouse`, NULL), (`3`, `Headset`, NULL), 
+  (`4`, `Wireless keyboard`, `1`),(`5`, `Wireless mouse`, `2`),(`6`, `Wireless headset`, `3`);
 
 INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `brand_name`, `quantity_stock`,`active`, `discount_id`) VALUES
-  ('1', 'LOGITECH G G913 LIGHTSPEED WIRELESS RGB', '', '5990', 'Logitech', '55',1, NULL),
-  ('2', 'RAZER HUNTSMAN ELITE', '- Razer™ Opto-Mechanical 
+  (`1`, `LOGITECH G G913 LIGHTSPEED WIRELESS RGB`, `, `5990`, `Logitech`, `55`,1, NULL),
+  (`2`, `RAZER HUNTSMAN ELITE`, `- Razer™ Opto-Mechanical 
   Switch with 45 G actuation force\r\n- 100 million keystroke lifespan\r\n- Chroma backlighting
-  with 16.8 million customizable color options', '5990', 'Razer', '40',1, NULL),
-  ('3', 'RAZER DEATHADDER V2', '- True 20,000 DPI Focus+ optical sensor\r\n- Up to 650 inches per second
-  (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy', '1990', 'Razer', '20',1, NULL),
-  ('4', 'RAZER BLACKSHARK V2 PRO', 'Frequency Response : 12 Hz – 28 kHz\r\nImpedance : 32 Ω (1 kHz)', '6490', 'Razer', '50',1, NULL);
+  with 16.8 million customizable color options`, `5990`, `Razer`, `40`,1, NULL),
+  (`3`, `RAZER DEATHADDER V2`, `- True 20,000 DPI Focus+ optical sensor\r\n- Up to 650 inches per second
+  (IPS) / 50 G acceleration / industry best 99.6% resolution accuracy`, `1990`, `Razer`, `20`,1, NULL),
+  (`4`, `RAZER BLACKSHARK V2 PRO`, `Frequency Response : 12 Hz – 28 kHz\r\nImpedance : 32 Ω (1 kHz)`, `6490`, `Razer`, `50`,1, NULL);
 
-INSERT INTO `products_has_colors` (`product_id`, `color_id`) VALUES ('1', '2'),('1', '3'), ('2', '2'),('2', '3'), ('3', '2'), ('4','2');
+INSERT INTO `products_has_colors` (`product_id`, `color_id`) VALUES (`1`, `2`),(`1`, `3`), (`2`, `2`),(`2`, `3`), (`3`, `2`), (`4`,`2`);
 
-INSERT INTO `products_has_categories` (`product_id`, `category_id`) VALUES ('1', '1'),('1', '4'), ('2','1'),('3','2'),('4','3'),('4','6');
+INSERT INTO `products_has_categories` (`product_id`, `category_id`) VALUES (`1`, `1`),(`1`, `4`), (`2`,`1`),(`3`,`2`),(`4`,`3`),(`4`,`6`);
 
-INSERT INTO `attributes` (`id`, `attribute`) VALUES ('1', 'Wired/Wireless'), ('2', 'Keyboard type'), ('3', 'Keyboard size'), ('4', 'Switch'), ('5', 'Sound');
+INSERT INTO `attributes` (`id`, `attribute`) VALUES (`1`, `Wired/Wireless`), (`2`, `Keyboard type`), (`3`, `Keyboard size`), (`4`, `Switch`), (`5`, `Sound`);
 
 INSERT INTO `products_has_attributes` (`product_id`, `attribute_id`, `attribute_value`) VALUES 
-  ('1', '1', 'Wireless'), ('1', '2', 'Mechanical'), ('1', '3', 'Full-Size'), ('1', '4', 'Logitech GL'), ('1', '5', 'Clicky, Silent'),
-  ('2', '1', 'Wired'), ('2', '2', 'Mecha-Optical'), ('2', '3', 'Full-Size'), ('2', '4', 'Razer'), ('2', '5', 'Clicky'),
-  ('3', '1', 'Wired'), ('4', '1', 'Wireless');
+  (`1`, `1`, `Wireless`), (`1`, `2`, `Mechanical`), (`1`, `3`, `Full-Size`), (`1`, `4`, `Logitech GL`), (`1`, `5`, `Clicky, Silent`),
+  (`2`, `1`, `Wired`), (`2`, `2`, `Mecha-Optical`), (`2`, `3`, `Full-Size`), (`2`, `4`, `Razer`), (`2`, `5`, `Clicky`),
+  (`3`, `1`, `Wired`), (`4`, `1`, `Wireless`);
 
 INSERT INTO `images` (`id`, `source`, `label`, `product_id`) VALUES 
-  ('1', 'G913-1.png', 'G913-1', '1'), 
-  ('2', 'G913-2.png', 'G913-2', '1'), 
-  ('3', 'G913-3.png', 'G913-3', '1'), 
-  ('4', 'G913-4.png', 'G913-4', '1'), 
-  ('5', 'hmel-1-1.png', 'hmel-1-1', '2'), 
-  ('6', 'hmel-1-2.png', 'hmel-1-2', '2'), 
-  ('7', 'hmel-1-3.png', 'hmel-1-3', '2'), 
-  ('8', 'hmel-1-4.png', 'hmel-1-4', '2'), 
-  ('9', 'DeathAdder-V2-1.png', 'DeathAdder-V2-1', '3'),  
-  ('10', 'DeathAdder-V2-2.png', 'DeathAdder-V2-2', '3'),  
-  ('11', 'DeathAdder-V2-3.png', 'DeathAdder-V2-3', '3'),  
-  ('12', 'DeathAdder-V2-4.png', 'DeathAdder-V2-4', '3'),  
-  ('13', 'DeathAdder-V2-5.png', 'DeathAdder-V2-5', '3'), 
-  ('14', 'BlackSharkV2Pro1.png', 'BlackSharkV2Pro1', '4'), 
-  ('15', 'BlackSharkV2Pro2.png', 'BlackSharkV2Pro2', '4'),
-  ('16', 'BlackSharkV2Pro3.jpg', 'BlackSharkV2Pro2', '4'),
-  ('17', 'BlackSharkV2Pro4.jpg', 'BlackSharkV2Pro2', '4'),
-  ('18', 'BlackSharkV2Pro5.jpg', 'BlackSharkV2Pro2', '4');
+  (`1`, `G913-1.png`, `G913-1`, `1`), 
+  (`2`, `G913-2.png`, `G913-2`, `1`), 
+  (`3`, `G913-3.png`, `G913-3`, `1`), 
+  (`4`, `G913-4.png`, `G913-4`, `1`), 
+  (`5`, `hmel-1-1.png`, `hmel-1-1`, `2`), 
+  (`6`, `hmel-1-2.png`, `hmel-1-2`, `2`), 
+  (`7`, `hmel-1-3.png`, `hmel-1-3`, `2`), 
+  (`8`, `hmel-1-4.png`, `hmel-1-4`, `2`), 
+  (`9`, `DeathAdder-V2-1.png`, `DeathAdder-V2-1`, `3`),  
+  (`10`, `DeathAdder-V2-2.png`, `DeathAdder-V2-2`, `3`),  
+  (`11`, `DeathAdder-V2-3.png`, `DeathAdder-V2-3`, `3`),  
+  (`12`, `DeathAdder-V2-4.png`, `DeathAdder-V2-4`, `3`),  
+  (`13`, `DeathAdder-V2-5.png`, `DeathAdder-V2-5`, `3`), 
+  (`14`, `BlackSharkV2Pro1.png`, `BlackSharkV2Pro1`, `4`), 
+  (`15`, `BlackSharkV2Pro2.png`, `BlackSharkV2Pro2`, `4`),
+  (`16`, `BlackSharkV2Pro3.jpg`, `BlackSharkV2Pro2`, `4`),
+  (`17`, `BlackSharkV2Pro4.jpg`, `BlackSharkV2Pro2`, `4`),
+  (`18`, `BlackSharkV2Pro5.jpg`, `BlackSharkV2Pro2`, `4`);
   
-INSERT INTO `roles` (`name`, `description`) VALUES ('Admin', '');
-INSERT INTO `roles` (`name`, `description`) VALUES ('User', '');
+INSERT INTO `roles` (`name`, `description`) VALUES (`Admin`, ``);
+INSERT INTO `roles` (`name`, `description`) VALUES (`User`, ``);
 
-
-
-
-
+INSERT INTO `ratings` (`id`,`name`) VALUES (`1`, `Design`);
+INSERT INTO `ratings` (`id`,`name`) VALUES (`2`, `Material`);
+INSERT INTO `ratings` (`id`,`name`) VALUES (`3`, `Good value`);
+INSERT INTO `ratings` (`id`,`name`) VALUES (`4`, `Ease to use`);
 
