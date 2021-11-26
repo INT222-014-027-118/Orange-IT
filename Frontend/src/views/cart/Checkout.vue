@@ -163,7 +163,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 export default {
     data() {
         return {
@@ -187,16 +187,30 @@ export default {
             }).format(price);
         },
         checkOut() {
-            
-
-
-            let order = { id: 1, status: "to be delivered", orderDate: "", shippingId: 1, paymentsId: 1 };
-            // axios.post(`${process.env.VUE_APP_API}/order/add`, order, {
-            //     headers: {
-            //         Authorization: this.getters.token,
-            //     },
-            // });
-            console.log(order);
+            let shipping = {
+                id: 1,
+                status: "to be delivered",
+                companyShipping: "Standard Delivery",
+                trackingNumber: "",
+                deliveryDetailId: this.selectedAddress.id,
+            };
+            axios
+                .post(`${process.env.VUE_APP_API}/shipping/add`, shipping, {
+                    headers: {
+                        Authorization: this.$store.getters.token,
+                    },
+                })
+                .then((response) => {
+                    console.log(response);
+                    if (response.status === 200) {
+                        let order = { id: 1, status: "in progress", orderDate: "", shippingId: response.data.id, paymentsId: 1 };
+                        axios.post(`${process.env.VUE_APP_API}/order/add`, order, {
+                            headers: {
+                                Authorization: this.$store.getters.token,
+                            },
+                        });
+                    }
+                });
         },
     },
     mounted() {

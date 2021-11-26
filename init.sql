@@ -72,10 +72,9 @@ CREATE TABLE IF NOT EXISTS `shippings` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `status` VARCHAR(30) NOT NULL,
   `company_shipping` VARCHAR(60) NOT NULL,
-  `tracking_number` VARCHAR(13) NOT NULL,
+  `tracking_number` VARCHAR(13) NULL,
   `delivery_detail_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `tracking_number_UNIQUE` (`tracking_number` ASC) ,
   INDEX `fk_Shippings_Delivery_details1_idx` (`delivery_detail_id` ASC) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Shippings_Delivery_details1`
