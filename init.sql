@@ -378,10 +378,10 @@ INSERT INTO `images` (`id`, `source`, `label`, `product_id`) VALUES
 INSERT INTO `roles` (`name`, `description`) VALUES ('Admin', '');
 INSERT INTO `roles` (`name`, `description`) VALUES ('User', '');
 
--- INSERT INTO `ratings` (`id`,`name`) VALUES (`1`, `Design`);
--- INSERT INTO `ratings` (`id`,`name`) VALUES (`2`, `Material`);
--- INSERT INTO `ratings` (`id`,`name`) VALUES (`3`, `Good value`);
--- INSERT INTO `ratings` (`id`,`name`) VALUES (`4`, `Ease to use`);
+INSERT INTO `ratings` (`id`,`name`) VALUES ('1', 'Design');
+INSERT INTO `ratings` (`id`,`name`) VALUES ('2', 'Material');
+INSERT INTO `ratings` (`id`,`name`) VALUES ('3', 'Good value');
+INSERT INTO `ratings` (`id`,`name`) VALUES ('4', 'Ease to use');
 
 
 
