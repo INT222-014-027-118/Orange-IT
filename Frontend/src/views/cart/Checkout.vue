@@ -32,12 +32,7 @@
                         </div>
 
                         <div class="md:w-1/6 py-3 md:py-0 flex md:justify-center">
-                            <button
-                                type="button"
-                                class="md:text-center cursor-pointer px-4 py-2 md:px-3 md:py-0 btn"
-                                @click="changeAddress = !changeAddress"
-                                v-show="!changeAddress"
-                            >
+                            <button type="button" class="md:text-center cursor-pointer px-4 py-2 md:px-3 md:py-0 btn" @click="changeAddress = !changeAddress" v-show="!changeAddress">
                                 change
                             </button>
                         </div>
@@ -158,7 +153,7 @@
                             </div>
                         </div>
                         <div class="flex justify-end">
-                            <button class="btn px-5 py-3 w-full md:w-1/3 mt-4 text-xl">submit order</button>
+                            <button class="btn px-5 py-3 w-full md:w-1/3 mt-4 text-xl" @click="checkOut">submit order</button>
                         </div>
                     </div>
                 </div>
@@ -168,6 +163,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
     data() {
         return {
@@ -190,6 +186,18 @@ export default {
                 maximumFractionDigits: 2,
             }).format(price);
         },
+        checkOut() {
+            
+
+
+            let order = { id: 1, status: "to be delivered", orderDate: "", shippingId: 1, paymentsId: 1 };
+            // axios.post(`${process.env.VUE_APP_API}/order/add`, order, {
+            //     headers: {
+            //         Authorization: this.getters.token,
+            //     },
+            // });
+            console.log(order);
+        },
     },
     mounted() {
         this.scrollToTop();
@@ -199,7 +207,7 @@ export default {
     },
     beforeCreate() {
         if (this.$store.getters.userInfo == null) {
-            this.$router.push('/cart')
+            this.$router.push("/cart");
         }
     },
 };

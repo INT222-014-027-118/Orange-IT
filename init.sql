@@ -122,19 +122,22 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `status` VARCHAR(30) NOT NULL,
   `order_date` DATETIME NOT NULL,
   `shipping_id` INT NOT NULL,
-  `payments_id` INT NOT NULL,
+  `users_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Order_Shippings1_idx` (`shipping_id` ASC) ,
-  INDEX `fk_orders_payments1_idx` (`payments_id` ASC) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_orders_users1_idx` (`users_id` ASC) ,
   CONSTRAINT `fk_Order_Shippings1`
     FOREIGN KEY (`shipping_id`)
     REFERENCES `shippings` (`id`),
-  CONSTRAINT `fk_orders_payments1`
-    FOREIGN KEY (`payments_id`)
-    REFERENCES `payments` (`id`) )
+  CONSTRAINT `fk_orders_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
+
 
 CREATE TABLE IF NOT EXISTS `products` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -146,8 +149,8 @@ CREATE TABLE IF NOT EXISTS `products` (
   `active` TINYINT NOT NULL,
   `discount_id` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Products_Discounts1_idx` (`discount_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_Products_Discounts1_idx` (`discount_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Products_Discounts1`
     FOREIGN KEY (`discount_id`)
     REFERENCES `discounts` (`id`))
@@ -296,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `rating_of_product` (
   INDEX `fk_Reviews_has_Ratings_Ratings1_idx` (`Ratings_id` ASC) ,
   INDEX `fk_Reviews_has_Ratings_Reviews1_idx` (`Reviews_id` ASC) ,
   INDEX `fk_Rating_of_product_Products1_idx` (`product_id` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Rating_of_product_Products1`
     FOREIGN KEY (`product_id`)
     REFERENCES `products` (`id`),
