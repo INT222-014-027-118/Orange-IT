@@ -27,10 +27,13 @@ public class Orders {
     @JoinColumn(name = "order_id",insertable = true, updatable = true)
     private List<OrderItems> orderItems;
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = true,name = "payments_id")
-    private Payments payments;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shipping_id")
+    private Shippings shippings;
+
+    @Column(name = "users_id")
+    private long userId;
 
 
 

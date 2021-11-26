@@ -38,7 +38,10 @@ const actions = {
                         this.dispatch("loadUserAddresses");
                     }
                 })
-                
+                .catch(() => {
+                    this.dispatch('logout')
+                })
+
         }
     },
     loadUserAddresses({
@@ -84,7 +87,7 @@ const mutations = {
     setAddresses(state, data) {
         state.addresses = data
     },
-    setToken(state, data){
+    setToken(state, data) {
         state.token = data
     },
     addAddress(state, address) {
