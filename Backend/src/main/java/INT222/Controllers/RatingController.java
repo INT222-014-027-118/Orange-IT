@@ -19,7 +19,7 @@ public class RatingController {
     private RatingRepository ratingRepository;
 
     @GetMapping("/list")
-    public List<Ratings> getReview() {
+    public List<Ratings> getRating() {
         return ratingRepository.findAll();
     }
 
@@ -50,9 +50,5 @@ public class RatingController {
     }
 
 
-    @GetMapping("/getByCategoryId/{id}")
-    public List<Ratings> getRatingsByCategoryId(@PathVariable(value = "id") long id) {
-        return ratingRepository.findAllByCategoryId(id);
 
-    }
 }
