@@ -4,6 +4,7 @@ import form from './modules/form';
 import user from './modules/user.js';
 import cart from './modules/cart.js'
 import adminFeatures from "./modules/adminFeatures"
+import orders from './modules/orders'
 
 export default new Vuex.Store({
   modules: {
@@ -11,7 +12,8 @@ export default new Vuex.Store({
     form,
     user,
     cart,
-    adminFeatures
+    adminFeatures,
+    orders
   },
 
   state: {
