@@ -28,17 +28,25 @@ public class OrderController {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
-    @GetMapping("/list")
-    @PreAuthorize("hasRole('Admin')")
-    public List<OrderForAdd> getOrder(){
-        return orderForAddRepository.findAll();
-    }
+//    @GetMapping("/list")
+//    @PreAuthorize("hasRole('Admin')")
+//    public List<Orders> getOrder(){
+//        return orderRepository.findAll();
+//    }
 
     @GetMapping("/getByUserId/{id}")
     @PreAuthorize("hasRole('User')" +
             " || hasRole('Admin')" )
     public List<Orders> getOrderByUserId(@PathVariable(value = "id") long id){
-        return orderRepository.findAllByUserId(id);
+        List<Orders> orders = new ArrayList<Orders>();
+        for (long i = 1; i < orderRepository.findAll().size()+1; i++) {
+                if(orderRepository.getById(i).getUsers().getId() == id){
+                    orders.add(orderRepository.getById(i));
+                }
+
+
+            }return  orders;
+
 
     }
 
@@ -49,10 +57,12 @@ public class OrderController {
             orderForAdd.setId(1);
             LocalDateTime now = LocalDateTime.now();
             orderForAdd.setOrderDate(now);
+            long num = 1;
             for (int i = 0; i < orderForAdd.getOrderItems().size(); i++) {
                 if(orderItemRepository.findTopByOrderByIdDesc() == null) {
                     orderForAdd.getOrderItems().get(i).setId(1);
-                }else orderForAdd.getOrderItems().get(i).setId(orderItemRepository.findTopByOrderByIdDesc().getId()+1);
+                }else orderForAdd.getOrderItems().get(i).setId(orderItemRepository.findTopByOrderByIdDesc().getId()+num);
+                num++;
                 if(orderForAddRepository.findTopByOrderByIdDesc()== null) {
                     orderForAdd.setId(1);
                 }else orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId() + 1);
@@ -61,13 +71,16 @@ public class OrderController {
 
 //            return orderRepository.getById(orderForAdd.getId());
         }else
+
             orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId()+1);
+        long num = 1;
         LocalDateTime now = LocalDateTime.now();
         orderForAdd.setOrderDate(now);
         for (int i = 0; i < orderForAdd.getOrderItems().size(); i++) {
             if(orderItemRepository.findTopByOrderByIdDesc() == null) {
                 orderForAdd.getOrderItems().get(i).setId(1);
-            }else orderForAdd.getOrderItems().get(i).setId(orderItemRepository.findTopByOrderByIdDesc().getId()+1);
+            }else orderForAdd.getOrderItems().get(i).setId(orderItemRepository.findTopByOrderByIdDesc().getId()+num);
+            num++;
             if(orderForAddRepository.findTopByOrderByIdDesc()== null) {
                 orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId());
             }else orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId() + 1);
