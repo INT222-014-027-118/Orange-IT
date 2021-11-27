@@ -27,22 +27,23 @@
                     <button type="button" class="bg-green-600 px-2 py-2 ml-2 h-9 rounded-md text-white text-sm" @click="AddOption">Add</button>
                 </div>
             </div>
-            <ul class="overflow-auto rounded-sm" style="max-height: 200px;">
-                <li
+            <div class="overflow-auto rounded-sm" style="max-height: 200px;">
+                <div
                     data-type="option"
                     class="cursor-pointer "
                     v-for="(attribute, index) in search"
                     :key="attribute"
                     :class="[attribute.active ? 'font-semibold bg-primary text-white hover:bg-primaryfocus ' : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary']"
                 >
-                    <div class="flex justify-between items-center px-3 py-2" @click="selectToNa(index)" v-if="attribute.show">
-                        <span class="truncate block ">{{ attribute.attribute }}</span>
-                        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current h-4 w-4" :class="{ hidden: !attribute.active }">
+                    <div class="flex justify-between items-center" v-if="attribute.show">
+                        <span class="truncate block w-full pl-3 py-2" @click="selectToNa(index)">{{ attribute.id }}. {{ attribute.attribute }}</span>
+                        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current h-4 w-4 mx-3" :class="{ hidden: !attribute.active }">
                             <polygon points="0 11 2 9 7 14 18 3 20 5 7 18"></polygon>
                         </svg>
+                        <span @click="deleteOption(attribute.id, attribute.attribute)" :class="{ hidden: attribute.active }" class="material-icons py-2 px-2 hover:text-red-500 text-gray-500 dark:text-gray-300 dark:hover:text-red-500">delete_forever</span>
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -87,10 +88,24 @@ export default {
         AddOption() {
             if (!this.text == "" && !this.text == this.attributes.filter((t) => t.attribute.toLowerCase().includes(this.text.toLowerCase()))) {
                 let newattribute = { id: 1, attribute: this.text };
-                this.$store.dispatch("addAttribute", newattribute);
-                setTimeout(() => {
-                    this.attributes = this.$store.getters.attributes;
-                }, 500);
+                this.$store.dispatch("addAttribute", newattribute).then((res) => {
+                    if (res.status == 200) {
+                        this.$store.dispatch("loadAttirbute").then(() => {
+                            this.attributes = this.$store.getters.attributes;
+                        });
+                    }
+                });
+            }
+        },
+        deleteOption(id, attributeName) {
+            if (window.confirm("Are you sure to delete attirbute [ " + attributeName + " ] ?")) {
+                this.$store.dispatch("deleteAttribute", id).then((res) => {
+                    if (res.status == 200) {
+                        this.$store.dispatch("loadAttirbute").then(() => {
+                            this.attributes = this.$store.getters.attributes;
+                        });
+                    }
+                });
             }
         },
         clearText(text) {

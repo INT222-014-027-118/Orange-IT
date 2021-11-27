@@ -8,6 +8,7 @@ const get_attributes = `${api}/attribute/list`
 const post_product = `${api}/product/add`
 const put_product = `${api}/product/update`
 const post_attribute = `${api}/attribute/add`
+const delete_attribute = `${api}/attribute/delete/`
 // const post_image = `${api}/image/add`
 const post_image_Multiple = `${api}/image/uploadMultipleFiles`
 // const put_image = `${api}/image/update/`
@@ -61,11 +62,14 @@ const actions = {
     loadAttirbute({
         commit
     }) {
-        axios
+        return axios
             .get(get_attributes)
             .then(data => {
                 let attributes = data.data
                 commit('SET_ATTRIBUTES', attributes)
+            })
+            .then(response => {
+                return response
             })
             .catch(error => {
                 console.log(error)
@@ -132,18 +136,30 @@ const actions = {
             })
     },
 
-    addAttribute({
-        dispatch
-    }, attribute) {
-        axios
+    addAttribute(context, attribute) {
+        return axios
             .post(post_attribute, attribute, {
                 headers: {
                     'Authorization': this.getters.token
                 }
             })
             .then(response => {
-                console.log("response: ", response)
-                dispatch("loadAttirbute")
+                return response
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },
+
+    deleteAttribute(context, id) {
+        return axios
+            .delete(`${delete_attribute}${id}`, {
+                headers: {
+                    'Authorization': this.getters.token
+                }
+            })
+            .then(response => {
+                return response
             })
             .catch(error => {
                 console.log(error)
