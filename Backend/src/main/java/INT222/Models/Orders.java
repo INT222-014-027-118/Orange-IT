@@ -32,8 +32,9 @@ public class Orders {
     @JoinColumn(name = "shipping_id")
     private Shippings shippings;
 
-    @Column(name = "users_id")
-    private long userId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id")
+    private Users users;
 
 
 
