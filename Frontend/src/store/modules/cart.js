@@ -64,7 +64,7 @@ const actions = {
                         localStorage.removeItem('cart')
                     }
                 })
-                .catch((error)=>{
+                .catch((error) => {
                     console.log(error);
                 })
         } else {
@@ -79,7 +79,13 @@ const actions = {
         commit('setCart', [])
         localStorage.removeItem('cart')
     },
-
+    checkout({
+        commit
+    }) {
+        for (let index = 0; index < this.getters.cart.length; index++) {
+            commit('removeCartItem', index)
+        }
+    }
 }
 
 const mutations = {
