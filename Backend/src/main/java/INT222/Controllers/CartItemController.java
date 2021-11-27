@@ -70,10 +70,9 @@ public class CartItemController {
     @GetMapping("/findByUserId/{id}")
     @PreAuthorize("hasRole('User')")
     public List<CartItems> getCartItemListByUserId(@PathVariable(value = "id") long userId) {
-        if (cartItemRepository.existsByUserId(userId)) {
             return cartItemRepository.findAllByUserId(userId);
 
-        }else throw new NotFoundUserCartItemException(userId);
+
     }
 
 
