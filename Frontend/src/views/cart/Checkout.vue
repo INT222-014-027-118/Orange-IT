@@ -197,7 +197,6 @@ export default {
                     trackingNumber: "",
                     deliveryDetailId: this.selectedAddress.id,
                 };
-                console.log(shipping);
                 axios
                     .post(`${process.env.VUE_APP_API}/shipping/add`, shipping, {
                         headers: {
@@ -207,7 +206,24 @@ export default {
                     .then((response) => {
                         console.log(response);
                         if (response.status === 200) {
-                            let order = { id: 1, status: "in progress", orderDate: "", shippingId: response.data.id, userId: this.$store.getters.userId };
+                            let orderItems = this.$store.getters.cart.map((item) => {
+                                return {
+                                    id: 1,
+                                    quantity: item.quantity,
+                                    price: item.productCart.price,
+                                    productId: item.productCart.id,
+                                    orderId: 1,
+                                    colorId: item.colors.id,
+                                };
+                            });
+                            let order = {
+                                id: 1,
+                                status: "in progress",
+                                orderDate: "",
+                                shippingId: response.data.id,
+                                userId: Number(this.$store.getters.userId),
+                                orderItems: orderItems,
+                            };
                             axios
                                 .post(`${process.env.VUE_APP_API}/order/add`, order, {
                                     headers: {
@@ -215,7 +231,12 @@ export default {
                                     },
                                 })
                                 .then((response) => {
-                                    console.log(response);
+                                    if (response.status === 200) {
+                                        alert("Order successfully");
+                                        this.$store.dispatch("checkout");
+                                        this.$store.dispatch("clearCart");
+                                        this.$router.push("/user/purchase");
+                                    }
                                 });
                         }
                     });

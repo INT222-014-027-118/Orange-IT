@@ -16,7 +16,8 @@
             </div>
             <hr class="dark:border-gray-500" />
         </div>
-        <div class="py-5" v-if="selectTab.id == 1">
+
+        <!-- <div class="py-5" v-if="selectTab.id == 1">
             <div class="px-0 sm:px-2 pb-3" v-for="product in this.$store.getters.cart" :key="product.id">
                 <PurchItem :product="product" />
                 <div class="flex justify-end border-b-2 pb-3 text-white dark:border-gray-500">
@@ -34,10 +35,11 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> -->
+
         <div class="py-5" v-if="selectTab.id == 2">
-            <div class="px-0 sm:px-2 pb-3 border-b-2 mb-3" v-for="product in this.$store.getters.cart" :key="product.id">
-                <PurchItem :product="product" />
+            <div class="px-0 sm:px-2 pb-3 border-b-2 mb-3" v-for="order in this.$store.getters.orders" :key="order.id">
+                <order :order="order" />
             </div>
         </div>
         <div class="py-5" v-if="selectTab.id == 3">go</div>
@@ -46,10 +48,10 @@
 </template>
 
 <script>
-import PurchItem from "../../components/purchItem.vue";
+import Order from "../../components/Order.vue";
 export default {
     components: {
-        PurchItem,
+        Order,
     },
     data() {
         return {
@@ -72,6 +74,9 @@ export default {
                 maximumFractionDigits: 2,
             }).format(price);
         },
+    },
+    created() {
+         this.$store.dispatch("loadOrders");
     },
 };
 </script>
