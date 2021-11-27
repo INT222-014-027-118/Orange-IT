@@ -50,7 +50,9 @@ public class OrderController {
             LocalDateTime now = LocalDateTime.now();
             orderForAdd.setOrderDate(now);
             for (int i = 0; i < orderForAdd.getOrderItems().size(); i++) {
-                orderForAdd.getOrderItems().get(i).setOrderId(1);
+                if(orderItemRepository.findTopByOrderByIdDesc() == null) {
+                    orderForAdd.getOrderItems().get(i).setId(1);
+                }else orderForAdd.getOrderItems().get(i).setId(orderItemRepository.findTopByOrderByIdDesc().getId()+1);
                 if(orderForAddRepository.findTopByOrderByIdDesc()== null) {
                     orderForAdd.setId(1);
                 }else orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId() + 1);
@@ -63,7 +65,9 @@ public class OrderController {
         LocalDateTime now = LocalDateTime.now();
         orderForAdd.setOrderDate(now);
         for (int i = 0; i < orderForAdd.getOrderItems().size(); i++) {
-            orderForAdd.getOrderItems().get(i).setOrderId(orderForAdd.getId());
+            if(orderItemRepository.findTopByOrderByIdDesc() == null) {
+                orderForAdd.getOrderItems().get(i).setId(1);
+            }else orderForAdd.getOrderItems().get(i).setId(orderItemRepository.findTopByOrderByIdDesc().getId()+1);
             if(orderForAddRepository.findTopByOrderByIdDesc()== null) {
                 orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId());
             }else orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId() + 1);
