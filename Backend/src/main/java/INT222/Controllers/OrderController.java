@@ -1,10 +1,7 @@
 package INT222.Controllers;
 
 import INT222.Models.*;
-import INT222.Repositories.DiscountRepository;
-import INT222.Repositories.OrderForAddRepository;
-import INT222.Repositories.OrderItemRepository;
-import INT222.Repositories.OrderRepository;
+import INT222.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,6 +24,9 @@ public class OrderController {
 
     @Autowired
     private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private ProductStockRepository productStockRepository;
 
 //    @GetMapping("/list")
 //    @PreAuthorize("hasRole('Admin')")
@@ -61,8 +61,16 @@ public class OrderController {
             for (int i = 0; i < orderForAdd.getOrderItems().size(); i++) {
                 if(orderItemRepository.findTopByOrderByIdDesc() == null) {
                     orderForAdd.getOrderItems().get(i).setId(1);
+                    ProductStock productStock =  productStockRepository.getById(orderForAdd.getOrderItems().get(i).getProductId());
+                    int stock = productStock.getQuantityStock();
+                    productStock.setQuantityStock((int) (stock - orderForAdd.getOrderItems().get(i).getQuantity()));
+                    productStockRepository.save(productStock);
                 }else orderForAdd.getOrderItems().get(i).setId(orderItemRepository.findTopByOrderByIdDesc().getId()+num);
                 num++;
+                ProductStock productStock =  productStockRepository.getById(orderForAdd.getOrderItems().get(i).getProductId());
+                int stock = productStock.getQuantityStock();
+                productStock.setQuantityStock((int) (stock - orderForAdd.getOrderItems().get(i).getQuantity()));
+                productStockRepository.save(productStock);
                 if(orderForAddRepository.findTopByOrderByIdDesc()== null) {
                     orderForAdd.setId(1);
                 }else orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId() + 1);
@@ -79,13 +87,23 @@ public class OrderController {
         for (int i = 0; i < orderForAdd.getOrderItems().size(); i++) {
             if(orderItemRepository.findTopByOrderByIdDesc() == null) {
                 orderForAdd.getOrderItems().get(i).setId(1);
+                ProductStock productStock =  productStockRepository.getById(orderForAdd.getOrderItems().get(i).getProductId());
+                int stock = productStock.getQuantityStock();
+                productStock.setQuantityStock((int) (stock - orderForAdd.getOrderItems().get(i).getQuantity()));
+                productStockRepository.save(productStock);
             }else orderForAdd.getOrderItems().get(i).setId(orderItemRepository.findTopByOrderByIdDesc().getId()+num);
             num++;
+            ProductStock productStock =  productStockRepository.getById(orderForAdd.getOrderItems().get(i).getProductId());
+            int stock = productStock.getQuantityStock();
+            productStock.setQuantityStock((int) (stock - orderForAdd.getOrderItems().get(i).getQuantity()));
+            productStockRepository.save(productStock);
+
             if(orderForAddRepository.findTopByOrderByIdDesc()== null) {
                 orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId());
             }else orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId() + 1);
 
         }
+
         orderForAddRepository.save(orderForAdd);
         //return orderRepository.getById(orderForAdd.getId());
     }
@@ -112,5 +130,7 @@ this.deleteOrderItem(id);
         orderItemRepository.deleteByOrderId(id);
 
     }
+
+    //@PutMapping("/updateStock/{id}")
 
 }
