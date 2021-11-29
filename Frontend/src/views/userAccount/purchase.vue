@@ -37,13 +37,14 @@
             </div>
         </div> -->
 
-        <div class="py-5" v-if="selectTab.id == 2">
+        <div class="py-5" v-if="selectTab.id == 1">
             <div class="px-0 sm:px-2 pb-3 border-b-2 mb-3" v-for="order in this.$store.getters.orders" :key="order.id">
                 <order :order="order" />
             </div>
         </div>
-        <div class="py-5" v-if="selectTab.id == 3">go</div>
-        <div class="py-5" v-if="selectTab.id == 4">gogo</div>
+        
+        <div class="py-5" v-if="selectTab.id == 2">go</div>
+        <div class="py-5" v-if="selectTab.id == 3">gogo</div>
     </div>
 </template>
 
@@ -56,10 +57,9 @@ export default {
     data() {
         return {
             tabs: [
-                { id: 1, title: "all" },
-                { id: 2, title: "to be delivered" },
-                { id: 3, title: "to be receive" },
-                { id: 4, title: "done" },
+                { id: 1, title: "to be delivered" },
+                { id: 2, title: "to be receive" },
+                { id: 3, title: "done" },
             ],
             selectTab: { id: 1, title: "all" },
             api: process.env.VUE_APP_API,

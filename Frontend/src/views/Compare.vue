@@ -2,7 +2,9 @@
     <div class="mx-auto max-w-7xl sm:mt-5" v-if="this.$store.getters.countCompareProducts == 2">
         <div class="p-1 md:mt-0 md:p-2 capitalize">
             <div class="flex flex-wrap justify-between items-center">
-                <h1 class="py-3 px-3 text-2xl font-semibold"><span class="material-icons mr-3 text-xl font-bold py-2 px-3 bg-primary text-white rounded-full"> compare_arrows </span>compare products</h1>
+                <h1 class="py-3 px-3 text-2xl font-semibold">
+                    <span class="material-icons mr-3 text-xl font-bold py-2 px-3 bg-primary text-white rounded-full"> compare_arrows </span>compare products
+                </h1>
                 <button class="px-3 py-2 my-2 ml-auto btn capitalize" @click="clearProduct">clear product</button>
             </div>
             <!-- <div class="overflow-auto max-w-7xl"> -->
@@ -108,26 +110,19 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
+                        <tr
+                            class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm"
+                            v-for="attribute in attributeTable"
+                            :key="attribute.attributeTitle"
+                        >
                             <td class="table_content">
-                                spceType 1
+                                {{ attribute.attributeTitle }}
                             </td>
                             <td class="table_content">
-                                value2
+                                {{ attribute.product1 }}
                             </td>
                             <td class="table_content">
-                                value2
-                            </td>
-                        </tr>
-                        <tr class="mb-10 bg-white dark:bg-dark_tertiary shadow-sm">
-                            <td class="table_content">
-                                spceType 2
-                            </td>
-                            <td class="table_content">
-                                value2
-                            </td>
-                            <td class="table_content">
-                                value2
+                                {{ attribute.product2 }}
                             </td>
                         </tr>
                     </tbody>
@@ -207,6 +202,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
     components: {},
     data() {
@@ -235,6 +231,8 @@ export default {
             productName: {},
             images: {},
             price: {},
+            attributeHeaders: [],
+            attributeTable: [],
         };
     },
     methods: {
@@ -262,6 +260,30 @@ export default {
             this.images = { images: ["images", this.compareProducts[0].images[0], this.compareProducts[1].images[0]] };
             this.price = { price: ["price", this.compareProducts[0].price, this.compareProducts[1].price] };
             this.colors = { colors: ["colors", this.compareProducts[0].colors, this.compareProducts[1].colors] };
+            axios
+                .get(`${this.api}/attribute/list`)
+                .then((response) => {
+                    this.attributeHeaders = response.data;
+                    this.attributeTable = response.data.map((attribute) => {
+                        let attributeValue1 = this.compareProducts[0].productsHasAttributes.find((element) => {
+                            return attribute.id == element.attributeId;
+                        });
+                        let attributeValue2 = this.compareProducts[1].productsHasAttributes.find((element) => {
+                            return attribute.id == element.attributeId;
+                        });
+
+                        return {
+                            attributeTitle: attribute.attribute,
+                            product1: attributeValue1 == undefined ? null : attributeValue1.attribute_value,
+                            product2: attributeValue2 == undefined ? null : attributeValue2.attribute_value,
+                        };
+                    });
+                })
+                .then(() => {
+                    this.attributeTable = this.attributeTable.filter((element)=>{ return !(element.product1 == null && element.product2 == null)})
+                });
+
+            // let specProduct1 = this.compareProducts[1];
         }
     },
 };
