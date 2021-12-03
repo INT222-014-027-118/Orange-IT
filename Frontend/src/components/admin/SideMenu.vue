@@ -12,7 +12,7 @@
             <LDmode />
         </div>
 
-        <button @click="logout()" class="hover:text-red-500 flex justify-center sm:justify-start font-bold w-full py-2 my-2">
+        <button @click="logout()" class="hover:text-red-500 flex items-center justify-center sm:justify-start font-bold w-full py-2 my-2">
             <span class="material-icons-outlined sm:ml-3 md:ml-6">logout</span>
             <span class="ml-3 text-sm md:text-base lg:text-lg hidden sm:inline-block font-semibold leading-5">Logout</span>
         </button>

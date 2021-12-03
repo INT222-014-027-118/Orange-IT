@@ -27,8 +27,8 @@
                     <button type="button" class="bg-green-600 px-2 py-2 ml-2 h-9 rounded-md text-white text-sm" @click="AddOption">Add</button>
                 </div>
                 <div class="flex" v-show="showEditor">
-                    <button type="button" class="bg-blue-500 px-2 py-2 ml-1 h-9 rounded-md text-white text-sm" @click="deleteOption(attribute.id, attribute.attribute)">Update</button>
-                    <button type="button" class="bg-red-500 px-2 py-2 ml-1 h-9 rounded-md text-white text-sm" @click="deleteOption(attribute.id, attribute.attribute)">Delete</button>
+                    <button type="button" class="bg-blue-500 px-2 py-2 ml-1 h-9 rounded-md text-white text-sm" @click="updateOption">Update</button>
+                    <button type="button" class="bg-red-500 px-2 py-2 ml-1 h-9 rounded-md text-white text-sm" @click="deleteOption">Delete</button>
                 </div>
             </div>
             <div class="overflow-auto rounded-sm" style="max-height: 200px;">
@@ -71,7 +71,7 @@ export default {
             attributes: [],
             choosed: "",
             text: "",
-            selectToDelete: "",
+            selectToDelete: {},
         };
     },
     methods: {
@@ -113,12 +113,15 @@ export default {
                 });
             }
         },
-        deleteOption(id, attributeName) {
+        deleteOption() {
+            let id = this.selectToDelete.id;
+            let attributeName = this.selectToDelete.attributeName;
             if (window.confirm("Are you sure to delete attirbute [ " + attributeName + " ] ?")) {
                 this.$store.dispatch("deleteAttribute", id).then((res) => {
                     if (res.status == 200) {
                         this.$store.dispatch("loadAttirbute").then(() => {
                             this.attributes = this.$store.getters.attributes;
+                            this.text = "";
                         });
                     }
                 });
@@ -128,9 +131,9 @@ export default {
             this.choosed = text;
         },
         editOption(id, attributeName) {
-            console.log(attributeName + id);
             this.showEditor = true;
             this.text = attributeName;
+            this.selectToDelete = { id, attributeName };
         },
     },
     computed: {
