@@ -38,7 +38,7 @@
         </div> -->
 
         <div class="py-5" v-if="selectTab.id == 1">
-            <div class="px-0 sm:px-2 pb-3 border-b-2 mb-3" v-for="order in this.$store.getters.orders" :key="order.id">
+            <div class="px-0 sm:px-2 pb-3" v-for="order in this.$store.getters.orders" :key="order.id">
                 <order :order="order" />
             </div>
         </div>
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import Order from "../../components/Order.vue";
+import Order from "../../components/purchase/Order.vue";
 export default {
     components: {
         Order,

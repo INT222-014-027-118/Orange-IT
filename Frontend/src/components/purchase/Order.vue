@@ -1,6 +1,6 @@
 <template>
-    <div class="m-2 p-3 shadow">
-        <purch-item v-for="product in order.orderItems" :key="product.id" :product="product" />
+    <div class="mb-2 p-3 border rounded-md dark:border-gray-500">
+        <PurchItem v-for="product in order.orderItems" :key="product.id" :product="product" />
         <div class="text-right">
             <p>{{ order.shippings.companyShipping }}</p>
             <p v-if="order.shippings.status == 'to be receive'">{{ order.shippings.trackingNumber }}</p>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import PurchItem from "./purchItem.vue";
+import PurchItem from "./PurchItem.vue";
 export default {
     components: {
         PurchItem,
@@ -20,5 +20,3 @@ export default {
     },
 };
 </script>
-
-<style></style>

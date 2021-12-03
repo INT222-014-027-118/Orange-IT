@@ -158,7 +158,7 @@
                                     class="hover:text-primary flex font-semibold capitalize items-center"
                                 >
                                     <span class="material-icons-outlined text-center w-14 md:w-16 "> {{ $store.getters.userInfo === null ? "person_add" : "inventory" }}</span>
-                                    <span class="ml-1">{{ $store.getters.userInfo === null ? "singin" : "purchase" }}</span>
+                                    <span class="ml-1">{{ $store.getters.userInfo === null ? "sing up" : "purchase" }}</span>
                                 </div>
                                 <hr class="dark:border-gray-500" />
                                 <!-- <div class="flex items-center flex-wrap cursor-pointer select-none " @click="changeSetChangeMode()">
