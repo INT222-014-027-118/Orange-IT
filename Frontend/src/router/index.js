@@ -40,11 +40,6 @@ const routes = [{
     ],
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import( /* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
     path: '/compare',
     name: 'Compare',
     component: () => import( /* webpackChunkName: "compare" */ '../views/Compare.vue')
