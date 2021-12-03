@@ -23,8 +23,12 @@
         >
             <div class="w-full p-2 placeholder-gray-400 flex items-center">
                 <input placeholder="Search..." type="search" maxlength="40" class="inline w-full px-3 py-2 h-9 input-theme" v-model="text" ref="inputText" @keydown.enter="gogo" />
-                <div class="" v-show="showAdd">
+                <div class="" v-show="showAdd" v-if="!showEditor">
                     <button type="button" class="bg-green-600 px-2 py-2 ml-2 h-9 rounded-md text-white text-sm" @click="AddOption">Add</button>
+                </div>
+                <div class="flex" v-show="showEditor">
+                    <button type="button" class="bg-blue-500 px-2 py-2 ml-1 h-9 rounded-md text-white text-sm" @click="updateOption">Update</button>
+                    <button type="button" class="bg-red-500 px-2 py-2 ml-1 h-9 rounded-md text-white text-sm" @click="deleteOption">Delete</button>
                 </div>
             </div>
             <div class="overflow-auto rounded-sm" style="max-height: 200px;">
@@ -40,7 +44,15 @@
                         <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current h-4 w-4 mx-3" :class="{ hidden: !attribute.active }">
                             <polygon points="0 11 2 9 7 14 18 3 20 5 7 18"></polygon>
                         </svg>
-                        <span @click="deleteOption(attribute.id, attribute.attribute)" :class="{ hidden: attribute.active }" class="material-icons py-2 px-2 hover:text-red-500 text-gray-500 dark:text-gray-300 dark:hover:text-red-500">delete_forever</span>
+                        <!-- <div @mouseenter="showEdit = true" @mouseleave="showEdit = false" v-show="showEdit"> -->
+                        <span
+                            :class="{ hidden: attribute.active }"
+                            @click="editOption(attribute.id, attribute.attribute)"
+                            class="material-icons py-2 px-2 hover:text-yellow-500 text-gray-500 dark:text-gray-300 dark:hover:text-red-500"
+                            >edit</span
+                        >
+                        <!-- @click="deleteOption(attribute.id, attribute.attribute)" -->
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>
@@ -55,9 +67,11 @@ export default {
         return {
             showOption: false,
             showAdd: false,
+            showEditor: false,
             attributes: [],
             choosed: "",
             text: "",
+            selectToDelete: {},
         };
     },
     methods: {
@@ -75,6 +89,8 @@ export default {
         },
         showOP() {
             this.$store.dispatch("loadAttirbute");
+            this.showEditor = false;
+            this.text = "";
             this.showOption = !this.showOption;
             if (this.attributes.length == 0) {
                 this.attributes = this.$store.getters.attributes;
@@ -97,12 +113,15 @@ export default {
                 });
             }
         },
-        deleteOption(id, attributeName) {
+        deleteOption() {
+            let id = this.selectToDelete.id;
+            let attributeName = this.selectToDelete.attributeName;
             if (window.confirm("Are you sure to delete attirbute [ " + attributeName + " ] ?")) {
                 this.$store.dispatch("deleteAttribute", id).then((res) => {
                     if (res.status == 200) {
                         this.$store.dispatch("loadAttirbute").then(() => {
                             this.attributes = this.$store.getters.attributes;
+                            this.text = "";
                         });
                     }
                 });
@@ -110,6 +129,11 @@ export default {
         },
         clearText(text) {
             this.choosed = text;
+        },
+        editOption(id, attributeName) {
+            this.showEditor = true;
+            this.text = attributeName;
+            this.selectToDelete = { id, attributeName };
         },
     },
     computed: {

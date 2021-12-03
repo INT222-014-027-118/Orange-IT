@@ -8,6 +8,7 @@ const get_attributes = `${api}/attribute/list`
 const post_product = `${api}/product/add`
 const put_product = `${api}/product/update`
 const post_attribute = `${api}/attribute/add`
+// const put_attribute = `${api}/attribute/add`
 const delete_attribute = `${api}/attribute/delete/`
 // const post_image = `${api}/image/add`
 const post_image_Multiple = `${api}/image/uploadMultipleFiles`

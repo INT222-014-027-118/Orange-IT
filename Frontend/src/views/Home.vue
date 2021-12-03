@@ -39,6 +39,7 @@ import headset from "../assets/category/headset.jpg";
 import speaker from "../assets/category/speaker.jpg";
 import keyboard from "../assets/category/keyboard.jpg";
 import mouse from "../assets/category/mouse.png";
+import orangeIt from '../assets/slider/orange-it.jpg'
 export default {
     components: {},
     data() {
@@ -50,6 +51,7 @@ export default {
                 { category: "Mouse", image: mouse, icon: "mouse" },
             ],
             promotionImages: [
+                orangeIt,
                 "https://image.bestreview.asia/wp-content/uploads/2020/03/best-gaming-chair.jpg",
                 "https://kanexkane.com/wp-content/uploads/2020/04/kkblog-cover-review-logitech-g-pro-x-keyboard.jpg",
                 "https://instore.bnn.in.th/wp-content/uploads/2019/01/FTIM-10GamingGear.jpg",
