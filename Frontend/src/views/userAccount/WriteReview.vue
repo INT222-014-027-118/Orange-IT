@@ -64,7 +64,7 @@
                     </div>
                     <div class="px-0 sm:px-2 relative max-w-lg mx-auto">
                         <textarea
-                            class="px-3 py-5 rounded-md h-52 ring-1 w-full ring-gray-300 min-h-0 focus:ring focus:ring-primary focus:outline-none bg-neutral dark:bg-dark_primary"
+                            class="vertical px-3 py-5 rounded-md h-52 ring-1 w-full ring-gray-300 min-h-0 focus:ring focus:ring-primary focus:outline-none bg-neutral dark:bg-dark_primary"
                             name=""
                             id=""
                             cols="30"
@@ -160,6 +160,11 @@ export default {
 </script>
 
 <style>
+textarea.vertical {
+    resize: vertical;
+    min-height: 10rem;
+}
+
 /*generated with Input range slider CSS style generator (version 20210711)
 https://toughengineer.github.io/demo/slider-styler*/
 input[type="range"].styled-slider {

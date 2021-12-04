@@ -217,8 +217,8 @@
                         >
                             <p class="text-left ml-3">{{ $store.getters.userInfo == null ? "login" : "my account" }}</p>
                         </button>
-                        <hr class="dark:border-gray-500" />
-                        <LDmode @click="moreVert = false" />
+                        <!-- <hr class="dark:border-gray-500" /> -->
+                        <LDmode @click="moreVert = false" :class="[routerBTN.includes(this.$route.name) ? 'hidden':'border-t dark:border-gray-500']"/>
                     </div>
                 </div>
             </div>
