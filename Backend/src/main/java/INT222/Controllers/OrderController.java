@@ -28,11 +28,11 @@ public class OrderController {
     @Autowired
     private ProductStockRepository productStockRepository;
 
-//    @GetMapping("/list")
-//    @PreAuthorize("hasRole('Admin')")
-//    public List<Orders> getOrder(){
-//        return orderRepository.findAll();
-//    }
+    @GetMapping("/list")
+    @PreAuthorize("hasRole('Admin')")
+    public List<Orders> getOrder(){
+        return orderRepository.findAll();
+    }
 
     @GetMapping("/getByUserId/{id}")
     @PreAuthorize("hasRole('User')" +
