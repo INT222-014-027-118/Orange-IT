@@ -172,8 +172,7 @@ public class ProductController {
                 }
             }
 
-            if(products.getProductName().equals(productRepository.findById(products.getId()).get().getProductName()) && productRepository.existsByProductName(products.getProductName())){
-
+            if(products.getProductName().equals(productRepository.findById(products.getId()).get().getProductName())){
                 List<Images> images =  products.getImages();
                 List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
                 for (int i = 0; i < images.size(); i++) {
@@ -186,7 +185,20 @@ public class ProductController {
                 }
                 productRepository.save(products);
 
-            }else throw new SameProductNameException(products.getProductName());
+            }else if (!productRepository.existsByProductName(products.getProductName())){
+                List<Images> images =  products.getImages();
+                List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
+                for (int i = 0; i < images.size(); i++) {
+                    images.get(i).setId(imageRepository.findAll().size()+1+i);
+                    images.get(i).setProductId(products.getId());
+                }
+                for (int i = 0; i < productsHasAttributes.size(); i++) {
+                    productsHasAttributes.get(i).setId(productHasAttributeRepository.findAll().size()+1+i);
+                    productsHasAttributes.get(i).setProductId(products.getId());
+                }
+                productRepository.save(products);
+            }
+            else throw new SameProductNameException(products.getProductName());
 
 
 
