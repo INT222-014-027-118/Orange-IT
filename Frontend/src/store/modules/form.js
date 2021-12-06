@@ -128,22 +128,40 @@ const actions = {
                 console.log(error)
             })
     },
-    updateProduct(context, product) {
-        axios
-            .put(put_product, product, {
-                headers: {
-                    'Authorization': this.getters.token
+    updateProduct(context, payload) {
+        if (payload.newImages.length > 0) {
+
+
+            this.dispatch('uploadImages', payload.newImages).then((response) => {
+                console.log(response);
+                if (response.status == 200) {
+                    axios
+                        .put(put_product, payload.product, {
+                            headers: {
+                                'Authorization': this.getters.token
+                            }
+                        })
+                        .then(response => {
+                            if (response.status === 200) {
+                                router.push('/admin/manage-products')
+                            }
+                        })
                 }
             })
-            .then(response => {
-                if (response.status === 200) {
-                    router.push('/admin/manage-products')
-                }
-                console.log("response: ", response)
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        } else {
+            axios
+                .put(put_product, payload.product, {
+                    headers: {
+                        'Authorization': this.getters.token
+                    }
+                })
+                .then(response => {
+                    if (response.status === 200) {
+                        router.push('/admin/manage-products')
+                    }
+                })
+        }
+
     },
 
     addAttribute(context, attribute) {

@@ -15,7 +15,9 @@
                             <div class="flex flex-col bg-white dark:bg-gray-700 w-full md:w-1/3 p-1 border-b border-r">
                                 <div
                                     class="px-2 py-1 cursor-pointer flex justify-between rounded-sm"
-                                    :class="[selectRootCat.category === category.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary']"
+                                    :class="[
+                                        selectRootCat.category === category.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary',
+                                    ]"
                                     v-for="category in $store.getters.rootCategories"
                                     :key="category.id"
                                     @click="chooseRootCategory(category)"
@@ -28,7 +30,11 @@
                                 <span class="absolute top-0 text-xs md:hidden whitespace-nowrap">sub category</span>
                                 <div
                                     class="px-2 py-1 cursor-pointer flex justify-between rounded-sm"
-                                    :class="[selectChildCat.category === childcat.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary']"
+                                    :class="[
+                                        selectChildCat.category === childcat.category
+                                            ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white'
+                                            : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary',
+                                    ]"
                                     v-for="childcat in $store.getters.childCategories(`${this.selectRootCat.id}`)"
                                     :key="childcat.id"
                                     @click="chooseSubCategory(childcat)"
@@ -223,7 +229,14 @@
                         <label class="label-css" for="description">Description</label>
                         <p class="label-css">{{ countDescription }}/1000</p>
                     </div>
-                    <textarea class="input-form input-theme vertical" id="description" v-model="product.description" type="text" placeholder="Please enter text up to 1000 characters." maxlength="1000" />
+                    <textarea
+                        class="input-form input-theme vertical"
+                        id="description"
+                        v-model="product.description"
+                        type="text"
+                        placeholder="Please enter text up to 1000 characters."
+                        maxlength="1000"
+                    />
                 </div>
                 <button type="submit" class="self-end rounded shadow-md cursor-pointer btn text-lg py-3 px-6 mx-1 sm:mx-3 mb-3 w-full max-w-xs">
                     Submit
@@ -260,7 +273,7 @@ export default {
                 price: 0,
                 brandName: "",
                 quantityStock: 0,
-                active:1,
+                active: 1,
                 discount: null,
                 colors: [],
                 attributes: [],
@@ -317,9 +330,13 @@ export default {
                     //     if (response.status == 200) {
                     this.product.id = this.productId;
                     this.product.attributes = [];
-                    this.$store.dispatch("updateProduct", this.product);
-                    console.log(this.product);
-                    this.resetForm();
+                    for (let index = 0; index < this.imageInfo.length; index++) {
+                        this.product.images.push({ id: 1, source: this.imageInfo[index].name, label: this.imageInfo[index].name.split(".")[0], productId: this.product.id });
+                    }
+
+                    // console.log(this.product);
+                    this.$store.dispatch("updateProduct", { product: this.product, newImages: this.imageInfo });
+                    // this.resetForm();
                     //     }
                     // });
                 } else {
@@ -391,7 +408,10 @@ export default {
         },
 
         deleteImg(index) {
-            this.imageInfo.splice(index, 1); //?????????????????????????????????????????
+            // this.imageInfo.splice(index, 1);
+         
+
+            this.product.images.splice(index, 1);
             this.preview_list.splice(index, 1);
         },
 
