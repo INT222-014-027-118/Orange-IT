@@ -166,7 +166,6 @@ export default {
             }
         },
         editProduct(id) {
-            // this.$router.push({name:"" ,prarm:{}})
             this.$router.push({ name: "Form", params: { formPath: "edit", productId: id } });
         },
         changeActiveProduct(id) {
@@ -178,9 +177,7 @@ export default {
                     Authorization: this.$store.getters.token,
                 },
             };
-            axios(config).then((res) => {
-                console.log(res);
-            });
+            axios(config)
         },
     },
     created() {
