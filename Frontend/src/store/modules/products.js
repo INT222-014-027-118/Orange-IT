@@ -59,28 +59,12 @@ const actions = {
         axios
             .get(get_products_list)
             .then(res => {
-                let products = res.data
+                let products = res.data.filter((product)=>{return product.active})
                 commit('SET_PRODUCTS', products)
             })
             .catch(error => {
                 console.log(error)
             })
-        // if (this.getters.isAdmin) {
-        //     axios
-        //         .get(get_products_list_admin, {
-        //             headers: {
-        //                 'Authorization': this.getters.token
-        //             }
-        //         })
-        //         .then(res => {
-        //             let products = res.data
-        //             commit('SET_PRODUCTS', products)
-        //         })
-        //         .catch(error => {
-        //             console.log(error)
-        //         })
-        // }
-
 
     },
     async loadcategories({
@@ -102,7 +86,7 @@ const actions = {
         axios
             .get(`${get_by_category}/${category}`)
             .then(res => {
-                let products = res.data
+                let products = res.data.filter((product)=>{return product.active})
                 commit('SET_PRODUCTS', products)
             })
             .catch(error => {
