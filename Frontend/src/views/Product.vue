@@ -60,7 +60,7 @@
                                     <span class="material-icons mr-1"> compare_arrows </span>
                                     <span class="text-xs sm:text-base"> Compare ({{ this.$store.getters.countCompareProducts }})</span>
                                 </button>
-                                <button class="w-full px-1 py-1 mb-1 sm:mb-0 flex flex-col sm:flex-row items-center justify-center whitespace-nowrap z-40 btn" @click="addCartItem">
+                                <button class="w-full px-1 py-1 mb-1 sm:mb-0 flex flex-col sm:flex-row items-center justify-center whitespace-nowrap z-40 btn" @click="addCartItem" :disabled="product.quantityStock <= 0" :class="[product.quantityStock <= 0?'cursor-not-allowed':'']">
                                     <span class="material-icons mr-1"> add_shopping_cart </span>
                                     <span class="text-xs sm:text-base">Add to Cart</span>
                                 </button>
@@ -206,11 +206,11 @@ export default {
     computed: {
         stockCheck() {
             let stock = {};
-            if (this.product.quantityStock == 0) {
+            if (this.product.quantityStock <= 0) {
                 stock = { class: "text-red-500", icon: "cancel", text: "out of stock" };
                 return stock;
             } else if (this.product.quantityStock < 10) {
-                stock = { class: "text-yellow-500", icon: "error_outline", text: `low stock (${this.product.quantityStock} piece)` };
+                stock = { class: "text-yellow-500", icon: "error_outline", text: `low stock (${this.product.quantityStock} pieces)` };
                 return stock;
             } else {
                 stock = { class: "text-green-600", icon: "check_circle", text: "in stock" };
