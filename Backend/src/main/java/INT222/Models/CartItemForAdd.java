@@ -16,7 +16,7 @@ public class CartItemForAdd {
     private long id;
 
     @Column
-    private String quantity;
+    private int quantity;
 
     @Column(name = "product_id")
     private long productId;
