@@ -333,7 +333,9 @@ INSERT INTO `colors` (`id`, `label`, `hex_code`) VALUES
 
 INSERT INTO `categories` (`id`, `category`, `parent_id`) VALUES 
   ('1', 'Keyboard', NULL),('2', 'Mouse', NULL), ('3', 'Headset', NULL), 
-  ('4', 'Wireless keyboard', '1'),('5', 'Wireless mouse', '2'),('6', 'Wireless headset', '3');
+  ('4', 'Wireless keyboard', '1'),('5', 'Wireless mouse', '2'),('6', 'Wireless headset', '3'),
+  ('7', 'Wire keyboard', '1'),('8', 'Wire mouse', '2'),('9', 'Wire headset', '3'),
+  ('10', 'speaker', NULL),('11', 'Wireless speaker', '10'),('12', 'Wire speaker', '10');
 
 INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `brand_name`, `quantity_stock`,`active`, `discount_id`) VALUES
   ('1', 'LOGITECH G G913 LIGHTSPEED WIRELESS RGB', '', '5990', 'Logitech', '55',1, NULL),

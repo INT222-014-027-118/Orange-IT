@@ -3,7 +3,7 @@
         <button @blur="showBoxResult = false" @focus="loadProduct" class="w-full focus:outline-none">
             <input
                 type="search"
-                v-model="text_Search"
+                v-model.trim="text_Search"
                 class="mx-0.5 pt-1 pb-1 pl-10 md:pl-10 rounded-2xl focus:outline-none w-full ring-2 ring-primary focus:bg-gray-50 dark:focus:bg-dark_secondary bg-gray-100 dark:bg-dark_secondary"
                 @keypress.enter="goToProduct"
                 @focus="loadProduct"
