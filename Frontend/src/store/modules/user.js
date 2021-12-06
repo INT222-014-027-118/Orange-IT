@@ -15,7 +15,7 @@ const getters = {
     defaultAddress: state => state.addresses[0],
     isAdmin: state => state.isAdmin,
     token: state => state.token,
-    userId:state=>state.userId
+    userId: state => state.userId
 }
 
 const actions = {
@@ -50,7 +50,7 @@ const actions = {
     }) {
         if (!state.isAdmin) {
             axios
-                .get(`${process.env.VUE_APP_API}/delivery/findByUserId/${state.userId}`, {
+                .get(`${process.env.VUE_APP_API}/delivery/findByUserId/${localStorage.getItem('userId')}`, {
                     headers: {
                         'Authorization': state.token
                     }

@@ -59,9 +59,11 @@ export default {
                             this.$store.commit("setUserInfo", userinfo.user);
                             let isAdmin = userinfo.user.role[0].name === "Admin" ? true : false;
                             this.$store.commit("setIsAdmin", isAdmin);
-                             this.$store.commit('setToken',`Bearer ${userinfo.jwtToken}`)
+                            this.$store.commit("setToken", `Bearer ${userinfo.jwtToken}`);
                             if (!isAdmin) {
                                 this.$store.dispatch("loadCartData");
+                                // this.$store.dispatch("loadOrders");
+                                // this.$store.dispatch("loadUserAddresses");
                             }
                             return isAdmin;
                         }
