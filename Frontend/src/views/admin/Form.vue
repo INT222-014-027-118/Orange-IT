@@ -196,7 +196,7 @@
                                 <tr v-show="1 !== 0">
                                     <td colspan="3" class="font-semibold p-2">Attributes list</td>
                                 </tr>
-                                <tr v-for="(att, index) in product.productsHasAttributes" :key="att.key" :class="index % 2 == 0 ? 'bg-white' : 'bg-gray-50'" class="border">
+                                <tr v-for="(att, index) in product.productsHasAttributes" :key="att.key" :class="index % 2 == 0 ? 'bg-white dark:bg-gray-700' : 'bg-gray-50 dark:bg-gray-700'" class="border dark:border-gray-600 rounded-md">
                                     <td class="">
                                         <p class="px-3 py-2">{{ att.attributeName }}</p>
                                     </td>
