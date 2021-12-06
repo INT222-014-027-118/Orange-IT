@@ -7,7 +7,7 @@ const state = {
 
 
 const getters = {
-    orders: state => state.orders.reverse(),
+    orders: state => [].concat(state.orders).reverse(),
 }
 const actions = {
     loadOrders({
