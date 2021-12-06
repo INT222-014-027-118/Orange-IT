@@ -7,7 +7,7 @@ const state = {
     menuList: [{
             label: "Manage orders",
             active: false,
-            link: ":manage-orders",
+            link: "manage-orders",
             icon: "shopping_basket"
         }, {
             label: "Manage product",
@@ -21,12 +21,12 @@ const state = {
             link: "manage-users",
             icon: "manage_accounts"
         },
-        // {
-        //     label: "Form product",
-        //     active: false,
-        //     link: "add-product",
-        //     icon: "insert_drive_file"
-        // },
+        {
+            label: "Form product",
+            active: false,
+            link: "add-product",
+            icon: "insert_drive_file"
+        },
     ],
     users: [],
     ordersForAdmin: []
