@@ -6,6 +6,9 @@
             <p v-if="order.shippings.status == 'to be receive'">{{ order.shippings.trackingNumber }}</p>
             <p>Ordered on: {{ order.orderDate }}</p>
         </div>
+        <div>
+            <p class="text-lg sm:text-2xl font-semibold self-end ml-auto pb-0.5">Total price: {{ totalPrice }}</p>
+        </div>
     </div>
 </template>
 
@@ -17,6 +20,17 @@ export default {
     },
     props: {
         order: Object,
+    },
+    computed: {
+        totalPrice() {
+            return this.order.orderItems.length > 0
+                ? this.order.orderItems
+                      .map((product) => product.price * product.quantity)
+                      .reduce((previousPrice, currentPrice) => {
+                          return previousPrice + currentPrice;
+                      })
+                : 0;
+        },
     },
 };
 </script>
