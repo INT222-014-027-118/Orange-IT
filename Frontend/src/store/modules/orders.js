@@ -14,7 +14,7 @@ const actions = {
         commit
     }) {
         axios
-            .get(`${process.env.VUE_APP_API}/order/getByUserId/${this.getters.userId}`, {
+            .get(`${process.env.VUE_APP_API}/order/getByUserId/${localStorage.getItem('userId')}`, {
                 headers: {
                     'Authorization': this.getters.token
                 }

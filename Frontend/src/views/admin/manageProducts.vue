@@ -137,8 +137,8 @@ export default {
                     value: "Active",
                 },
                 {
-                    key: "feature",
-                    value: "Feature",
+                    key: "",
+                    value: "",
                 },
             ],
             searchText: "",

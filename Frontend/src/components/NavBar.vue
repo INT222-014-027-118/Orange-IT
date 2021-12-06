@@ -158,7 +158,7 @@
                                     class="hover:text-primary flex font-semibold capitalize items-center"
                                 >
                                     <span class="material-icons-outlined text-center w-14 md:w-16 "> {{ $store.getters.userInfo === null ? "person_add" : "inventory" }}</span>
-                                    <span class="ml-1">{{ $store.getters.userInfo === null ? "singin" : "purchase" }}</span>
+                                    <span class="ml-1">{{ $store.getters.userInfo === null ? "sing up" : "purchase" }}</span>
                                 </div>
                                 <hr class="dark:border-gray-500" />
                                 <!-- <div class="flex items-center flex-wrap cursor-pointer select-none " @click="changeSetChangeMode()">
@@ -217,8 +217,8 @@
                         >
                             <p class="text-left ml-3">{{ $store.getters.userInfo == null ? "login" : "my account" }}</p>
                         </button>
-                        <hr class="dark:border-gray-500" />
-                        <LDmode @click="moreVert = false" />
+                        <!-- <hr class="dark:border-gray-500" /> -->
+                        <LDmode @click="moreVert = false" :class="[routerBTN.includes(this.$route.name) ? 'hidden':'border-t dark:border-gray-500']"/>
                     </div>
                 </div>
             </div>

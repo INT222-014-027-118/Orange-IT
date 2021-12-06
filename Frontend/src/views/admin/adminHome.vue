@@ -3,6 +3,7 @@
         <side-menu />
         <div class="ml-14 sm:ml-32 md:ml-52 lg:ml-60">
             <router-view />
+            <p>Test</p>
         </div>
     </div>
 </template>

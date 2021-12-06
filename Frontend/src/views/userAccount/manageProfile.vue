@@ -49,7 +49,7 @@
             </div>
 
             <div class="mt-7 flex justify-end" v-if="editBTN">
-                <button type="reset" class="px-4 py-2 cancel-btn" @click="editBTN = false">cancel</button>
+                <button type="reset" class="px-4 py-2 cancel-btn" @click="cancel">cancel</button>
                 <button type="submit" class="px-6 py-2 btn ml-3">Save</button>
             </div>
         </form>
@@ -57,15 +57,15 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
     data() {
         return {
             editBTN: false,
-
             firstname: "",
             lastname: "",
             email: "",
-
+            userDataToEdit: {},
             invalid: {
                 firstname: true,
                 lastname: true,
@@ -79,9 +79,38 @@ export default {
             this.invalid.lastname = this.lastname == "" ? false + this.$refs.lastname.focus() : true;
             this.invalid.firstname = this.firstname == "" ? false + this.$refs.firstname.focus() : true;
             if (this.invalid.email && this.invalid.lastname && this.invalid.firstname) {
-                console.log(this.firstname + this.lastname + this.email);
+                this.userDataToEdit.userFirstName = this.firstname;
+                this.userDataToEdit.userLastName = this.lastname;
+                this.userDataToEdit.email = this.email;
+                axios
+                    .put(`${process.env.VUE_APP_API}/updateInfo`, this.userDataToEdit, {
+                        headers: {
+                            Authorization: this.$store.getters.token,
+                        },
+                    })
+                    .then((response) => {
+                        if (response.status === 200) {
+                            this.$store.dispatch("loadUserData").then(() => {
+                                this.cancel();
+                            });
+                        }
+                    });
             }
         },
+        cancel() {
+            this.editBTN = false;
+            this.userDataToEdit = Object.assign({}, this.$store.getters.userInfo);
+            this.resetData();
+        },
+        resetData() {
+            this.firstname = this.userDataToEdit.userFirstName;
+            this.lastname = this.userDataToEdit.userLastName;
+            this.email = this.userDataToEdit.email;
+        },
+    },
+    created() {
+        this.userDataToEdit = Object.assign({}, this.$store.getters.userInfo);
+        this.resetData();
     },
 };
 </script>

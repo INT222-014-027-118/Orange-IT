@@ -8,7 +8,7 @@ const get_attributes = `${api}/attribute/list`
 const post_product = `${api}/product/add`
 const put_product = `${api}/product/update`
 const post_attribute = `${api}/attribute/add`
-// const put_attribute = `${api}/attribute/add`
+const put_attribute = `${api}/attribute/update`
 const delete_attribute = `${api}/attribute/delete/`
 // const post_image = `${api}/image/add`
 const post_image_Multiple = `${api}/image/uploadMultipleFiles`
@@ -155,6 +155,21 @@ const actions = {
     deleteAttribute(context, id) {
         return axios
             .delete(`${delete_attribute}${id}`, {
+                headers: {
+                    'Authorization': this.getters.token
+                }
+            })
+            .then(response => {
+                return response
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },
+
+    updateAttribute(context, attribute) {
+        return axios
+            .put(`${put_attribute}`, attribute, {
                 headers: {
                     'Authorization': this.getters.token
                 }

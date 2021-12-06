@@ -11,13 +11,9 @@ const routes = [{
     component: Home
   },
   {
-    path: '/*',
-    component: () => import( /* webpackChunkName: "NotFound" */ '../views/NotFound.vue')
-  },
-  {
     path: '/admin',
     name: 'Admin',
-    component: () => import( /* webpackChunkName: "admin" */ '../views/admin/adminHome.vue'),
+    component: () => import( /* webpackChunkName: "admin" */ '../views/admin/AdminHome.vue'),
     beforeEnter: (to, from, next) => {
       if (store.getters['isAdmin']) {
         next()
@@ -28,12 +24,12 @@ const routes = [{
     children: [{
         path: ':manage-products',
         name: 'ManageProducts',
-        component: () => import( /* webpackChunkName: "purchase" */ '../views/admin/manageProducts.vue')
+        component: () => import( /* webpackChunkName: "manageProducts" */ '../views/admin/ManageProducts.vue')
       },
       {
         path: ':manage-users',
         name: 'ManageUsers',
-        component: () => import( /* webpackChunkName: "purchase" */ '../views/admin/manageUsers.vue')
+        component: () => import( /* webpackChunkName: "manageUsers" */ '../views/admin/ManageUsers.vue')
       },
       {
         path: ':formPath-product',
@@ -42,11 +38,6 @@ const routes = [{
         component: () => import( /* webpackChunkName: "form" */ '../views/admin/Form.vue'),
       },
     ],
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import( /* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
     path: '/compare',
@@ -77,13 +68,13 @@ const routes = [{
         path: ':purchaseDetail',
         name: 'purchase',
         props: true,
-        component: () => import( /* webpackChunkName: "purchase" */ '../views/userAccount/purchase.vue')
+        component: () => import( /* webpackChunkName: "purchase" */ '../views/userAccount/Purchase.vue')
       },
       {
         path: ':manage/edit',
         name: 'manageProfile',
         props: true,
-        component: () => import( /* webpackChunkName: "manageProfile" */ '../views/userAccount/manageProfile.vue')
+        component: () => import( /* webpackChunkName: "manageProfile" */ '../views/userAccount/ManageProfile.vue')
       },
       {
         path: ':address-info',
@@ -113,7 +104,7 @@ const routes = [{
     path: '/result=:currentCategoryName',
     name: 'resultProducts',
     props: true,
-    component: () => import( /* webpackChunkName: "resultProducts" */ '../views/resultProducts.vue')
+    component: () => import( /* webpackChunkName: "resultProducts" */ '../views/ResultProductsPage.vue')
   },
 ]
 

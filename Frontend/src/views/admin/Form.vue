@@ -52,7 +52,7 @@
                 <div class="px-1 md:px-3 lg:w-full">
                     <div class="flex justify-between">
                         <label class="label-css" for="" ref="name">Product Name *</label>
-                        <p class="label-css">{{ countText }}/40</p>
+                        <p class="label-css">{{ countProductName }}/100</p>
                     </div>
                     <input
                         v-model="product.productName"
@@ -60,7 +60,7 @@
                         id=""
                         type="text"
                         placeholder="Please input product name"
-                        maxlength="40"
+                        maxlength="100"
                         :class="[invalid.productName ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']"
                     />
                     <!-- <span v-if="invalid.name" class="absolute font-mono text-sm text-red-500 transform select-none -bottom-3 left-3 sm:bottom-2 sm:left-1/2 sm:-translate-x-1/2">Please input product name</span> -->
@@ -166,11 +166,11 @@
                     <label class="label-css">attribute *</label>
                     <div class="input-form input-theme" :class="[invalid.productsHasAttributes ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <div class="grid grid-cols-2 grid-rows-2">
-                            <div class="col-span-2 sm:col-span-1 p-1">
+                            <div class="col-span-2 lg:col-span-1 p-1">
                                 <h2 class="text-center font-semibold relative">Attribute</h2>
                                 <RichSelect class="" @selectAttribute="selectAttribute" ref="childComponent" />
                             </div>
-                            <div class="col-span-2 sm:col-span-1 p-1">
+                            <div class="col-span-2 lg:col-span-1 p-1">
                                 <h2 class="text-center font-semibold">Value</h2>
                                 <input class="input-theme " type="text" maxlength="40" placeholder="Please input value" v-model="attributeValue" />
                             </div>
@@ -219,8 +219,11 @@
                 </div>
 
                 <div class="relative px-1 md:px-3 lg:w-full">
-                    <label class="label-css" for="description">Description</label>
-                    <textarea class="h-40 input-form input-theme" id="description" v-model="product.description" type="text" placeholder="Please enter text up to 1000 characters." maxlength="1000" />
+                    <div class="flex justify-between">
+                        <label class="label-css" for="description">Description</label>
+                        <p class="label-css">{{ countDescription }}/1000</p>
+                    </div>
+                    <textarea class="input-form input-theme vertical" id="description" v-model="product.description" type="text" placeholder="Please enter text up to 1000 characters." maxlength="1000" />
                 </div>
                 <button type="submit" class="self-end rounded shadow-md cursor-pointer btn text-lg py-3 px-6 mx-1 sm:mx-3 mb-3 w-full max-w-xs">
                     Submit
@@ -311,11 +314,11 @@ export default {
                 if (this.formPath === "edit") {
                     // this.$store.dispatch("uploadImages", this.imageInfo).then((response) => {
                     //     if (response.status == 200) {
-                            this.product.id = this.productId;
-                            this.product.attributes = [];
-                            this.$store.dispatch("updateProduct", this.product);
-                            console.log(this.product);
-                            this.resetForm();
+                    this.product.id = this.productId;
+                    this.product.attributes = [];
+                    this.$store.dispatch("updateProduct", this.product);
+                    console.log(this.product);
+                    this.resetForm();
                     //     }
                     // });
                 } else {
@@ -358,7 +361,7 @@ export default {
                 this.product.productsHasAttributes.push(attributeValue);
                 this.attributeValue = "";
                 this.selectAttributes = {};
-                this.$refs.childComponent.clearText("");
+                this.$refs.childComponent.clearSelected();
             }
         },
 
@@ -406,8 +409,11 @@ export default {
         },
     },
     computed: {
-        countText() {
+        countProductName() {
             return this.product.productName.length;
+        },
+        countDescription() {
+            return this.product.description.length;
         },
         validate() {
             return (
@@ -467,5 +473,10 @@ export default {
 
 [type="radio"]:checked {
     background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='red' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+}
+
+textarea.vertical {
+    resize: vertical;
+    min-height: 10rem;
 }
 </style>

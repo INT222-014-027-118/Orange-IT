@@ -21,7 +21,7 @@
 }
 
 .cancel-btn {
-    @apply  ring-inset ring-1 ring-gray-300 rounded-md text-gray-900 hover:bg-gray-200 transition-colors;
+    @apply  ring-inset ring-1 ring-gray-300 rounded-md text-gray-900 dark:bg-gray-200 hover:bg-gray-200 dark:hover:bg-gray-400 transition-colors;
 }
 
 .input-theme {
