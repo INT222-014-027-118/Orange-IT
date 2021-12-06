@@ -27,7 +27,7 @@ export default {
     },
     data() {
         return {
-            menuList: [{ label: "Manage product", active: false, link: "manageProducts" }],
+            // menuList: [{ label: "Manage product", active: false, link: "manageProducts" }],
         };
     },
     methods: {

@@ -5,6 +5,11 @@ const get_users_list = `${api}/user/list`
 
 const state = {
     menuList: [{
+            label: "Manage orders",
+            active: false,
+            link: ":manage-orders",
+            icon: "shopping_basket"
+        }, {
             label: "Manage product",
             active: false,
             link: "manage-products",

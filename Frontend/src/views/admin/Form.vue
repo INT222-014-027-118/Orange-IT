@@ -260,6 +260,7 @@ export default {
                 price: 0,
                 brandName: "",
                 quantityStock: 0,
+                active:1,
                 discount: null,
                 colors: [],
                 attributes: [],
@@ -449,7 +450,7 @@ export default {
             this.product.brandName = loadProduct.brandName;
             this.product.quantityStock = loadProduct.quantityStock;
             this.product.colors = loadProduct.colors;
-            // this.product.images = loadProduct.images;
+            this.product.images = loadProduct.images;
             this.product.productsHasAttributes = loadProduct.productsHasAttributes.map((att) => {
                 return {
                     id: att.id,

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '../../router'
 
 const api = process.env.VUE_APP_API
 const get_colors = `${api}/color/list`
@@ -14,6 +15,8 @@ const delete_attribute = `${api}/attribute/delete/`
 const post_image_Multiple = `${api}/image/uploadMultipleFiles`
 // const put_image = `${api}/image/update/`
 const delete_product = `${api}/product/delete/`
+const delete_productI = `${api}/product/deleteI/`
+const delete_productP = `${api}/product/deleteP/`
 const delete_image = `${api}/image/delete/`
 
 
@@ -116,6 +119,9 @@ const actions = {
                 }
             })
             .then(response => {
+                if (response.status === 200) {
+                    router.push('/admin/manage-products')
+                }
                 console.log("response: ", response)
             })
             .catch(error => {
@@ -130,6 +136,9 @@ const actions = {
                 }
             })
             .then(response => {
+                if (response.status === 200) {
+                    router.push('/admin/manage-products')
+                }
                 console.log("response: ", response)
             })
             .catch(error => {
@@ -186,18 +195,44 @@ const actions = {
         dispatch
     }, id) {
         axios
-            .delete(`${delete_product}${id}`, {
+            .delete(`${delete_productI}${id}`, {
                 headers: {
                     'Authorization': this.getters.token
                 }
+            }).then((response) => {
+                if (response.status === 200) {
+                    axios
+                        .delete(`${delete_productP}${id}`, {
+                            headers: {
+                                'Authorization': this.getters.token
+                            }
+                        }).then((response) => {
+                            if (response.status === 200) {
+                                axios
+                                    .delete(`${delete_product}${id}`, {
+                                        headers: {
+                                            'Authorization': this.getters.token
+                                        }
+                                    })
+                                    .then(response => {
+                                        console.log("response: ", response)
+                                        dispatch("loadProducts")
+                                    })
+                                    .catch(error => {
+                                        console.log(error)
+                                    })
+                            }
+                        })
+
+
+
+                }
             })
-            .then(response => {
-                console.log("response: ", response)
-                dispatch("loadProducts")
-            })
-            .catch(error => {
-                console.log(error)
-            })
+
+
+
+
+
     }
 
 }

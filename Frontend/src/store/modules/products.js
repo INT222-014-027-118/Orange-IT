@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const api = process.env.VUE_APP_API
 const get_products_list = `${api}/product/list`
-// const get_products_list_admin = `${api}/product/listAdmin`
+const get_products_list_admin = `${api}/product/listAdmin`
 const get_by_category = `${api}/product/getByCategory`
 // const get_by_name = `${api}/product/getByBrandName`
 const get_categories = `${api}/category/list`
@@ -59,12 +59,30 @@ const actions = {
         axios
             .get(get_products_list)
             .then(res => {
-                let products = res.data.filter((product)=>{return product.active})
+                let products = res.data.filter((product) => {
+                    return product.active
+                })
                 commit('SET_PRODUCTS', products)
             })
             .catch(error => {
                 console.log(error)
             })
+        if (this.getters.isAdmin) {
+            axios
+                .get(get_products_list_admin, {
+                    headers: {
+                        'Authorization': this.getters.token
+                    }
+                })
+                .then(res => {
+                    let products = res.data
+                    commit('SET_PRODUCTS', products)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+
 
     },
     async loadcategories({
@@ -86,7 +104,9 @@ const actions = {
         axios
             .get(`${get_by_category}/${category}`)
             .then(res => {
-                let products = res.data.filter((product)=>{return product.active})
+                let products = res.data.filter((product) => {
+                    return product.active
+                })
                 commit('SET_PRODUCTS', products)
             })
             .catch(error => {
