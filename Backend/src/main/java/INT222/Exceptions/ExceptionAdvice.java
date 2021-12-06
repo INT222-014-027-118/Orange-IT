@@ -171,5 +171,12 @@ public class ExceptionAdvice {
         return ex.getMessage();
     }
 
+    @ResponseBody
+    @ExceptionHandler(ProductOutOffStock.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    String SameAttribute(ProductOutOffStock ex){
+        return ex.getMessage();
+    }
+
 
 }

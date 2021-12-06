@@ -3,10 +3,12 @@ package INT222.Controllers;
 import INT222.Exceptions.NotFoundCartItemException;
 import INT222.Exceptions.NotFoundUserCartItemException;
 import INT222.Exceptions.NotFoundUserException;
+import INT222.Exceptions.ProductOutOffStock;
 import INT222.Models.CartItemForAdd;
 import INT222.Models.CartItems;
 import INT222.Repositories.CartItemForAddRepository;
 import INT222.Repositories.CartItemRepository;
+import INT222.Repositories.ProductRepository;
 import INT222.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,6 +29,9 @@ public class CartItemController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @DeleteMapping("delete/{id}")
     @PreAuthorize("hasRole('User')")
     public void deleteById(@PathVariable(value = "id") long id) {
@@ -39,6 +44,10 @@ public class CartItemController {
                             @PathVariable(value = "productId") long productId) {
         if(!userRepository.existsById(userId)){
             throw new NotFoundUserException(userId);
+        }
+        int stock = productRepository.getById(productId).getQuantityStock() - cartItemForAdd.getQuantity();
+        if(stock <= 0){
+            throw new ProductOutOffStock(productId);
         }
             cartItemForAdd.setProductId(productId);
             cartItemForAdd.setUserId(userId);
