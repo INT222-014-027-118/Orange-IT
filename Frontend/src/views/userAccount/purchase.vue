@@ -41,7 +41,7 @@
                                         <p class="">color: {{ order.color.label }}</p>
                                         <p class="">{{ passingPrice(order.price) }} x {{ order.quantity }}</p>
                                     </div>
-                                    <p class="text-lg sm:text-2xl font-semibold self-end ml-auto pb-0.5">{{ passingPrice(order.price * order.quantity) }}</p>
+                                    <p class="text-lg sm:text-2xl font-semibold self-end ml-auto pb-0.5 text-primary">{{ passingPrice(order.price * order.quantity) }}</p>
                                 </div>
                             </div>
                         </div>

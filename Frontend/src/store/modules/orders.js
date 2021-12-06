@@ -7,7 +7,7 @@ const state = {
 
 
 const getters = {
-    orders: state => state.orders,
+    orders: state => state.orders.reverse(),
 }
 const actions = {
     loadOrders({
