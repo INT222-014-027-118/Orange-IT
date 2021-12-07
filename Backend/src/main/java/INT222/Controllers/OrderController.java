@@ -8,6 +8,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.chrono.ThaiBuddhistDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +57,8 @@ public class OrderController {
     public void addOrder(@RequestBody OrderForAdd orderForAdd){
         if(orderForAddRepository.findTopByOrderByIdDesc() == null){
             orderForAdd.setId(1);
-            LocalDateTime now = LocalDateTime.now();
+            ZoneId zone = ZoneId.of("Asia/Bangkok");
+            LocalDateTime now = LocalDateTime.now(zone);
             orderForAdd.setOrderDate(now);
             long num = 1;
             for (int i = 0; i < orderForAdd.getOrderItems().size(); i++) {
@@ -116,11 +119,14 @@ this.deleteOrderItem(id);
         orderRepository.deleteById(id);
     }
 
-    @PutMapping("/update")
-    @PreAuthorize("hasRole('Admin')")
-    public void editPayment(@RequestBody Orders orders) {
-        if(orderRepository.existsById(orders.getId())) {
-            orderRepository.save(orders);
+    @PutMapping("/updateStatus/{status}/{id}")
+    @PreAuthorize("hasRole('User')" +
+            " || hasRole('Admin')" )
+    public void editOrderStatus(@PathVariable(value = "id") long id,@PathVariable(value = "status") String status) {
+        if(orderRepository.existsById(id)) {
+            OrderForAdd order = orderForAddRepository.getById(id);
+            order.setStatus(status);
+            orderForAddRepository.save(order);
         }
     }
 
@@ -132,5 +138,14 @@ this.deleteOrderItem(id);
     }
 
     //@PutMapping("/updateStock/{id}")
+
+    @PutMapping("/update")
+    @PreAuthorize("hasRole('Admin')")
+    public void editOrder(@RequestBody OrderForAdd orderForAdd) {
+        if(orderRepository.existsById(orderForAdd.getId())) {
+            orderForAddRepository.save(orderForAdd);
+
+        }
+    }
 
 }
