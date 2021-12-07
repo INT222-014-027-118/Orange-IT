@@ -53,20 +53,20 @@
                             <td class="border-dashed border-b border-gray-200">
                                 <span class="px-6 py-3 flex items-center">{{ order.shippings.companyShipping }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
-                                <span class="px-6 py-3 flex items-center">{{ order.shippings.trackingNumber }}</span>
+                            <td class="border-dashed border-b border-gray-200 ">
+                                <tracking-manage :order="order"/>
                             </td>
                             <td class="border-dashed border-b border-gray-200">
                                 <span class="px-6 py-3 flex items-center">{{ order.shippings.status }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200 text-center space-x-3 ">
-                                <div class="flex items-center justify-center space-x-4">
+                            <td class="border-dashed border-b border-gray-200 text-center">
+                                <div class="flex items-center justify-center mr-1">
                                     <button class="bg-blue-400 py-1 px-2 rounded text-xs font-semibold text-white shadow-md" @click="editProduct(product.id)">
                                         More
                                     </button>
-                                    <button class="material-icons text-red-500" @click="deleteProduct(product.id, product.productName)">
+                                    <!-- <button class="material-icons text-red-500" @click="deleteProduct(product.id, product.productName)">
                                         delete
-                                    </button>
+                                    </button> -->
                                 </div>
                             </td>
                         </tr>
@@ -82,7 +82,12 @@
 </template>
 
 <script>
+import TrackingManage from '../../components/admin/TrackingManage.vue'
+
 export default {
+    components: {
+        TrackingManage,
+    },
     data() {
         return {
             headings: [
