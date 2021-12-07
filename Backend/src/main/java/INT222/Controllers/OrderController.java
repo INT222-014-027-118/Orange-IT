@@ -148,10 +148,11 @@ this.deleteOrderItem(id);
     //@PutMapping("/updateStock/{id}")
 
     @PutMapping("/update")
-    @PreAuthorize("hasRole('Admin')")
-    public void editOrder(@RequestBody OrderForAdd orderForAdd) {
-        if(orderRepository.existsById(orderForAdd.getId())) {
-            orderForAddRepository.save(orderForAdd);
+    @PreAuthorize("hasRole('User')" +
+            " || hasRole('Admin')" )
+    public void editOrder(@RequestBody Orders order) {
+        if(orderRepository.existsById(order.getId())) {
+            orderRepository.save(order);
 
         }
     }
