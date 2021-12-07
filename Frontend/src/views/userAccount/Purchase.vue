@@ -18,15 +18,37 @@
         </div>
 
         <div class="py-5" v-if="selectTab.id == 1">
-            <div class="px-0 sm:px-2 pb-3" v-for="order in this.$store.getters.orders" :key="order.id">
+            <div
+                class="px-0 sm:px-2 pb-3"
+                v-for="order in this.$store.getters.orders.filter((order) => {
+                    return order.status == 'in progress' && order.shippings.status == 'to be delivered';
+                })"
+                :key="order.id"
+            >
                 <order :order="order" />
             </div>
         </div>
 
-        <div class="py-5" v-if="selectTab.id == 2"></div>
+        <div class="py-5" v-if="selectTab.id == 2">
+            <div
+                class="px-0 sm:px-2 pb-3"
+                v-for="order in this.$store.getters.orders.filter((order) => {
+                    return order.status == 'in progress' && order.shippings.status == 'to be receive';
+                })"
+                :key="order.id"
+            >
+                <order :order="order" />
+            </div>
+        </div>
 
         <div class="py-5" v-if="selectTab.id == 3">
-            <div class="px-0 sm:px-2 pb-3" v-for="orderDone in this.$store.getters.orders" :key="orderDone.id">
+            <div
+                class="px-0 sm:px-2 pb-3"
+                v-for="orderDone in this.$store.getters.orders.filter((order) => {
+                    return order.status == 'received';
+                })"
+                :key="orderDone.id"
+            >
                 <!-- <PurchItem :product="product" /> -->
                 <div v-for="(order, index) in orderDone.orderItems" :key="order" :class="index >= 1 ? 'pt-2' : ''">
                     <div class="overflow-hidden mb-3">
@@ -79,7 +101,8 @@ export default {
             tabs: [
                 { id: 1, title: "to be delivered" },
                 { id: 2, title: "to be receive" },
-                { id: 3, title: "done" },
+                { id: 3, title: "received" },
+                { id: 4, title: "done" },
             ],
             selectTab: { id: 1, title: "to be delivered" },
             api: process.env.VUE_APP_API,
