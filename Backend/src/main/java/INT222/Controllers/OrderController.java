@@ -93,7 +93,8 @@ public class OrderController {
 
             orderForAdd.setId(orderForAddRepository.findTopByOrderByIdDesc().getId()+1);
         long num = 1;
-        LocalDateTime now = LocalDateTime.now();
+        ZoneId zone = ZoneId.of("Asia/Bangkok");
+        LocalDateTime now = LocalDateTime.now(zone);
         orderForAdd.setOrderDate(now);
         for (int i = 0; i < orderForAdd.getOrderItems().size(); i++) {
             if(orderItemRepository.findTopByOrderByIdDesc() == null) {

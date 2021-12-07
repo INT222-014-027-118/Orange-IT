@@ -38,15 +38,15 @@ public class ShippingController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('User')")
-    public Shippings addShipping(@RequestBody Shippings shippings) {
+    public void addShipping(@RequestBody Shippings shippings) {
         if(shippingRepository.findTopByOrderByIdDesc() == null) {
             shippings.setId(1);
             shippingRepository.save(shippings);
-            return shippings;
+
         }else
             shippings.setId(shippingRepository.findTopByOrderByIdDesc().getId()+1);
         shippingRepository.save(shippings);
-        return shippings;
+
     }
 
     @GetMapping("/getByDeliveryId/{id}")

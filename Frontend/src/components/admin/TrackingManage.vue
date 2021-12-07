@@ -2,7 +2,7 @@
     <div class="text-center">
         <span v-if="order.shippings.trackingNumber" class="px-6 py-3">{{ order.shippings.trackingNumber }}</span>
         <div v-else class="flex flex-row">
-            <input v-model="trackingNumber" type="text" class="bg-gray-50 shadow-sm relative">
+            <input v-model="trackingNumber" type="text" class="bg-gray-50 shadow-sm relative" />
             <button @click="addTracking" class="bg-green-400 rounded px-2 text-sm text-white font-semibold">Add</button>
         </div>
     </div>
@@ -18,8 +18,8 @@ export default {
     data() {
         return {
             trackingNumber: "",
-            apiUpdateOrder: `${process.env.VUE_APP_API}/order/update`,
-            orderToAddTrackingNumber: {},
+            apiUpdateShipping: `${process.env.VUE_APP_API}/shipping/update`,
+            shipping: {},
         };
     },
     methods: {
@@ -27,11 +27,11 @@ export default {
             this.activeAddButtonTracking = false;
             this.activeAddTracking = true;
         },
-        addTracking() {
-            this.orderToAddTrackingNumber.shippings.trackingNumber = this.trackingNumber;
-            this.orderToAddTrackingNumber.shippings.status = "to be receive";
+        async addTracking() {
+            this.shipping.trackingNumber = this.trackingNumber;
+            this.shipping.status = "to be receive";
             axios
-                .put(this.apiUpdateOrder, this.orderToAddTrackingNumber, {
+                .put(this.apiUpdateShipping, this.shipping, {
                     headers: {
                         Authorization: this.$store.getters.token,
                     },
@@ -42,7 +42,7 @@ export default {
         },
     },
     created() {
-        this.orderToAddTrackingNumber = Object.assign(this.order);
+        this.shipping = Object.assign(this.order.shippings);
     },
 };
 </script>
