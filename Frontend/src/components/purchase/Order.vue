@@ -3,25 +3,47 @@
         <PurchItem v-for="product in order.orderItems" :key="product.id" :product="product" />
         <div class="text-sm md:text-base text-right font-light whitespace-nowrap">
             <p>{{ order.shippings.companyShipping }}</p>
-            <p v-if="order.shippings.status == 'to be receive'">{{ order.shippings.trackingNumber }}</p>
+            <p v-if="order.shippings.status == 'to be receive'">Tracking number: {{ order.shippings.trackingNumber }}</p>
             <p>Ordered on: {{ order.orderDate }}</p>
         </div>
-        <div>
-            <p class="text-lg sm:text-2xl font-semibold self-end ml-auto pb-0.5 whitespace-nowrap ">
-                Total price: <span class="text-primary">{{ totalPrice }}</span>
-            </p>
+        <div class="flex justify-between">
+            <div>
+                <p class="text-lg sm:text-2xl font-semibold self-end ml-auto pb-0.5 whitespace-nowrap ">
+                    Total price: <span class="text-primary">{{ totalPrice }}</span>
+                </p>
+            </div>
+            <button v-if="order.shippings.status == 'to be receive'" class="mt-2 bg-green-500 py-2 px-4 rounded-md text-base font-semibold text-white shadow-md" @click="receivedProduct">Received</button>
         </div>
     </div>
 </template>
 
 <script>
 import PurchItem from "./PurchItem.vue";
+import axios from "axios";
 export default {
     components: {
         PurchItem,
     },
+    data() {
+        return {
+            apiUpdateStatus: `${process.env.VUE_APP_API}/order/updateStatus/received/${this.order.id}`,
+        };
+    },
     props: {
         order: Object,
+    },
+    methods: {
+        receivedProduct() {
+            axios.put(
+                this.apiUpdateStatus,
+                "",
+                {
+                    headers: {
+                        Authorization: this.$store.getters.token,
+                    },
+                }
+            ).then((res)=>{console.log(res);});
+        },
     },
     computed: {
         totalPrice() {
