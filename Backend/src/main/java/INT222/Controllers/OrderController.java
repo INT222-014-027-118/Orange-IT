@@ -52,7 +52,7 @@ public class OrderController {
 
     }
 
-    @GetMapping("/getByUserId/{id}")
+    @GetMapping("/getById/{id}")
     @PreAuthorize("hasRole('User')" +
             " || hasRole('Admin')" )
     public Orders getOrderById(@PathVariable(value = "id") long id){
