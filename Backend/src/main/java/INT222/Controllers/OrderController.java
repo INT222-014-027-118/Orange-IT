@@ -52,6 +52,14 @@ public class OrderController {
 
     }
 
+    @GetMapping("/getById/{id}")
+    @PreAuthorize("hasRole('User')" +
+            " || hasRole('Admin')" )
+    public Orders getOrderById(@PathVariable(value = "id") long id){
+       return orderRepository.getById(id);
+
+    }
+
     @PostMapping("/add")
     @PreAuthorize("hasRole('User')")
     public void addOrder(@RequestBody OrderForAdd orderForAdd){
@@ -140,10 +148,11 @@ this.deleteOrderItem(id);
     //@PutMapping("/updateStock/{id}")
 
     @PutMapping("/update")
-    @PreAuthorize("hasRole('Admin')")
-    public void editOrder(@RequestBody OrderForAdd orderForAdd) {
-        if(orderRepository.existsById(orderForAdd.getId())) {
-            orderForAddRepository.save(orderForAdd);
+    @PreAuthorize("hasRole('User')" +
+            " || hasRole('Admin')" )
+    public void editOrder(@RequestBody Orders order) {
+        if(orderRepository.existsById(order.getId())) {
+            orderRepository.save(order);
 
         }
     }
