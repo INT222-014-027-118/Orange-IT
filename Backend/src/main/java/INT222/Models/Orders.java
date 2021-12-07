@@ -28,7 +28,7 @@ public class Orders {
     private List<OrderItems> orderItems;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "shipping_id")
     private Shippings shippings;
 
