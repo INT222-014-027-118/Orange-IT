@@ -2,7 +2,7 @@
     <div class="text-center">
         <span v-if="order.shippings.trackingNumber" class="px-6 py-3">{{ order.shippings.trackingNumber }}</span>
         <div v-else class="flex flex-row">
-            <input v-model="trackingNumber" type="text" class="bg-gray-50 shadow-sm relative input-form" />
+            <input v-model="trackingNumber" type="text" class="bg-gray-50 shadow-sm relative input-theme" />
             <button @click="addTracking" class="bg-green-500 rounded px-2 text-sm text-white font-semibold">Add</button>
         </div>
     </div>
