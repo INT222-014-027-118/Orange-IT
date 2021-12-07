@@ -119,11 +119,14 @@ this.deleteOrderItem(id);
         orderRepository.deleteById(id);
     }
 
-    @PutMapping("/update")
-    @PreAuthorize("hasRole('Admin')")
-    public void editPayment(@RequestBody Orders orders) {
-        if(orderRepository.existsById(orders.getId())) {
-            orderRepository.save(orders);
+    @PutMapping("/updateStatus/{status}/{id}")
+    @PreAuthorize("hasRole('User')" +
+            " || hasRole('Admin')" )
+    public void editOrderStatus(@PathVariable(value = "id") long id,@PathVariable(value = "status") String status) {
+        if(orderRepository.existsById(id)) {
+            OrderForAdd order = orderForAddRepository.getById(id);
+            order.setStatus(status);
+            orderForAddRepository.save(order);
         }
     }
 
@@ -135,5 +138,14 @@ this.deleteOrderItem(id);
     }
 
     //@PutMapping("/updateStock/{id}")
+
+    @PutMapping("/update")
+    @PreAuthorize("hasRole('Admin')")
+    public void editOrder(@RequestBody OrderForAdd orderForAdd) {
+        if(orderRepository.existsById(orderForAdd.getId())) {
+            orderForAddRepository.save(orderForAdd);
+
+        }
+    }
 
 }
