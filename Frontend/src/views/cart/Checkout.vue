@@ -224,6 +224,7 @@ export default {
                                 userId: Number(this.$store.getters.userId),
                                 orderItems: orderItems,
                             };
+                            console.log(order);
                             axios
                                 .post(`${process.env.VUE_APP_API}/order/add`, order, {
                                     headers: {

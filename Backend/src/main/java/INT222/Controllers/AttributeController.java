@@ -46,13 +46,16 @@ if(!attributeRepository.existsByAttribute(attributes.getAttribute())) {
     @PutMapping("/update")
     @PreAuthorize("hasRole('Admin')")
     public void editAttribute(@RequestBody Attributes attributes) {
-        if(attributeRepository.existsByAttribute(attributes.getAttribute())){
-            throw new SameAttributeException(attributes.getAttribute());
-        }
+        if(attributes.getAttribute().equals(attributeRepository.findById(attributes.getId()).get().getAttribute())) {
+
             if (attributeRepository.existsById(attributes.getId())) {
                 attributeRepository.save(attributes);
-            }else
-        throw new NotFoundAttributeException(attributes.getId());
+            } else
+                throw new NotFoundAttributeException(attributes.getId());
+        }else if (!attributeRepository.existsByAttribute(attributes.getAttribute())) {
+            attributeRepository.save(attributes);
+            }else throw new SameAttributeException(attributes.getAttribute());
+
     }
 
     @DeleteMapping("/delete/{id}")

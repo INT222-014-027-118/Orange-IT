@@ -98,7 +98,7 @@ const mutations = {
             } else {
                 index = state.cart.findIndex(element => element.productCart.id === cartItem.productCart.id && element.colors.id === cartItem.colors.id)
             }
-            let quantity = state.cart[index].quantity + cartItem.quantity > 10 ? 10 : state.cart[index].quantity + cartItem.quantity
+            let quantity = state.cart[index].quantity + cartItem.quantity > state.cart[index].productCart.quantityStock ? state.cart[index].productCart.quantityStock : state.cart[index].quantity + cartItem.quantity
             state.cart[index].quantity = quantity
             let payload = {
                 index: index,

@@ -8,7 +8,7 @@
                     v-for="tab in tabs"
                     :key="tab"
                     @click="selectTab = tab"
-                    class="text-gray-600 text-center cursor-pointer whitespace-nowrap text-base px-4 py-4 md:py-4 md:px-6 hover:text-primary  focus:outline-none"
+                    class="text-gray-600 text-center cursor-pointer select-none whitespace-nowrap text-base px-4 py-4 md:py-4 md:px-6 hover:text-primary  focus:outline-none"
                     :class="[selectTab.id == tab.id ? 'text-primary border-b-2 font-medium border-primary' : 'dark:text-gray-50']"
                 >
                     {{ tab.title }}
@@ -41,7 +41,7 @@
                                         <p class="">color: {{ order.color.label }}</p>
                                         <p class="">{{ passingPrice(order.price) }} x {{ order.quantity }}</p>
                                     </div>
-                                    <p class="text-lg sm:text-2xl font-semibold self-end ml-auto pb-0.5">{{ passingPrice(order.price * order.quantity) }}</p>
+                                    <p class="text-lg sm:text-2xl font-semibold self-end ml-auto pb-0.5 text-primary">{{ passingPrice(order.price * order.quantity) }}</p>
                                 </div>
                             </div>
                         </div>

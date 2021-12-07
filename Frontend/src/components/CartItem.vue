@@ -19,9 +19,9 @@
                         <p class="text-xs sm:text-base text-gray-600 dark:text-gray-300">color: {{ product.colors.label }}</p>
                     </div>
                     <!-- <div> -->
-                        <div class="font-semibold flex items-center mt-3" :class="[stockCheck.class]">
-                            <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
-                        </div>
+                    <div class="font-semibold flex items-center mt-3" :class="[stockCheck.class]">
+                        <span class="material-icons-outlined mr-1"> {{ stockCheck.icon }} </span> {{ stockCheck.text }}
+                    </div>
                     <!-- </div> -->
                 </div>
                 <div>
@@ -63,7 +63,6 @@ export default {
         return {
             image: "",
             quantity: 0,
-            choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         };
     },
     methods: {
@@ -86,16 +85,24 @@ export default {
     computed: {
         stockCheck() {
             let stock = {};
-            if (this.product.quantityStock == 0) {
+            if (this.product.productCart.quantityStock <= 0) {
                 stock = { class: "text-red-500", icon: "cancel", text: "out of stock" };
                 return stock;
-            } else if (this.product.quantityStock < 10) {
-                stock = { class: "text-yellow-500", icon: "error_outline", text: `low stock (${this.product.quantityStock} piece)` };
+            } else if (this.product.productCart.quantityStock < 10) {
+                stock = { class: "text-yellow-500", icon: "error_outline", text: `low stock (${this.product.productCart.quantityStock} pieces)` };
                 return stock;
             } else {
                 stock = { class: "text-green-600", icon: "check_circle", text: "in stock" };
                 return stock;
             }
+        },
+        choices() {
+            let option = [];
+            let maxOption = this.product.productCart.quantityStock > 10 ? 10 : this.product.productCart.quantityStock;
+            for (let index = 1; index <= maxOption; index++) {
+                option.push(index);
+            }
+            return option;
         },
     },
     async created() {

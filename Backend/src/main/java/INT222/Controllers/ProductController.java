@@ -18,6 +18,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +52,7 @@ public class ProductController {
     @Autowired
     private FileStorageService fileStorageService;
 
+    private final Path path = Paths.get("images");
 
     //Get all Products
     @GetMapping("/list")
@@ -154,24 +159,50 @@ public class ProductController {
     @PutMapping("/update")
     @PreAuthorize("hasRole('Admin')")
     public void editProduct(@RequestBody Products products) {
-//        for (int i = 0; i < products.getImages().size(); i++) {
-//            if(imageRepository.existsImagesBySource(products.getImages().get(i).getSource())){
-//                throw new SameImageException(products.getImages().get(i).getSource());
-//            }
-//        }
+
+
         if (productRepository.existsById(products.getId())) {
-            List<Images> images = products.getImages();
-            for (int i = 0; i < images.size(); i++) {
-                if(!imageRepository.existsImagesBySource(images.get(i).getSource())){
-                    images.get(i).setId(imageRepository.findTopByOrderByIdDesc().getId()+1);
-                    images.get(i).setProductId(products.getId());
-                    imageRepository.save(images.get(i));
-                }
-            }
 
             this.deleteProductImage(products.getId());
             this.deleteProductHasAttribute(products.getId());
-            productRepository.save(products);
+
+            for (int i = 0; i < products.getImages().size(); i++) {
+                if(imageRepository.existsImagesBySource(products.getImages().get(i).getSource())){
+                    throw new SameImageException(products.getImages().get(i).getSource());
+                }
+            }
+
+            if(products.getProductName().equals(productRepository.findById(products.getId()).get().getProductName())){
+                List<Images> images =  products.getImages();
+                List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
+                for (int i = 0; i < images.size(); i++) {
+                    images.get(i).setId(imageRepository.findAll().size()+1+i);
+                    images.get(i).setProductId(products.getId());
+                }
+                for (int i = 0; i < productsHasAttributes.size(); i++) {
+                    productsHasAttributes.get(i).setId(productHasAttributeRepository.findAll().size()+1+i);
+                    productsHasAttributes.get(i).setProductId(products.getId());
+                }
+                productRepository.save(products);
+
+            }else if (!productRepository.existsByProductName(products.getProductName())){
+                List<Images> images =  products.getImages();
+                List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
+                for (int i = 0; i < images.size(); i++) {
+                    images.get(i).setId(imageRepository.findAll().size()+1+i);
+                    images.get(i).setProductId(products.getId());
+                }
+                for (int i = 0; i < productsHasAttributes.size(); i++) {
+                    productsHasAttributes.get(i).setId(productHasAttributeRepository.findAll().size()+1+i);
+                    productsHasAttributes.get(i).setProductId(products.getId());
+                }
+                productRepository.save(products);
+            }
+            else throw new SameProductNameException(products.getProductName());
+
+
+
+
         }
 
         else throw new NotFoundException(products.getId());
@@ -250,6 +281,7 @@ public class ProductController {
 
 
     }
+
 
 
 

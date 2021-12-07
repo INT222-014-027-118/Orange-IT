@@ -32,6 +32,11 @@ const routes = [{
         component: () => import( /* webpackChunkName: "manageUsers" */ '../views/admin/ManageUsers.vue')
       },
       {
+        path: ':manage-orders',
+        name: 'ManageOrders',
+        component: () => import( /* webpackChunkName: "manageOrders" */ '../views/admin/ManageOrders.vue'),
+      },
+      {
         path: ':formPath-product',
         name: 'Form',
         props: true,

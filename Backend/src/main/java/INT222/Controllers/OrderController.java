@@ -8,6 +8,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.chrono.ThaiBuddhistDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +57,8 @@ public class OrderController {
     public void addOrder(@RequestBody OrderForAdd orderForAdd){
         if(orderForAddRepository.findTopByOrderByIdDesc() == null){
             orderForAdd.setId(1);
-            LocalDateTime now = LocalDateTime.now();
+            ZoneId zone = ZoneId.of("Asia/Bangkok");
+            LocalDateTime now = LocalDateTime.now(zone);
             orderForAdd.setOrderDate(now);
             long num = 1;
             for (int i = 0; i < orderForAdd.getOrderItems().size(); i++) {

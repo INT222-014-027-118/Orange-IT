@@ -1,10 +1,15 @@
 import axios from "axios"
 const api = process.env.VUE_APP_API
 const get_users_list = `${api}/user/list`
-// const change_active = `${api}/product/changeActive/`
+const get_ordersForAdmin_list = `${api}/order/list`
 
 const state = {
     menuList: [{
+            label: "Manage orders",
+            active: false,
+            link: "manage-orders",
+            icon: "shopping_basket"
+        }, {
             label: "Manage product",
             active: false,
             link: "manage-products",
@@ -23,7 +28,8 @@ const state = {
             icon: "insert_drive_file"
         },
     ],
-    users: []
+    users: [],
+    ordersForAdmin: []
 
 
 }
@@ -31,6 +37,7 @@ const state = {
 const getters = {
     menuList: state => state.menuList,
     users: state => state.users,
+    ordersForAdmin: state => state.ordersForAdmin,
 }
 
 const actions = {
@@ -50,6 +57,17 @@ const actions = {
             }
         }).then((res) => {
             commit('SET_USERS', res.data)
+        })
+    },
+    loadOrdersForAdmin({
+        commit
+    }) {
+        axios.get(get_ordersForAdmin_list, {
+            headers: {
+                'Authorization': this.getters.token
+            }
+        }).then((res) => {
+            commit('SET_ORDERFORADMIN', res.data)
         })
     },
 
@@ -75,6 +93,9 @@ const mutations = {
     },
     SET_USERS(state, payload) {
         state.users = payload
+    },
+    SET_ORDERFORADMIN(state, payload) {
+        state.ordersForAdmin = payload
     },
 
 }

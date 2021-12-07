@@ -22,7 +22,7 @@
                     </button>
                 </div>
 
-                <filter-products class="p-2 w-full sm:w-auto" />
+                <filter-products class="p-2 w-full sm:w-auto z-50" />
 
                 <div class="p-2 w-full sm:w-auto">
                     <button @click="addNewProduct" class="bg-primary rounded-md px-3 py-1 text-white btn shadow flex items-center justify-center w-full">
@@ -166,7 +166,6 @@ export default {
             }
         },
         editProduct(id) {
-            // this.$router.push({name:"" ,prarm:{}})
             this.$router.push({ name: "Form", params: { formPath: "edit", productId: id } });
         },
         changeActiveProduct(id) {
@@ -178,9 +177,7 @@ export default {
                     Authorization: this.$store.getters.token,
                 },
             };
-            axios(config).then((res) => {
-                console.log(res);
-            });
+            axios(config)
         },
     },
     created() {
