@@ -12,13 +12,15 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import Loading from '@/components/Loading.vue'
 import BaseProduct from "@/components/BaseProduct.vue";
 import LDmode from "@/components/LDmode.vue";
-
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 const vue = createApp(App)
 vue.use(store)
 vue.use(router)
 vue.use(VueSplide)
 vue.use(VueSweetalert2)
+vue.use(VueAxios, axios)
 vue.component('Carousel', Carousel)
 vue.component('Loading', Loading)
 vue.component('BaseProduct', BaseProduct)
