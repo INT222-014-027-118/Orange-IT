@@ -11,7 +11,7 @@
                         <p class="">color: {{ product.color.label }}</p>
                         <p class="">{{ passingPrice(product.price) }} x {{ product.quantity }}</p>
                     </div>
-                    <p class="text-base sm:text-lg font-semibold self-end ml-auto pb-0.5 text-primary">{{ passingPrice(product.price * product.quantity) }}</p>
+                    <p class="text-base sm:text-xl font-semibold self-end ml-auto pb-0.5 text-primary">{{ passingPrice(product.price * product.quantity) }}</p>
                 </div>
             </div>
         </div>

@@ -94,7 +94,7 @@ import Order from "../../components/purchase/Order.vue";
 export default {
     components: {
         Order,
-        // PurchItem,
+        // PurchItem, 
     },
     data() {
         return {

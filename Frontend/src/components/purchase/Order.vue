@@ -6,13 +6,13 @@
             <p v-if="order.shippings.status == 'to be receive'">Tracking number: {{ order.shippings.trackingNumber }}</p>
             <p>Ordered on: {{ order.orderDate }}</p>
         </div>
-        <div class="flex justify-between">
+        <div class="flex justify-between mt-2">
             <div>
                 <p class="text-lg sm:text-2xl font-semibold self-end ml-auto pb-0.5 whitespace-nowrap ">
                     Total price: <span class="text-primary">{{ totalPrice }}</span>
                 </p>
             </div>
-            <button v-if="order.shippings.status == 'to be receive'" class="mt-2 bg-green-500 py-2 px-4 rounded-md text-base font-semibold text-white shadow-md" @click="receivedProduct">Received</button>
+            <button v-if="order.shippings.status == 'to be receive'" class="btn py-2 px-4" @click="receivedProduct">Received</button>
         </div>
     </div>
 </template>
@@ -34,15 +34,15 @@ export default {
     },
     methods: {
         receivedProduct() {
-            axios.put(
-                this.apiUpdateStatus,
-                "",
-                {
+            axios
+                .put(this.apiUpdateStatus, "", {
                     headers: {
                         Authorization: this.$store.getters.token,
                     },
-                }
-            ).then((res)=>{console.log(res);});
+                })
+                .then((res) => {
+                    console.log(res);
+                });
         },
     },
     computed: {

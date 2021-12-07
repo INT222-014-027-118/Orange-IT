@@ -77,12 +77,14 @@
                                 </label>
                             </td>
                             <td class="border-dashed border-b border-gray-200 text-center space-x-3">
-                                <button class="material-icons text-yellow-500" @click="editProduct(product.id)">
-                                    edit
-                                </button>
-                                <button class="material-icons text-red-500" @click="deleteProduct(product.id, product.productName)">
-                                    delete
-                                </button>
+                                <div class="flex flex-nowrap">
+                                    <button class="material-icons text-yellow-500" @click="editProduct(product.id)">
+                                        edit
+                                    </button>
+                                    <button class="material-icons text-red-500" @click="deleteProduct(product.id, product.productName)">
+                                        delete
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -177,7 +179,7 @@ export default {
                     Authorization: this.$store.getters.token,
                 },
             };
-            axios(config)
+            axios(config);
         },
     },
     created() {
