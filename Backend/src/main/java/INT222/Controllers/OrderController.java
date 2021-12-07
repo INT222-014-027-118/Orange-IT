@@ -52,6 +52,14 @@ public class OrderController {
 
     }
 
+    @GetMapping("/getByUserId/{id}")
+    @PreAuthorize("hasRole('User')" +
+            " || hasRole('Admin')" )
+    public Orders getOrderById(@PathVariable(value = "id") long id){
+       return orderRepository.getById(id);
+
+    }
+
     @PostMapping("/add")
     @PreAuthorize("hasRole('User')")
     public void addOrder(@RequestBody OrderForAdd orderForAdd){
