@@ -5,6 +5,7 @@ import user from './modules/user.js';
 import cart from './modules/cart.js'
 import adminFeatures from "./modules/adminFeatures"
 import orders from './modules/orders'
+import reviews from './modules/reviews'
 
 export default new Vuex.Store({
   modules: {
@@ -13,7 +14,8 @@ export default new Vuex.Store({
     user,
     cart,
     adminFeatures,
-    orders
+    orders,
+    reviews
   },
 
   state: {

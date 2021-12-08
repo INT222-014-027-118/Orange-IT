@@ -120,6 +120,8 @@ export default {
             },
         };
     },
+    created() {
+    },
 };
 </script>
 

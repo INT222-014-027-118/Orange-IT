@@ -2,17 +2,19 @@
     <div class="pt-1">
         <div class="mx-auto max-w-7xl">
             <div class="p-1 md:mt-0 md:p-2 lg:mx-auto">
-                <h1 class="py-3 px-3 text-2xl md:text-3xl font-semibold flex items-center"><span class="material-icons mr-2 text-xl py-2 px-3 bg-primary text-white rounded-full"> rate_review </span>review</h1>
+                <h1 class="py-3 px-3 text-2xl md:text-3xl font-semibold flex items-center">
+                    <span class="material-icons mr-2 text-xl py-2 px-3 bg-primary text-white rounded-full"> rate_review </span>review
+                </h1>
                 <div class="capitalize bg-white dark:bg-dark_secondary shadow-md rounded-md p-1 md:p-3">
                     <div class="px-0 sm:px-2">
                         <div class="overflow-hidden">
                             <div class="flex flex-shrink-0 items-center">
                                 <div class="self-start border border-gray-200 rounded-md w-14 h-14 sm:w-20 sm:h-20 md:w-28 md:h-28 flex flex-shrink-0 overflow-hidden">
-                                    <img :src="`${this.api}/image/get/DeathAdder-V2-1.png`" class="object-cover object-center w-full h-full" alt="Product image" />
+                                    <img :src="`${this.api}/image/get/${this.image}`" class="object-cover object-center w-full h-full" alt="Product image" />
                                 </div>
                                 <div class="ml-3 w-full self-start">
-                                    <p class="font-bold">RAZER DEATHADDER V2</p>
-                                    <p class="">color: Black</p>
+                                    <p class="font-bold">{{ product.productName }}</p>
+                                    <p class="">brand: {{ product.brandName }}</p>
                                 </div>
                             </div>
                         </div>
@@ -38,9 +40,9 @@
                     <div class="px-0 py-2 sm:px-2 max-w-lg mx-auto mt-3 mb-6">
                         <div class="px-1 font-semibold tracking-wide">rating:</div>
                         <div class="px-3 pb-5 pt-2 sm:px-4 select-none space-y-3">
-                            <div class="">
+                            <div class="" v-for="ratingTitle in this.$store.getters.ratingTitleList" :key="ratingTitle">
                                 <div class="flex flex-row justify-between ">
-                                    <label for="volume text-primary tracking-tighter px-1">Volume</label>
+                                    <label for="volume text-primary tracking-tighter px-1">{{ ratingTitle.name }}</label>
                                     <div class="pl-3">
                                         <span class="text-sm">{{ rating.sore }}</span>
                                     </div>
@@ -49,7 +51,7 @@
                                     <input v-model="rating.sore" class="focus:outline-none styled-slider slider-progress " type="range" id="volume" name="volume" min="0" max="10" />
                                 </div>
                             </div>
-                            <div class="" v-for="num in [1,2,4,5,6]" :key="num">
+                            <!-- <div class="">
                                 <div class="flex flex-row justify-between ">
                                     <label for="volume text-primary tracking-tighter px-1">Volume</label>
                                     <div class="pl-3">
@@ -59,7 +61,7 @@
                                 <div class="flex items-center mt-1">
                                     <input v-model="rating.sore1" class="focus:outline-none styled-slider slider-progress " type="range" id="volume" name="volume" min="0" max="10" />
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="px-0 sm:px-2 relative max-w-lg mx-auto">
@@ -98,11 +100,13 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
     data() {
         return {
             api: process.env.VUE_APP_API,
             product: {},
+            image: "",
             reviews: {
                 id: null,
                 star: 0,
@@ -116,8 +120,41 @@ export default {
                 sore2: 0,
                 sore3: 0,
             },
+            ratingTitle: [
+                {
+                    id: 1,
+                    name: "Design",
+                    description: null,
+                },
+                {
+                    id: 2,
+                    name: "Material",
+                    description: null,
+                },
+                {
+                    id: 3,
+                    name: "Good value",
+                    description: null,
+                },
+                {
+                    id: 4,
+                    name: "Ease to use",
+                    description: null,
+                },
+            ],
             hoverStarCcore: 0,
+            review: {
+                id: 1,
+                star: 0,
+                comment: "",
+                reviewDate: "",
+                userId: 5,
+                ratingOfProductForAdds: [],
+            },
         };
+    },
+    props: {
+        productId: String,
     },
     methods: {
         scrollToTop() {
@@ -153,8 +190,14 @@ export default {
             e.addEventListener("input", () => e.style.setProperty("--value", e.value));
         }
     },
-    created() {
+    async created() {
         this.reviews.users_id = this.$store.getters.userInfo.id;
+        console.log(this.reviews.users_id);
+        this.product = await axios.get(`${this.api}/product/${this.productId}`).then((response) => {
+            this.image = response.data.images[0].source;
+            return response.data;
+        });
+        this.$store.dispatch("loadRatingTitle");
     },
 };
 </script>
