@@ -137,11 +137,11 @@ public class ProductController {
              List<Images> images =  products.getImages();
              List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
         for (int i = 0; i < images.size(); i++) {
-            images.get(i).setId(imageRepository.findAll().size()+1+i);
+            images.get(i).setId(imageRepository.findTopByOrderByIdDesc().getId()+1+i);
             images.get(i).setProductId(id);
         }
         for (int i = 0; i < productsHasAttributes.size(); i++) {
-            productsHasAttributes.get(i).setId(productHasAttributeRepository.findAll().size()+1+i);
+            productsHasAttributes.get(i).setId(productHasAttributeRepository.findTopByOrderByIdDesc().getId()+i+1);
             productsHasAttributes.get(i).setProductId(id);
         }
             productRepository.save(products);
@@ -165,22 +165,22 @@ public class ProductController {
 
             this.deleteProductImage(products.getId());
             this.deleteProductHasAttribute(products.getId());
-
-            for (int i = 0; i < products.getImages().size(); i++) {
-                if(imageRepository.existsImagesBySource(products.getImages().get(i).getSource())){
-                    throw new SameImageException(products.getImages().get(i).getSource());
-                }
-            }
+//
+//            for (int i = 0; i < products.getImages().size(); i++) {
+//                if(imageRepository.existsImagesBySource(products.getImages().get(i).getSource())){
+//                    throw new SameImageException(products.getImages().get(i).getSource());
+//                }
+//            }
 
             if(products.getProductName().equals(productRepository.findById(products.getId()).get().getProductName())){
                 List<Images> images =  products.getImages();
                 List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
                 for (int i = 0; i < images.size(); i++) {
-                    images.get(i).setId(imageRepository.findAll().size()+1+i);
+                    images.get(i).setId(imageRepository.findTopByOrderByIdDesc().getId()+1+i);
                     images.get(i).setProductId(products.getId());
                 }
                 for (int i = 0; i < productsHasAttributes.size(); i++) {
-                    productsHasAttributes.get(i).setId(productHasAttributeRepository.findAll().size()+1+i);
+                    productsHasAttributes.get(i).setId(productHasAttributeRepository.findTopByOrderByIdDesc().getId()+i+1);
                     productsHasAttributes.get(i).setProductId(products.getId());
                 }
                 productRepository.save(products);
@@ -189,11 +189,11 @@ public class ProductController {
                 List<Images> images =  products.getImages();
                 List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
                 for (int i = 0; i < images.size(); i++) {
-                    images.get(i).setId(imageRepository.findAll().size()+1+i);
+                    images.get(i).setId(imageRepository.findTopByOrderByIdDesc().getId()+1+i);
                     images.get(i).setProductId(products.getId());
                 }
                 for (int i = 0; i < productsHasAttributes.size(); i++) {
-                    productsHasAttributes.get(i).setId(productHasAttributeRepository.findAll().size()+1+i);
+                    productsHasAttributes.get(i).setId(productHasAttributeRepository.findTopByOrderByIdDesc().getId()+i+1);
                     productsHasAttributes.get(i).setProductId(products.getId());
                 }
                 productRepository.save(products);
