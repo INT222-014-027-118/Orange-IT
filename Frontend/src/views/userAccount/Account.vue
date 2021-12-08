@@ -25,7 +25,7 @@
                                     params: { manage: 'account' },
                                 }"
                                 @click="changetShowAccountPage"
-                                class="block px-2 py-0.5 text-sm font-semibold text-center text-white bg-primary hover:bg-primaryfocus transition-colors rounded md:inline-block"
+                                class="block px-2 py-0.5 text-sm text-center btn md:inline-block"
                                 >Edit</router-link
                             >
                         </div>

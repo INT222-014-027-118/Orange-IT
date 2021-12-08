@@ -34,53 +34,59 @@
                 </div>
             </div>
 
-            <div class="overflow-auto mx-1 shadow-inner border h-screen height-res" style="">
+            <div class="overflow-auto mx-1 shadow-inner border dark:border-gray-500 h-screen height-res" style="">
                 <table class="border-collapse table-auto w-full whitespace-no-wrap table-striped relative">
                     <thead>
                         <tr class="text-left sticky top-0 z-10">
-                            <th v-for="heading in headings" :key="heading.key" class="bg-secondary border-b border-gray-200 px-6 py-2 text-black font-bold tracking-wider uppercase text-xs whitespace-nowrap">
+                            <th
+                                v-for="heading in headings"
+                                :key="heading.key"
+                                class="bg-secondary border-b border-gray-200 dark:border-gray-500 px-6 py-2 text-black font-bold tracking-wider uppercase text-xs whitespace-nowrap"
+                            >
                                 {{ heading.value }}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="product in products" :key="product.id">
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ product.id }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <img :src="`${this.api}/image/get/${product.images[0].source}`" class="object-cover object-center w-14 h-14 sm:w-14 sm:h-14 md:w-20 md:h-20" alt="Product image" />
                             </td>
-                            <td class="border-dashed border-b border-gray-200 text-xs w-1/5">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500 text-xs w-1/5">
                                 <span class="px-6 py-3 flex items-center">{{ product.productName }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ product.brandName }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200 text-xs py-3">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500 text-xs py-3">
                                 <span class="px-6 flex items-center">{{ product.catergories[0].category }}</span>
                                 <span v-if="product.catergories.length > 1" class="px-6 flex items-center">{{ product.catergories[1].category }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ product.price }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <div class="flex items-center justify-center">
                                     <span class="px-2 text-lg font-bold">{{ product.quantityStock }}</span>
                                     <button class="material-icons text-md p-1">add_circle_outline</button>
                                 </div>
                             </td>
-                            <td class="border-dashed border-b border-gray-200 text-center">
-                                <label class="switch shadow-sm">
-                                    <input type="checkbox" :checked="product.active" @click="changeActiveProduct(product.id)" />
-                                    <span class="slider"></span>
-                                </label>
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500 text-center">
+                                <div class="flex justify-center">
+                                    <label class="switch shadow-sm">
+                                        <input type="checkbox" :checked="product.active" @click="changeActiveProduct(product.id)" />
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
                             </td>
-                            <td class="border-dashed border-b border-gray-200 text-center space-x-3">
-                                <button class="material-icons text-yellow-500" @click="editProduct(product.id)">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500 text-center">
+                                <button class="material-icons text-yellow-500 p-2 hover:text-primary" @click="editProduct(product.id)">
                                     edit
                                 </button>
-                                <button class="material-icons text-red-500" @click="deleteProduct(product.id, product.productName)">
+                                <button class="material-icons text-red-500 p-2 mx-2 hover:text-red-600" @click="deleteProduct(product.id, product.productName)">
                                     delete
                                 </button>
                             </td>
@@ -177,7 +183,7 @@ export default {
                     Authorization: this.$store.getters.token,
                 },
             };
-            axios(config)
+            axios(config);
         },
     },
     created() {

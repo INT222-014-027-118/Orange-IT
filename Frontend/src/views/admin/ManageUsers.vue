@@ -1,7 +1,7 @@
 <template>
     <div class="p-1 sm:p-5">
         <div class="mx-auto bg-white dark:bg-dark_tertiary rounded-md shadow-sm max-w-7xl pb-1">
-            <div class="py-4 border-b pb-5 flex flex-wrap justify-between bg-white dark:bg-dark_tertiary">
+            <div class="py-4 border-b dark:border-gray-500 pb-5 flex flex-wrap justify-between bg-white dark:bg-dark_tertiary">
                 <h1 class="text-2xl sm:text-3xl whitespace-nowrap p-2 font-semibold font-sans">Manage users</h1>
 
                 <div class="items-center rounded-3xl inline-flex w-full sm:w-2/5 p-2">
@@ -23,14 +23,14 @@
                 </div>
             </div>
 
-            <div class="overflow-auto mx-1 shadow-inner border h-screen height-res" style="">
+            <div class="overflow-auto mx-1 shadow-inner border dark:border-gray-500 h-screen height-res" style="">
                 <table class="border-collapse table-auto w-full whitespace-no-wrap table-striped relative">
                     <thead>
                         <tr class="text-left sticky top-0 z-10">
                             <th
                                 v-for="heading in headings"
                                 :key="heading.key"
-                                class="bg-secondary border-b border-gray-200 px-6 py-2 text-black font-bold tracking-wider uppercase text-xs whitespace-nowrap"
+                                class="bg-secondary border-b border-gray-200 dark:border-gray-500 px-6 py-2 text-black font-bold tracking-wider uppercase text-xs whitespace-nowrap"
                             >
                                 {{ heading.value }}
                             </th>
@@ -38,23 +38,23 @@
                     </thead>
                     <tbody>
                         <tr v-for="user in users" :key="user.id">
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ user.id }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ user.username }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ user.userFirstName }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ user.userLastName }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ user.role[0].name }}</span>
                             </td>
 
-                            <td class="border-dashed border-b border-gray-200 text-center space-x-3 ">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500 text-center space-x-3 ">
                                 <div class="flex items-center justify-center space-x-4">
                                     <button class="bg-blue-400 py-1 px-2 rounded text-xs font-semibold text-white shadow-md" @click="editProduct(product.id)">
                                         More
@@ -126,4 +126,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.height-res {
+    height: 80vh;
+}
+
+@media screen and (max-width: 640px) {
+    .height-res {
+        height: 70vh;
+    }
+}
+</style>

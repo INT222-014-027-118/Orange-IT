@@ -23,14 +23,14 @@
                 </div>
             </div>
 
-            <div class="overflow-auto mx-1 shadow-inner border h-screen height-res" style="">
+            <div class="overflow-auto mx-1 shadow-inner border dark:border-gray-500 h-screen height-res" style="">
                 <table class="border-collapse table-auto w-full whitespace-no-wrap table-striped relative">
                     <thead>
                         <tr class="text-left sticky top-0 z-10">
                             <th
                                 v-for="heading in headings"
                                 :key="heading.key"
-                                class="bg-secondary border-b border-gray-200 px-6 py-2 text-black font-bold tracking-wider uppercase text-xs whitespace-nowrap"
+                                class="bg-secondary border-b border-gray-200 dark:border-gray-500 px-6 py-2 text-black font-bold tracking-wider uppercase text-xs whitespace-nowrap"
                             >
                                 {{ heading.value }}
                             </th>
@@ -38,29 +38,29 @@
                     </thead>
                     <tbody>
                         <tr v-for="order in orders" :key="order.id">
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ order.id }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ order.users.username }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
-                                <span class="px-6 py-3 flex items-center">{{ order.orderDate }}</span>
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
+                                <span class="px-6 py-3 flex items-center whitespace-nowrap">{{ order.orderDate }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ order.status }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ order.shippings.companyShipping }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200 ">
-                                <tracking-manage :order="order"/>
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500 ">
+                                <tracking-manage :order="order" />
                             </td>
-                            <td class="border-dashed border-b border-gray-200">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
                                 <span class="px-6 py-3 flex items-center">{{ order.shippings.status }}</span>
                             </td>
-                            <td class="border-dashed border-b border-gray-200 text-center">
-                                <div class="flex items-center justify-center mr-1">
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500 text-center">
+                                <div class="flex items-center justify-center mr-2">
                                     <button class="bg-blue-400 py-1 px-2 rounded text-xs font-semibold text-white shadow-md" @click="editProduct(product.id)">
                                         More
                                     </button>
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import TrackingManage from '../../components/admin/TrackingManage.vue'
+import TrackingManage from "../../components/admin/TrackingManage.vue";
 
 export default {
     components: {
@@ -143,4 +143,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.height-res {
+    height: 80vh;
+}
+
+@media screen and (max-width: 640px) {
+    .height-res {
+        height: 70vh;
+    }
+}
+</style>

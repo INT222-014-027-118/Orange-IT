@@ -17,7 +17,7 @@
 }
 
 .btn {
-    @apply bg-primary hover:bg-primaryfocus text-white font-semibold focus:outline-none rounded-md transition-colors;
+    @apply bg-primary hover:bg-primaryfocus text-white font-semibold focus:outline-none rounded-md transition-colors shadow-md;
 }
 
 .cancel-btn {
