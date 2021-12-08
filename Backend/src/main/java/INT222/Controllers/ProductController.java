@@ -92,22 +92,7 @@ public class ProductController {
     public void deleteProduct(@PathVariable long id) {
 
         if (this.productRepository.existsById(id)) {
-//           long num =0;
-//           Products products =  productRepository.getById(id);
-//           List<Images> images = products.getImages();
-//            for (int i = 0; i < images.size(); i++) {
-//                Images image = imageRepository.getById(images.get(i).getId());
-//                image.setProduct_id(num);
-//                imageRepository.save(image);
-//
-//            }
-//            List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
-//            for (int i = 0; i < productsHasAttributes.size(); i++) {
-//                ProductsHasAttributes productSpecValue = productsHasAttributes.get(i);
-//                productSpecValue.setProduct_id(num);
-//                productSpecValueRepository.save(productSpecValue);
-//
-//            }
+
      if(this.productRepository.findById(id).get().getActive() == 0) {
          this.deleteProductHasAttribute(id);
          this.deleteProductImage(id);
@@ -137,11 +122,11 @@ public class ProductController {
              List<Images> images =  products.getImages();
              List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
         for (int i = 0; i < images.size(); i++) {
-            images.get(i).setId(imageRepository.findAll().size()+1+i);
+            images.get(i).setId(imageRepository.findTopByOrderByIdDesc().getId()+1+i);
             images.get(i).setProductId(id);
         }
         for (int i = 0; i < productsHasAttributes.size(); i++) {
-            productsHasAttributes.get(i).setId(productHasAttributeRepository.findAll().size()+1+i);
+            productsHasAttributes.get(i).setId(productHasAttributeRepository.findTopByOrderByIdDesc().getId()+i+1);
             productsHasAttributes.get(i).setProductId(id);
         }
             productRepository.save(products);
@@ -176,11 +161,11 @@ public class ProductController {
                 List<Images> images =  products.getImages();
                 List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
                 for (int i = 0; i < images.size(); i++) {
-                    images.get(i).setId(imageRepository.findAll().size()+1+i);
+                    images.get(i).setId(imageRepository.findTopByOrderByIdDesc().getId()+1+i);
                     images.get(i).setProductId(products.getId());
                 }
                 for (int i = 0; i < productsHasAttributes.size(); i++) {
-                    productsHasAttributes.get(i).setId(productHasAttributeRepository.findAll().size()+1+i);
+                    productsHasAttributes.get(i).setId(productHasAttributeRepository.findTopByOrderByIdDesc().getId()+i+1);
                     productsHasAttributes.get(i).setProductId(products.getId());
                 }
                 productRepository.save(products);
@@ -189,11 +174,11 @@ public class ProductController {
                 List<Images> images =  products.getImages();
                 List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
                 for (int i = 0; i < images.size(); i++) {
-                    images.get(i).setId(imageRepository.findAll().size()+1+i);
+                    images.get(i).setId(imageRepository.findTopByOrderByIdDesc().getId()+1+i);
                     images.get(i).setProductId(products.getId());
                 }
                 for (int i = 0; i < productsHasAttributes.size(); i++) {
-                    productsHasAttributes.get(i).setId(productHasAttributeRepository.findAll().size()+1+i);
+                    productsHasAttributes.get(i).setId(productHasAttributeRepository.findTopByOrderByIdDesc().getId()+i+1);
                     productsHasAttributes.get(i).setProductId(products.getId());
                 }
                 productRepository.save(products);

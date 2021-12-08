@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class ReviewForAdd {
     @Column
     private String comment;
     @Column(name = "review_date")
-    private String reviewDate;
+    private LocalDateTime reviewDate;
     @Column(name = "users_id")
     private long userId;
 
