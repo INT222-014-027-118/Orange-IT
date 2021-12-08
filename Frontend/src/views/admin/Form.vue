@@ -6,7 +6,7 @@
             <form @submit.prevent="submitForm" class="py-5">
                 <div class="px-1 md:px-3">
                     <label class="label-css" for="grid-state">Category *</label>
-                    <div class="input-form input-theme" ref="categories" :class="[invalid.categories ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
+                    <div class="input-form input-theme" :class="[invalid.categories ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <div class="w-full flex text-xs p-2">
                             <p class="w-1/3">category</p>
                             <p class="hidden md:inline-block w-1/3">sub category</p>
@@ -15,7 +15,6 @@
                             <div class="flex flex-col bg-white dark:bg-gray-700 w-full md:w-1/3 p-1 border-b border-r">
                                 <button
                                     type="button"
-                                    ref="category"
                                     class="px-2 py-1 cursor-pointer flex justify-between rounded-sm"
                                     :class="[selectRootCat.category === category.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary']"
                                     v-for="category in $store.getters.rootCategories"
@@ -46,7 +45,7 @@
 
                 <div class="px-1 md:px-3 lg:w-full">
                     <label class="label-css" for="brand">Brand *</label>
-                    <select class="input-form input-theme" id="brandName" v-model="product.brandName" :class="[invalid.brandName ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
+                    <select class="input-form input-theme" ref="brandName" v-model="product.brandName" :class="[invalid.brandName ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <option value="" disabled selected>[ Select Brand ]</option>
                         <option v-for="brand in $store.getters.brands" :key="brand" :value="brand" class="text-lg">{{ brand }}</option>
                     </select>
@@ -54,10 +53,11 @@
 
                 <div class="px-1 md:px-3 lg:w-full">
                     <div class="flex justify-between">
-                        <label class="label-css" for="" ref="name">Product Name *</label>
+                        <label class="label-css">Product Name *</label>
                         <p class="label-css">{{ countProductName }}/100</p>
                     </div>
                     <input
+                        ref="productName"
                         v-model="product.productName"
                         class="input-form input-theme"
                         id=""
@@ -76,6 +76,7 @@
                             <span v-if="!invalid.price" class="text-sm text-red-500 select-none">Please input price</span>
                         </div>
                         <input
+                            ref="price"
                             v-model.number="product.price"
                             step="0.00"
                             class="input-form input-theme"
@@ -94,6 +95,7 @@
                             <span v-if="!invalid.quantityStock" class="text-sm text-red-500 select-none ">Please input stock quantity</span>
                         </div>
                         <input
+                            ref="quantityStock"
                             v-model.number="product.quantityStock"
                             step="1"
                             class="input-form input-theme"
@@ -109,7 +111,7 @@
 
                 <div class="relative px-1 md:px-3 lg:w-full">
                     <label class="label-css">color *</label>
-                    <div class="input-form input-theme flex flex-wrap" :class="[invalid.colors ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
+                    <div class="input-form input-theme flex flex-wrap" id="colors" ref="colors" :class="[invalid.colors ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <label :for="color.id" v-for="color in $store.getters.colors" :key="color.id" class="flex flex-col items-center cursor-pointer">
                             <input
                                 :id="color.id"
@@ -167,7 +169,7 @@
 
                 <div class="px-1 md:px-3 lg:w-full rounded-md">
                     <label class="label-css">attribute *</label>
-                    <div class="input-form input-theme" :class="[invalid.productsHasAttributes ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
+                    <div class="input-form input-theme" id="attributes" :class="[invalid.productsHasAttributes ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <div class="grid grid-cols-2 grid-rows-2">
                             <div class="col-span-2 lg:col-span-1 p-1">
                                 <h2 class="text-center font-semibold relative">Attribute</h2>
@@ -307,13 +309,13 @@ export default {
     },
     methods: {
         submitForm() {
-            this.invalid.quantityStock = this.product.quantityStock === 0 ? false : true;
-            this.invalid.colors = this.product.colors.length === 0 ? false : true;
-            // this.invalid.images = this.imageInfo.length === 0 || this.imageInfo.length >= 7 ? false : true;
-            this.invalid.productName = this.product.productName === "" ? false : true;
-            this.invalid.productsHasAttributes = this.product.productsHasAttributes.length === 0 ? false : true;
-            this.invalid.price = this.product.price === 0 ? false : true;
-            this.invalid.brandName = this.product.brandName === "" ? false : true;
+            this.invalid.images = this.preview_list.length === 0 || this.preview_list.length >= 7 ? false : true;
+            this.invalid.productsHasAttributes = this.product.productsHasAttributes.length === 0 ? false + this.gotoAttributes() : true;
+            this.invalid.colors = this.product.colors.length === 0 ? false + this.gotoColor() : true;
+            this.invalid.quantityStock = this.product.quantityStock === 0 ? false + this.$refs.quantityStock.focus() : true;
+            this.invalid.price = this.product.price === 0 ? false + this.$refs.price.focus() : true;
+            this.invalid.productName = this.product.productName === "" ? false + this.$refs.productName.focus() : true;
+            this.invalid.brandName = this.product.brandName == "" ? false + this.$refs.brandName.focus() : true;
             this.invalid.categories = Object.keys(this.selectRootCat).length === 0 ? false + this.scrollToTop() : true;
 
             if (this.validate) {
@@ -327,12 +329,7 @@ export default {
                     for (let index = 0; index < this.imageInfo.length; index++) {
                         this.product.images.push({ id: 1, source: this.imageInfo[index].name, label: this.imageInfo[index].name.split(".")[0], productId: this.product.id });
                     }
-
-                    // console.log(this.product);
                     this.$store.dispatch("updateProduct", { product: this.product, newImages: this.imageInfo, imageForDelete: this.imagesDelete });
-                    // this.resetForm();
-                    //     }
-                    // });
                 } else {
                     var imagesArray = this.imageInfo.map((image) => {
                         return { id: 1, source: image.name, label: image.name.split(".")[0], product_id: 1 };
@@ -341,12 +338,20 @@ export default {
                     this.$store.dispatch("uploadImages", this.imageInfo).then((response) => {
                         if (response.status == 200) {
                             this.$store.dispatch("addProduct", this.product);
-                            // console.log(this.product);
                         }
                     });
                 }
             }
         },
+        gotoColor() {
+            var color = document.getElementById("colors");
+            color.scrollIntoView();
+        },
+        gotoAttributes() {
+            var attributes = document.getElementById("attributes");
+            attributes.scrollIntoView();
+        },
+
         chooseRootCategory(category) {
             this.selectRootCat = category;
             this.selectChildCat = {};
@@ -437,7 +442,7 @@ export default {
             return (
                 this.product.quantityStock !== 0 &&
                 this.product.colors.length !== 0 &&
-                // this.product.images !== 0 &&
+                this.product.preview_list !== 0 &&
                 this.product.productName !== "" &&
                 this.product.productsHasAttributes.length !== 0 &&
                 this.product.price !== 0 &&

@@ -37,7 +37,7 @@ const state = {
 const getters = {
     menuList: state => state.menuList,
     users: state => state.users,
-    ordersForAdmin: state => state.ordersForAdmin,
+    ordersForAdmin: state => [].concat(state.ordersForAdmin).reverse(),
 }
 
 const actions = {
