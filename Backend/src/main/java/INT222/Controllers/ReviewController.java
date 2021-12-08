@@ -33,12 +33,12 @@ public class ReviewController {
         List<Reviews> reviews = new ArrayList<Reviews>();
         List<Reviews> reviewsList = reviewRepository.findAll();
         for (int i = 0; i < reviewsList.size(); i++) {
-            List<RatingOfProduct> ratingOfProducts = reviewsList.get(1).getRatingOfProducts();
-            for (int j = 0; j < ratingOfProducts.size(); j++) {
-                if(ratingOfProducts.get(j).getProductId()== id){
+            List<RatingOfProduct> ratingOfProducts = reviewsList.get(i).getRatingOfProducts();
+
+                if(ratingOfProducts.get(0).getProductId()== id){
                     reviews.add(reviewsList.get(i));
                 }
-            }
+            
         }
         return reviews;
     }

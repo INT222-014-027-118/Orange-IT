@@ -2,7 +2,9 @@
     <div class="pt-1">
         <div class="mx-auto max-w-7xl">
             <div class="p-1 md:mt-0 md:p-2 lg:mx-auto">
-                <h1 class="py-3 px-3 text-2xl md:text-3xl font-semibold flex items-center"><span class="material-icons mr-2 text-xl py-2 px-3 bg-primary text-white rounded-full"> rate_review </span>review</h1>
+                <h1 class="py-3 px-3 text-2xl md:text-3xl font-semibold flex items-center">
+                    <span class="material-icons mr-2 text-xl py-2 px-3 bg-primary text-white rounded-full"> rate_review </span>review
+                </h1>
                 <div class="capitalize bg-white dark:bg-dark_secondary shadow-md rounded-md p-1 md:p-3">
                     <div class="px-0 sm:px-2">
                         <div class="overflow-hidden">
@@ -171,6 +173,19 @@ export default {
             this.reviews.ratingOfProductForAdds.push(this.GoodValue);
             this.reviews.ratingOfProductForAdds.push(this.EaseToUse);
             console.log(this.reviews);
+            axios
+                .post(`${this.api}/review/add`, this.reviews, {
+                    headers: {
+                        Authorization: this.$store.getters.token,
+                    },
+                })
+                .then((res) => {
+                    console.log(res);
+                    if (res.status === 200) {
+                        this.$router.push("/");
+                        // this.$router.push(`${this.productId}-${this.product.productName}`);
+                    }
+                });
         },
     },
     mounted() {

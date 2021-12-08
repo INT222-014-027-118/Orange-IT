@@ -60,7 +60,12 @@
                                     <span class="material-icons mr-1"> compare_arrows </span>
                                     <span class="text-xs sm:text-base"> Compare ({{ this.$store.getters.countCompareProducts }})</span>
                                 </button>
-                                <button class="w-full px-1 py-1 mb-1 sm:mb-0 flex flex-col sm:flex-row items-center justify-center whitespace-nowrap z-40 btn" @click="addCartItem" :disabled="product.quantityStock <= 0" :class="[product.quantityStock <= 0?'cursor-not-allowed':'']">
+                                <button
+                                    class="w-full px-1 py-1 mb-1 sm:mb-0 flex flex-col sm:flex-row items-center justify-center whitespace-nowrap z-40 btn"
+                                    @click="addCartItem"
+                                    :disabled="product.quantityStock <= 0"
+                                    :class="[product.quantityStock <= 0 ? 'cursor-not-allowed' : '']"
+                                >
                                     <span class="material-icons mr-1"> add_shopping_cart </span>
                                     <span class="text-xs sm:text-base">Add to Cart</span>
                                 </button>
@@ -102,12 +107,30 @@
                     <p class="font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md capitalize">
                         rating:
                     </p>
-                    <Raring />
+                    <Rating :ratings="ratings" />
                 </div>
-                <p class="col-span-3 font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md">Customer reviews</p>
-                <Review class="col-span-3 lg:col-span-1 p-1 sm:px-16 md:px-20 lg:px-5 mb-5" />
+                <div class="col-span-3 font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md">
+                    Customer reviews
+                    <div class="mx-4 flex items-center">
+                        <div class="flex items-center">
+                            <span
+                                class="material-icons mb-1"
+                                v-for="rating in [0, 1, 2, 3, 4]"
+                                :key="rating"
+                                :class="[avgRateStar > rating ? 'text-yellow-400' : 'text-gray-200', 'h-5 w-5 flex-shrink-0']"
+                                aria-hidden="true"
+                            >
+                                star
+                            </span>
+                            {{ avgRateStar.toFixed(2) }}
+                        </div>
+                        <p class="sr-only">{{ reviews.average }} out of 5 stars</p>
+                        <a href="reviews.href" class="ml-3 text-sm font-medium text-primary hover:text-secondary">{{ reviews.length }} reviews</a>
+                    </div>
+                </div>
+                <!-- <Review :reviews="reviews" class="col-span-3 lg:col-span-1 p-1 sm:px-16 md:px-20 lg:px-5 mb-5" /> -->
                 <div class="col-span-3 lg:col-span-2 sm:px-16 md:px-20 lg:px-5 my-6">
-                    <Comments v-for="review in reviews" :key="review" :review="review"/>
+                    <Comments v-for="review in reviews" :key="review" :review="review" />
                 </div>
             </div>
         </div>
@@ -119,13 +142,13 @@
 import axios from "axios";
 import Review from "../components/product/Review.vue";
 import Comments from "../components/product/Comment.vue";
-import Raring from "../components/product/Rating.vue";
+import Rating from "../components/product/Rating.vue";
 export default {
     name: "Item",
     components: {
         Review,
         Comments,
-        Raring,
+        Rating,
     },
     props: {
         productName: String,
@@ -139,6 +162,7 @@ export default {
             product: {},
             Attribute: [],
             reviews: [],
+            ratings: [],
             colorPick: null,
             loading: false,
             api: `${process.env.VUE_APP_API}/product`,
@@ -220,6 +244,19 @@ export default {
                 maximumFractionDigits: 2,
             }).format(this.product.price);
         },
+        avgRateStar() {
+            let avgStar =
+                this.reviews.length > 0
+                    ? this.reviews
+                          .map((item) => {
+                              return item.star;
+                          })
+                          .reduce((previouItem, currentItem) => {
+                              return Number(previouItem) + Number(currentItem);
+                          }) / this.reviews.length
+                    : 0;
+            return avgStar;
+        },
     },
     mounted() {
         this.scrollToTop();
@@ -242,6 +279,11 @@ export default {
         this.reviews = await axios.get(`${process.env.VUE_APP_API}/review/getByProductId/${this.productId}`).then((res) => {
             return res.data;
         });
+
+        this.ratings = await axios.get(`${process.env.VUE_APP_API}/rating/listByProductId/${this.productId}`).then((res) => {
+            return res.data;
+        });
+        // console.log(this.ratings);
 
         this.images = await this.product.images.map((img) => {
             return `${process.env.VUE_APP_API}/image/get/${img.source}`;
