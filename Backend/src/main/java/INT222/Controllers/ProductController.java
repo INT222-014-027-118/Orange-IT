@@ -92,11 +92,12 @@ public class ProductController {
     public void deleteProduct(@PathVariable long id) {
 
         if (this.productRepository.existsById(id)) {
-
-     if(this.productRepository.findById(id).get().getActive() == 0) {
+           Products products =  this.productRepository.findById(id).get();
+     if(products.getActive() == 0) {
          this.deleteProductHasAttribute(id);
          this.deleteProductImage(id);
          this.productRepository.deleteById(id);
+
      }else throw new ProductActiveException(id);
         } else
             throw new NotFoundException(id);

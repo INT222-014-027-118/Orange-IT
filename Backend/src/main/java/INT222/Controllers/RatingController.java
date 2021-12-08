@@ -1,8 +1,10 @@
 package INT222.Controllers;
 
 import INT222.Exceptions.NotFoundRatingException;
+import INT222.Models.RatingOfProduct;
 import INT222.Models.Ratings;
 import INT222.Models.Reviews;
+import INT222.Repositories.RatingOfProductRepository;
 import INT222.Repositories.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +19,9 @@ import java.util.List;
 public class RatingController {
     @Autowired
     private RatingRepository ratingRepository;
+
+    @Autowired
+    private RatingOfProductRepository ratingOfProductRepository;
 
     @GetMapping("/list")
     public List<Ratings> getRating() {
@@ -49,6 +54,9 @@ public class RatingController {
         ratingRepository.save(ratings);
     }
 
-
+    @GetMapping("/listByProductId/{id}")
+    public List<RatingOfProduct> getRatingByProductId(@PathVariable(value = "id") long id) {
+        return ratingOfProductRepository.getAllByProductId(id);
+    }
 
 }

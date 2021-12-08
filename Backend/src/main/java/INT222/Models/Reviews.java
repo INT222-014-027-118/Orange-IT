@@ -23,10 +23,12 @@ public class Reviews {
     private String comment;
     @Column(name = "review_date")
     private String reviewDate;
-    @Column(name = "users_id")
-    private long userId;
 
-    @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "users_id")
+    private UserForReview userForReview;
+
+    @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     @JoinColumn(name = "reviews_id")
     private List<RatingOfProduct> ratingOfProducts = new ArrayList<>();
 
