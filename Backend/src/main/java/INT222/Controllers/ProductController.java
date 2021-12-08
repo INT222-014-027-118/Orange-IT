@@ -92,22 +92,7 @@ public class ProductController {
     public void deleteProduct(@PathVariable long id) {
 
         if (this.productRepository.existsById(id)) {
-//           long num =0;
-//           Products products =  productRepository.getById(id);
-//           List<Images> images = products.getImages();
-//            for (int i = 0; i < images.size(); i++) {
-//                Images image = imageRepository.getById(images.get(i).getId());
-//                image.setProduct_id(num);
-//                imageRepository.save(image);
-//
-//            }
-//            List<ProductsHasAttributes> productsHasAttributes = products.getProductsHasAttributes();
-//            for (int i = 0; i < productsHasAttributes.size(); i++) {
-//                ProductsHasAttributes productSpecValue = productsHasAttributes.get(i);
-//                productSpecValue.setProduct_id(num);
-//                productSpecValueRepository.save(productSpecValue);
-//
-//            }
+
      if(this.productRepository.findById(id).get().getActive() == 0) {
          this.deleteProductHasAttribute(id);
          this.deleteProductImage(id);
@@ -165,12 +150,12 @@ public class ProductController {
 
             this.deleteProductImage(products.getId());
             this.deleteProductHasAttribute(products.getId());
-//
-//            for (int i = 0; i < products.getImages().size(); i++) {
-//                if(imageRepository.existsImagesBySource(products.getImages().get(i).getSource())){
-//                    throw new SameImageException(products.getImages().get(i).getSource());
-//                }
-//            }
+
+            for (int i = 0; i < products.getImages().size(); i++) {
+                if(imageRepository.existsImagesBySource(products.getImages().get(i).getSource())){
+                    throw new SameImageException(products.getImages().get(i).getSource());
+                }
+            }
 
             if(products.getProductName().equals(productRepository.findById(products.getId()).get().getProductName())){
                 List<Images> images =  products.getImages();

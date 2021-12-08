@@ -4,12 +4,15 @@ import INT222.Exceptions.NotFoundException;
 import INT222.Models.Products;
 import INT222.Models.ReviewForAdd;
 import INT222.Models.Reviews;
+import INT222.Repositories.RatingOfProductForAddRepository;
 import INT222.Repositories.ReviewForAddRepository;
 import INT222.Repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,9 @@ public class ReviewController {
 
     @Autowired
     private ReviewForAddRepository reviewForAddRepository;
+
+    @Autowired
+    private RatingOfProductForAddRepository ratingOfProductForAddRepository;
 
     @GetMapping("/getByProductId/{id}")
     public List<Reviews> getReviewByProductId(@PathVariable(value = "id") long id) {
@@ -56,26 +62,40 @@ public class ReviewController {
         }
     }
 
-    @PutMapping("/update")
-    @PreAuthorize("hasRole('User')")
-    public void editReview(@RequestBody ReviewForAdd reviews) {
-        if(reviewForAddRepository.existsByUserId(reviews.getUserId())){
-            if(reviewForAddRepository.existsById(reviews.getId())){
-                reviewForAddRepository.save(reviews);
-            }
-        }
 
 
-    }
+
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('User')")
     public void addReview(@RequestBody ReviewForAdd reviews) {
         if (reviewForAddRepository.findTopByOrderByIdDesc() == null) {
             reviews.setId(1);
+            for (int i = 0; i < reviews.getRatingOfProductForAdds().size(); i++) {
+                reviews.getRatingOfProductForAdds().get(i).setReviewId(1);
+                if(ratingOfProductForAddRepository.findTopByOrderByIdDesc() == null ){
+                    reviews.getRatingOfProductForAdds().get(i).setId(1);
+                }else
+                reviews.getRatingOfProductForAdds().get(i).setId(ratingOfProductForAddRepository.findTopByOrderByIdDesc().getId()+1);
+
+            }
+            ZoneId zone = ZoneId.of("Asia/Bangkok");
+            LocalDateTime now = LocalDateTime.now(zone);
+            reviews.setReviewDate(now);
             reviewForAddRepository.save(reviews);
         }else
             reviews.setId(reviewForAddRepository.findTopByOrderByIdDesc().getId()+1);
+        for (int i = 0; i < reviews.getRatingOfProductForAdds().size(); i++) {
+            reviews.getRatingOfProductForAdds().get(i).setReviewId(reviews.getId());
+            if(ratingOfProductForAddRepository.findTopByOrderByIdDesc() == null ){
+                reviews.getRatingOfProductForAdds().get(i).setId(1);
+            }else
+                reviews.getRatingOfProductForAdds().get(i).setId(ratingOfProductForAddRepository.findTopByOrderByIdDesc().getId()+1);
+
+        }
+        ZoneId zone = ZoneId.of("Asia/Bangkok");
+        LocalDateTime now = LocalDateTime.now(zone);
+        reviews.setReviewDate(now);
         reviewForAddRepository.save(reviews);
     }
 
