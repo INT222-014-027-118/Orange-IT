@@ -61,7 +61,7 @@
                                 </label>
                             </div>
                         </div> -->
-                        <div class="border-b-2 dark:border-gray-500">
+                        <!-- <div class="border-b-2 dark:border-gray-500">
                             <div class="flex items-center justify-between py-3 cursor-pointer" @click="showPrice = !showPrice">
                                 <span class="font-semibold">Price</span> <span class="text-base font-bold">+</span>
                             </div>
@@ -78,7 +78,7 @@
 
                                 <button type="button" class="py-1 px-2 h-8 w-3/12 self-end bg-primary hover:bg-primaryfocus rounded-md text-white">OK</button>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

@@ -60,14 +60,14 @@
                                 <span class="px-6 py-3 flex items-center">{{ order.shippings.status }}</span>
                             </td>
                             <td class="border-dashed border-b border-gray-200 dark:border-gray-500 text-center">
-                                <div class="flex items-center justify-center mr-2">
+                                <!-- <div class="flex items-center justify-center mr-2">
                                     <button class="bg-blue-400 py-1 px-2 rounded text-xs font-semibold text-white shadow-md" @click="editProduct(product.id)">
                                         More
-                                    </button>
+                                    </button> -->
                                     <!-- <button class="material-icons text-red-500" @click="deleteProduct(product.id, product.productName)">
                                         delete
                                     </button> -->
-                                </div>
+                                <!-- </div> -->
                             </td>
                         </tr>
                     </tbody>
