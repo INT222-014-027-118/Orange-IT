@@ -26,10 +26,20 @@ const state = {
     specs: [],
     brands: [
         'Asus',
-        'Razer',
+        'Cooler Master',
+        'Ducky',
+        'Hp',
+        'HyperX',
+        'JBL',
+        'Keychron',
+        'Loga',
         'Logitech',
         'MSI',
-        
+        'Nubwo',
+        'Razer',
+        'Signo',
+        'SteelSeries',
+        'Zowie'
     ],
     attributes: [],
     token: `Bearer ${localStorage.getItem('token')}`,
