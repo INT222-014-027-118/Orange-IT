@@ -25,8 +25,11 @@ const state = {
     categories: [],
     specs: [],
     brands: [
+        'Asus',
         'Razer',
-        'Logitech'
+        'Logitech',
+        'MSI',
+        
     ],
     attributes: [],
     token: `Bearer ${localStorage.getItem('token')}`,
