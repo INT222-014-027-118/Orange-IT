@@ -49,7 +49,7 @@
                                     <input v-model="rating.sore" class="focus:outline-none styled-slider slider-progress " type="range" id="volume" name="volume" min="0" max="10" />
                                 </div>
                             </div>
-                            <div class="">
+                            <div class="" v-for="num in [1,2,4,5,6]" :key="num">
                                 <div class="flex flex-row justify-between ">
                                     <label for="volume text-primary tracking-tighter px-1">Volume</label>
                                     <div class="pl-3">

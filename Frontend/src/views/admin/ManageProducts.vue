@@ -82,13 +82,15 @@
                                     </label>
                                 </div>
                             </td>
-                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500 text-center">
-                                <button class="material-icons text-yellow-500 p-2 hover:text-primary" @click="editProduct(product.id)">
-                                    edit
-                                </button>
-                                <button class="material-icons text-red-500 p-2 mx-2 hover:text-red-600" @click="deleteProduct(product.id, product.productName)">
-                                    delete
-                                </button>
+                            <td class="border-dashed border-b border-gray-200 dark:border-gray-500 text-center ">
+                                <div class="flex justify-center">
+                                    <button class="material-icons text-yellow-500 p-2 hover:text-primary" @click="editProduct(product.id)">
+                                        edit
+                                    </button>
+                                    <button class="material-icons text-red-500 p-2 mx-2 hover:text-red-600" @click="deleteProduct(product.id, product.productName)">
+                                        delete
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -167,6 +169,9 @@ export default {
             this.$router.push(`/admin/add-product`);
         },
         deleteProduct(id, productName) {
+            // if (condition) {
+                
+            // }
             if (window.confirm("Do you want to delete? \nproduct:   " + productName)) {
                 this.$store.dispatch("deleteProduct", id);
             }

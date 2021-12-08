@@ -212,7 +212,7 @@ const actions = {
     deleteProduct({
         dispatch
     }, id) {
-        axios
+        return axios
             .delete(`${delete_productI}${id}`, {
                 headers: {
                     'Authorization': this.getters.token
@@ -235,6 +235,7 @@ const actions = {
                                     .then(response => {
                                         console.log("response: ", response)
                                         dispatch("loadProducts")
+                                        return response
                                     })
                                     .catch(error => {
                                         console.log(error)
