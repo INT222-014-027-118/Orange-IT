@@ -28,7 +28,7 @@ public class Reviews {
     @JoinColumn(name = "users_id")
     private UserForReview userForReview;
 
-    @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     @JoinColumn(name = "reviews_id")
     private List<RatingOfProduct> ratingOfProducts = new ArrayList<>();
 

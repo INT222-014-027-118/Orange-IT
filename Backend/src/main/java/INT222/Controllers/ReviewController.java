@@ -54,7 +54,8 @@ public class ReviewController {
     public void deleteById(@PathVariable(value = "id") long id,@PathVariable(value = "userId") long userId) {
         if(reviewForAddRepository.existsByUserId(userId)){
             if(reviewForAddRepository.existsById(id)){
-                reviewRepository.deleteById(id);
+                ratingOfProductForAddRepository.deleteByReviewId(id);
+               reviewForAddRepository.deleteById(id);
             }
         }
     }
