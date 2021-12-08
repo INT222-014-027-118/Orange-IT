@@ -70,7 +70,7 @@ export default {
                     })
                     .then((isAdmin) => {
                         if (isAdmin) {
-                            this.$router.push("/admin");
+                            this.$router.push("/admin/manage-orders");
                         } else {
                             // this.$store.dispatch("loadCartData");
                             this.$router.push("/");

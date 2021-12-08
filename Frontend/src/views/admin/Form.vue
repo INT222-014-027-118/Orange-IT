@@ -297,6 +297,7 @@ export default {
 
             preview_list: [],
             imageInfo: [],
+            imagesDelete: [],
         };
     },
     props: {
@@ -326,6 +327,12 @@ export default {
                     for (let index = 0; index < this.imageInfo.length; index++) {
                         this.product.images.push({ id: 1, source: this.imageInfo[index].name, label: this.imageInfo[index].name.split(".")[0], productId: this.product.id });
                     }
+
+                    // console.log(this.product);
+                    this.$store.dispatch("updateProduct", { product: this.product, newImages: this.imageInfo, imageForDelete: this.imagesDelete });
+                    // this.resetForm();
+                    //     }
+                    // });
                 } else {
                     var imagesArray = this.imageInfo.map((image) => {
                         return { id: 1, source: image.name, label: image.name.split(".")[0], product_id: 1 };
@@ -400,7 +407,7 @@ export default {
 
         deleteImg(index) {
             // this.imageInfo.splice(index, 1);
-
+            this.imagesDelete.push(this.preview_list[index].split("http://20.212.33.246/orange-it/image/get/")[1]);
             this.product.images.splice(index, 1);
             this.preview_list.splice(index, 1);
         },

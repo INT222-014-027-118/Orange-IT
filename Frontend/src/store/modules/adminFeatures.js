@@ -47,10 +47,8 @@ const actions = {
         commit('activeMenu', index)
     },
     loadUsers({
-            commit
-        }
-
-    ) {
+        commit
+    }) {
         axios.get(get_users_list, {
             headers: {
                 'Authorization': this.getters.token
