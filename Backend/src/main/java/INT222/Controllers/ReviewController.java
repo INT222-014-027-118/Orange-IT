@@ -36,7 +36,7 @@ public class ReviewController {
         for (int i = 0; i < reviewRepository.findAll().size(); i++) {
             for (int j = 0; j < reviewRepository.findAll().get(i).getRatingOfProducts().size(); j++) {
 
-                if (reviewRepository.findAll().get(i).getRatingOfProducts().get(j).getProduct_id() == id) {
+                if (reviewRepository.findAll().get(i).getRatingOfProducts().get(j).getProductId() == id) {
                     reviews.add(reviewRepository.findAll().get(i));
                 }
 
@@ -76,7 +76,7 @@ public class ReviewController {
                 if(ratingOfProductForAddRepository.findTopByOrderByIdDesc() == null ){
                     reviews.getRatingOfProductForAdds().get(i).setId(1);
                 }else
-                reviews.getRatingOfProductForAdds().get(i).setId(ratingOfProductForAddRepository.findTopByOrderByIdDesc().getId()+1);
+                reviews.getRatingOfProductForAdds().get(i).setId(ratingOfProductForAddRepository.findTopByOrderByIdDesc().getId()+1+i);
 
             }
             ZoneId zone = ZoneId.of("Asia/Bangkok");
@@ -90,7 +90,7 @@ public class ReviewController {
             if(ratingOfProductForAddRepository.findTopByOrderByIdDesc() == null ){
                 reviews.getRatingOfProductForAdds().get(i).setId(1);
             }else
-                reviews.getRatingOfProductForAdds().get(i).setId(ratingOfProductForAddRepository.findTopByOrderByIdDesc().getId()+1);
+                reviews.getRatingOfProductForAdds().get(i).setId(ratingOfProductForAddRepository.findTopByOrderByIdDesc().getId()+1+i);
 
         }
         ZoneId zone = ZoneId.of("Asia/Bangkok");

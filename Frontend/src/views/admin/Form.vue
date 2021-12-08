@@ -13,35 +13,32 @@
                         </div>
                         <div class="bg-white dark:bg-gray-700 border w-full shadow-md flex flex-col md:flex-row mb-5 rounded-md h-full overflow-y-auto">
                             <div class="flex flex-col bg-white dark:bg-gray-700 w-full md:w-1/3 p-1 border-b border-r">
-                                <div
+                                <button
+                                    type="button"
+                                    ref="category"
                                     class="px-2 py-1 cursor-pointer flex justify-between rounded-sm"
-                                    :class="[
-                                        selectRootCat.category === category.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary',
-                                    ]"
+                                    :class="[selectRootCat.category === category.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary']"
                                     v-for="category in $store.getters.rootCategories"
                                     :key="category.id"
                                     @click="chooseRootCategory(category)"
                                 >
                                     <span>{{ category.category }}</span>
-                                    <span class="material-icons " v-if="selectRootCat.category === category.category"> navigate_next </span>
-                                </div>
+                                    <span class="material-icons " v-if="selectRootCat.category === category.category"> check </span>
+                                </button>
                             </div>
                             <div class="flex flex-col bg-white dark:bg-gray-700 w-full md:w-1/3 p-1 pt-6 md:p-1 border-b border-r relative">
                                 <span class="absolute top-0 text-xs md:hidden whitespace-nowrap">sub category</span>
-                                <div
+                                <button
+                                    type="button"
                                     class="px-2 py-1 cursor-pointer flex justify-between rounded-sm"
-                                    :class="[
-                                        selectChildCat.category === childcat.category
-                                            ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white'
-                                            : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary',
-                                    ]"
+                                    :class="[selectChildCat.category === childcat.category ? 'bg-primary text-white hover:bg-primaryfocus hover:text-white' : 'hover:bg-gray-200 dark:hover:bg-dark_tertiary']"
                                     v-for="childcat in $store.getters.childCategories(`${this.selectRootCat.id}`)"
                                     :key="childcat.id"
                                     @click="chooseSubCategory(childcat)"
                                 >
                                     <span> {{ childcat.category }}</span>
                                     <span class="material-icons " v-if="selectChildCat.category === childcat.category"> check </span>
-                                </div>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -137,8 +134,8 @@
                     <label class="label-css">Upload Image *</label>
                     <div class="relative input-form input-theme flex flex-wrap overflow-hidden" :class="[invalid.images ? '' : 'ring-2 ring-opacity-60 border border-red-500 ring-red-500']">
                         <div v-for="(item, index) in preview_list" :key="index" class="m-2 md:m-5 relative ring-1 ring-primary">
-                            <div class="bg-white h-40 w-40 md:h-64 md:w-64 rounded-md">
-                                <img :src="item" class="object-contain object-center w-full h-full rounded-md" />
+                            <div class="bg-white h-40 w-40 md:h-64 md:w-64 ">
+                                <img :src="item" class="object-contain object-center w-full h-full" />
                             </div>
                             <!-- <p class="text-sm font-light truncate w-40 md:w-64 cursor-text px-3 py-3" v-if="formPath !== 'edit'">file name: {{ imageInfo[index].name }}</p>
                             <p class="text-sm font-light truncate w-40 md:w-64 cursor-text px-3 py-3" v-else>
@@ -202,7 +199,12 @@
                                 <tr v-show="1 !== 0">
                                     <td colspan="3" class="font-semibold p-2">Attributes list</td>
                                 </tr>
-                                <tr v-for="(att, index) in product.productsHasAttributes" :key="att.key" :class="index % 2 == 0 ? 'bg-white dark:bg-gray-700' : 'bg-gray-50 dark:bg-gray-700'" class="border dark:border-gray-600 rounded-md">
+                                <tr
+                                    v-for="(att, index) in product.productsHasAttributes"
+                                    :key="att.key"
+                                    :class="index % 2 == 0 ? 'bg-white dark:bg-gray-700' : 'bg-gray-50 dark:bg-gray-700'"
+                                    class="border dark:border-gray-600 rounded-md"
+                                >
                                     <td class="">
                                         <p class="px-3 py-2">{{ att.attributeName }}</p>
                                     </td>
@@ -229,14 +231,7 @@
                         <label class="label-css" for="description">Description</label>
                         <p class="label-css">{{ countDescription }}/1000</p>
                     </div>
-                    <textarea
-                        class="input-form input-theme vertical"
-                        id="description"
-                        v-model="product.description"
-                        type="text"
-                        placeholder="Please enter text up to 1000 characters."
-                        maxlength="1000"
-                    />
+                    <textarea class="input-form input-theme vertical" id="description" v-model="product.description" type="text" placeholder="Please enter text up to 1000 characters." maxlength="1000" />
                 </div>
                 <button type="submit" class="self-end rounded shadow-md cursor-pointer btn text-lg py-3 px-6 mx-1 sm:mx-3 mb-3 w-full max-w-xs">
                     Submit
@@ -302,7 +297,7 @@ export default {
 
             preview_list: [],
             imageInfo: [],
-            imagesDelete:[]
+            imagesDelete: [],
         };
     },
     props: {
@@ -319,7 +314,7 @@ export default {
             this.invalid.productsHasAttributes = this.product.productsHasAttributes.length === 0 ? false : true;
             this.invalid.price = this.product.price === 0 ? false : true;
             this.invalid.brandName = this.product.brandName === "" ? false : true;
-            this.invalid.categories = Object.keys(this.selectChildCat).length === 0 ? false : true;
+            this.invalid.categories = Object.keys(this.selectRootCat).length === 0 ? false + this.scrollToTop() : true;
 
             if (this.validate) {
                 this.product.categories = [this.selectRootCat, this.selectChildCat];
@@ -327,8 +322,6 @@ export default {
                     return { id: att.id, attributeId: att.attributeId, productId: att.productId, attribute_value: att.attribute_value };
                 });
                 if (this.formPath === "edit") {
-                    // this.$store.dispatch("uploadImages", this.imageInfo).then((response) => {
-                    //     if (response.status == 200) {
                     this.product.id = this.productId;
                     this.product.attributes = [];
                     for (let index = 0; index < this.imageInfo.length; index++) {
@@ -336,7 +329,7 @@ export default {
                     }
 
                     // console.log(this.product);
-                    this.$store.dispatch("updateProduct", { product: this.product, newImages: this.imageInfo, imageForDelete:this.imagesDelete });
+                    this.$store.dispatch("updateProduct", { product: this.product, newImages: this.imageInfo, imageForDelete: this.imagesDelete });
                     // this.resetForm();
                     //     }
                     // });
@@ -366,6 +359,10 @@ export default {
                 id: choosed.id,
                 attribute: choosed.attribute,
             };
+        },
+
+        scrollToTop() {
+            window.scrollTo(0, 0);
         },
 
         Addattribute() {
@@ -410,7 +407,7 @@ export default {
 
         deleteImg(index) {
             // this.imageInfo.splice(index, 1);
-            this.imagesDelete.push(this.preview_list[index].split('http://20.212.33.246/orange-it/image/get/')[1])
+            this.imagesDelete.push(this.preview_list[index].split("http://20.212.33.246/orange-it/image/get/")[1]);
             this.product.images.splice(index, 1);
             this.preview_list.splice(index, 1);
         },
@@ -445,7 +442,7 @@ export default {
                 this.product.productsHasAttributes.length !== 0 &&
                 this.product.price !== 0 &&
                 this.product.brandName !== "" &&
-                Object.keys(this.selectChildCat).length !== 0
+                Object.keys(this.selectRootCat).length !== 0
             );
         },
     },

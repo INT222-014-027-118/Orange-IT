@@ -107,9 +107,7 @@
                 <p class="col-span-3 font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md">Customer reviews</p>
                 <Review class="col-span-3 lg:col-span-1 p-1 sm:px-16 md:px-20 lg:px-5 mb-5" />
                 <div class="col-span-3 lg:col-span-2 sm:px-16 md:px-20 lg:px-5 my-6">
-                    <Comments />
-                    <Comments />
-                    <Comments />
+                    <Comments v-for="review in reviews" :key="review" :review="review"/>
                 </div>
             </div>
         </div>
@@ -140,10 +138,7 @@ export default {
             images: [],
             product: {},
             Attribute: [],
-            reviews: {
-                totalCount: 123,
-                average: 4,
-            },
+            reviews: [],
             colorPick: null,
             loading: false,
             api: `${process.env.VUE_APP_API}/product`,
@@ -243,6 +238,11 @@ export default {
                 }).attribute_value,
             };
         });
+
+        this.reviews = await axios.get(`${process.env.VUE_APP_API}/review/getByProductId/${this.productId}`).then((res) => {
+            return res.data;
+        });
+
         this.images = await this.product.images.map((img) => {
             return `${process.env.VUE_APP_API}/image/get/${img.source}`;
         });

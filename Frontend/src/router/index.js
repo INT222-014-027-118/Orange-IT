@@ -90,7 +90,7 @@ const routes = [{
     ],
   },
   {
-    path: '/review/:productId',
+    path: '/review/:product_id',
     name: 'Review',
     props: true,
     component: () => import( /* webpackChunkName: "Review" */ '../views/userAccount/WriteReview.vue')

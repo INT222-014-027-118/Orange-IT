@@ -15,4 +15,5 @@ public interface RatingRepository extends JpaRepository<Ratings, Long> {
 
 
 
+
 }
