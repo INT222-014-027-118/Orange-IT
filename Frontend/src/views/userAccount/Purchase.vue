@@ -102,7 +102,6 @@ export default {
                 { id: 1, title: "to be delivered" },
                 { id: 2, title: "to be receive" },
                 { id: 3, title: "received" },
-                { id: 4, title: "done" },
             ],
             selectTab: { id: 1, title: "to be delivered" },
             api: process.env.VUE_APP_API,

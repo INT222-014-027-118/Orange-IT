@@ -42,6 +42,9 @@ export default {
                 })
                 .then((res) => {
                     console.log(res);
+                    if (res.status == 200) {
+                        this.$store.dispatch("loadOrders");
+                    }
                 });
         },
     },
