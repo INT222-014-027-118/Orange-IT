@@ -33,7 +33,7 @@ const actions = {
                     commit('setUserInfo', response.data)
                     commit('setIsAdmin', response.data.role[0].name === 'Admin' ? true : false)
                     if (state.isAdmin) {
-                        router.push('/admin')
+                        router.push('/admin/manage-orders')
                         this.dispatch("loadProducts", state.isAdmin);
                     } else {
                         this.dispatch("loadUserAddresses");
