@@ -25,8 +25,8 @@ public class RatingOfProduct {
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Ratings ratings;
 
-    @Column
-    private long product_id;
+    @Column(name = "product_id")
+    private long productId;
 
 
 }
