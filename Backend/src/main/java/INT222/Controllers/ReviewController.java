@@ -38,7 +38,7 @@ public class ReviewController {
                 if(ratingOfProducts.get(0).getProductId()== id){
                     reviews.add(reviewsList.get(i));
                 }
-            
+
         }
         return reviews;
     }
