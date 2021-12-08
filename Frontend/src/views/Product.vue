@@ -109,8 +109,11 @@
                     </p>
                     <Rating :ratings="ratings" />
                 </div>
-                <div class="col-span-3 font-semibold text-xl p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md">
-                    Customer reviews
+                <div class="col-span-3  p-2 sm:px-16 md:px-20 lg:px-5 bg-white dark:bg-dark_tertiary shadow-md rounded-md flex flex-nowrap justify-between">
+                    <div>
+                        <p class="font-semibold text-xl whitespace-nowrap">Customer reviews</p>
+                        <p class="font-medium text-primary whitespace-nowrap">{{ reviews.length }} reviews</p>
+                    </div>
                     <div class="mx-4 flex items-center">
                         <div class="flex items-center">
                             <span
@@ -122,14 +125,12 @@
                             >
                                 star
                             </span>
-                            {{ avgRateStar.toFixed(2) }}
+                            <span class="ml-3"> {{ avgRateStar.toFixed(2) }}</span>
                         </div>
                         <p class="sr-only">{{ reviews.average }} out of 5 stars</p>
-                        <a href="reviews.href" class="ml-3 text-sm font-medium text-primary hover:text-secondary">{{ reviews.length }} reviews</a>
                     </div>
                 </div>
-                <!-- <Review :reviews="reviews" class="col-span-3 lg:col-span-1 p-1 sm:px-16 md:px-20 lg:px-5 mb-5" /> -->
-                <div class="col-span-3 lg:col-span-2 sm:px-16 md:px-20 lg:px-5 my-6">
+                <div class="col-span-3 p-1 sm:px-16 md:px-20 lg:mt-6 mb-16 lg:px-36">
                     <Comments v-for="review in reviews" :key="review" :review="review" />
                 </div>
             </div>
@@ -140,13 +141,11 @@
 
 <script>
 import axios from "axios";
-import Review from "../components/product/Review.vue";
 import Comments from "../components/product/Comment.vue";
 import Rating from "../components/product/Rating.vue";
 export default {
     name: "Item",
     components: {
-        Review,
         Comments,
         Rating,
     },

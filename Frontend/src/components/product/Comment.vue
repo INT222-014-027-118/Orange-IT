@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-start border-b mb-2 p-2">
+    <div class="flex items-start border-b mb-2 p-2 dark:border-gray-500">
         <div class="flex-shrink-0">
             <div class="inline-block relative">
                 <div class="relative w-9 h-9 sm:w-11 sm:h-11 rounded-full overflow-hidden">
