@@ -371,8 +371,8 @@ INSERT INTO `images` (`id`, `source`, `label`, `product_id`) VALUES
   ('11', 'DeathAdder-V2-3.png', 'DeathAdder-V2-3', '3'),  
   ('12', 'DeathAdder-V2-4.png', 'DeathAdder-V2-4', '3'),  
   ('13', 'DeathAdder-V2-5.png', 'DeathAdder-V2-5', '3'), 
-  ('14', 'BlackSharkV2Pro1.png', 'BlackSharkV2Pro1', '4'), 
-  ('15', 'BlackSharkV2Pro2.png', 'BlackSharkV2Pro2', '4'),
+  ('14', 'BlackSharkV2Pro1.jpg', 'BlackSharkV2Pro1', '4'), 
+  ('15', 'BlackSharkV2Pro2.jpg', 'BlackSharkV2Pro2', '4'),
   ('16', 'BlackSharkV2Pro3.jpg', 'BlackSharkV2Pro2', '4'),
   ('17', 'BlackSharkV2Pro4.jpg', 'BlackSharkV2Pro2', '4'),
   ('18', 'BlackSharkV2Pro5.jpg', 'BlackSharkV2Pro2', '4');
