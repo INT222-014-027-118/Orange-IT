@@ -8,7 +8,7 @@
                 </div>
             </div>
         </div>
-        <div class="ml-6">
+        <div class="ml-6 w-full">
             <p class="flex items-baseline">
                 <span class="text-gray-700 dark:text-gray-400 font-bold">Mary T.</span>
                 <!-- <span class="ml-2 text-green-600 text-xs">Verified Buyer</span> -->
@@ -18,19 +18,17 @@
                     class="material-icons mb-1 text-xl"
                     v-for="rating in [0, 1, 2, 3, 4]"
                     :key="rating"
-                    :class="[reviews.average > rating ? 'text-yellow-400' : 'text-gray-200', 'h-5 w-5 flex-shrink-0']"
+                    :class="[review.star > rating ? 'text-yellow-400' : 'text-gray-200', 'h-5 w-5 flex-shrink-0']"
                     aria-hidden="true"
                 >
                     star
                 </span>
             </div>
 
-            <div class="mt-3">
+            <div class="mt-3 w-full">
                 <!-- <span class="font-bold">Sapien consequat eleifend!</span> -->
-                <p class="mb-7 text-sm">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                </p>
+                <p class="mb-7 text-sm">{{ review.comment }}</p>
+                <p class="text-xs w-full text-right">{{ review.reviewDate }}</p>
             </div>
         </div>
     </div>
@@ -45,6 +43,9 @@ export default {
                 average: 4,
             },
         };
+    },
+    props: {
+        review: Object,
     },
 };
 </script>
