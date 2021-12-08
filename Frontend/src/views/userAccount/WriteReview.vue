@@ -2,9 +2,7 @@
     <div class="pt-1">
         <div class="mx-auto max-w-7xl">
             <div class="p-1 md:mt-0 md:p-2 lg:mx-auto">
-                <h1 class="py-3 px-3 text-2xl md:text-3xl font-semibold flex items-center">
-                    <span class="material-icons mr-2 text-xl py-2 px-3 bg-primary text-white rounded-full"> rate_review </span>review
-                </h1>
+                <h1 class="py-3 px-3 text-2xl md:text-3xl font-semibold flex items-center"><span class="material-icons mr-2 text-xl py-2 px-3 bg-primary text-white rounded-full"> rate_review </span>review</h1>
                 <div class="capitalize bg-white dark:bg-dark_secondary shadow-md rounded-md p-1 md:p-3">
                     <div class="px-0 sm:px-2">
                         <div class="overflow-hidden">
@@ -40,28 +38,50 @@
                     <div class="px-0 py-2 sm:px-2 max-w-lg mx-auto mt-3 mb-6">
                         <div class="px-1 font-semibold tracking-wide">rating:</div>
                         <div class="px-3 pb-5 pt-2 sm:px-4 select-none space-y-3">
-                            <div class="" v-for="ratingTitle in this.$store.getters.ratingTitleList" :key="ratingTitle">
+                            <div class="">
                                 <div class="flex flex-row justify-between ">
-                                    <label for="volume text-primary tracking-tighter px-1">{{ ratingTitle.name }}</label>
+                                    <label for="volume text-primary tracking-tighter px-1">Design</label>
                                     <div class="pl-3">
-                                        <span class="text-sm">{{ rating.sore }}</span>
+                                        <span class="text-sm">{{ Design.score }}</span>
                                     </div>
                                 </div>
                                 <div class="flex items-center mt-1">
-                                    <input v-model="rating.sore" class="focus:outline-none styled-slider slider-progress " type="range" id="volume" name="volume" min="0" max="10" />
+                                    <input v-model="Design.score" class="focus:outline-none styled-slider slider-progress " type="range" id="volume" name="volume" min="0" max="10" />
                                 </div>
                             </div>
-                            <!-- <div class="">
+                            <div class="">
                                 <div class="flex flex-row justify-between ">
-                                    <label for="volume text-primary tracking-tighter px-1">Volume</label>
+                                    <label for="volume text-primary tracking-tighter px-1">Material</label>
                                     <div class="pl-3">
-                                        <span class="text-sm">{{ rating.sore1 }}</span>
+                                        <span class="text-sm">{{ Material.score }}</span>
                                     </div>
                                 </div>
                                 <div class="flex items-center mt-1">
-                                    <input v-model="rating.sore1" class="focus:outline-none styled-slider slider-progress " type="range" id="volume" name="volume" min="0" max="10" />
+                                    <input v-model="Material.score" class="focus:outline-none styled-slider slider-progress " type="range" id="volume" name="volume" min="0" max="10" />
                                 </div>
-                            </div> -->
+                            </div>
+                            <div class="">
+                                <div class="flex flex-row justify-between ">
+                                    <label for="volume text-primary tracking-tighter px-1">Good value</label>
+                                    <div class="pl-3">
+                                        <span class="text-sm">{{ GoodValue.score }}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center mt-1">
+                                    <input v-model="GoodValue.score" class="focus:outline-none styled-slider slider-progress " type="range" id="volume" name="volume" min="0" max="10" />
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="flex flex-row justify-between ">
+                                    <label for="volume text-primary tracking-tighter px-1">Ease to use</label>
+                                    <div class="pl-3">
+                                        <span class="text-sm">{{ EaseToUse.score }}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center mt-1">
+                                    <input v-model="EaseToUse.score" class="focus:outline-none styled-slider slider-progress " type="range" id="volume" name="volume" min="0" max="10" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="px-0 sm:px-2 relative max-w-lg mx-auto">
@@ -107,54 +127,25 @@ export default {
             api: process.env.VUE_APP_API,
             product: {},
             image: "",
-            reviews: {
-                id: null,
-                star: 0,
-                comment: "",
-                review_date: "",
-                users_id: 0,
-            },
-            rating: {
-                sore: 0,
-                sore1: 0,
-                sore2: 0,
-                sore3: 0,
-            },
-            ratingTitle: [
-                {
-                    id: 1,
-                    name: "Design",
-                    description: null,
-                },
-                {
-                    id: 2,
-                    name: "Material",
-                    description: null,
-                },
-                {
-                    id: 3,
-                    name: "Good value",
-                    description: null,
-                },
-                {
-                    id: 4,
-                    name: "Ease to use",
-                    description: null,
-                },
-            ],
             hoverStarCcore: 0,
-            review: {
+            productId: 0,
+            reviews: {
                 id: 1,
                 star: 0,
                 comment: "",
                 reviewDate: "",
-                userId: 5,
+                userId: 0,
                 ratingOfProductForAdds: [],
             },
+
+            Design: { id: 1, score: "0", ratings_id: 1, productId: 0, reviewId: 1 },
+            Material: { id: 1, score: "0", ratings_id: 2, productId: 0, reviewId: 1 },
+            GoodValue: { id: 1, score: "0", ratings_id: 3, productId: 0, reviewId: 1 },
+            EaseToUse: { id: 1, score: "0", ratings_id: 4, productId: 0, reviewId: 1 },
         };
     },
     props: {
-        productId: String,
+        product_id: String,
     },
     methods: {
         scrollToTop() {
@@ -175,11 +166,11 @@ export default {
             this.reviews.star = score;
         },
         submitReview() {
-            const time = new Date();
-            this.reviews.review_date = time.toLocaleString("th-TH");
+            this.reviews.ratingOfProductForAdds.push(this.Design);
+            this.reviews.ratingOfProductForAdds.push(this.Material);
+            this.reviews.ratingOfProductForAdds.push(this.GoodValue);
+            this.reviews.ratingOfProductForAdds.push(this.EaseToUse);
             console.log(this.reviews);
-            let a = [];
-            a.length;
         },
     },
     mounted() {
@@ -191,13 +182,17 @@ export default {
         }
     },
     async created() {
-        this.reviews.users_id = this.$store.getters.userInfo.id;
-        console.log(this.reviews.users_id);
-        this.product = await axios.get(`${this.api}/product/${this.productId}`).then((response) => {
+        this.reviews.userId = this.$store.getters.userInfo.id;
+        this.product = await axios.get(`${this.api}/product/${this.product_id}`).then((response) => {
             this.image = response.data.images[0].source;
             return response.data;
         });
         this.$store.dispatch("loadRatingTitle");
+        this.productId = parseInt(this.product_id);
+        this.Design.productId = this.productId;
+        this.Material.productId = this.productId;
+        this.GoodValue.productId = this.productId;
+        this.EaseToUse.productId = this.productId;
     },
 };
 </script>
