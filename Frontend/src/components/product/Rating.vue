@@ -10,7 +10,7 @@
                     <div class=" text-primary tracking-tighter">
                         <span>{{ rate.name }}</span>
                     </div>
-                    <div class=" text-gray-700 pl-3">
+                    <div class=" text-gray-700 dark:text-gray-400 pl-3">
                         <span class="text-sm">{{ rate.result.toFixed(2) }}</span>
                     </div>
                 </div>
