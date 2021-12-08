@@ -69,10 +69,7 @@
                                 <span class="px-6 py-3 flex items-center">{{ product.price }}</span>
                             </td>
                             <td class="border-dashed border-b border-gray-200 dark:border-gray-500">
-                                <div class="flex items-center justify-center">
-                                    <span class="px-2 text-lg font-bold">{{ product.quantityStock }}</span>
-                                    <button class="material-icons text-md p-1">add_circle_outline</button>
-                                </div>
+                                <p class="px-2 text-lg font-bold text-center w-full">{{ product.quantityStock }}</p>
                             </td>
                             <td class="border-dashed border-b border-gray-200 dark:border-gray-500 text-center">
                                 <div class="flex justify-center">
@@ -170,7 +167,7 @@ export default {
         },
         deleteProduct(id, productName) {
             // if (condition) {
-                
+
             // }
             if (window.confirm("Do you want to delete? \nproduct:   " + productName)) {
                 this.$store.dispatch("deleteProduct", id);
