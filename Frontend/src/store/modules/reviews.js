@@ -18,7 +18,6 @@ const actions = {
         axios
             .get(get_rating_list)
             .then((response) => {
-                console.log(response);
                 commit('SET_RATING_TITLE_LIST', response.data)
             })
 

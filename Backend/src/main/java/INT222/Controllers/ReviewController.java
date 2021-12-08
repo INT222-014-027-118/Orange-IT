@@ -1,9 +1,7 @@
 package INT222.Controllers;
 
 import INT222.Exceptions.NotFoundException;
-import INT222.Models.Products;
-import INT222.Models.ReviewForAdd;
-import INT222.Models.Reviews;
+import INT222.Models.*;
 import INT222.Repositories.RatingOfProductForAddRepository;
 import INT222.Repositories.ReviewForAddRepository;
 import INT222.Repositories.ReviewRepository;
@@ -32,18 +30,17 @@ public class ReviewController {
 
     @GetMapping("/getByProductId/{id}")
     public List<Reviews> getReviewByProductId(@PathVariable(value = "id") long id) {
-        List<Reviews> reviews = new ArrayList<>();
-        for (int i = 0; i < reviewRepository.findAll().size(); i++) {
-            for (int j = 0; j < reviewRepository.findAll().get(i).getRatingOfProducts().size(); j++) {
+        List<Reviews> reviews = new ArrayList<Reviews>();
+        List<Reviews> reviewsList = reviewRepository.findAll();
+        for (int i = 0; i < reviewsList.size(); i++) {
+            List<RatingOfProduct> ratingOfProducts = reviewsList.get(i).getRatingOfProducts();
 
-                if (reviewRepository.findAll().get(i).getRatingOfProducts().get(j).getProductId() == id) {
-                    reviews.add(reviewRepository.findAll().get(i));
+                if(ratingOfProducts.get(0).getProductId()== id){
+                    reviews.add(reviewsList.get(i));
                 }
 
-
-            }
-
-        }return reviews;
+        }
+        return reviews;
     }
 
     @GetMapping("/list")
@@ -57,7 +54,8 @@ public class ReviewController {
     public void deleteById(@PathVariable(value = "id") long id,@PathVariable(value = "userId") long userId) {
         if(reviewForAddRepository.existsByUserId(userId)){
             if(reviewForAddRepository.existsById(id)){
-                reviewRepository.deleteById(id);
+                ratingOfProductForAddRepository.deleteByReviewId(id);
+               reviewForAddRepository.deleteById(id);
             }
         }
     }
