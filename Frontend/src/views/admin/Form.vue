@@ -302,6 +302,7 @@ export default {
 
             preview_list: [],
             imageInfo: [],
+            imagesDelete:[]
         };
     },
     props: {
@@ -335,7 +336,7 @@ export default {
                     }
 
                     // console.log(this.product);
-                    this.$store.dispatch("updateProduct", { product: this.product, newImages: this.imageInfo });
+                    this.$store.dispatch("updateProduct", { product: this.product, newImages: this.imageInfo, imageForDelete:this.imagesDelete });
                     // this.resetForm();
                     //     }
                     // });
@@ -409,8 +410,7 @@ export default {
 
         deleteImg(index) {
             // this.imageInfo.splice(index, 1);
-         
-
+            this.imagesDelete.push(this.preview_list[index].split('http://20.212.33.246/orange-it/image/get/')[1])
             this.product.images.splice(index, 1);
             this.preview_list.splice(index, 1);
         },

@@ -129,6 +129,7 @@ const actions = {
             })
     },
     updateProduct(context, payload) {
+
         if (payload.newImages.length > 0) {
 
 
@@ -143,6 +144,14 @@ const actions = {
                         })
                         .then(response => {
                             if (response.status === 200) {
+                                for (let i = 0; i < payload.imageForDelete.length; i++) {
+                                    axios.delete(delete_image + payload.imageForDelete[i], {
+                                        headers: {
+                                            'Authorization': this.getters.token
+                                        }
+                                    })
+                                }
+
                                 router.push('/admin/manage-products')
                             }
                         })
@@ -157,6 +166,16 @@ const actions = {
                 })
                 .then(response => {
                     if (response.status === 200) {
+
+                        for (let i = 0; i < payload.imageForDelete.length; i++) {
+                            console.log(delete_image + payload.imageForDelete[i]);
+                            axios.delete(delete_image + payload.imageForDelete[i], {
+                                headers: {
+                                    'Authorization': this.getters.token
+                                }
+                            })
+                        }
+
                         router.push('/admin/manage-products')
                     }
                 })
