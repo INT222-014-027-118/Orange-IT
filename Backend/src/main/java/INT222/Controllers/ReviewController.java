@@ -72,7 +72,7 @@ public class ReviewController {
             for (int i = 0; i < reviews.getRatingOfProductForAdds().size(); i++) {
                 reviews.getRatingOfProductForAdds().get(i).setReviewId(1);
                 if(ratingOfProductForAddRepository.findTopByOrderByIdDesc() == null ){
-                    reviews.getRatingOfProductForAdds().get(i).setId(1);
+                    reviews.getRatingOfProductForAdds().get(i).setId(1+i);
                 }else
                 reviews.getRatingOfProductForAdds().get(i).setId(ratingOfProductForAddRepository.findTopByOrderByIdDesc().getId()+1+i);
 
@@ -86,7 +86,7 @@ public class ReviewController {
         for (int i = 0; i < reviews.getRatingOfProductForAdds().size(); i++) {
             reviews.getRatingOfProductForAdds().get(i).setReviewId(reviews.getId());
             if(ratingOfProductForAddRepository.findTopByOrderByIdDesc() == null ){
-                reviews.getRatingOfProductForAdds().get(i).setId(1);
+                reviews.getRatingOfProductForAdds().get(i).setId(1+i);
             }else
                 reviews.getRatingOfProductForAdds().get(i).setId(ratingOfProductForAddRepository.findTopByOrderByIdDesc().getId()+1+i);
 
